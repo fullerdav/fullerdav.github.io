@@ -1,6 +1,6 @@
 var govsources=[
 {office:"meta", label:"Open Government Data", href:"https://www.data.gov/", desc:"Here you will find data, tools, and resources to conduct research, develop web and mobile applications, design data visualizations, and more."},
-{office: "cftc", label:"Commodity Futures Trading Commission", "http://www.cftc.gov/MarketReports/index.htm", desc:""},
+{office: "cftc", label:"Commodity Futures Trading Commission", href:"http://www.cftc.gov/MarketReports/index.htm", desc:""},
 {office: "ncua", label:"National Credit Union Assc.", href:"https://www.ncua.gov/analysis/Pages/industry.aspx", desc:"Financial indicators for credit unions, plus state and city data such as unemployment, growth, real estate, etc."},
 {office:"arc", label:"Appalachian Regional Commission", href:"http://www.arc.gov/data"},
 {office:"potus", label:"Executive Office of the President - The White House", href:"https://open.whitehouse.gov/"},
