@@ -159,7 +159,7 @@ var govsources=[
 {office:"ssa", label:"Social Security Advisory Board", href:"http://www.ssab.gov/DATA.aspx"},
 {office:"usaid", label:"United States Agency for International Development", href:"http://www.usaid.gov/data"},
 {office:"usaid", label:"USAID Foreign AID Explorer", href:"https://explorer.usaid.gov/aid-dashboard.html", desc:"As the lead U.S. Government agency for international aid, USAID is responsible for reporting official U.S. Government foreign aid to Congress and the Organization for Economic Cooperation and Development (OECD). To fulfill this responsibility, USAID maintains the official database from 1946 to the present.", download:true, gis:true, explorer:true, chart:true, tools:false, resource:false},
-{office:"usccr", label:"US Commission on Civil Rights", href:"http://zekiah.github.io/usccr/", desc:"Appears to provide data on complaints of civil rights violations."}];
+{office:"usccr", label:"US Commission on Civil Rights", href:"http://zekiah.github.io/usccr/", desc:"Appears to provide data on complaints of civil rights violations."},
 {office:"cities", label:"US City Open Data Census", href:"http://us-city.census.okfn.org/", desc:"City data presented in a visual matrix"},
 {office:"cities", label:"State of the Cities", href:"https://www.huduser.gov/portal/datasets/socds.html", desc:"Profile of major cities provided by HUD."},
 {office:"cities", label:"American Community Survey", href:"https://www.census.gov/acs/www/data/data-tables-and-tools/data-profiles/2015/", desc:"Select State and Municipality"},
