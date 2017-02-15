@@ -1,718 +1,745 @@
 {
     "name": "government data",
     "children": [{
-                "name": "Federal (US)",
-                "children": [
-
-                    {
-                        "name": "Megasites",
+        "name": "Federal (US)",
+        "children": [{
+            "name": "Megasites",
+            "children": [{
+                "name": "Discover US Government Information",
+                "href": "https://www.govinfo.gov/",
+                "desc": "Massive new front end to the US government."
+            }, {
+                "name": "Geospatial Platform",
+                "href": "https://www.geoplatform.gov/",
+                "desc": "GeoPlatform users have access to a one-stop shop that delivers a focal point where governmental, academic, private, and public data can be visualized together to inform national and regional issues"
+            }, {
+                "name": "healthdata.gov",
+                "href": "http://www.healthdata.gov/"
+            }, {
+                "name": "Open Government Data",
+                "href": "https://www.data.gov/",
+                "desc": "Here you will find data, tools, and resources to conduct research, develop web and mobile applications, design data visualizations, and more."
+            }, {
+                "name": "State Data Centers (interactive map)",
+                "href": "https://sdcclearinghouse.com/httpceicmap/",
+                "desc": ""
+            }, {
+                "name": "US Govt bulk data downloads",
+                "href": "https://www.gpo.gov/fdsys/bulkdata",
+                "desc": "Congressional Bills, Commerce Business Daily, Code of Federal Regulations, Federal Register, US Govt Manual, Public Papers of the Presidents of the United States, Supreme Court Decisions 1937-1975"
+            }]
+        }, {
+            "name": "Executive",
+            "children": [{
+                "name": "The White House",
+                "href": "https://open.whitehouse.gov/"
+            }, {
+                "name": "Cabinet",
+                "children": [{
+                    "name": "Dept. of Agriculture",
+                    "children": [{
+                        "name": "USDA Economic Research Service",
+                        "href": "https://www.ers.usda.gov/data-products/",
+                        "desc": "We provide leadership on food, agriculture, natural resources, rural development, nutrition, and related issues based on public policy, the best available science, and effective management."
+                    }, {
+                        "name": "USDA Food and Nutrition Service",
+                        "href": "http://www.fns.usda.gov/data-and-statistics",
+                        "desc": "Includes data on these USDA programs:<br> Supplemental Nutrition Assistance Program (SNAP), Food Distribution Programs, School Meals, Women, Infants and Children"
+                    }, {
+                        "name": "USDA Foreign Agricultural Service",
+                        "href": "https://www.fas.usda.gov/data",
+                        "desc": "Information on U.S. export sales, by commodity and country of destination, <br> insight and analysis on issues affecting agricultural production and trade."
+                    }, {
+                        "name": "USDA National Agricultural Statistics Service",
+                        "href": "https://www.nass.usda.gov/Data_Visualization/index.php",
+                        "desc": "The National Agricultural Statistics Service provides timely, accurate, and useful statistics in service to U.S. agriculture."
+                    }]
+                }, {
+                    "name": "Dept. of Commerce",
+                    "children": [{
+                        "name": "Advanced Manufacturing Portal",
+                        "href": "http://www.manufacturing.gov/data.html",
+                        "desc": "By coordinating federal resources and programs, the Advanced Manufacturing National Program Office enhances technology transfer in U.S. manufacturing industries and helps companies overcome technical obstacles to scale up of new technologies and products."
+                    }, {
+                        "name": "Data.Commerce.gov",
+                        "href": "https://data.commerce.gov/"
+                    }, {
+                        "name": "Economic Indicators",
+                        "href": "http://www.commerce.gov/economicindicators"
+                    }, {
+                        "name": "Income Distribution Across America",
+                        "href": "https://midaas.commerce.gov/",
+                        "desc": "Currently in alpha the MIDAAS system allows the exploration of Income distribution in the United States. This site democratizes insights from open government data."
+                    }, {
+                        "name": "International Trade Administration",
+                        "href": "http://trade.gov/data.asp"
+                    }, {
+                        "name": "Marine Cadastre - NOAA",
+                        "href": "http://marinecadastre.gov/DATA"
+                    }, {
+                        "name": "Open.Commerce.gov",
+                        "href": "http://open.commerce.gov/data-sets"
+                    }, {
+                        "name": "Visitors Arrival Program",
+                        "href": "http://travel.trade.gov/research/programs/i94/index.html",
+                        "desc": "The International Visitor Arrivals Program provides the U.S. government and the public with the official monthly and annual overseas visitor arrivals to the United States. The National Travel and Tourism Office (NTTO) manages the program in cooperation with the Department of Homeland Security, Customs and Border Protection (CBP)."
+                    }, {
+                        "name": "NIST",
                         "children": [{
-                            "name": "Discover US Government Information",
-                            "href": "https://www.govinfo.gov/",
-                            "desc": "Massive new front end to the US government."
+                            "name": "Computer Forensic Reference Data Sets",
+                            "href": "http://www.cfreds.nist.gov/",
+                            "desc": "NIST is developing Computer Forensic Reference Data Sets (CFReDS) for digital evidence. These reference data sets (CFReDS) provide to an investigator documented sets of simulated digital evidence for examination."
                         }, {
-                            "name": "Geospatial Platform",
-                            "href": "https://www.geoplatform.gov/",
-                            "desc": "GeoPlatform users have access to a one-stop shop that delivers a focal point where governmental, academic, private, and public data can be visualized together to inform national and regional issues"
-                        }, {
-                            "name": "healthdata.gov",
-                            "href": "http://www.healthdata.gov/"
-                        }, {
-                            "name": "Open Government Data",
-                            "href": "https://www.data.gov/",
-                            "desc": "Here you will find data, tools, and resources to conduct research, develop web and mobile applications, design data visualizations, and more."
-                        }, {
-                            "name": "State Data Centers (interactive map)",
-                            "href": "https://sdcclearinghouse.com/httpceicmap/",
-                            "desc": ""
-                        }, {
-                            "name": "US Govt bulk data downloads",
-                            "href": "https://www.gpo.gov/fdsys/bulkdata",
-                            "desc": "Congressional Bills, Commerce Business Daily, Code of Federal Regulations, Federal Register, US Govt Manual, Public Papers of the Presidents of the United States, Supreme Court Decisions 1937-1975"
+                            "name": "National Institute of Standards and Technology",
+                            "href": "http://nist.gov/data/"
                         }]
                     }, {
-                        "name": "Executive",
+                        "name": "NOAA",
                         "children": [{
-                                "name": "The White House",
-                                "href": "https://open.whitehouse.gov/"
-                            }, {
-                                "name": "Dept. of Agriculture",
-                                "children": [{
-                                    "name": "USDA Economic Research Service",
-                                    "href": "https://www.ers.usda.gov/data-products/",
-                                    "desc": "We provide leadership on food, agriculture, natural resources, rural development, nutrition, and related issues based on public policy, the best available science, and effective management."
-                                }, {
-                                    "name": "USDA Food and Nutrition Service",
-                                    "href": "http://www.fns.usda.gov/data-and-statistics",
-                                    "desc": "Includes data on these USDA programs:<br> Supplemental Nutrition Assistance Program (SNAP), Food Distribution Programs, School Meals, Women, Infants and Children"
-                                }, {
-                                    "name": "USDA Foreign Agricultural Service",
-                                    "href": "https://www.fas.usda.gov/data",
-                                    "desc": "Information on U.S. export sales, by commodity and country of destination, <br> insight and analysis on issues affecting agricultural production and trade."
-                                }, {
-                                    "name": "USDA National Agricultural Statistics Service",
-                                    "href": "https://www.nass.usda.gov/Data_Visualization/index.php",
-                                    "desc": "The National Agricultural Statistics Service provides timely, accurate, and useful statistics in service to U.S. agriculture."
-                                }]
-                            }, {
-                                "name": "Dept. of Commerce",
-                                "children": [{
-                                        "name": "NIST",
-                                        "children": [{
-                                            "name": "Computer Forensic Reference Data Sets",
-                                            "href": "http://www.cfreds.nist.gov/",
-                                            "desc": "NIST is developing Computer Forensic Reference Data Sets (CFReDS) for digital evidence. These reference data sets (CFReDS) provide to an investigator documented sets of simulated digital evidence for examination."
-                                        }, {
-                                            "name": "National Institute of Standards and Technology",
-                                            "href": "http://nist.gov/data/"
-                                        }]
-                                    }, {
-                                        "name": "NOAA",
-                                        "children": [{
-                                            "name": "Coral Health and Monitoring Program",
-                                            "href": "http://www.coral.noaa.gov/champportal/",
-                                            "desc": "to provide services and information sources for researchers and the public in order to help improve and sustain coral reef health throughout the world."
-                                        }, {
-                                            "name": "Integrated Ocean Observing System - NOAA",
-                                            "href": "http://www.ioos.noaa.gov/data/"
-                                        }, {
-                                            "name": "NOAA Climate datasets",
-                                            "href": "http://www.ncdc.noaa.gov/data-access/quick-links",
-                                            "desc": "datasets and other resources related to climate."
-                                        }, {
-                                            "office": "doc",
-                                            "name": "Storm Events Data",
-                                            "href": "https://gis.ncdc.noaa.gov/all-records/catalog/search/resource/details.page?id=gov.noaa.ncdc:C00510",
-                                            "desc": " NCDC Storm Event database contains a chronological listing, by state, of hurricanes, tornadoes, thunderstorms, hail, floods, drought conditions, lightning, high winds, snow, temperature extremes and other weather phenomena, from 1950 to the present."
-                                        }]
-                                    }, {
-                                        "name": "Advanced Manufacturing Portal",
-                                        "href": "http://www.manufacturing.gov/data.html",
-                                        "desc": "By coordinating federal resources and programs, the Advanced Manufacturing National Program Office enhances technology transfer in U.S. manufacturing industries and helps companies overcome technical obstacles to scale up of new technologies and products."
-                                    }, {
-                                        "name": "Data.Commerce.gov",
-                                        "href": "https://data.commerce.gov/"
-                                    }, {
-                                        "name": "Economic Indicators",
-                                        "href": "http://www.commerce.gov/economicindicators"
-                                    }, {
-                                        "name": "Income Distribution Across America",
-                                        "href": "https://midaas.commerce.gov/",
-                                        "desc": "Currently in alpha the MIDAAS system allows the exploration of Income distribution in the United States. This site democratizes insights from open government data."
-                                    }, {
-                                        "name": "International Trade Administration",
-                                        "href": "http://trade.gov/data.asp"
-                                    }, {
-                                        "name": "Marine Cadastre - NOAA",
-                                        "href": "http://marinecadastre.gov/DATA"
-                                    }, {
-                                        "name": "Open.Commerce.gov",
-                                        "href": "http://open.commerce.gov/data-sets"
-                                    },
-
-
-                                    {
-                                        "name": "Bureau of the Census",
-                                        "children": [{
-                                            "name": "Annual Survey of Entrepreneurs",
-                                            "href": "http://www.census.gov/programs-surveys/ase.html",
-                                            "desc": "The ASE provides annual data on select economic and demographic characteristics of employer businesses and their owners by gender, ethnicity, race, and veteran status."
-                                        }, {
-                                            "name": "Family Planning Centers",
-                                            "href": "http://thedataweb.rm.census.gov/TheDataWeb_HotReport2/econsnapshot/2012/snapshot.hrml?NAICS=621410",
-                                            "desc": "An Industry Snapshot from the Census Bureau covering 2008-2013.  It includes locations, payroll, revenue, pop. served, etc."
-                                        }, {
-                                            "name": "Current Population Survey",
-                                            "href": "https://www.census.gov/programs-surveys/cps/data-detail.html",
-                                            "desc": "In addition to being the primary source of monthly labor force statistics, the CPS adds a set of supplemental questions which vary month to month and cover topics such as child support, volunteerism, health insurance coverage, and school enrollment."
-                                        }, {
-                                            "name": "Economic Census",
-                                            "href": "http://www.census.gov/economic-indicators/",
-                                            "desc": "List of indicators made available by the Census Bureau with companion tools for exploration."
-                                        }, {
-                                            "name": "Economic Indicators",
-                                            "href": "http://www.census.gov/economic-indicators/",
-                                            "desc": ""
-                                        }, {
-                                            "name": "Industry Statistics Portal",
-                                            "href": "http://www.census.gov/econ/isp/",
-                                            "desc": "Census Bureau application that searches across programs that provide economic data for a user-selected industry. To choose the industry you are interested in use the NAICS code or keyword."
-                                        }, {
-                                            "name": "Small Area Health Insurance Estimates",
-                                            "subjects": "healthinsurance",
-                                            "href": "",
-                                            "desc": "The Small Area Health Insurance Estimates (SAHIE) program was created to develop model-based estimates of health insurance coverage for counties and states."
-                                        }, {
-                                            "name": "USA Trade Online",
-                                            "href": "https://usatrade.census.gov/",
-                                            "desc": "USA Trade Online is a dynamic data tool that gives users access to current and cumulative U.S. export and import data.  This tool can support economists in performing academic research, as well as helping form trade policies."
-                                        }]
-                                    }
-                                ]
-                            }, {
-                                "name": "Dept. of Defense",
-                                "children": [{
-                                    "name": "data.mil",
-                                    "href": "https://www.data.mil/s/v2/data-mil/1ff45997-196e-4e9a-96e2-eed27e3e17ab/",
-                                    "desc": "In providing the military forces needed to deter war and protect the security of our country, the U.S. Department of Defense generates vast troves of data. "
-                                }, {
-                                    "name": "Department of Defense",
-                                    "href": "http://www.defense.gov/data"
-                                }]
-                            }, {
-                                "name": "Dept. of Education",
-                                "children": [{
-                                    "name": "Civil Rights Data Collection",
-                                    "href": "http://ocrdata.ed.gov/DataAnalysisTools",
-                                    "desc": "compare data across school districts"
-                                }, {
-                                    "name": "Common Core",
-                                    "href": "https://nces.ed.gov/ccd/index.asp",
-                                    "desc": ""
-                                }, {
-                                    "name": "ED Data Inventory",
-                                    "href": "http://datainventory.ed.gov/",
-                                    "desc": "The goal of the ED Data Inventory is to describe all data reported to the Department of Education, with the exception of personnel and administrative data. It includes data collected as part of grant activities, along with statistical data collected to allow publication of valuable statistics about the state of education in this country. "
-                                }, {
-                                    "name": "Federal Student Aid Data Center",
-                                    "href": "https://studentaid.ed.gov/sa/data-center/",
-                                    "desc": "The Federal Student Aid Data Center is your centralized source for information relating to the federal financial assistance programs."
-                                }, {
-                                    "name": "Graduate Earnings Data for Career College Programs",
-                                    "href": "http://www.ed.gov/news/press-releases/education-department-releases-new-graduate-earnings-data-career-college-programs",
-                                    "desc": "US Dept. of Education data showing the typical earnings of graduates of the thousands of career training programs offered by colleges across the country. This is intended to help students make more informed decisions about college enrollment ."
-                                }, {
-                                    "name": "National Center for Education Statistics",
-                                    "href": "https://nces.ed.gov/datatools/",
-                                    "desc": "Topics outlined include the participation of students, teachers, and faculty in U.S. educational institutions; the personnel, performance and payrolls of U.S. public schools and in comparison to students in other countries."
-                                }]
-                            }, {
-                                "name": "Dept. of Energy",
-                                "children": [{
-                                    "name": "Alternative Fueling Stations",
-                                    "href": "http://www.afdc.energy.gov/locator/stations/",
-                                    "desc": "Alternative fueling stations are located throughout the United States and their availability continues to grow. The Alternative Fuels Data Center (AFDC) maintains a website where you can find alternative fuels stations near you or on a route, obtain counts of alternative fuels stations by state, view U.S. maps, and more."
-                                }, {
-                                    "name": "Atmospheric Radiation Measurement - Climate Research Facility",
-                                    "href": "http://www.arm.gov/data",
-                                    "desc": "ARM focuses on obtaining continuous measurements—supplemented by field campaigns—and providing data products that promote the advancement of climate models."
-                                }, {
-                                    "name": "DOE Data Explorer",
-                                    "href": "http://www.osti.gov/dataexplorer/",
-                                    "desc": "Discover science, technology, engineering research and data collections from the US Department of Energy"
-                                }, {
-                                    "name": "Lawrence Berkeley National Laboratory - Institutes Office",
-                                    "href": "http://institutes.lanl.gov/data/"
-                                }, {
-                                    "name": "Lawrence Berkeley National Laboratory - Standby Data",
-                                    "href": "http://standby.lbl.gov/data.html"
-                                }, {
-                                    "name": "National Nuclear Data Center",
-                                    "href": "http://www.nndc.bnl.gov/"
-                                }, {
-                                    "name": "National Renewable Energy Laboratory - The Open PV Project",
-                                    "href": "https://openpv.nrel.gov/login.php?dest=data"
-                                }, {
-                                    "name": "Oak Ridge National Laboratory - Computer Science and Mathematics Division",
-                                    "href": "http://www.csm.ornl.gov/data/"
-                                }, {
-                                    "name": "Office of Scientific and Technical Information",
-                                    "href": "http://www.osti.gov/data/"
-                                }, {
-                                    "name": "Pacific Northwest National Laboratory - Proteomics Research Resource for Integrative Biology",
-                                    "href": "http://panomics.pnnl.gov/data/"
-                                }]
-                            }, {
-                                "name": "DHHS",
-                                "desc": "Dept. of Health and Human Services",
-                                "children": [{
-                                    "name": "National Cancer Insitute Surveillance, Epidemiology, and End Results Program Turning Cancer Data Into Discovery",
-                                    "href": "http://seer.cancer.gov/data/"
-                                }, {
-                                    "name": "National Data Archive on Child Abuse and Neglect",
-                                    "href": "http://www.ndacan.acf.hhs.gov/datasets/datasets-list.cfm",
-                                    "desc": "NDACAN disseminates datasets of archived research for secondary analysis with statistical software such as SPSS or SAS. They do not maintain statistics on child abuse and neglect or provide reports of research findings."
-                                }, {
-                                    "name": "Substance Abuse and Mental Health Services Administration",
-                                    "href": "http://www.samhsa.gov/data",
-                                    "desc": "SAMHSA is the agency within the U.S. Department of Health and Human Services that leads public health efforts to advance the behavioral health of the nation.  Datasets are related to facilities, clients and emergency room visits."
-                                }, {
-                                    "name": "Office of Childcare",
-                                    "href": "https://www.acf.hhs.gov/occ/resource/ccdf-statistics"
-                                }, {
-                                    "name": "Centers for Disease Control",
-                                    "children": [{
-                                        "name": "Aging Statistics",
-                                        "href": "https://www.cdc.gov/nchs/lsoa/index.htm",
-                                        "desc": "This report provides the latest data on the 41 key indicators selected by the Forum to portray aspects of the lives of older Americans and their families."
-                                    }, {
-                                        "name": "Behavioral Risk Factors",
-                                        "href": "http://www.cdc.gov/brfss/data_documentation/",
-                                        "desc": "BRFSS is used to collect prevalence data among adult U.S. residents regarding their risk behaviors and preventive health practices that can affect their health status. Examples range from infant mortality and suicide rates to seat belt use, binge drinking and obesity."
-                                    }, {
-                                        "name": "CDC - Sexual Health",
-                                        "href": "https://www.cdc.gov/sexualhealth/data.html",
-                                        "desc": "an array of datasets related to sexual health, risk, behavior, etc."
-                                    }, {
-                                        "name": "Centers for Disease Control and Prevention",
-                                        "href": "https://data.cdc.gov"
-                                    }, {
-                                        "name": "Injury Prevention & Control: Data and Statistics",
-                                        "href": "http://www.cdc.gov/injury/wisqars/index.html",
-                                        "desc": "CDC’s Web-based Injury Statistics Query and Reporting System provides data related to fatal and nonfatal injury, violent death, and cost of injury data illustraing the economic burden associated with unintentional and violence-related injury in the US."
-                                    }, {
-                                        "name": "Longitudinal Studies of Aging",
-                                        "href": "https://www.cdc.gov/nchs/lsoa/index.htm",
-                                        "desc": "The Longitudinal Studies of Aging (LSOAs) is a multicohort study of persons 70 years of age and over designed primarily to measure changes in the health, functional status, living arrangements, and health services utilization of two cohorts of Americans as they move into and through the oldest ages."
-                                    }, {
-                                        "name": "National Vital Statistics Rapid Release",
-                                        "href": "https://www.cdc.gov/nchs/products/vsrr.htm",
-                                        "desc": "Natality, mortality, infant mortality.  Rapid Release provides more up to date data than the annual archive, including both interactive tools and downloadable public use data files."
-                                    }]
-                                }, {
-                                    "name": "AHRQ",
-                                    "children": [{
-                                        "name": "H*CUPnet",
-                                        "href": "http://hcupnet.ahrq.gov/",
-                                        "desc": "The Agency for Healthcare Research and Quality provides statistics for hospital inpatient, emergency department, and ambulatory settings, as well as population-based health care data on counties.  The focus is on the patient, hospital stays, emergency room visits, etc."
-                                    }, {
-                                        "name": "Medical Expenditure Panel Survey",
-                                        "href": "https://meps.ahrq.gov/mepsweb/",
-                                        "desc": "The Medical Expenditure Panel Survey (MEPS) is a set of large-scale surveys of families and individuals, their medical providers, and employers across the United States. MEPS is the most complete source of data on the cost and use of health care and health insurance coverage."
-                                    }]
-                                }, {
-                                    "name": "Center for Medicare/Medicaid",
-                                    "children": [{
-                                        "name": "Centers for Medicare and Medicaid Services",
-                                        "href": "http://data.cms.gov"
-                                    }, {
-                                        "name": "Hospital Compare",
-                                        "href": "https://data.medicare.gov/data/hospital-compare",
-                                        "desc": "These are the official datasets used on the Medicare.gov Hospital Compare Website provided by the Centers for Medicare & Medicaid Services. These data allow you to compare the quality of care at over 4,000 Medicare-certified hospitals across the country"
-                                    }, {
-                                        "name": "Medicare.gov",
-                                        "href": "https://data.medicare.gov"
-                                    }]
-                                }]
-                            }, {
-                                "name": "Dept. of Homeland Security",
-                                "children": [{
-                                    "name": "Immigration Data & Statistics",
-                                    "href": "https://www.dhs.gov/Immigration-statistics",
-                                    "desc": "The Office of Immigration Statistics is charged to collect and disseminate data useful in evaluating the impact of immigration laws."
-                                }]
-                            }, {
-                                "name": "Dept. of The Interior",
-                                "children": [{
-                                    "name": "United States Geological Survey",
-                                    "children": [{
-                                        "name": "Biodiversity and species data",
-                                        "href": "https://bison.usgs.gov/#home",
-                                        "desc": "Biodiversity Information Serving Our Nation (BISON) -  Explore & download U.S. species occurrence data & maps"
-                                    }, {
-                                        "name": "Earthquakes (USGS)",
-                                        "href": "http://earthquake.usgs.gov/earthquakes/search/",
-                                        "desc": "This web site is sponsored by the USGS Earthquake Hazards Program, as part of our effort to provide and apply relevant earthquake science information and knowledge to reduce deaths, injuries, and property damage from earthquakes. "
-                                    }, {
-                                        "name": "National Geomagnetism Program",
-                                        "href": "http://geomag.usgs.gov/data/",
-                                        "desc": ""
-                                    }, {
-                                        "name": "The National Map",
-                                        "href": "https://nationalmap.gov/",
-                                        "desc": ""
-                                    }, {
-                                        "name": "US Geological Survey",
-                                        "href": "http://data.usgs.gov/",
-                                        "desc": ""
-                                    }, {
-                                        "name": "USGS Gap Analysis Program",
-                                        "href": "http://gapanalysis.usgs.gov/data/",
-                                        "desc": ""
-                                    }, {
-                                        "name": "USGS National Hydrography Dataset",
-                                        "href": "http://nhd.usgs.gov/data.html",
-                                        "desc": ""
-                                    }, {
-                                        "name": "USGS National Water Information System",
-                                        "href": "http://water.usgs.gov/data/",
-                                        "desc": ""
-                                    }]
-                                }]
-                            },
-
-                            {
-                                "name": "Dept. of Justice",
-                                "children": [{
-                                    "name": "Department of Justice",
-                                    "href": "http://www.justice.gov/data"
-                                }, {
-                                    "name": "OJP Diagnostic Center",
-                                    "subjects": "crime|justice",
-                                    "href": "https://www.ojpdiagnosticcenter.org/",
-                                    "desc": "The Office of Justice Programs (OJP) Diagnostic Center is a technical assistance resource designed to provide local leaders with customized training and technical assistance (TTA) in addressing persistent and emerging public safety problems using evidence-based strategies"
-                                }, {
-                                    "name": "Uniform Crime Reporting - FBI",
-                                    "href": "http://www.ucrdatatool.gov/"
-                                }, {
-                                    "name": "United States Sentencing Commission",
-                                    "subjects": "prison|justice|crime",
-                                    "href": "http://isb.ussc.gov/",
-                                    "desc": "The Sentencing Commission is an independent agency in the judicial branch whose mission includes collecting, analyzing and distributing a broad array of information on federal crime and sentencing issues."
-                                }, {
-                                    "name": "Bureau of Justice Statistics",
-                                    "children": [{
-                                        "name": "Bureau of Justice Statistics",
-                                        "href": "https://www.bjs.gov/",
-                                        "desc": "To collect, analyze, publish, and disseminate information on crime, criminal offenders, victims of crime, and the operation of justice systems at all levels of government. These data are critical to federal, state, and local policymakers in combating crime and ensuring that justice is both efficient and evenhanded."
-                                    }, {
-                                        "name": "Bureau of Prisons",
-                                        "subjects": "prison|crime|justice",
-                                        "href": "https://www.bop.gov/about/statistics/",
-                                        "desc": ""
-                                    }]
-                                }]
-                            }, {
-                                "name": "Dept. of Labor",
-                                "children": [
-                                 {
-                                    "name": "Department of Labor",
-                                    "href": "http://www.dol.gov/data"
-                                }, {
-                                    "office": "dol",
-                                    "name": "Unemployment Insurance Data",
-                                    "href": "https://oui.doleta.gov/unemploy/DataDashboard.asp",
-                                    "desc": ""
-                                }, {
-                                    "name": "Occupational Safety and Health",
-                                    "href": "https://www.osha.gov/oshstats/index.html",
-                                    "desc": "Appears to provide data on complaints of civil rights violations."
-                                }, {
-                                    "name": "Bureau of Labor Statistics",
-                                    "children": [{
-                                        "name": "Data Finder",
-                                        "href": "http://www.bls.gov/data/",
-                                        "desc": "Data Finder is a new search and navigation tool for BLS time series data available on the BLS website. Rather than searching individual data sets, Data Finder allows users to conveniently search multiple data sets all at once."
-                                    }, {
-                                        "name": "Consumer Expenditure Survey",
-                                        "href": "https://www.bls.gov/cex/home.htm#data",
-                                        "desc": ""
-                                    }, {
-                                        "name": "Industries at a Glance",
-                                        "href": "https://www.bls.gov/iag/tgs/iag_index_alpha.htm",
-                                        "desc": ""
-                                    }, {
-                                        "name": "Occupational Employment Statistics",
-                                        "href": "https://www.bls.gov/oes/tables.htm",
-                                        "desc": ""
-                                    }, {
-                                        "name": "State and Metro Area Employment, Hours, & Earnings",
-                                        "href": "https://www.bls.gov/sae/home.htm",
-                                        "desc": ""
-                                    }]
-                                 }]
-                                }, {
-                                    "name": "Dept. of State",
-                                    "children": [{
-                                        "name": "Department of State",
-                                        "href": "http://www.state.gov/data"
-                                    }, {
-                                        "name": "Passports, Visas, Abductions",
-                                        "href": "https://travel.state.gov/content/travel/en/statistics.html"
-                                    }]
-                                }, {
-                                    "name": "Dept. of Transportation",
-                                    "children": [{
-                                        "name": "Department of Transportation",
-                                        "href": "http://www.dot.gov/data"
-                                    }, {
-                                        "name": "Explore Topics and Geography",
-                                        "href": "https://www.bts.dot.gov/explore-topics-and-geography",
-                                        "desc": "Select a topic, geographic region, or mode of transportation to explore information about the transportation system."
-                                    }, {
-                                        "name": "Federal Railroad Administration - Office of Safety Analysis",
-                                        "href": "http://safetydata.fra.dot.gov/"
-                                    }, {
-                                        "name": "Freight Analysis Framework",
-                                        "href": "http://www.ops.fhwa.dot.gov/freight/freight_analysis/faf/",
-                                        "desc": "The Freight Analysis Framework (FAF), produced through a partnership between Bureau of Transportation Statistics (BTS) and Federal Highway Administration (FHWA), integrates data from a variety of sources to create a comprehensive picture of freight movement among states and major metropolitan areas by all modes of transportation."
-                                    }, {
-                                        "name": "National Transportation Atlas",
-                                        "href": "http://www.rita.dot.gov/bts/sites/rita.dot.gov.bts/files/publications/national_transportation_atlas_database/2015/index.html",
-                                        "desc": "Download gis data, shapefiles, points and/or polygons for use with BTS datasets"
-                                    }, {
-                                        "name": "Transportation.gov (geospatial)",
-                                        "href": "https://maps.bts.dot.gov/",
-                                        "desc": "Data and Maps pertaining to aviation, rail, highways, vehicles, bicycles, passengers, freight, border crossings, deficient bridges, etc."
-                                    }]
-                                }, {
-                                    "name": "Dept. of the Treasury",
-                                    "children": [{
-                                        "name": "Department of the Treasury",
-                                        "href": "http://www.treasury.gov/data"
-                                    }, {
-                                        "name": "Financial Crimes Enforcement Network",
-                                        "href": "https://www.fincen.gov/reports/sar-stats"
-                                    }]
-                                }, {
-                                    "name": "Dept. of Veteran's Affairs",
-                                    "children": [{
-                                        "name": "Department of Veterans Affairs",
-                                        "href": "http://www.va.gov/data/"
-                                    }, {
-                                        "name": "National Center for Veterans Analysis and Statistics",
-                                        "href": "http://www.va.gov/vetdata/",
-                                        "desc": "We develop statistical analyses and reports on a broad range of topics, operate VA’s data and statistics Web portal to disseminate Veteran data and statistics, and develop estimates and projections on Veteran populations."
-                                    }]
-                                }]
-                            }, {
-                                "name": "Legislative",
-                                "children": [{
-                                    "name": "House of Representatives",
-                                    "children": []
-                                }, {
-                                    "name": "Senate",
-                                    "children": [{
-                                        "name": "United States Senate",
-                                        "href": "https://www.senate.gov/legislative/votes.htm",
-                                        "desc": ""
-                                    }]
-                                }, {
-                                    "name": "Congressional Budget Office",
-                                    "children": [{
-                                        "name": "Budget and Economic Data",
-                                        "href": "https://www.cbo.gov/about/products/budget-economic-data"
-                                    }]
-                                }, {
-                                    "name": "Library of Congress",
-                                    "children": []
-                                }]
-                            },
-
-
-                            {
-                                "name": "Judicial",
-                                "children": [{
-                                    "name": "Supreme Court",
-                                    "children": [{
-                                        "name": "Supreme Court Opinions",
-                                        "href": "https://www.supremecourt.gov/opinions/opinions.aspx"
-                                    }, {
-                                        "name": "US Courts Caseload Statistics",
-                                        "href": "http://www.uscourts.gov/statistics-reports/caseload-statistics-data-tables",
-                                        "desc": "This section of uscourts.gov provides statistical data on the business of the federal Judiciary. Specific publications address the work of the appellate, district, and bankruptcy courts; the probation and pretrial services systems; and other components of the U.S. courts."
-                                    }]
-                                }]
-                            }
-                        ]
-                    },
-
-                    {
-                        "name": "State",
-                        "children": [{
-                            "name": "Alabama",
-                            "href": "http://cber.cba.ua.edu/",
-                            "desc": ""
+                            "name": "Coral Health and Monitoring Program",
+                            "href": "http://www.coral.noaa.gov/champportal/",
+                            "desc": "to provide services and information sources for researchers and the public in order to help improve and sustain coral reef health throughout the world."
                         }, {
-                            "name": "Alaska",
-                            "href": "http://live.laborstats.alaska.gov/cen/",
-                            "desc": ""
+                            "name": "Integrated Ocean Observing System - NOAA",
+                            "href": "http://www.ioos.noaa.gov/data/"
                         }, {
-                            "name": "Arizona",
-                            "href": "https://ebr.eller.arizona.edu/",
-                            "desc": ""
+                            "name": "NOAA Climate datasets",
+                            "href": "http://www.ncdc.noaa.gov/data-access/quick-links",
+                            "desc": "datasets and other resources related to climate."
                         }, {
-                            "name": "Arkansas",
-                            "href": "http://www.aiea.ualr.edu/resourceslinks-101/data.html",
-                            "desc": ""
-                        }, {
-                            "name": "California",
-                            "href": "http://www.dof.ca.gov/index.php",
-                            "desc": ""
-                        }, {
-                            "name": "Colorado",
-                            "href": "http://www.cde.state.co.us/stateinfo/qggovtstatistics",
-                            "desc": ""
-                        }, {
-                            "name": "Connecticut",
-                            "href": "http://www.ct.gov/ecd/site/default.asp",
-                            "desc": ""
-                        }, {
-                            "name": "Delaware",
-                            "href": "http://dedo.delaware.gov",
-                            "desc": ""
-                        }, {
-                            "name": "Florida",
-                            "href": "http://www.bebr.ufl.edu/",
-                            "desc": ""
-                        }, {
-                            "name": "Georgia",
-                            "href": "https://georgiadata.org/",
-                            "desc": ""
-                        }, {
-                            "name": "Hawaii",
-                            "href": "http://dbedt.hawaii.gov/economic/databook/",
-                            "desc": ""
-                        }, {
-                            "name": "Idaho",
-                            "href": "http://commerce.idaho.gov/",
-                            "desc": ""
-                        }, {
-                            "name": "Illinois",
-                            "href": "http://www.igpa.uiuc.edu/",
-                            "desc": ""
-                        }, {
-                            "name": "Indiana",
-                            "href": "http://www.stats.indiana.edu/",
-                            "desc": ""
-                        }, {
-                            "name": "Iowa",
-                            "href": "http://www.iowadatacenter.org",
-                            "desc": ""
-                        }, {
-                            "name": "Kansas",
-                            "href": "http://ipsr.ku.edu/ksdata/",
-                            "desc": ""
-                        }, {
-                            "name": "Kentucky",
-                            "href": "http://www.ksdc.louisville.edu/",
-                            "desc": ""
-                        }, {
-                            "name": "Louisianna",
-                            "href": "http://www.louisiana.gov/Explore/Demographics_and_Geography/",
-                            "desc": ""
-                        }, {
-                            "name": "Maine",
-                            "href": "https://data.maine.gov/",
-                            "desc": ""
-                        }, {
-                            "name": "Massachusetts",
-                            "href": "http://massbigdata.org/data",
-                            "desc": ""
-                        }, {
-                            "name": "Michigan",
-                            "href": "https://data.michigan.gov/",
-                            "desc": ""
-                        }, {
-                            "name": "Mississippi",
-                            "href": "http://mississippisiteselection.com/gis-data-download.aspx#",
-                            "desc": ""
-                        }, {
-                            "name": "Montana",
-                            "href": "https://data.mt.gov/",
-                            "desc": ""
-                        }, {
-                            "name": "Nevada",
-                            "href": "http://nsla.nv.gov/Library/StateDataCenter/Nevada_State_Data_Center/",
-                            "desc": ""
-                        }, {
-                            "name": "New Mexico",
-                            "href": "http://bber.unm.edu/",
-                            "desc": ""
-                        }, {
-                            "name": "New York",
-                            "href": "http://www.rockinst.org/nys_statistics/",
-                            "desc": ""
-                        }, {
-                            "name": "North Carolina",
-                            "href": "http://www.osbm.state.nc.us/",
-                            "desc": ""
-                        }, {
-                            "name": "North Dakota",
-                            "href": "http://business.und.edu/bber/",
-                            "desc": ""
-                        }, {
-                            "name": "Ohio",
-                            "href": "http://www.odod.state.oh.us/research",
-                            "desc": ""
-                        }, {
-                            "name": "Oklahoma",
-                            "href": "https://data.ok.gov/",
-                            "desc": ""
-                        }, {
-                            "name": "Oregon",
-                            "href": "http://www.sos.state.or.us/bbook",
-                            "desc": ""
-                        }, {
-                            "name": "Pennsylvania",
-                            "href": "http://pasdc.hbg.psu.edu",
-                            "desc": ""
-                        }, {
-                            "name": "Rhode Island",
-                            "href": "http://ridatahub.org/",
-                            "desc": ""
-                        }, {
-                            "name": "South Carolina",
-                            "href": "http://www.ors2.state.sc.us/abstract/",
-                            "desc": ""
-                        }, {
-                            "name": "South Dakota",
-                            "href": "http://www.usd.edu/",
-                            "desc": ""
-                        }, {
-                            "name": "Tennessee",
-                            "href": "http://tndata.utk.edu/",
-                            "desc": ""
-                        }, {
-                            "name": "Texas",
-                            "href": "http://txsdc.utsa.edu/",
-                            "desc": ""
-                        }, {
-                            "name": "Utah",
-                            "href": "http://www.governor.utah.gov/dea/",
-                            "desc": ""
-                        }, {
-                            "name": "Vermont",
-                            "href": "http://www.vtlmi.info/",
-                            "desc": ""
-                        }, {
-                            "name": "Virginia",
-                            "href": "https://data.virginia.gov/",
-                            "desc": ""
-                        }, {
-                            "name": "Washington DC",
-                            "href": "http://dc.gov/page/data-demographics-and-maps",
-                            "desc": ""
-                        }, {
-                            "name": "Washington",
-                            "href": "http://www.ofm.wa.gov/",
-                            "desc": ""
-                        }, {
-                            "name": "West Virginia",
-                            "href": "http://www.be.wvu.edu/bber/index.htm",
-                            "desc": ""
-                        }, {
-                            "name": "Wisconsin",
-                            "href": "http://www.legis.state.wi.us/lrb/pubs/bluebook.htm/",
-                            "desc": ""
-                        }, {
-                            "name": "Wyoming",
-                            "href": "http://eadiv.state.wy.us/",
-                            "desc": ""
+                            "office": "doc",
+                            "name": "Storm Events Data",
+                            "href": "https://gis.ncdc.noaa.gov/all-records/catalog/search/resource/details.page?id=gov.noaa.ncdc:C00510",
+                            "desc": " NCDC Storm Event database contains a chronological listing, by state, of hurricanes, tornadoes, thunderstorms, hail, floods, drought conditions, lightning, high winds, snow, temperature extremes and other weather phenomena, from 1950 to the present."
                         }]
                     }, {
-                        "name": "Local",
+                        "name": "Bureau of the Census",
                         "children": [{
-                            "name": "American Community Survey",
-                            "href": "https://www.census.gov/acs/www/data/data-tables-and-tools/data-profiles/2015/",
-                            "desc": "Select State and Municipality"
+                            "name": "Annual Survey of Entrepreneurs",
+                            "href": "http://www.census.gov/programs-surveys/ase.html",
+                            "desc": "The ASE provides annual data on select economic and demographic characteristics of employer businesses and their owners by gender, ethnicity, race, and veteran status."
                         }, {
-                            "name": "Open Data for US cities",
-                            "href": "https://catalog.data.gov/dataset?organization_type=City+Government#topic=cities_navigation",
-                            "desc": "By collecting and analyzing data from a variety of government and private sources, we're able to create detailed, informative profiles for every city in the United States."
+                            "name": "Family Planning Centers",
+                            "href": "http://thedataweb.rm.census.gov/TheDataWeb_HotReport2/econsnapshot/2012/snapshot.hrml?NAICS=621410",
+                            "desc": "An Industry Snapshot from the Census Bureau covering 2008-2013.  It includes locations, payroll, revenue, pop. served, etc."
                         }, {
-                            "name": "State of the Cities",
-                            "href": "https://www.huduser.gov/portal/datasets/socds.html",
-                            "desc": "Profile of major cities provided by HUD."
+                            "name": "Current Population Survey",
+                            "href": "https://www.census.gov/programs-surveys/cps/data-detail.html",
+                            "desc": "In addition to being the primary source of monthly labor force statistics, the CPS adds a set of supplemental questions which vary month to month and cover topics such as child support, volunteerism, health insurance coverage, and school enrollment."
                         }, {
-                            "name": "US City Open Data Census",
-                            "href": "http://us-city.census.okfn.org/",
-                            "desc": "City data presented in a visual matrix"
+                            "name": "Economic Census",
+                            "href": "http://www.census.gov/economic-indicators/",
+                            "desc": "List of indicators made available by the Census Bureau with companion tools for exploration."
                         }, {
-                            "name": "City Data",
-                            "href": "http://www.city-data.com/",
-                            "desc": "The US City Open Data Census is an ongoing, crowdsourced measure of the current state of access to a selected group of datasets in municipalities across the United States."
+                            "name": "Economic Indicators",
+                            "href": "http://www.census.gov/economic-indicators/",
+                            "desc": ""
+                        }, {
+                            "name": "Industry Statistics Portal",
+                            "href": "http://www.census.gov/econ/isp/",
+                            "desc": "Census Bureau application that searches across programs that provide economic data for a user-selected industry. To choose the industry you are interested in use the NAICS code or keyword."
+                        }, {
+                            "name": "Small Area Health Insurance Estimates",
+                            "subjects": "healthinsurance",
+                            "href": "",
+                            "desc": "The Small Area Health Insurance Estimates (SAHIE) program was created to develop model-based estimates of health insurance coverage for counties and states."
+                        }, {
+                            "name": "USA Trade Online",
+                            "href": "https://usatrade.census.gov/",
+                            "desc": "USA Trade Online is a dynamic data tool that gives users access to current and cumulative U.S. export and import data.  This tool can support economists in performing academic research, as well as helping form trade policies."
                         }]
-                    }
-                ]
-            }
+                    }]
+                }, {
+                    "name": "Dept. of Defense",
+                    "children": [{
+                        "name": "data.mil",
+                        "href": "https://www.data.mil/s/v2/data-mil/1ff45997-196e-4e9a-96e2-eed27e3e17ab/",
+                        "desc": "In providing the military forces needed to deter war and protect the security of our country, the U.S. Department of Defense generates vast troves of data. "
+                    }, {
+                        "name": "Department of Defense",
+                        "href": "http://www.defense.gov/data"
+                    }]
+                }, {
+                    "name": "Dept. of Education",
+                    "children": [{
+                        "name": "Civil Rights Data Collection",
+                        "href": "http://ocrdata.ed.gov/DataAnalysisTools",
+                        "desc": "compare data across school districts"
+                    }, {
+                        "name": "Common Core",
+                        "href": "https://nces.ed.gov/ccd/index.asp",
+                        "desc": ""
+                    }, {
+                        "name": "ED Data Inventory",
+                        "href": "http://datainventory.ed.gov/",
+                        "desc": "The goal of the ED Data Inventory is to describe all data reported to the Department of Education, with the exception of personnel and administrative data. It includes data collected as part of grant activities, along with statistical data collected to allow publication of valuable statistics about the state of education in this country. "
+                    }, {
+                        "name": "Federal Student Aid Data Center",
+                        "href": "https://studentaid.ed.gov/sa/data-center/",
+                        "desc": "The Federal Student Aid Data Center is your centralized source for information relating to the federal financial assistance programs."
+                    }, {
+                        "name": "Graduate Earnings Data for Career College Programs",
+                        "href": "http://www.ed.gov/news/press-releases/education-department-releases-new-graduate-earnings-data-career-college-programs",
+                        "desc": "US Dept. of Education data showing the typical earnings of graduates of the thousands of career training programs offered by colleges across the country. This is intended to help students make more informed decisions about college enrollment ."
+                    }, {
+                        "name": "National Center for Education Statistics",
+                        "href": "https://nces.ed.gov/datatools/",
+                        "desc": "Topics outlined include the participation of students, teachers, and faculty in U.S. educational institutions; the personnel, performance and payrolls of U.S. public schools and in comparison to students in other countries."
+                    }]
+                }, {
+                    "name": "Dept. of Energy",
+                    "children": [{
+                        "name": "Alternative Fueling Stations",
+                        "href": "http://www.afdc.energy.gov/locator/stations/",
+                        "desc": "Alternative fueling stations are located throughout the United States and their availability continues to grow. The Alternative Fuels Data Center (AFDC) maintains a website where you can find alternative fuels stations near you or on a route, obtain counts of alternative fuels stations by state, view U.S. maps, and more."
+                    }, {
+                        "name": "Atmospheric Radiation Measurement - Climate Research Facility",
+                        "href": "http://www.arm.gov/data",
+                        "desc": "ARM focuses on obtaining continuous measurements—supplemented by field campaigns—and providing data products that promote the advancement of climate models."
+                    }, {
+                        "name": "DOE Data Explorer",
+                        "href": "http://www.osti.gov/dataexplorer/",
+                        "desc": "Discover science, technology, engineering research and data collections from the US Department of Energy"
+                    }, {
+                        "name": "Lawrence Berkeley National Laboratory - Institutes Office",
+                        "href": "http://institutes.lanl.gov/data/"
+                    }, {
+                        "name": "Lawrence Berkeley National Laboratory - Standby Data",
+                        "href": "http://standby.lbl.gov/data.html"
+                    }, {
+                        "name": "National Nuclear Data Center",
+                        "href": "http://www.nndc.bnl.gov/"
+                    }, {
+                        "name": "National Renewable Energy Laboratory - The Open PV Project",
+                        "href": "https://openpv.nrel.gov/login.php?dest=data"
+                    }, {
+                        "name": "Oak Ridge National Laboratory - Computer Science and Mathematics Division",
+                        "href": "http://www.csm.ornl.gov/data/"
+                    }, {
+                        "name": "Office of Scientific and Technical Information",
+                        "href": "http://www.osti.gov/data/"
+                    }, {
+                        "name": "Pacific Northwest National Laboratory - Proteomics Research Resource for Integrative Biology",
+                        "href": "http://panomics.pnnl.gov/data/"
+                    }]
+                }, {
+                    "name": "DHHS",
+                    "desc": "Dept. of Health and Human Services",
+                    "children": [{
+                        "name": "National Cancer Insitute",
+                        "desc": "NCI Surveillance, Epidemiology, and End Results Program Turning Cancer Data Into Discovery",
+                        "href": "http://seer.cancer.gov/data/"
+                    }, {
+                        "name": "ClinicalTrials.gov",
+                        "href": "https://clinicaltrials.gov/ct2/about-site/results",
+                        "desc": "ClinicalTrials.gov is a Web-based resource that provides patients, their family members, health care professionals, researchers, and the public with easy access to information on publicly and privately supported clinical studies on a wide range of diseases and conditions. "
+                    }, {
+                        "name": "National Data Archive on Child Abuse and Neglect",
+                        "href": "http://www.ndacan.acf.hhs.gov/datasets/datasets-list.cfm",
+                        "desc": "NDACAN disseminates datasets of archived research for secondary analysis with statistical software such as SPSS or SAS. They do not maintain statistics on child abuse and neglect or provide reports of research findings."
+                    }, {
+                        "name": "Substance Abuse and Mental Health Services Administration",
+                        "href": "http://www.samhsa.gov/data",
+                        "desc": "SAMHSA is the agency within the U.S. Department of Health and Human Services that leads public health efforts to advance the behavioral health of the nation.  Datasets are related to facilities, clients and emergency room visits."
+                    }, {
+                        "name": "Drugs of Abuse",
+                        "href": "https://www.drugabuse.gov/drugs-abuse/club-drugs",
+                        "desc": "Learn the facts about the most commonly abused drugs.  Included are substances such as bath salts, fentanyl, marijuana, ketamine, alcohol, etc."
+                    }, {
+                        "name": "Office of Childcare",
+                        "href": "https://www.acf.hhs.gov/occ/resource/ccdf-statistics"
+                    }, {
+                        "name": "Centers for Disease Control",
+                        "children": [{
+                            "name": "Aging Statistics",
+                            "href": "https://www.cdc.gov/nchs/lsoa/index.htm",
+                            "desc": "This report provides the latest data on the 41 key indicators selected by the Forum to portray aspects of the lives of older Americans and their families."
+                        }, {
+                            "name": "Behavioral Risk Factors",
+                            "href": "http://www.cdc.gov/brfss/data_documentation/",
+                            "desc": "BRFSS is used to collect prevalence data among adult U.S. residents regarding their risk behaviors and preventive health practices that can affect their health status. Examples range from infant mortality and suicide rates to seat belt use, binge drinking and obesity."
+                        }, {
+                            "name": "CDC - Sexual Health",
+                            "href": "https://www.cdc.gov/sexualhealth/data.html",
+                            "desc": "an array of datasets related to sexual health, risk, behavior, etc."
+                        }, {
+                            "name": "Centers for Disease Control and Prevention",
+                            "href": "https://data.cdc.gov"
+                        }, {
+                            "name": "WISQARS",
+                            "href": "http://www.cdc.gov/injury/wisqars/index.html",
+                            "desc": "CDC’s Web-based Injury Statistics Query and Reporting System provides data related to fatal and nonfatal injury, violent death, and cost of injury data illustraing the economic burden associated with unintentional and violence-related injury in the US."
+                        }, {
+                            "name": "Longitudinal Studies of Aging",
+                            "href": "https://www.cdc.gov/nchs/lsoa/index.htm",
+                            "desc": "The Longitudinal Studies of Aging (LSOAs) is a multicohort study of persons 70 years of age and over designed primarily to measure changes in the health, functional status, living arrangements, and health services utilization of two cohorts of Americans as they move into and through the oldest ages."
+                        }, {
+                            "name": "National Vital Statistics",
+                            "href": "https://www.cdc.gov/nchs/products/vsrr.htm",
+                            "desc": "Natality, mortality, infant mortality.  Rapid Release provides more up to date data than the annual archive, including both interactive tools and downloadable public use data files."
+                        }]
+                    }, {
+                        "name": "HRSA",
+                        "desc": "Health Resources and Services Administration is the primary Federal agency for improving health care to people who are geographically isolated, economically or medically vulnerable.",
+                        "children": [{
+                            "name": "Health Resources and Services Administration",
+                            "href": "https://datawarehouse.hrsa.gov/tools/dataportal.aspx",
+                            "desc": "A variety of datasets pertaining to the availability and distribution of health care services and resources."
+                        }, {
+                            "name": "Organ Procurement and Transplantation Network",
+                            "href": "http://optn.transplant.hrsa.gov/data/"
+                        }]
+                    }, {
+                        "name": "AHRQ",
+                        "children": [{
+                            "name": "H*CUPnet",
+                            "href": "http://hcupnet.ahrq.gov/",
+                            "desc": "The Agency for Healthcare Research and Quality provides statistics for hospital inpatient, emergency department, and ambulatory settings, as well as population-based health care data on counties.  The focus is on the patient, hospital stays, emergency room visits, etc."
+                        }, {
+                            "name": "Medical Expenditure Panel Survey",
+                            "href": "https://meps.ahrq.gov/mepsweb/",
+                            "desc": "The Medical Expenditure Panel Survey (MEPS) is a set of large-scale surveys of families and individuals, their medical providers, and employers across the United States. MEPS is the most complete source of data on the cost and use of health care and health insurance coverage."
+                        }]
+                    }, {
+                        "name": "Center for Medicare/Medicaid",
+                        "children": [{
+                            "name": "Centers for Medicare and Medicaid Services",
+                            "href": "http://data.cms.gov"
+                        }, {
+                            "name": "CMS Data Navigator",
+                            "href": "https://www.cms.gov/research-statistics-data-and-systems/research-statistics-data-and-systems.html",
+                            "desc": "Very rich source of health care data including points of service, patients providers, services, trends, and a fraud database."
+                        }, {
+                            "name": "Hospital Compare",
+                            "href": "https://data.medicare.gov/data/hospital-compare",
+                            "desc": "These are the official datasets used on the Medicare.gov Hospital Compare Website provided by the Centers for Medicare & Medicaid Services. These data allow you to compare the quality of care at over 4,000 Medicare-certified hospitals across the country"
+                        }, {
+                            "name": "Open Payments",
+                            "href": "https://www.cms.gov/OpenPayments/",
+                            "desc": "Open Payments is a federal program, required by the Affordable Care Act, that collects information about the payments drug and device companies make to physicians and teaching hospitals for things like travel, research, gifts, speaking fees, and meals."
+                        }]
+                    }]
+                }, {
+                    "name": "Homeland Security",
+                    "children": [{
+                        "name": "Immigration Data & Statistics",
+                        "href": "https://www.dhs.gov/Immigration-statistics",
+                        "desc": "The Office of Immigration Statistics is charged to collect and disseminate data useful in evaluating the impact of immigration laws."
+                    }]
+                }, {
+                    "name": "Dept. of The Interior",
+                    "children": [{
+                        "name": "Department of the Interior",
+                        "href": "http://www.doi.gov/data"
+                    }, {
+                        "name": "US Geological Survey",
+                        "children": [{
+                            "name": "Biodiversity and species data",
+                            "href": "https://bison.usgs.gov/#home",
+                            "desc": "Biodiversity Information Serving Our Nation (BISON) -  Explore & download U.S. species occurrence data & maps"
+                        }, {
+                            "name": "Earthquakes (USGS)",
+                            "href": "http://earthquake.usgs.gov/earthquakes/search/",
+                            "desc": "This web site is sponsored by the USGS Earthquake Hazards Program, as part of our effort to provide and apply relevant earthquake science information and knowledge to reduce deaths, injuries, and property damage from earthquakes. "
+                        }, {
+                            "name": "National Geomagnetism Program",
+                            "href": "http://geomag.usgs.gov/data/",
+                            "desc": ""
+                        }, {
+                            "name": "The National Map",
+                            "href": "https://nationalmap.gov/",
+                            "desc": ""
+                        }, {
+                            "name": "US Geological Survey",
+                            "href": "http://data.usgs.gov/",
+                            "desc": ""
+                        }, {
+                            "name": "USGS Gap Analysis Program",
+                            "href": "http://gapanalysis.usgs.gov/data/",
+                            "desc": ""
+                        }, {
+                            "name": "USGS National Hydrography Dataset",
+                            "href": "http://nhd.usgs.gov/data.html",
+                            "desc": ""
+                        }, {
+                            "name": "USGS National Water Information System",
+                            "href": "http://water.usgs.gov/data/",
+                            "desc": ""
+                        }]
+                    }]
+                }, {
+                    "name": "Dept. of Justice",
+                    "children": [{
+                        "name": "Department of Justice",
+                        "href": "http://www.justice.gov/data"
+                    }, {
+                        "name": "OJP Diagnostic Center",
+                        "subjects": "crime|justice",
+                        "href": "https://www.ojpdiagnosticcenter.org/",
+                        "desc": "The Office of Justice Programs (OJP) Diagnostic Center is a technical assistance resource designed to provide local leaders with customized training and technical assistance (TTA) in addressing persistent and emerging public safety problems using evidence-based strategies"
+                    }, {
+                        "name": "Uniform Crime Reporting - FBI",
+                        "href": "http://www.ucrdatatool.gov/"
+                    }, {
+                        "name": "United States Sentencing Commission",
+                        "subjects": "prison|justice|crime",
+                        "href": "http://isb.ussc.gov/",
+                        "desc": "The Sentencing Commission is an independent agency in the judicial branch whose mission includes collecting, analyzing and distributing a broad array of information on federal crime and sentencing issues."
+                    }, {
+                        "name": "Bureau of Justice Statistics",
+                        "children": [{
+                            "name": "Bureau of Justice Statistics",
+                            "href": "https://www.bjs.gov/",
+                            "desc": "To collect, analyze, publish, and disseminate information on crime, criminal offenders, victims of crime, and the operation of justice systems at all levels of government. These data are critical to federal, state, and local policymakers in combating crime and ensuring that justice is both efficient and evenhanded."
+                        }, {
+                            "name": "Bureau of Prisons",
+                            "subjects": "prison|crime|justice",
+                            "href": "https://www.bop.gov/about/statistics/",
+                            "desc": ""
+                        }]
+                    }]
+                }, {
+                    "name": "Dept. of Labor",
+                    "children": [{
+                        "name": "Department of Labor",
+                        "href": "http://www.dol.gov/data"
+                    }, {
+                        "name": "Unemployment Insurance Data",
+                        "href": "https://oui.doleta.gov/unemploy/DataDashboard.asp",
+                        "desc": ""
+                    }, {
+                        "name": "Occupational Safety and Health",
+                        "href": "https://www.osha.gov/oshstats/index.html",
+                        "desc": "Appears to provide data on complaints of civil rights violations."
+                    }, {
+                        "name": "Bureau of Labor Statistics",
+                        "children": [{
+                            "name": "Data Finder",
+                            "href": "http://www.bls.gov/data/",
+                            "desc": "Data Finder is a new search and navigation tool for BLS time series data available on the BLS website. Rather than searching individual data sets, Data Finder allows users to conveniently search multiple data sets all at once."
+                        }, {
+                            "name": "Consumer Expenditure Survey",
+                            "href": "https://www.bls.gov/cex/home.htm#data",
+                            "desc": ""
+                        }, {
+                            "name": "Industries at a Glance",
+                            "href": "https://www.bls.gov/iag/tgs/iag_index_alpha.htm",
+                            "desc": ""
+                        }, {
+                            "name": "Occupational Employment Statistics",
+                            "href": "https://www.bls.gov/oes/tables.htm",
+                            "desc": ""
+                        }, {
+                            "name": "State and Metro Area Employment, Hours, & Earnings",
+                            "href": "https://www.bls.gov/sae/home.htm",
+                            "desc": ""
+                        }]
+                    }]
+                }, {
+                    "name": "Dept. of State",
+                    "children": [{
+                        "name": "Department of State",
+                        "href": "http://www.state.gov/data"
+                    }, {
+                        "name": "Passports, Visas, Abductions",
+                        "href": "https://travel.state.gov/content/travel/en/statistics.html"
+                    }]
+                }, {
+                    "name": "Dept. of Transportation",
+                    "children": [{
+                        "name": "Department of Transportation",
+                        "href": "http://www.dot.gov/data"
+                    }, {
+                        "name": "Federal Railroad Administration - Office of Safety Analysis",
+                        "href": "http://safetydata.fra.dot.gov/"
+                    }, {
+                        "name": "Freight Analysis Framework",
+                        "href": "http://www.ops.fhwa.dot.gov/freight/freight_analysis/faf/",
+                        "desc": "The Freight Analysis Framework (FAF), produced through a partnership between Bureau of Transportation Statistics (BTS) and Federal Highway Administration (FHWA), integrates data from a variety of sources to create a comprehensive picture of freight movement among states and major metropolitan areas by all modes of transportation."
+                    }, {
+                        "name": "Bureau of Transportation Statistics",
+                        "href": "http://www.transtats.bts.gov/",
+                        "desc": ""
+                    }, {
+                        "name": "Border Crossing Data",
+                        "href": "https://transborder.bts.gov/programs/international/transborder/TBDR_BC/TBDR_BC_Index.html",
+                        "desc": "The Bureau of Transportation Statistics (BTS) Border Crossing/Entry Data provides summary statistics for trucks, trains, containers, buses, personal vehicles, passengers, and pedestrians."
+                    }, {
+                        "name": "Explore Topics and Geography",
+                        "href": "https://www.bts.dot.gov/explore-topics-and-geography",
+                        "desc": "Select a topic, geographic region, or mode of transportation to explore information about the transportation system."
+                    }, {
+                        "name": "National Transportation Atlas",
+                        "href": "http://www.rita.dot.gov/bts/sites/rita.dot.gov.bts/files/publications/national_transportation_atlas_database/2015/index.html",
+                        "desc": "Download gis data, shapefiles, points and/or polygons for use with BTS datasets"
+                    }, {
+                        "name": "Transportation.gov (geospatial)",
+                        "href": "https://maps.bts.dot.gov/",
+                        "desc": "Data and Maps pertaining to aviation, rail, highways, vehicles, bicycles, passengers, freight, border crossings, deficient bridges, etc."
+                    }]
+                }, {
+                    "name": "Dept. of the Treasury",
+                    "children": [{
+                        "name": "Department of the Treasury",
+                        "href": "http://www.treasury.gov/data"
+                    }, {
+                        "name": "Financial Crimes Enforcement Network",
+                        "href": "https://www.fincen.gov/reports/sar-stats"
+                    }]
+                }, {
+                    "name": "Dept. of Veteran's Affairs",
+                    "children": [{
+                        "name": "Department of Veterans Affairs",
+                        "href": "http://www.va.gov/data/"
+                    }, {
+                        "name": "National Center for Veterans Analysis and Statistics",
+                        "href": "http://www.va.gov/vetdata/",
+                        "desc": "We develop statistical analyses and reports on a broad range of topics, operate VA’s data and statistics Web portal to disseminate Veteran data and statistics, and develop estimates and projections on Veteran populations."
+                    }]
+                }]
+            }, { "name": "Corporations", "children": [] }
+         ]
+        }, {
+            "name": "Legislative",
+            "children": [{
+                "name": "House of Representatives",
+                "children": []
+            }, {
+                "name": "Senate",
+                "children": [{
+                    "name": "United States Senate",
+                    "href": "https://www.senate.gov/legislative/votes.htm",
+                    "desc": ""
+                }]
+            }, {
+                "name": "Congressional Budget Office",
+                "children": [{
+                    "name": "Budget and Economic Data",
+                    "href": "https://www.cbo.gov/about/products/budget-economic-data"
+                }]
+            }, {
+                "name": "Library of Congress",
+                "children": []
+            }]
+        }, {
+            "name": "Judicial",
+            "children": [{
+                "name": "Supreme Court",
+                "children": [{
+                    "name": "Supreme Court Opinions",
+                    "href": "https://www.supremecourt.gov/opinions/opinions.aspx"
+                }, {
+                    "name": "US Courts Caseload Statistics",
+                    "href": "http://www.uscourts.gov/statistics-reports/caseload-statistics-data-tables",
+                    "desc": "This section of uscourts.gov provides statistical data on the business of the federal Judiciary. Specific publications address the work of the appellate, district, and bankruptcy courts; the probation and pretrial services systems; and other components of the U.S. courts."
+                }]
+            }]
+        }]
+    }, {
+        "name": "State",
+        "children": [{
+            "name": "Alabama",
+            "href": "http://cber.cba.ua.edu/",
+            "desc": ""
+        }, {
+            "name": "Alaska",
+            "href": "http://live.laborstats.alaska.gov/cen/",
+            "desc": ""
+        }, {
+            "name": "Arizona",
+            "href": "https://ebr.eller.arizona.edu/",
+            "desc": ""
+        }, {
+            "name": "Arkansas",
+            "href": "http://www.aiea.ualr.edu/resourceslinks-101/data.html",
+            "desc": ""
+        }, {
+            "name": "California",
+            "href": "http://www.dof.ca.gov/index.php",
+            "desc": ""
+        }, {
+            "name": "Colorado",
+            "href": "http://www.cde.state.co.us/stateinfo/qggovtstatistics",
+            "desc": ""
+        }, {
+            "name": "Connecticut",
+            "href": "http://www.ct.gov/ecd/site/default.asp",
+            "desc": ""
+        }, {
+            "name": "Delaware",
+            "href": "http://dedo.delaware.gov",
+            "desc": ""
+        }, {
+            "name": "Florida",
+            "href": "http://www.bebr.ufl.edu/",
+            "desc": ""
+        }, {
+            "name": "Georgia",
+            "href": "https://georgiadata.org/",
+            "desc": ""
+        }, {
+            "name": "Hawaii",
+            "href": "http://dbedt.hawaii.gov/economic/databook/",
+            "desc": ""
+        }, {
+            "name": "Idaho",
+            "href": "http://commerce.idaho.gov/",
+            "desc": ""
+        }, {
+            "name": "Illinois",
+            "href": "http://www.igpa.uiuc.edu/",
+            "desc": ""
+        }, {
+            "name": "Indiana",
+            "href": "http://www.stats.indiana.edu/",
+            "desc": ""
+        }, {
+            "name": "Iowa",
+            "href": "http://www.iowadatacenter.org",
+            "desc": ""
+        }, {
+            "name": "Kansas",
+            "href": "http://ipsr.ku.edu/ksdata/",
+            "desc": ""
+        }, {
+            "name": "Kentucky",
+            "href": "http://www.ksdc.louisville.edu/",
+            "desc": ""
+        }, {
+            "name": "Louisianna",
+            "href": "http://www.louisiana.gov/Explore/Demographics_and_Geography/",
+            "desc": ""
+        }, {
+            "name": "Maine",
+            "href": "https://data.maine.gov/",
+            "desc": ""
+        }, {
+            "name": "Massachusetts",
+            "href": "http://massbigdata.org/data",
+            "desc": ""
+        }, {
+            "name": "Michigan",
+            "href": "https://data.michigan.gov/",
+            "desc": ""
+        }, {
+            "name": "Mississippi",
+            "href": "http://mississippisiteselection.com/gis-data-download.aspx#",
+            "desc": ""
+        }, {
+            "name": "Montana",
+            "href": "https://data.mt.gov/",
+            "desc": ""
+        }, {
+            "name": "Nevada",
+            "href": "http://nsla.nv.gov/Library/StateDataCenter/Nevada_State_Data_Center/",
+            "desc": ""
+        }, {
+            "name": "New Mexico",
+            "href": "http://bber.unm.edu/",
+            "desc": ""
+        }, {
+            "name": "New York",
+            "href": "http://www.rockinst.org/nys_statistics/",
+            "desc": ""
+        }, {
+            "name": "North Carolina",
+            "href": "http://www.osbm.state.nc.us/",
+            "desc": ""
+        }, {
+            "name": "North Dakota",
+            "href": "http://business.und.edu/bber/",
+            "desc": ""
+        }, {
+            "name": "Ohio",
+            "href": "http://www.odod.state.oh.us/research",
+            "desc": ""
+        }, {
+            "name": "Oklahoma",
+            "href": "https://data.ok.gov/",
+            "desc": ""
+        }, {
+            "name": "Oregon",
+            "href": "http://www.sos.state.or.us/bbook",
+            "desc": ""
+        }, {
+            "name": "Pennsylvania",
+            "href": "http://pasdc.hbg.psu.edu",
+            "desc": ""
+        }, {
+            "name": "Rhode Island",
+            "href": "http://ridatahub.org/",
+            "desc": ""
+        }, {
+            "name": "South Carolina",
+            "href": "http://www.ors2.state.sc.us/abstract/",
+            "desc": ""
+        }, {
+            "name": "South Dakota",
+            "href": "http://www.usd.edu/",
+            "desc": ""
+        }, {
+            "name": "Tennessee",
+            "href": "http://tndata.utk.edu/",
+            "desc": ""
+        }, {
+            "name": "Texas",
+            "href": "http://txsdc.utsa.edu/",
+            "desc": ""
+        }, {
+            "name": "Utah",
+            "href": "http://www.governor.utah.gov/dea/",
+            "desc": ""
+        }, {
+            "name": "Vermont",
+            "href": "http://www.vtlmi.info/",
+            "desc": ""
+        }, {
+            "name": "Virginia",
+            "href": "https://data.virginia.gov/",
+            "desc": ""
+        }, {
+            "name": "Washington DC",
+            "href": "http://dc.gov/page/data-demographics-and-maps",
+            "desc": ""
+        }, {
+            "name": "Washington",
+            "href": "http://www.ofm.wa.gov/",
+            "desc": ""
+        }, {
+            "name": "West Virginia",
+            "href": "http://www.be.wvu.edu/bber/index.htm",
+            "desc": ""
+        }, {
+            "name": "Wisconsin",
+            "href": "http://www.legis.state.wi.us/lrb/pubs/bluebook.htm/",
+            "desc": ""
+        }, {
+            "name": "Wyoming",
+            "href": "http://eadiv.state.wy.us/",
+            "desc": ""
+        }]
+    }, {
+        "name": "Local",
+        "children": [{
+            "name": "American Community Survey",
+            "href": "https://www.census.gov/acs/www/data/data-tables-and-tools/data-profiles/2015/",
+            "desc": "Select State and Municipality"
+        }, {
+            "name": "Open Data for US cities",
+            "href": "https://catalog.data.gov/dataset?organization_type=City+Government#topic=cities_navigation",
+            "desc": "By collecting and analyzing data from a variety of government and private sources, we're able to create detailed, informative profiles for every city in the United States."
+        }, {
+            "name": "State of the Cities",
+            "href": "https://www.huduser.gov/portal/datasets/socds.html",
+            "desc": "Profile of major cities provided by HUD."
+        }, {
+            "name": "US City Open Data Census",
+            "href": "http://us-city.census.okfn.org/",
+            "desc": "City data presented in a visual matrix"
+        }, {
+            "name": "City Data",
+            "href": "http://www.city-data.com/",
+            "desc": "The US City Open Data Census is an ongoing, crowdsourced measure of the current state of access to a selected group of datasets in municipalities across the United States."
+        }]
+    }]
+}
