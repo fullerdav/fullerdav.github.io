@@ -54,7 +54,102 @@
                         "href": "https://www.nass.usda.gov/Data_Visualization/index.php",
                         "desc": "The National Agricultural Statistics Service provides timely, accurate, and useful statistics in service to U.S. agriculture."
                     }]
-                },  {
+                }, {
+                    "name": "Dept. of Commerce",
+                    "children": [{
+                        "name": "Advanced Manufacturing Portal",
+                        "href": "http://www.manufacturing.gov/data.html",
+                        "desc": "By coordinating federal resources and programs, the Advanced Manufacturing National Program Office enhances technology transfer in U.S. manufacturing industries and helps companies overcome technical obstacles to scale up of new technologies and products."
+                    }, {
+                        "name": "Data.Commerce.gov",
+                        "href": "https://data.commerce.gov/"
+                    }, {
+                        "name": "Economic Indicators",
+                        "href": "http://www.commerce.gov/economicindicators"
+                    }, {
+                        "name": "Income Distribution Across America",
+                        "href": "https://midaas.commerce.gov/",
+                        "desc": "Currently in alpha the MIDAAS system allows the exploration of Income distribution in the United States. This site democratizes insights from open government data."
+                    }, {
+                        "name": "International Trade Administration",
+                        "href": "http://trade.gov/data.asp"
+                    }, {
+                        "name": "Marine Cadastre - NOAA",
+                        "href": "http://marinecadastre.gov/DATA"
+                    }, {
+                        "name": "Open.Commerce.gov",
+                        "href": "http://open.commerce.gov/data-sets"
+                    }, {
+                        "name": "Visitors Arrival Program",
+                        "href": "http://travel.trade.gov/research/programs/i94/index.html",
+                        "desc": "The International Visitor Arrivals Program provides the U.S. government and the public with the official monthly and annual overseas visitor arrivals to the United States. The National Travel and Tourism Office (NTTO) manages the program in cooperation with the Department of Homeland Security, Customs and Border Protection (CBP)."
+                    }, {
+                        "name": "NIST",
+                        "children": [{
+                            "name": "Computer Forensic Reference Data Sets",
+                            "href": "http://www.cfreds.nist.gov/",
+                            "desc": "NIST is developing Computer Forensic Reference Data Sets (CFReDS) for digital evidence. These reference data sets (CFReDS) provide to an investigator documented sets of simulated digital evidence for examination."
+                        }, {
+                            "name": "National Institute of Standards and Technology",
+                            "href": "http://nist.gov/data/"
+                        }]
+                    }, {
+                        "name": "NOAA",
+                        "children": [{
+                            "name": "Coral Health and Monitoring Program",
+                            "href": "http://www.coral.noaa.gov/champportal/",
+                            "desc": "to provide services and information sources for researchers and the public in order to help improve and sustain coral reef health throughout the world."
+                        }, {
+                            "name": "Integrated Ocean Observing System - NOAA",
+                            "href": "http://www.ioos.noaa.gov/data/"
+                        }, {
+                            "name": "NOAA Climate datasets",
+                            "href": "http://www.ncdc.noaa.gov/data-access/quick-links",
+                            "desc": "datasets and other resources related to climate."
+                        }, {
+                            "office": "doc",
+                            "name": "Storm Events Data",
+                            "href": "https://gis.ncdc.noaa.gov/all-records/catalog/search/resource/details.page?id=gov.noaa.ncdc:C00510",
+                            "desc": " NCDC Storm Event database contains a chronological listing, by state, of hurricanes, tornadoes, thunderstorms, hail, floods, drought conditions, lightning, high winds, snow, temperature extremes and other weather phenomena, from 1950 to the present."
+                        }]
+                    }, {
+                        "name": "Bureau of the Census",
+                        "children": [{
+                            "name": "Annual Survey of Entrepreneurs",
+                            "href": "http://www.census.gov/programs-surveys/ase.html",
+                            "desc": "The ASE provides annual data on select economic and demographic characteristics of employer businesses and their owners by gender, ethnicity, race, and veteran status."
+                        }, {
+                            "name": "Family Planning Centers",
+                            "href": "http://thedataweb.rm.census.gov/TheDataWeb_HotReport2/econsnapshot/2012/snapshot.hrml?NAICS=621410",
+                            "desc": "An Industry Snapshot from the Census Bureau covering 2008-2013.  It includes locations, payroll, revenue, pop. served, etc."
+                        }, {
+                            "name": "Current Population Survey",
+                            "href": "https://www.census.gov/programs-surveys/cps/data-detail.html",
+                            "desc": "In addition to being the primary source of monthly labor force statistics, the CPS adds a set of supplemental questions which vary month to month and cover topics such as child support, volunteerism, health insurance coverage, and school enrollment."
+                        }, {
+                            "name": "Economic Census",
+                            "href": "http://www.census.gov/economic-indicators/",
+                            "desc": "List of indicators made available by the Census Bureau with companion tools for exploration."
+                        }, {
+                            "name": "Economic Indicators",
+                            "href": "http://www.census.gov/economic-indicators/",
+                            "desc": ""
+                        }, {
+                            "name": "Industry Statistics Portal",
+                            "href": "http://www.census.gov/econ/isp/",
+                            "desc": "Census Bureau application that searches across programs that provide economic data for a user-selected industry. To choose the industry you are interested in use the NAICS code or keyword."
+                        }, {
+                            "name": "Small Area Health Insurance Estimates",
+                            "subjects": "healthinsurance",
+                            "href": "",
+                            "desc": "The Small Area Health Insurance Estimates (SAHIE) program was created to develop model-based estimates of health insurance coverage for counties and states."
+                        }, {
+                            "name": "USA Trade Online",
+                            "href": "https://usatrade.census.gov/",
+                            "desc": "USA Trade Online is a dynamic data tool that gives users access to current and cumulative U.S. export and import data.  This tool can support economists in performing academic research, as well as helping form trade policies."
+                        }]
+                    }]
+                }, {
                     "name": "Dept. of Defense",
                     "children": [{
                         "name": "data.mil",
@@ -126,6 +221,103 @@
                     }, {
                         "name": "Pacific Northwest National Laboratory - Proteomics Research Resource for Integrative Biology",
                         "href": "http://panomics.pnnl.gov/data/"
+                    }]
+                }, {
+                    "name": "DHHS",
+                    "desc": "Dept. of Health and Human Services",
+                    "children": [{
+                        "name": "National Cancer Insitute",
+                        "desc": "NCI Surveillance, Epidemiology, and End Results Program Turning Cancer Data Into Discovery",
+                        "href": "http://seer.cancer.gov/data/"
+                    }, {
+                        "name": "ClinicalTrials.gov",
+                        "href": "https://clinicaltrials.gov/ct2/about-site/results",
+                        "desc": "ClinicalTrials.gov is a Web-based resource that provides patients, their family members, health care professionals, researchers, and the public with easy access to information on publicly and privately supported clinical studies on a wide range of diseases and conditions. "
+                    }, {
+                        "name": "National Data Archive on Child Abuse and Neglect",
+                        "href": "http://www.ndacan.acf.hhs.gov/datasets/datasets-list.cfm",
+                        "desc": "NDACAN disseminates datasets of archived research for secondary analysis with statistical software such as SPSS or SAS. They do not maintain statistics on child abuse and neglect or provide reports of research findings."
+                    }, {
+                        "name": "Substance Abuse and Mental Health Services Administration",
+                        "href": "http://www.samhsa.gov/data",
+                        "desc": "SAMHSA is the agency within the U.S. Department of Health and Human Services that leads public health efforts to advance the behavioral health of the nation.  Datasets are related to facilities, clients and emergency room visits."
+                    }, {
+                        "name": "Drugs of Abuse",
+                        "href": "https://www.drugabuse.gov/drugs-abuse/club-drugs",
+                        "desc": "Learn the facts about the most commonly abused drugs.  Included are substances such as bath salts, fentanyl, marijuana, ketamine, alcohol, etc."
+                    }, {
+                        "name": "Office of Childcare",
+                        "href": "https://www.acf.hhs.gov/occ/resource/ccdf-statistics"
+                    }, {
+                        "name": "Centers for Disease Control",
+                        "children": [{
+                            "name": "Aging Statistics",
+                            "href": "https://www.cdc.gov/nchs/lsoa/index.htm",
+                            "desc": "This report provides the latest data on the 41 key indicators selected by the Forum to portray aspects of the lives of older Americans and their families."
+                        }, {
+                            "name": "Behavioral Risk Factors",
+                            "href": "http://www.cdc.gov/brfss/data_documentation/",
+                            "desc": "BRFSS is used to collect prevalence data among adult U.S. residents regarding their risk behaviors and preventive health practices that can affect their health status. Examples range from infant mortality and suicide rates to seat belt use, binge drinking and obesity."
+                        }, {
+                            "name": "CDC - Sexual Health",
+                            "href": "https://www.cdc.gov/sexualhealth/data.html",
+                            "desc": "an array of datasets related to sexual health, risk, behavior, etc."
+                        }, {
+                            "name": "Centers for Disease Control and Prevention",
+                            "href": "https://data.cdc.gov"
+                        }, {
+                            "name": "WISQARS",
+                            "href": "http://www.cdc.gov/injury/wisqars/index.html",
+                            "desc": "CDC’s Web-based Injury Statistics Query and Reporting System provides data related to fatal and nonfatal injury, violent death, and cost of injury data illustraing the economic burden associated with unintentional and violence-related injury in the US."
+                        }, {
+                            "name": "Longitudinal Studies of Aging",
+                            "href": "https://www.cdc.gov/nchs/lsoa/index.htm",
+                            "desc": "The Longitudinal Studies of Aging (LSOAs) is a multicohort study of persons 70 years of age and over designed primarily to measure changes in the health, functional status, living arrangements, and health services utilization of two cohorts of Americans as they move into and through the oldest ages."
+                        }, {
+                            "name": "National Vital Statistics",
+                            "href": "https://www.cdc.gov/nchs/products/vsrr.htm",
+                            "desc": "Natality, mortality, infant mortality.  Rapid Release provides more up to date data than the annual archive, including both interactive tools and downloadable public use data files."
+                        }]
+                    }, {
+                        "name": "HRSA",
+                        "desc": "Health Resources and Services Administration is the primary Federal agency for improving health care to people who are geographically isolated, economically or medically vulnerable.",
+                        "children": [{
+                            "name": "Health Resources and Services Administration",
+                            "href": "https://datawarehouse.hrsa.gov/tools/dataportal.aspx",
+                            "desc": "A variety of datasets pertaining to the availability and distribution of health care services and resources."
+                        }, {
+                            "name": "Organ Procurement and Transplantation Network",
+                            "href": "http://optn.transplant.hrsa.gov/data/"
+                        }]
+                    }, {
+                        "name": "AHRQ",
+                        "children": [{
+                            "name": "H*CUPnet",
+                            "href": "http://hcupnet.ahrq.gov/",
+                            "desc": "The Agency for Healthcare Research and Quality provides statistics for hospital inpatient, emergency department, and ambulatory settings, as well as population-based health care data on counties.  The focus is on the patient, hospital stays, emergency room visits, etc."
+                        }, {
+                            "name": "Medical Expenditure Panel Survey",
+                            "href": "https://meps.ahrq.gov/mepsweb/",
+                            "desc": "The Medical Expenditure Panel Survey (MEPS) is a set of large-scale surveys of families and individuals, their medical providers, and employers across the United States. MEPS is the most complete source of data on the cost and use of health care and health insurance coverage."
+                        }]
+                    }, {
+                        "name": "Center for Medicare/Medicaid",
+                        "children": [{
+                            "name": "Centers for Medicare and Medicaid Services",
+                            "href": "http://data.cms.gov"
+                        }, {
+                            "name": "CMS Data Navigator",
+                            "href": "https://www.cms.gov/research-statistics-data-and-systems/research-statistics-data-and-systems.html",
+                            "desc": "Very rich source of health care data including points of service, patients providers, services, trends, and a fraud database."
+                        }, {
+                            "name": "Hospital Compare",
+                            "href": "https://data.medicare.gov/data/hospital-compare",
+                            "desc": "These are the official datasets used on the Medicare.gov Hospital Compare Website provided by the Centers for Medicare & Medicaid Services. These data allow you to compare the quality of care at over 4,000 Medicare-certified hospitals across the country"
+                        }, {
+                            "name": "Open Payments",
+                            "href": "https://www.cms.gov/OpenPayments/",
+                            "desc": "Open Payments is a federal program, required by the Affordable Care Act, that collects information about the payments drug and device companies make to physicians and teaching hospitals for things like travel, research, gifts, speaking fees, and meals."
+                        }]
                     }]
                 }, {
                     "name": "Homeland Security",
@@ -305,8 +497,7 @@
                         "desc": "We develop statistical analyses and reports on a broad range of topics, operate VA’s data and statistics Web portal to disseminate Veteran data and statistics, and develop estimates and projections on Veteran populations."
                     }]
                 }]
-            }, { "name": "Corporations", "children": [] }
-         ]
+            }, { "name": "Corporations", "children": [] }]
         }, {
             "name": "Legislative",
             "children": [{
