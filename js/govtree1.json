@@ -1,11 +1,12 @@
 {
     "name": "government",
     "children": [{
-        "name": "The White House",
-        "href": "https://open.whitehouse.gov/"
-    }, {
-        "name": "Cabinet",
+        "name": "Executive",
         "children": [{
+            "name": "The White House",
+            "href": "https://open.whitehouse.gov/",
+            "desc": "Office of the President"
+        }, {
             "name": "Dept. of Agriculture",
             "children": [{
                 "name": "USDA Economic Research Service",
@@ -321,9 +322,9 @@
                 "desc": "The Office of Immigration Statistics is charged to collect and disseminate data useful in evaluating the impact of immigration laws."
             }]
         }, {
-            "name": "Department of Housing and Urban Development",
+            "desc": "Department of Housing and Urban Development",
             "href": "http://data.hud.gov",
-            "desc": ""
+            "name": "HUD"
         }, {
             "name": "Dept. of The Interior",
             "children": [{
@@ -384,11 +385,6 @@
             }, {
                 "name": "Uniform Crime Reporting - FBI",
                 "href": "http://www.ucrdatatool.gov/"
-            }, {
-                "name": "United States Sentencing Commission",
-                "subjects": "prison|justice|crime",
-                "href": "http://isb.ussc.gov/",
-                "desc": "The Sentencing Commission is an independent agency in the judicial branch whose mission includes collecting, analyzing and distributing a broad array of information on federal crime and sentencing issues."
             }, {
                 "name": "Bureau of Justice Statistics",
                 "children": [{
@@ -791,6 +787,11 @@
                 "name": "US Courts Caseload Statistics",
                 "href": "http://www.uscourts.gov/statistics-reports/caseload-statistics-data-tables",
                 "desc": "This section of uscourts.gov provides statistical data on the business of the federal Judiciary. Specific publications address the work of the appellate, district, and bankruptcy courts; the probation and pretrial services systems; and other components of the U.S. courts."
+            }, {
+                "name": "United States Sentencing Commission",
+                "subjects": "prison|justice|crime",
+                "href": "http://isb.ussc.gov/",
+                "desc": "The Commission is charged with the ongoing responsibilities of evaluating the effects of the sentencing guidelines on the criminal justice system, recommending to Congress appropriate modifications of substantive criminal law and sentencing procedures, and establishing a research and development program on sentencing issues."
             }]
         }]
     }, {
@@ -1001,3 +1002,5 @@
         }]
     }]
 }
+// {"name":"", "children":[]}
+// {"name":"", "href":"", "desc":""}
