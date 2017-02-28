@@ -6,8 +6,10 @@
             "name": "The White House",
             "href": "https://open.whitehouse.gov/",
             "desc": "Office of the President"
-        }, {
-            "name": "Dept. of Agriculture",
+        },{
+        "name": "Departments", 
+        "children":[{
+            "name": "Agriculture",
             "children": [{
                 "name": "USDA Economic Research Service",
                 "href": "https://www.ers.usda.gov/data-products/",
@@ -26,7 +28,7 @@
                 "desc": "The National Agricultural Statistics Service provides timely, accurate, and useful statistics in service to U.S. agriculture."
             }]
         }, {
-            "name": "Dept. of Commerce",
+            "name": "Commerce",
             "children": [{
                 "name": "Advanced Manufacturing Portal",
                 "href": "http://www.manufacturing.gov/data.html",
@@ -128,7 +130,7 @@
                 }]
             }]
         }, {
-            "name": "Dept. of Defense",
+            "name": "Defense",
             "children": [{
                 "name": "data.mil",
                 "href": "https://www.data.mil/s/v2/data-mil/1ff45997-196e-4e9a-96e2-eed27e3e17ab/",
@@ -138,7 +140,7 @@
                 "href": "http://www.defense.gov/data"
             }]
         }, {
-            "name": "Dept. of Education",
+            "name": "Education",
             "children": [{
                 "name": "Civil Rights Data Collection",
                 "href": "http://ocrdata.ed.gov/DataAnalysisTools",
@@ -165,7 +167,7 @@
                 "desc": "Topics outlined include the participation of students, teachers, and faculty in U.S. educational institutions; the personnel, performance and payrolls of U.S. public schools and in comparison to students in other countries."
             }]
         }, {
-            "name": "Dept. of Energy",
+            "name": "Energy",
             "children": [{
                 "name": "Alternative Fueling Stations",
                 "href": "http://www.afdc.energy.gov/locator/stations/",
@@ -282,7 +284,6 @@
             }, {
                 "name": "AHRQ",
                 "children": [{
-
                     "name": "Agency for Healthcare Research and Quality Data Resources",
                     "href": "http://www.ahrq.gov/research/data/index.html",
                     "desc": "The AHRQ mission is to produce evidence to make health care safer, higher quality, more accessible, equitable, and affordable."
@@ -322,11 +323,11 @@
                 "desc": "The Office of Immigration Statistics is charged to collect and disseminate data useful in evaluating the impact of immigration laws."
             }]
         }, {
-            "desc": "Department of Housing and Urban Development",
+            "desc": "Housing and Urban Development",
             "href": "http://data.hud.gov",
             "name": "HUD"
         }, {
-            "name": "Dept. of The Interior",
+            "name": "Interior",
             "children": [{
                 "name": "Department of the Interior",
                 "href": "http://www.doi.gov/data"
@@ -370,7 +371,7 @@
                 }]
             }]
         }, {
-            "name": "Dept. of Justice",
+            "name": "Justice",
             "children": [{
                 "name": "Department of Justice",
                 "href": "http://www.justice.gov/data"
@@ -399,7 +400,7 @@
                 }]
             }]
         }, {
-            "name": "Dept. of Labor",
+            "name": "Labor",
             "children": [{
                 "name": "Department of Labor",
                 "href": "http://www.dol.gov/data"
@@ -436,7 +437,7 @@
                 }]
             }]
         }, {
-            "name": "Dept. of State",
+            "name": "State",
             "children": [{
                 "name": "Department of State",
                 "href": "http://www.state.gov/data"
@@ -445,7 +446,7 @@
                 "href": "https://travel.state.gov/content/travel/en/statistics.html"
             }]
         }, {
-            "name": "Dept. of Transportation",
+            "name": "Transportation",
             "children": [{
                 "name": "Department of Transportation",
                 "href": "http://www.dot.gov/data"
@@ -481,7 +482,7 @@
                 "desc": "Data and Maps pertaining to aviation, rail, highways, vehicles, bicycles, passengers, freight, border crossings, deficient bridges, etc."
             }]
         }, {
-            "name": "Dept. of the Treasury",
+            "name": "Treasury",
             "children": [{
                 "name": "Department of the Treasury",
                 "href": "http://www.treasury.gov/data"
@@ -498,7 +499,7 @@
                 "desc": "USAspending.gov is the publicly accessible, searchable website to the public access to information on how their tax dollars are spent."
             }]
         }, {
-            "name": "Dept. of Veteran's Affairs",
+            "name": "Veteran's Affairs",
             "children": [{
                 "name": "Department of Veterans Affairs",
                 "href": "http://www.va.gov/data/"
@@ -508,7 +509,8 @@
                 "desc": "We develop statistical analyses and reports on a broad range of topics, operate VA’s data and statistics Web portal to disseminate Veteran data and statistics, and develop estimates and projections on Veteran populations."
             }]
         }]
-    }, {
+    }]
+}, {
         "name": "Corporations",
         "children": [{
             "name": "Bureau of Economic Analysis",
@@ -567,6 +569,10 @@
                 "name": "Environmental Database Gateway",
                 "href": "https://edg.epa.gov/metadata/catalog/main/home.page"
             }, {
+                "name":"Greenhouse Gas Reporting Program",
+                "href":"https://www.epa.gov/ghgreporting/ghg-reporting-program-data-sets",
+                "desc":"The GHGRP collects data from large emitting facilities, suppliers of fossil fuels and industrial gases and facilities that inject carbon dioxide underground."
+            }, {
                 "name": "Toxic Release Inventory",
                 "href": "https://www.epa.gov/trinationalanalysis/where-you-live-2014-tri-national-analysis",
                 "desc": "This chapter of the National Analysis looks at toxic chemical disposal or other releases that occurred at various geographic levels throughout the United States. "
@@ -581,7 +587,7 @@
                 "href": "https://www.fcc.gov/general/broadband-deployment-data-fcc-form-477"
             }]
         }, {
-            "name": "Fedreral Deposit Insurance Corpoation",
+            "name": "Federal Deposit Insurance Corpoation",
             "children": [{
                 "name": "Bank Data and Statistics",
                 "href": "https://www.fdic.gov/bank/index.html",

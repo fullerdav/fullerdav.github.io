@@ -54,7 +54,11 @@
             "name": "Global Terrorism database",
             "href": "https://www.start.umd.edu/gtd/",
             "desc": "The Global Terrorism Database (GTD) is an open-source database including information on terrorist events around the world from 1970 through 2015 (with annual updates planned for the future)."
-        },{"name":"Insstitue for the Study of War","href":"http://www.understandingwar.org/research","The Institute for the Study of War advances an informed understanding of military affairs through reliable research, trusted analysis, and innovative education."}, {
+        },{
+            "name":"Institue for the Study of War",
+            "href":"http://www.understandingwar.org/research",
+            "desc":"The Institute for the Study of War advances an informed understanding of military affairs through reliable research, trusted analysis, and innovative education."
+        },{
             "name": "SIPRI databases",
             "href": "https://www.sipri.org/databases",
             "desc": "SIPRI is an independent international institute dedicated to research into conflict, armaments, arms control and disarmament. Established in 1966, SIPRI provides data, analysis and recommendations, based on open sources."
