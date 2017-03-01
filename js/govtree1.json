@@ -1,6 +1,21 @@
+
 {
     "name": "government",
-    "children": [{
+    "children": [{"name":"International",
+        "children":[{
+            "name":"Eurostat",
+            "href":"http://ec.europa.eu/eurostat/data/database",
+            "desc":" Eurostat offers a whole range of important and interesting data that governments, businesses, the education sector, journalists and the public can use for their work and daily life."
+            },{
+            "name": "Knowledge Center on Migration and Demography",
+            "href": "https://ec.europa.eu/jrc/en/migration-and-demography/knowledge/data",
+            "desc": "The target audience of this data catalogue is primarily policy makers and practitioners of migration. The catalogue is intended to answer the question what data exists already that can be of use to study migration and develop migration policies. Academics and other experts are encouraged to use the links to the data sources to find more detailed and updated information directly from the data providers themselves.  Includes data on trafficking, smuggling, asylum, refugees, forced displacement, etc."
+            },{
+            "name": "EU Urban Data Platform",
+            "href": "http://urban.jrc.ec.europa.eu",
+            "desc": "Part of the EU Science hub"
+        }]
+    },{
         "name": "Executive",
         "children": [{
             "name": "The White House",
@@ -150,6 +165,14 @@
                 "href": "https://nces.ed.gov/ccd/index.asp",
                 "desc": ""
             }, {
+                 "name": "Condition of Education",
+                "href": "https://nces.ed.gov/programs/coe/",
+                "desc": ""  
+            },{
+                 "name":"Digest of Education Statistics",
+                "href": "https://nces.ed.gov/programs/digest/",
+                "desc": ""  
+            },{
                 "name": "ED Data Inventory",
                 "href": "http://datainventory.ed.gov/",
                 "desc": "The goal of the ED Data Inventory is to describe all data reported to the Department of Education, with the exception of personnel and administrative data. It includes data collected as part of grant activities, along with statistical data collected to allow publication of valuable statistics about the state of education in this country. "
@@ -206,6 +229,10 @@
                 "name": "Pacific Northwest National Laboratory",
                 "desc": "Pacific Northwest National Laboratory - Proteomics Research Resource for Integrative Biology",
                 "href": "http://panomics.pnnl.gov/data/"
+            },{
+                "name":"Total Energy",
+                "desc":"",
+                "href":"http://www.eia.gov/totalenergy/data/annual/index.php"
             }]
         }, {
             "name": "DHHS",
@@ -532,7 +559,7 @@
                 "desc": "BEA’s national economic accounts provide a comprehensive picture of the U.S. economy and feature many macroeconomic statistics."
             }]
         }, {
-            "name": "Commodity Futures Trading Commission",
+            "name": "Commodity Futures Trading",
             "children": [{
                 "name": "Market Reports",
                 "href": "http://www.cftc.gov/MarketReports/index.htm",
@@ -543,7 +570,7 @@
                 "desc": "The Industry Filings search tool provides access to information about, and submissions by, trading and clearing organizations such as designated contract markets (DCMs), swap execution facilities (SEFs), derivatives clearing organizations (DCOs), swap data repositories (SDRs), and non-U.S. organizations"
             }]
         }, {
-            "name": "Consumer Financial Protection Bureau (complaints)",
+            "name": "Consumer Financial Protection Bureau",
             "href": "https://data.consumerfinance.gov/dataset/Consumer-Complaints/s6ew-h6mp",
             "desc": "Each week we send thousands of consumers' complaints about financial products and services to companies for response."
         }, {
@@ -578,7 +605,7 @@
                 "desc": "This chapter of the National Analysis looks at toxic chemical disposal or other releases that occurred at various geographic levels throughout the United States. "
             }]
         }, {
-            "name": "Federal Communications Commission",
+            "name": "Federal Communications Comm.",
             "children": [{
                 "name": "Federal Communications Commission",
                 "href": "http://www.fcc.gov/data"
@@ -587,7 +614,7 @@
                 "href": "https://www.fcc.gov/general/broadband-deployment-data-fcc-form-477"
             }]
         }, {
-            "name": "Federal Deposit Insurance Corpoation",
+            "name": "Federal Deposit Insurance Corp.",
             "children": [{
                 "name": "Bank Data and Statistics",
                 "href": "https://www.fdic.gov/bank/index.html",
@@ -628,17 +655,13 @@
                 "href": "https://www.philadelphiafed.org/research-and-data/real-time-center/survey-of-professional-forecasters",
                 "desc": "The Survey of Professional Forecasters is the oldest quarterly survey of macroeconomic forecasts in the United States."
             }]
-        }, {
-            "name": "Federal Housing Finance Agency",
-            "href": "https://www.fhfa.gov/DataTools/Downloads",
-            "desc": "Ensure that the housing government sponsored enterprises operate in a safe and sound manner so that they serve as a reliable source of liquidity and funding for housing finance and community investment."
-        }, {
+        },{
 
             "name": "Federal Trade Commission",
             "href": "https://www.ftc.gov/site-information/open-government/data-sets",
             "desc": "Consumer Sentinel Network Data Book - Stats on identity theft and internet fraud."
         }, {
-            "name": "Institue of Museum and Library Services",
+            "name": "Museum and Library Services",
             "href": "https://www.imls.gov/research-tools/data-collection"
         }, {
             "name": "NASA",
@@ -665,7 +688,7 @@
                 "href": "http://ledaps.nascom.nasa.gov/data/"
             }]
         }, {
-            "name": "National Archives and Records Administration",
+            "name": "National Archives",
             "href": "http://www.archives.gov/data"
         }, {
             "name": "National Credit Union Assc.",
@@ -691,7 +714,7 @@
             "href": "http://www.ntsb.gov/investigations/data/Pages/Data_Stats.aspx",
             "desc": "Accident Reports are one of the main products of an NTSB investigation.  Included modes: Aviation, Hazardous Materials, Highway, Marine, Pipeline, Railroad"
         }, {
-            "name": "Networking and Information Technology Research and Development",
+            "name": "Networking and Information Technology",
             "href": "http://www.nitrd.gov/data/"
         }, {
             "name": "Nuclear Regulatory Commission",
@@ -704,7 +727,7 @@
             "name": "Office of Personnel Management",
             "href": "http://www.opm.gov/data/"
         }, {
-            "name": "Office of the US Trade Representative",
+            "name": "US Trade Representative",
             "href": "https://ustr.gov/about-us/policy-offices/press-office/reports-and-publications",
             "desc": "Reports on intellectual property, trade barriers, etc."
         }, {

@@ -152,8 +152,9 @@
                 "desc": "GeoFRED® allows you to create, customize, and share geographical maps of data found in FRED®. Easily access the details and adjust how the data are displayed. You can also transform the data and download it according to geographic category and time frame."
             }]
         }, {
-            "name": "megasites",
-            "children": [{
+            "name":"macro indicators",
+            "children":[
+                {
                 "name": "World Bank",
                 "href": "http://data.worldbank.org/",
                 "desc": "The World Bank's Open Data initiative is intended to provide all users with access to World Bank data. The data catalog is a listing of available World Bank datasets, including databases, pre-formatted tables, reports, and other resources."
@@ -165,12 +166,12 @@
                 "name": "International Monetary Fund",
                 "href": "http://www.imf.org/external/datamapper/",
                 "desc": "The International Monetary Fund (IMF) is an organization of 189 countries, working to foster global monetary cooperation, secure financial stability, facilitate international trade, promote high employment and sustainable economic growth, and reduce poverty around the world."
-            }, {
+            },  ,{
                 "name": "UNCTAD",
                 "href": "http://unctadstat.unctad.org/EN/",
                 "desc": "UNCTAD produces more than 150 indicators and statistical time series essential for the analysis of: International trade, economic trends, foreign direct investment, external financial resources, population and labor force, commodities, information economy, creative economy and maritime transport.\n"
             }]
-        }, {
+        },{
             "name": "real estate",
             "children": [{
                 "name": "Real Estate Existing Home Sales by State (NAR)",
@@ -413,10 +414,6 @@
                 "name": "UNHCR The UN Refugee Agency",
                 "href": "http://popstats.unhcr.org/en/overview",
                 "desc": "UNHCR's populations of concern: asylum seekers, refugees, stateless persons from the year 1951 up to 2015 and more current monthly data in some categories."
-            }, {
-                "name": "Knowledge Center on Migration and Demography",
-                "href": "https://ec.europa.eu/jrc/en/migration-and-demography/knowledge/data",
-                "desc": "The target audience of this data catalogue is primarily policy makers and practitioners of migration. The catalogue is intended to answer the question what data exists already that can be of use to study migration and develop migration policies. Academics and other experts are encouraged to use the links to the data sources to find more detailed and updated information directly from the data providers themselves.  Includes data on trafficking, smuggling, asylum, refugees, forced displacement, etc."
             }, {
                 "name": "The UN Refugee Agency",
                 "href": "http://popstats.unhcr.org/en/overview",
