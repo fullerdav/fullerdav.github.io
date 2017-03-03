@@ -220,6 +220,9 @@
             "href": "https://www.amacad.org/content/research/dataForumList.aspx",
             "desc": "The Data Forum provides a neutral space for Academy Fellows, guest writers, and staff to discuss the data that informs all of the Academy's program areas: the Humanities, Arts, and Education; Science, Engineering and Technology; Global Security and International Affairs; and American Institutions and the Public Good."
         }, {
+            "name":"Educational Attainment dataset",
+            "href":"http://barrolee.com/"
+        },{
             "name": "Humanities Indicator",
             "href": "http://humanitiesindicators.org/",
             "desc": "Using Data to Make a Strong Case for the Humanities."
