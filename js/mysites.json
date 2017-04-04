@@ -1702,7 +1702,7 @@ var mysites = {
     "nsf.gov": { "name": "National Center for Science and Engineering Statistics", "wplink": "" },
     "nshd.mrc.ac.uk": { "name": "MRC Unit for Lifelong Health and Ageing", "wplink": "http://en.wikipedia.org/wiki/National_Survey_of_Health_%26_Development" },
     "nsi.edu": { "name": "Neurosciences Institute", "wplink": "https://en.wikipedia.org/wiki/The_Neurosciences_Institute" },
-    "nsidc.org": { "National Snow and Ice Data Center", "wplink": "https://en.wikipedia.org/wiki/National_Snow_and_Ice_Data_Center" },
+    "nsidc.org": { "name":"National Snow and Ice Data Center", "wplink": "https://en.wikipedia.org/wiki/National_Snow_and_Ice_Data_Center" },
     "nspcc.org.uk": { "name": "National Society for the Prevention of Cruelty to Children", "wplink": "https://en.wikipedia.org/wiki/National_Society_for_the_Prevention_of_Cruelty_to_Children" },
     "ntepa.nt.gov.au": { "name": "Northern Territory Environment Protection Authority", "wplink": "" },
     "ntiindia.kar.nic.in": { "name": "National Tuberculosis Institute", "wplink": "https://en.wikipedia.org/wiki/National_Tuberculosis_Institute" },
