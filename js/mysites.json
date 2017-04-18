@@ -1,4 +1,4 @@
-var mysites = {   
+
 "aao.gov.au": { "name": "Australian Astronomical Observatory", "wplink": "https://en.wikipedia.org/wiki/Australian_Astronomical_Observatory" },
 "aarp.org": { "name": "American Association of Retired Persons", "wplink": "https://en.wikipedia.org/wiki/AARP" },
 "abag.ca.gov": { "name": "Association of Bay Area Governments", "wplink": "https://en.wikipedia.org/wiki/Association_of_Bay_Area_Governments" },
@@ -61,6 +61,7 @@ var mysites = {
 "bber.ufl.edu":{"name":"Bureau of Business and Economic Research (Florida)","wplink":""},
 "bber.unm.edu":{"name":"Bureau of Business and Economic Research (New Mexico)","wplink":""},
 "bbsrc.ac.uk": { "name": "Biotechnology and Biological Sciences Research Council", "wplink": "http://en.wikipedia.org/wiki/Biotechnology_and_Biological_Sciences_Research_Council" },
+"bc.edu":{"name":"Boston College","wplink":""},
 "bea.gov": { "name": "Bureau of Economic Analysis", "wplink": "https://en.wikipedia.org/wiki/Bureau_of_Economic_Analysis" },
 "berkeley.edu": { "name": "University of California, Berkeley", "wplink": "http://en.wikipedia.org/wiki/University_of_California,_Berkeley" },
 "bgsu.edu": { "name": "Bowling Green State University", "wplink": "http://en.wikipedia.org/wiki/Bowling_Green_State_University" },
@@ -86,7 +87,7 @@ var mysites = {
 "brookings.edu": { "name": "Brookings Institution", "wplink": "https://en.wikipedia.org/wiki/Brookings_Institution" },
 "bsc-sbc.ca": { "name": "Bibliographical Society of Canada", "wplink": "" },
 "bu.edu": { "name": "Boston University", "wplink": "http://en.wikipedia.org/wiki/Boston_University" },
-"ca.gov":{"name":"State of Caifornia","wplink":""},
+"ca.gov":{"name":"State of California","wplink":""},
 "calacademy.org": { "name": "California Academy of Sciences", "wplink": "https://en.wikipedia.org/wiki/California_Academy_of_Sciences" },
 "calepa.ca.gov": { "name": "California Environmental Protection Agency", "wplink": "https://en.wikipedia.org/wiki/California_Environmental_Protection_Agency" },
 "calpoly.edu": { "name": "California Polytechnic State University", "wplink": "http://en.wikipedia.org/wiki/California_Polytechnic_State_University" },
@@ -482,6 +483,7 @@ var mysites = {
 "meps.ahrq.gov": { "name": "Medical Expenditure Panel Survey (MEPS)", "wplink": "" },
 "merit.edu": { "name": "Merit Network", "wplink": "https://en.wikipedia.org/wiki/Merit_Network" },
 "metmuseum.org": { "name": "Metropolitan Museum of Art", "wplink": "https://en.wikipedia.org/wiki/Metropolitan_Museum_of_Art" },
+"michigan.gov":{"name":"State of Michigan","wplink":""},
 "midaas.commerce.gov": { "name": "Income Distribution Across America", "wplink": "" },    
 "midlandsaerospace.org.uk": { "name": "Midlands Aerospace Alliance", "wplink": "" },
 "midlandu.edu": { "name": "Midland University", "wplink": "http://en.wikipedia.org/wiki/Midland_University" },    
@@ -724,7 +726,9 @@ var mysites = {
 "res-uk.com": { "name": "Renewable Energy Systems (United Kingdom)", "wplink": "https://en.wikipedia.org/wiki/Renewable_Energy_Systems" },
 "res.org.uk": { "name": "Royal Economic Society", "wplink": "https://en.wikipedia.org/wiki/Royal_Economic_Society" },
 "resources.ca.gov": { "name": "California Natural Resources Agency", "wplink": "https://en.wikipedia.org/wiki/California_Natural_Resources_Agency" },
+"ridatahub.org":{"name":"Rhode Island Data Hub","wplink":""},
 "rug.nl":{"name":"University of Groningen","wplink":""},
+"rutgers.edu":{"name":"Rutgers","wplink":""},
 "rwjf.org": { "name": "Robert Wood Johnson Foundation", "wplink": "" },
 "ryerson.ca": { "name": "Ryerson University", "wplink": "http://en.wikipedia.org/wiki/Ryerson_University" },
 "rzss.org.uk": { "name": "Royal Zoological Society of Scotland", "wplink": "https://en.wikipedia.org/wiki/Royal_Zoological_Society_of_Scotland" },
@@ -886,4 +890,5 @@ var mysites = {
 "www1.nyc.gov": { "name": "City of New York", "wplink": "https://en.wikipedia.org/wiki/New_York_City" },
 "wy.us":{"name":"State of Wyoming","wplink":"https://en.wikipedia.org/wiki/Wyoming"},
 "zeiss.co.uk": { "name": "Carl Zeiss (United Kingdom)", "wplink": "https://en.wikipedia.org/wiki/Carl_Zeiss_AG" }
+var mysites = {   
 };
