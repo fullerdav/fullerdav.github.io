@@ -24,6 +24,7 @@
 }
 function dispSites(s) {
   $("#searching").hide();
+  $(".spinner").hide();
   $("#key").show();
   $("#results").css("display", "grid");
   $("#results").show();
