@@ -1,0 +1,1424 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<title></title>
+	<meta name="generator" content="LibreOffice 5.1.6.2 (Linux)"/>
+	<meta name="created" content="00:00:00"/>
+	<meta name="changed" content="2017-04-23T14:58:19.136554260"/>
+
+	<style type="text/css">
+		body,div,table,thead,tbody,tfoot,tr,th,td,p { font-family:"Liberation Sans"; font-size:x-small }
+		a.comment-indicator:hover + comment { background:#ffd; position:absolute; display:block; border:1px solid black; padding:0.5em;  }
+		a.comment-indicator { background:red; display:inline-block; border:1px solid black; width:0.5em; height:0.5em;  }
+		comment { display:none;  }
+	</style>
+	<script src="/js/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css"/>
+	<script type="text/javascript" src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+		<style type="text/css">
+		body,div,table,thead,tbody,tfoot,tr,th,td,p { font-family:"Helvetica"; font-size:x-small; }
+
+.dataTables_wrapper .dataTables_filter {
+    float: left;
+    text-align: right;
+}
+.dataTables_wrapper .dataTables_length {
+    float: right;
+    text-align: right;
+		margin-bottom: 20px;
+}
+
+	</style>
+</head>
+
+<body>
+<table id="myTable" cellspacing="0" border="1" bgcolor="#62BFDE">
+<thead>
+	<tr bgcolor="#999" style="color:#fff">
+		<th height="17" align="left"><br></th>
+		<th align="left">LSP</th>
+		<th align="left">year</th>
+		<th align="left">Institution</th>
+		<th align="left">Enrollment</th>
+		<th align="left">expend_per_FTE</th>
+		<th align="left">StudentFaculty</th>
+		<th align="left">SalariesWages</th>
+		<th align="left">collectionSize</th>
+		<th align="left">eBooks</th>
+		<th align="left">eDatabases</th>
+		<th align="left">materials_services_expenditures</th>
+		<th align="left">ILLsent</th>
+		<th align="left">ILLrecd</th>
+
+	</tr></thead>
+	
+	<tr>
+		<td height="17" align="right" sdval="1" sdnum="1033;">1</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2002" sdnum="1033;">2002</td>
+		<td align="left">Agnes Scott College</td>
+		<td align="right" sdval="902" sdnum="1033;">902</td>
+		<td align="right" sdval="956" sdnum="1033;">956</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="468069" sdnum="1033;">468069</td>
+		<td align="right" sdval="265909" sdnum="1033;">265909</td>
+		<td align="right" sdval="57182" sdnum="1033;">57182</td>
+		<td align="right" sdval="342" sdnum="1033;">342</td>
+		<td align="right" sdval="347872" sdnum="1033;">347872</td>
+		<td align="right" sdval="858" sdnum="1033;">858</td>
+		<td align="right" sdval="1376" sdnum="1033;">1376</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="2" sdnum="1033;">2</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2004" sdnum="1033;">2004</td>
+		<td align="left">Albion College</td>
+		<td align="right" sdval="1376" sdnum="1033;">1376</td>
+		<td align="right" sdval="1053" sdnum="1033;">1053</td>
+		<td align="right" sdval="12" sdnum="1033;">12</td>
+		<td align="right" sdval="613324" sdnum="1033;">613324</td>
+		<td align="right" sdval="355879" sdnum="1033;">355879</td>
+		<td align="right" sdval="291052" sdnum="1033;">291052</td>
+		<td align="right" sdval="205" sdnum="1033;">205</td>
+		<td align="right" sdval="431057" sdnum="1033;">431057</td>
+		<td align="right" sdval="6108" sdnum="1033;">6108</td>
+		<td align="right" sdval="1450" sdnum="1033;">1450</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="3" sdnum="1033;">3</td>
+		<td align="left">Bibliovation</td>
+		<td align="right" sdval="2015" sdnum="1033;">2015</td>
+		<td align="left">Alma College</td>
+		<td align="right" sdval="1385" sdnum="1033;">1385</td>
+		<td align="right" sdval="967" sdnum="1033;">967</td>
+		<td align="right" sdval="11" sdnum="1033;">11</td>
+		<td align="right" sdval="421870" sdnum="1033;">421870</td>
+		<td align="right" sdval="262495" sdnum="1033;">262495</td>
+		<td align="right" sdval="119189" sdnum="1033;">119189</td>
+		<td align="right" sdval="58" sdnum="1033;">58</td>
+		<td align="right" sdval="647329" sdnum="1033;">647329</td>
+		<td align="right" sdval="1958" sdnum="1033;">1958</td>
+		<td align="right" sdval="1112" sdnum="1033;">1112</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="4" sdnum="1033;">4</td>
+		<td align="left">ALEPH 500</td>
+		<td align="right" sdval="2004" sdnum="1033;">2004</td>
+		<td align="left">Amherst College</td>
+		<td align="right" sdval="1795" sdnum="1033;">1795</td>
+		<td align="right" sdval="3567" sdnum="1033;">3567</td>
+		<td align="right" sdval="8" sdnum="1033;">8</td>
+		<td align="right" sdval="2636174" sdnum="1033;">2636174</td>
+		<td align="right" sdval="1611591" sdnum="1033;">1611591</td>
+		<td align="right" sdval="115687" sdnum="1033;">115687</td>
+		<td align="right" sdval="258" sdnum="1033;">258</td>
+		<td align="right" sdval="2614373" sdnum="1033;">2614373</td>
+		<td align="right" sdval="32797" sdnum="1033;">32797</td>
+		<td align="right" sdval="16013" sdnum="1033;">16013</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="5" sdnum="1033;">5</td>
+		<td align="left">Voyager</td>
+		<td align="right" sdval="2013" sdnum="1033;">2013</td>
+		<td align="left">Augustana College</td>
+		<td align="right" sdval="2478" sdnum="1033;">2478</td>
+		<td align="right" sdval="597" sdnum="1033;">597</td>
+		<td align="right" sdval="12" sdnum="1033;">12</td>
+		<td align="right" sdval="847896" sdnum="1033;">847896</td>
+		<td align="right" sdval="130518" sdnum="1033;">130518</td>
+		<td align="right" sdval="1100" sdnum="1033;">1100</td>
+		<td align="right" sdval="91" sdnum="1033;">91</td>
+		<td align="right" sdval="514558" sdnum="1033;">514558</td>
+		<td align="right" sdval="4082" sdnum="1033;">4082</td>
+		<td align="right" sdval="11448" sdnum="1033;">11448</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="6" sdnum="1033;">6</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2013" sdnum="1033;">2013</td>
+		<td align="left">Austin College</td>
+		<td align="right" sdval="1255" sdnum="1033;">1255</td>
+		<td align="right" sdval="725" sdnum="1033;">725</td>
+		<td align="right" sdval="13" sdnum="1033;">13</td>
+		<td align="right" sdval="433127" sdnum="1033;">433127</td>
+		<td align="right" sdval="288351" sdnum="1033;">288351</td>
+		<td align="right" sdval="33764" sdnum="1033;">33764</td>
+		<td align="right" sdval="168" sdnum="1033;">168</td>
+		<td align="right" sdval="446776" sdnum="1033;">446776</td>
+		<td align="right" sdval="1306" sdnum="1033;">1306</td>
+		<td align="right" sdval="524" sdnum="1033;">524</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="7" sdnum="1033;">7</td>
+		<td align="left">Millennium</td>
+		<td align="right" sdval="2005" sdnum="1033;">2005</td>
+		<td align="left">Bard College</td>
+		<td align="right" sdval="2332" sdnum="1033;">2332</td>
+		<td align="right" sdval="688" sdnum="1033;">688</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="999023" sdnum="1033;">999023</td>
+		<td align="right" sdval="348664" sdnum="1033;">348664</td>
+		<td align="right" sdval="55447" sdnum="1033;">55447</td>
+		<td align="right" sdval="42" sdnum="1033;">42</td>
+		<td align="right" sdval="581541" sdnum="1033;">581541</td>
+		<td align="right" sdval="5316" sdnum="1033;">5316</td>
+		<td align="right" sdval="8850" sdnum="1033;">8850</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="8" sdnum="1033;">8</td>
+		<td align="left">Voyager</td>
+		<td align="left">NA</td>
+		<td align="left">Barnard College</td>
+		<td align="right" sdval="2548" sdnum="1033;">2548</td>
+		<td align="right" sdval="1858" sdnum="1033;">1858</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1722734" sdnum="1033;">1722734</td>
+		<td align="right" sdval="209596" sdnum="1033;">209596</td>
+		<td align="right" sdval="174269" sdnum="1033;">174269</td>
+		<td align="right" sdval="1381" sdnum="1033;">1381</td>
+		<td align="right" sdval="1690061" sdnum="1033;">1690061</td>
+		<td align="right" sdval="135" sdnum="1033;">135</td>
+		<td align="right" sdval="650" sdnum="1033;">650</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2003" sdnum="1033;">2003</td>
+		<td align="left">Bates College</td>
+		<td align="right" sdval="1792" sdnum="1033;">1792</td>
+		<td align="right" sdval="7695" sdnum="1033;">7695</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1353154" sdnum="1033;">1353154</td>
+		<td align="right" sdval="641680" sdnum="1033;">641680</td>
+		<td align="right" sdval="975497" sdnum="1033;">975497</td>
+		<td align="right" sdval="148" sdnum="1033;">148</td>
+		<td align="right" sdval="1970116" sdnum="1033;">1970116</td>
+		<td align="right" sdval="18843" sdnum="1033;">18843</td>
+		<td align="right" sdval="11000" sdnum="1033;">11000</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2013" sdnum="1033;">2013</td>
+		<td align="left">Beloit College</td>
+		<td align="right" sdval="1358" sdnum="1033;">1358</td>
+		<td align="right" sdval="928" sdnum="1033;">928</td>
+		<td align="right" sdval="11" sdnum="1033;">11</td>
+		<td align="right" sdval="556593" sdnum="1033;">556593</td>
+		<td align="right" sdval="234346" sdnum="1033;">234346</td>
+		<td align="right" sdval="186889" sdnum="1033;">186889</td>
+		<td align="right" sdval="95" sdnum="1033;">95</td>
+		<td align="right" sdval="551046" sdnum="1033;">551046</td>
+		<td align="right" sdval="1461" sdnum="1033;">1461</td>
+		<td align="right" sdval="1744" sdnum="1033;">1744</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="11" sdnum="1033;">11</td>
+		<td align="left">Voyager</td>
+		<td align="right" sdval="2000" sdnum="1033;">2000</td>
+		<td align="left">Berea College</td>
+		<td align="right" sdval="1643" sdnum="1033;">1643</td>
+		<td align="right" sdval="899" sdnum="1033;">899</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="886166" sdnum="1033;">886166</td>
+		<td align="right" sdval="350272" sdnum="1033;">350272</td>
+		<td align="right" sdval="231470" sdnum="1033;">231470</td>
+		<td align="right" sdval="108" sdnum="1033;">108</td>
+		<td align="right" sdval="439276" sdnum="1033;">439276</td>
+		<td align="right" sdval="2917" sdnum="1033;">2917</td>
+		<td align="right" sdval="1456" sdnum="1033;">1456</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="12" sdnum="1033;">12</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2003" sdnum="1033;">2003</td>
+		<td align="left">Bowdoin College</td>
+		<td align="right" sdval="1799" sdnum="1033;">1799</td>
+		<td align="right" sdval="3310" sdnum="1033;">3310</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="2133975" sdnum="1033;">2133975</td>
+		<td align="right" sdval="1071107" sdnum="1033;">1071107</td>
+		<td align="right" sdval="494969" sdnum="1033;">494969</td>
+		<td align="right" sdval="435" sdnum="1033;">435</td>
+		<td align="right" sdval="2565059" sdnum="1033;">2565059</td>
+		<td align="right" sdval="13791" sdnum="1033;">13791</td>
+		<td align="right" sdval="11297" sdnum="1033;">11297</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="13" sdnum="1033;">13</td>
+		<td align="left">Millennium</td>
+		<td align="right" sdval="2000" sdnum="1033;">2000</td>
+		<td align="left">Bryn Mawr College</td>
+		<td align="right" sdval="1692" sdnum="1033;">1692</td>
+		<td align="right" sdval="2643" sdnum="1033;">2643</td>
+		<td align="right" sdval="8" sdnum="1033;">8</td>
+		<td align="right" sdval="1837812" sdnum="1033;">1837812</td>
+		<td align="right" sdval="742219" sdnum="1033;">742219</td>
+		<td align="right" sdval="626265" sdnum="1033;">626265</td>
+		<td align="right" sdval="138" sdnum="1033;">138</td>
+		<td align="right" sdval="2259419" sdnum="1033;">2259419</td>
+		<td align="right" sdval="9736" sdnum="1033;">9736</td>
+		<td align="right" sdval="4279" sdnum="1033;">4279</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="14" sdnum="1033;">14</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2011" sdnum="1033;">2011</td>
+		<td align="left">Bucknell University</td>
+		<td align="right" sdval="3625" sdnum="1033;">3625</td>
+		<td align="right" sdval="1463" sdnum="1033;">1463</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1603381" sdnum="1033;">1603381</td>
+		<td align="right" sdval="704029" sdnum="1033;">704029</td>
+		<td align="right" sdval="472542" sdnum="1033;">472542</td>
+		<td align="right" sdval="220" sdnum="1033;">220</td>
+		<td align="right" sdval="3114601" sdnum="1033;">3114601</td>
+		<td align="right" sdval="3750" sdnum="1033;">3750</td>
+		<td align="right" sdval="4008" sdnum="1033;">4008</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="15" sdnum="1033;">15</td>
+		<td align="left">Alma</td>
+		<td align="right" sdval="2015" sdnum="1033;">2015</td>
+		<td align="left">Carleton College</td>
+		<td align="right" sdval="2014" sdnum="1033;">2014</td>
+		<td align="right" sdval="2413" sdnum="1033;">2413</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="1696569" sdnum="1033;">1696569</td>
+		<td align="right" sdval="787236" sdnum="1033;">787236</td>
+		<td align="right" sdval="728555" sdnum="1033;">728555</td>
+		<td align="right" sdval="31508" sdnum="1033;">31508</td>
+		<td align="right" sdval="2310103" sdnum="1033;">2310103</td>
+		<td align="right" sdval="2698" sdnum="1033;">2698</td>
+		<td align="right" sdval="6024" sdnum="1033;">6024</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="16" sdnum="1033;">16</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2014" sdnum="1033;">2014</td>
+		<td align="left">Claremont McKenna College</td>
+		<td align="right" sdval="1349" sdnum="1033;">1349</td>
+		<td align="right" sdval="1586" sdnum="1033;">1586</td>
+		<td align="right" sdval="8" sdnum="1033;">8</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="17" sdnum="1033;">17</td>
+		<td align="left">Voyager</td>
+		<td align="left">NA</td>
+		<td align="left">Clark University</td>
+		<td align="right" sdval="3485" sdnum="1033;">3485</td>
+		<td align="right" sdval="775" sdnum="1033;">775</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="987553" sdnum="1033;">987553</td>
+		<td align="right" sdval="667851" sdnum="1033;">667851</td>
+		<td align="right" sdval="46252" sdnum="1033;">46252</td>
+		<td align="right" sdval="83" sdnum="1033;">83</td>
+		<td align="right" sdval="1397540" sdnum="1033;">1397540</td>
+		<td align="right" sdval="3943" sdnum="1033;">3943</td>
+		<td align="right" sdval="3650" sdnum="1033;">3650</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="18" sdnum="1033;">18</td>
+		<td align="left">Horizon</td>
+		<td align="right" sdval="1995" sdnum="1033;">1995</td>
+		<td align="left">Coe College</td>
+		<td align="right" sdval="1411" sdnum="1033;">1411</td>
+		<td align="right" sdval="762" sdnum="1033;">762</td>
+		<td align="right" sdval="11" sdnum="1033;">11</td>
+		<td align="right" sdval="431160" sdnum="1033;">431160</td>
+		<td align="right" sdval="199823" sdnum="1033;">199823</td>
+		<td align="right" sdval="290704" sdnum="1033;">290704</td>
+		<td align="right" sdval="47" sdnum="1033;">47</td>
+		<td align="right" sdval="408035" sdnum="1033;">408035</td>
+		<td align="right" sdval="891" sdnum="1033;">891</td>
+		<td align="right" sdval="1472" sdnum="1033;">1472</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="19" sdnum="1033;">19</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2003" sdnum="1033;">2003</td>
+		<td align="left">Colby College</td>
+		<td align="right" sdval="1857" sdnum="1033;">1857</td>
+		<td align="right" sdval="2400" sdnum="1033;">2400</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1994153" sdnum="1033;">1994153</td>
+		<td align="right" sdval="584350" sdnum="1033;">584350</td>
+		<td align="right" sdval="427718" sdnum="1033;">427718</td>
+		<td align="right" sdval="584" sdnum="1033;">584</td>
+		<td align="right" sdval="2048713" sdnum="1033;">2048713</td>
+		<td align="right" sdval="18062" sdnum="1033;">18062</td>
+		<td align="right" sdval="11676" sdnum="1033;">11676</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="20" sdnum="1033;">20</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2002" sdnum="1033;">2002</td>
+		<td align="left">Colgate University</td>
+		<td align="right" sdval="2861" sdnum="1033;">2861</td>
+		<td align="right" sdval="1984" sdnum="1033;">1984</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="1982806" sdnum="1033;">1982806</td>
+		<td align="right" sdval="926618" sdnum="1033;">926618</td>
+		<td align="right" sdval="2092" sdnum="1033;">2092</td>
+		<td align="right" sdval="205" sdnum="1033;">205</td>
+		<td align="right" sdval="2589616" sdnum="1033;">2589616</td>
+		<td align="right" sdval="10813" sdnum="1033;">10813</td>
+		<td align="right" sdval="8472" sdnum="1033;">8472</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="21" sdnum="1033;">21</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2015" sdnum="1033;">2015</td>
+		<td align="left">College of Saint Benedict</td>
+		<td align="right" sdval="1943" sdnum="1033;">1943</td>
+		<td align="right" sdval="929" sdnum="1033;">929</td>
+		<td align="right" sdval="12" sdnum="1033;">12</td>
+		<td align="right" sdval="984169" sdnum="1033;">984169</td>
+		<td align="right" sdval="243645" sdnum="1033;">243645</td>
+		<td align="right" sdval="57768" sdnum="1033;">57768</td>
+		<td align="right" sdval="242" sdnum="1033;">242</td>
+		<td align="right" sdval="501439" sdnum="1033;">501439</td>
+		<td align="right" sdval="2489" sdnum="1033;">2489</td>
+		<td align="right" sdval="4637" sdnum="1033;">4637</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="22" sdnum="1033;">22</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2003" sdnum="1033;">2003</td>
+		<td align="left">College of the Holy Cross</td>
+		<td align="right" sdval="2729" sdnum="1033;">2729</td>
+		<td align="right" sdval="1508" sdnum="1033;">1508</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1926407" sdnum="1033;">1926407</td>
+		<td align="right" sdval="676459" sdnum="1033;">676459</td>
+		<td align="right" sdval="150341" sdnum="1033;">150341</td>
+		<td align="right" sdval="219" sdnum="1033;">219</td>
+		<td align="right" sdval="1906699" sdnum="1033;">1906699</td>
+		<td align="right" sdval="7645" sdnum="1033;">7645</td>
+		<td align="right" sdval="3324" sdnum="1033;">3324</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="23" sdnum="1033;">23</td>
+		<td align="left">Millennium</td>
+		<td align="left">NA</td>
+		<td align="left">Colorado College</td>
+		<td align="right" sdval="2131" sdnum="1033;">2131</td>
+		<td align="right" sdval="1865" sdnum="1033;">1865</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1388226" sdnum="1033;">1388226</td>
+		<td align="right" sdval="508137" sdnum="1033;">508137</td>
+		<td align="right" sdval="334234" sdnum="1033;">334234</td>
+		<td align="right" sdval="230" sdnum="1033;">230</td>
+		<td align="right" sdval="2113777" sdnum="1033;">2113777</td>
+		<td align="right" sdval="10652" sdnum="1033;">10652</td>
+		<td align="right" sdval="7321" sdnum="1033;">7321</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="24" sdnum="1033;">24</td>
+		<td align="left">Alma</td>
+		<td align="right" sdval="2016" sdnum="1033;">2016</td>
+		<td align="left">Connecticut College</td>
+		<td align="right" sdval="1922" sdnum="1033;">1922</td>
+		<td align="right" sdval="1609" sdnum="1033;">1609</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="1377478" sdnum="1033;">1377478</td>
+		<td align="right" sdval="666001" sdnum="1033;">666001</td>
+		<td align="right" sdval="1022607" sdnum="1033;">1022607</td>
+		<td align="right" sdval="206" sdnum="1033;">206</td>
+		<td align="right" sdval="1778316" sdnum="1033;">1778316</td>
+		<td align="right" sdval="6263" sdnum="1033;">6263</td>
+		<td align="right" sdval="5931" sdnum="1033;">5931</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="25" sdnum="1033;">25</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2011" sdnum="1033;">2011</td>
+		<td align="left">Davidson College</td>
+		<td align="right" sdval="1784" sdnum="1033;">1784</td>
+		<td align="right" sdval="1979" sdnum="1033;">1979</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1349539" sdnum="1033;">1349539</td>
+		<td align="right" sdval="488711" sdnum="1033;">488711</td>
+		<td align="right" sdval="997265" sdnum="1033;">997265</td>
+		<td align="right" sdval="574" sdnum="1033;">574</td>
+		<td align="right" sdval="1986980" sdnum="1033;">1986980</td>
+		<td align="right" sdval="10863" sdnum="1033;">10863</td>
+		<td align="right" sdval="13231" sdnum="1033;">13231</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="26" sdnum="1033;">26</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2002" sdnum="1033;">2002</td>
+		<td align="left">Denison University</td>
+		<td align="right" sdval="2254" sdnum="1033;">2254</td>
+		<td align="right" sdval="1522" sdnum="1033;">1522</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1287463" sdnum="1033;">1287463</td>
+		<td align="right" sdval="672181" sdnum="1033;">672181</td>
+		<td align="right" sdval="970081" sdnum="1033;">970081</td>
+		<td align="right" sdval="456" sdnum="1033;">456</td>
+		<td align="right" sdval="1356224" sdnum="1033;">1356224</td>
+		<td align="right" sdval="19914" sdnum="1033;">19914</td>
+		<td align="right" sdval="10178" sdnum="1033;">10178</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="27" sdnum="1033;">27</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2013" sdnum="1033;">2013</td>
+		<td align="left">DePauw University</td>
+		<td align="right" sdval="2265" sdnum="1033;">2265</td>
+		<td align="right" sdval="1044" sdnum="1033;">1044</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1195659" sdnum="1033;">1195659</td>
+		<td align="right" sdval="436587" sdnum="1033;">436587</td>
+		<td align="right" sdval="181509" sdnum="1033;">181509</td>
+		<td align="right" sdval="161" sdnum="1033;">161</td>
+		<td align="right" sdval="1045360" sdnum="1033;">1045360</td>
+		<td align="right" sdval="5863" sdnum="1033;">5863</td>
+		<td align="right" sdval="8627" sdnum="1033;">8627</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="28" sdnum="1033;">28</td>
+		<td align="left">Symphony</td>
+		<td align="right" sdval="1995" sdnum="1033;">1995</td>
+		<td align="left">Dickinson College</td>
+		<td align="right" sdval="2420" sdnum="1033;">2420</td>
+		<td align="right" sdval="1369" sdnum="1033;">1369</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1303525" sdnum="1033;">1303525</td>
+		<td align="right" sdval="537501" sdnum="1033;">537501</td>
+		<td align="right" sdval="738883" sdnum="1033;">738883</td>
+		<td align="right" sdval="434" sdnum="1033;">434</td>
+		<td align="right" sdval="1707013" sdnum="1033;">1707013</td>
+		<td align="right" sdval="12792" sdnum="1033;">12792</td>
+		<td align="right" sdval="16888" sdnum="1033;">16888</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="29" sdnum="1033;">29</td>
+		<td align="left">Symphony</td>
+		<td align="right" sdval="2003" sdnum="1033;">2003</td>
+		<td align="left">Drew University</td>
+		<td align="right" sdval="2082" sdnum="1033;">2082</td>
+		<td align="right" sdval="1287" sdnum="1033;">1287</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1347824" sdnum="1033;">1347824</td>
+		<td align="right" sdval="677986" sdnum="1033;">677986</td>
+		<td align="right" sdval="133970" sdnum="1033;">133970</td>
+		<td align="right" sdval="370" sdnum="1033;">370</td>
+		<td align="right" sdval="1084527" sdnum="1033;">1084527</td>
+		<td align="right" sdval="3783" sdnum="1033;">3783</td>
+		<td align="right" sdval="4222" sdnum="1033;">4222</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="30" sdnum="1033;">30</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2013" sdnum="1033;">2013</td>
+		<td align="left">Earlham College</td>
+		<td align="right" sdval="1067" sdnum="1033;">1067</td>
+		<td align="right" sdval="1079" sdnum="1033;">1079</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="626722" sdnum="1033;">626722</td>
+		<td align="right" sdval="561586" sdnum="1033;">561586</td>
+		<td align="right" sdval="1618064" sdnum="1033;">1618064</td>
+		<td align="right" sdval="116" sdnum="1033;">116</td>
+		<td align="right" sdval="447990" sdnum="1033;">447990</td>
+		<td align="right" sdval="1467" sdnum="1033;">1467</td>
+		<td align="right" sdval="2762" sdnum="1033;">2762</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="31" sdnum="1033;">31</td>
+		<td align="left">Voyager</td>
+		<td align="right" sdval="1997" sdnum="1033;">1997</td>
+		<td align="left">Eckerd College</td>
+		<td align="right" sdval="2023" sdnum="1033;">2023</td>
+		<td align="right" sdval="629" sdnum="1033;">629</td>
+		<td align="right" sdval="12" sdnum="1033;">12</td>
+		<td align="right" sdval="502940" sdnum="1033;">502940</td>
+		<td align="right" sdval="150754" sdnum="1033;">150754</td>
+		<td align="right" sdval="9008" sdnum="1033;">9008</td>
+		<td align="right" sdval="214" sdnum="1033;">214</td>
+		<td align="right" sdval="655282" sdnum="1033;">655282</td>
+		<td align="right" sdval="1580" sdnum="1033;">1580</td>
+		<td align="right" sdval="1234" sdnum="1033;">1234</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="32" sdnum="1033;">32</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2016" sdnum="1033;">2016</td>
+		<td align="left">Franklin and Marshall College</td>
+		<td align="right" sdval="2249" sdnum="1033;">2249</td>
+		<td align="right" sdval="1498" sdnum="1033;">1498</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="1063979" sdnum="1033;">1063979</td>
+		<td align="right" sdval="482453" sdnum="1033;">482453</td>
+		<td align="right" sdval="135071" sdnum="1033;">135071</td>
+		<td align="right" sdval="165" sdnum="1033;">165</td>
+		<td align="right" sdval="2570713" sdnum="1033;">2570713</td>
+		<td align="right" sdval="5847" sdnum="1033;">5847</td>
+		<td align="right" sdval="6269" sdnum="1033;">6269</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="33" sdnum="1033;">33</td>
+		<td align="left">Millennium</td>
+		<td align="right" sdval="2005" sdnum="1033;">2005</td>
+		<td align="left">Furman University</td>
+		<td align="right" sdval="2884" sdnum="1033;">2884</td>
+		<td align="right" sdval="1151" sdnum="1033;">1151</td>
+		<td align="right" sdval="11" sdnum="1033;">11</td>
+		<td align="right" sdval="1309865" sdnum="1033;">1309865</td>
+		<td align="right" sdval="509605" sdnum="1033;">509605</td>
+		<td align="right" sdval="830324" sdnum="1033;">830324</td>
+		<td align="right" sdval="275" sdnum="1033;">275</td>
+		<td align="right" sdval="1927095" sdnum="1033;">1927095</td>
+		<td align="right" sdval="9978" sdnum="1033;">9978</td>
+		<td align="right" sdval="10392" sdnum="1033;">10392</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="34" sdnum="1033;">34</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2001" sdnum="1033;">2001</td>
+		<td align="left">Gettysburg College</td>
+		<td align="right" sdval="2447" sdnum="1033;">2447</td>
+		<td align="right" sdval="1289" sdnum="1033;">1289</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1474794" sdnum="1033;">1474794</td>
+		<td align="right" sdval="446182" sdnum="1033;">446182</td>
+		<td align="right" sdval="307163" sdnum="1033;">307163</td>
+		<td align="right" sdval="300" sdnum="1033;">300</td>
+		<td align="right" sdval="1674586" sdnum="1033;">1674586</td>
+		<td align="right" sdval="7191" sdnum="1033;">7191</td>
+		<td align="right" sdval="7127" sdnum="1033;">7127</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="35" sdnum="1033;">35</td>
+		<td align="left">Alma</td>
+		<td align="right" sdval="2016" sdnum="1033;">2016</td>
+		<td align="left">Grinnell College</td>
+		<td align="right" sdval="1705" sdnum="1033;">1705</td>
+		<td align="right" sdval="2004" sdnum="1033;">2004</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="1534484" sdnum="1033;">1534484</td>
+		<td align="right" sdval="806101" sdnum="1033;">806101</td>
+		<td align="right" sdval="409888" sdnum="1033;">409888</td>
+		<td align="right" sdval="296" sdnum="1033;">296</td>
+		<td align="right" sdval="1606364" sdnum="1033;">1606364</td>
+		<td align="right" sdval="4996" sdnum="1033;">4996</td>
+		<td align="right" sdval="3672" sdnum="1033;">3672</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="36" sdnum="1033;">36</td>
+		<td align="left">ALEPH 500</td>
+		<td align="left">NA</td>
+		<td align="left">Gustavus Adolphus College</td>
+		<td align="right" sdval="2379" sdnum="1033;">2379</td>
+		<td align="right" sdval="715" sdnum="1033;">715</td>
+		<td align="right" sdval="11" sdnum="1033;">11</td>
+		<td align="right" sdval="777969" sdnum="1033;">777969</td>
+		<td align="right" sdval="296501" sdnum="1033;">296501</td>
+		<td align="right" sdval="57705" sdnum="1033;">57705</td>
+		<td align="right" sdval="98" sdnum="1033;">98</td>
+		<td align="right" sdval="616359" sdnum="1033;">616359</td>
+		<td align="right" sdval="2943" sdnum="1033;">2943</td>
+		<td align="right" sdval="4970" sdnum="1033;">4970</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="37" sdnum="1033;">37</td>
+		<td align="left">Alma</td>
+		<td align="right" sdval="2017" sdnum="1033;">2017</td>
+		<td align="left">Hamilton College</td>
+		<td align="right" sdval="1877" sdnum="1033;">1877</td>
+		<td align="right" sdval="2152" sdnum="1033;">2152</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="1694566" sdnum="1033;">1694566</td>
+		<td align="right" sdval="518624" sdnum="1033;">518624</td>
+		<td align="right" sdval="414932" sdnum="1033;">414932</td>
+		<td align="right" sdval="182" sdnum="1033;">182</td>
+		<td align="right" sdval="1768026" sdnum="1033;">1768026</td>
+		<td align="right" sdval="16878" sdnum="1033;">16878</td>
+		<td align="right" sdval="11763" sdnum="1033;">11763</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="38" sdnum="1033;">38</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2014" sdnum="1033;">2014</td>
+		<td align="left">Harvey Mudd College</td>
+		<td align="right" sdval="825" sdnum="1033;">825</td>
+		<td align="right" sdval="1683" sdnum="1033;">1683</td>
+		<td align="right" sdval="8" sdnum="1033;">8</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="39" sdnum="1033;">39</td>
+		<td align="left">Millennium</td>
+		<td align="right" sdval="2000" sdnum="1033;">2000</td>
+		<td align="left">Haverford College</td>
+		<td align="right" sdval="1233" sdnum="1033;">1233</td>
+		<td align="right" sdval="3434" sdnum="1033;">3434</td>
+		<td align="right" sdval="8" sdnum="1033;">8</td>
+		<td align="right" sdval="1684464" sdnum="1033;">1684464</td>
+		<td align="right" sdval="494129" sdnum="1033;">494129</td>
+		<td align="right" sdval="702593" sdnum="1033;">702593</td>
+		<td align="right" sdval="91" sdnum="1033;">91</td>
+		<td align="right" sdval="1641540" sdnum="1033;">1641540</td>
+		<td align="right" sdval="3335" sdnum="1033;">3335</td>
+		<td align="right" sdval="5063" sdnum="1033;">5063</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="40" sdnum="1033;">40</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2002" sdnum="1033;">2002</td>
+		<td align="left">Hope College</td>
+		<td align="right" sdval="3392" sdnum="1033;">3392</td>
+		<td align="right" sdval="827" sdnum="1033;">827</td>
+		<td align="right" sdval="11" sdnum="1033;">11</td>
+		<td align="right" sdval="1236073" sdnum="1033;">1236073</td>
+		<td align="right" sdval="391783" sdnum="1033;">391783</td>
+		<td align="right" sdval="245095" sdnum="1033;">245095</td>
+		<td align="right" sdval="156" sdnum="1033;">156</td>
+		<td align="right" sdval="918951" sdnum="1033;">918951</td>
+		<td align="right" sdval="8555" sdnum="1033;">8555</td>
+		<td align="right" sdval="4345" sdnum="1033;">4345</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="41" sdnum="1033;">41</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2000" sdnum="1033;">2000</td>
+		<td align="left">Kalamazoo College</td>
+		<td align="right" sdval="1443" sdnum="1033;">1443</td>
+		<td align="right" sdval="684" sdnum="1033;">684</td>
+		<td align="right" sdval="13" sdnum="1033;">13</td>
+		<td align="right" sdval="546065" sdnum="1033;">546065</td>
+		<td align="right" sdval="361733" sdnum="1033;">361733</td>
+		<td align="right" sdval="147683" sdnum="1033;">147683</td>
+		<td align="right" sdval="191" sdnum="1033;">191</td>
+		<td align="right" sdval="198423" sdnum="1033;">198423</td>
+		<td align="right" sdval="2456" sdnum="1033;">2456</td>
+		<td align="right" sdval="1543" sdnum="1033;">1543</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="42" sdnum="1033;">42</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2002" sdnum="1033;">2002</td>
+		<td align="left">Kenyon College</td>
+		<td align="right" sdval="1711" sdnum="1033;">1711</td>
+		<td align="right" sdval="1564" sdnum="1033;">1564</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1155598" sdnum="1033;">1155598</td>
+		<td align="right" sdval="572436" sdnum="1033;">572436</td>
+		<td align="right" sdval="781131" sdnum="1033;">781131</td>
+		<td align="right" sdval="305" sdnum="1033;">305</td>
+		<td align="right" sdval="1223609" sdnum="1033;">1223609</td>
+		<td align="right" sdval="1514" sdnum="1033;">1514</td>
+		<td align="right" sdval="1486" sdnum="1033;">1486</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="43" sdnum="1033;">43</td>
+		<td align="left">Voyager</td>
+		<td align="right" sdval="2007" sdnum="1033;">2007</td>
+		<td align="left">Knox College</td>
+		<td align="right" sdval="1397" sdnum="1033;">1397</td>
+		<td align="right" sdval="907" sdnum="1033;">907</td>
+		<td align="right" sdval="11" sdnum="1033;">11</td>
+		<td align="right" sdval="726392" sdnum="1033;">726392</td>
+		<td align="right" sdval="354634" sdnum="1033;">354634</td>
+		<td align="right" sdval="8973" sdnum="1033;">8973</td>
+		<td align="right" sdval="56" sdnum="1033;">56</td>
+		<td align="right" sdval="334204" sdnum="1033;">334204</td>
+		<td align="right" sdval="6481" sdnum="1033;">6481</td>
+		<td align="right" sdval="9515" sdnum="1033;">9515</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="44" sdnum="1033;">44</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2001" sdnum="1033;">2001</td>
+		<td align="left">Lafayette College</td>
+		<td align="right" sdval="2533" sdnum="1033;">2533</td>
+		<td align="right" sdval="1731" sdnum="1033;">1731</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1711064" sdnum="1033;">1711064</td>
+		<td align="right" sdval="613949" sdnum="1033;">613949</td>
+		<td align="right" sdval="344469" sdnum="1033;">344469</td>
+		<td align="right" sdval="132" sdnum="1033;">132</td>
+		<td align="right" sdval="1756225" sdnum="1033;">1756225</td>
+		<td align="right" sdval="5256" sdnum="1033;">5256</td>
+		<td align="right" sdval="5755" sdnum="1033;">5755</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="45" sdnum="1033;">45</td>
+		<td align="left">Voyager</td>
+		<td align="right" sdval="2001" sdnum="1033;">2001</td>
+		<td align="left">Lake Forest College</td>
+		<td align="right" sdval="1600" sdnum="1033;">1600</td>
+		<td align="right" sdval="787" sdnum="1033;">787</td>
+		<td align="right" sdval="12" sdnum="1033;">12</td>
+		<td align="right" sdval="689310" sdnum="1033;">689310</td>
+		<td align="right" sdval="255406" sdnum="1033;">255406</td>
+		<td align="right" sdval="150010" sdnum="1033;">150010</td>
+		<td align="right" sdval="88" sdnum="1033;">88</td>
+		<td align="right" sdval="526290" sdnum="1033;">526290</td>
+		<td align="right" sdval="5194" sdnum="1033;">5194</td>
+		<td align="right" sdval="8393" sdnum="1033;">8393</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="46" sdnum="1033;">46</td>
+		<td align="left">Alma</td>
+		<td align="right" sdval="2015" sdnum="1033;">2015</td>
+		<td align="left">Lawrence University</td>
+		<td align="right" sdval="1557" sdnum="1033;">1557</td>
+		<td align="right" sdval="1254" sdnum="1033;">1254</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="784288" sdnum="1033;">784288</td>
+		<td align="right" sdval="734671" sdnum="1033;">734671</td>
+		<td align="right" sdval="220704" sdnum="1033;">220704</td>
+		<td align="right" sdval="169" sdnum="1033;">169</td>
+		<td align="right" sdval="840638" sdnum="1033;">840638</td>
+		<td align="right" sdval="2602" sdnum="1033;">2602</td>
+		<td align="right" sdval="4141" sdnum="1033;">4141</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="47" sdnum="1033;">47</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2014" sdnum="1033;">2014</td>
+		<td align="left">Macalester College</td>
+		<td align="right" sdval="2172" sdnum="1033;">2172</td>
+		<td align="right" sdval="1512" sdnum="1033;">1512</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1491450" sdnum="1033;">1491450</td>
+		<td align="right" sdval="426591" sdnum="1033;">426591</td>
+		<td align="right" sdval="6740" sdnum="1033;">6740</td>
+		<td align="right" sdval="191" sdnum="1033;">191</td>
+		<td align="right" sdval="1436973" sdnum="1033;">1436973</td>
+		<td align="right" sdval="2639" sdnum="1033;">2639</td>
+		<td align="right" sdval="12989" sdnum="1033;">12989</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="48" sdnum="1033;">48</td>
+		<td align="left">Koha -- ByWater Solutions</td>
+		<td align="right" sdval="2014" sdnum="1033;">2014</td>
+		<td align="left">Manhattan College</td>
+		<td align="right" sdval="4071" sdnum="1033;">4071</td>
+		<td align="right" sdval="626" sdnum="1033;">626</td>
+		<td align="right" sdval="13" sdnum="1033;">13</td>
+		<td align="right" sdval="1415064" sdnum="1033;">1415064</td>
+		<td align="right" sdval="262815" sdnum="1033;">262815</td>
+		<td align="right" sdval="212812" sdnum="1033;">212812</td>
+		<td align="right" sdval="224" sdnum="1033;">224</td>
+		<td align="right" sdval="711077" sdnum="1033;">711077</td>
+		<td align="right" sdval="985" sdnum="1033;">985</td>
+		<td align="right" sdval="391" sdnum="1033;">391</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="49" sdnum="1033;">49</td>
+		<td align="left">Millennium</td>
+		<td align="right" sdval="2004" sdnum="1033;">2004</td>
+		<td align="left">Middlebury College</td>
+		<td align="right" sdval="2558" sdnum="1033;">2558</td>
+		<td align="right" sdval="1888" sdnum="1033;">1888</td>
+		<td align="right" sdval="8" sdnum="1033;">8</td>
+		<td align="right" sdval="2458435" sdnum="1033;">2458435</td>
+		<td align="right" sdval="739182" sdnum="1033;">739182</td>
+		<td align="right" sdval="278747" sdnum="1033;">278747</td>
+		<td align="right" sdval="507" sdnum="1033;">507</td>
+		<td align="right" sdval="2548506" sdnum="1033;">2548506</td>
+		<td align="right" sdval="14538" sdnum="1033;">14538</td>
+		<td align="right" sdval="8873" sdnum="1033;">8873</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="50" sdnum="1033;">50</td>
+		<td align="left">Millennium</td>
+		<td align="right" sdval="2001" sdnum="1033;">2001</td>
+		<td align="left">Mills College</td>
+		<td align="right" sdval="1397" sdnum="1033;">1397</td>
+		<td align="right" sdval="738" sdnum="1033;">738</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="537421" sdnum="1033;">537421</td>
+		<td align="right" sdval="245785" sdnum="1033;">245785</td>
+		<td align="right" sdval="128868" sdnum="1033;">128868</td>
+		<td align="right" sdval="0" sdnum="1033;">0</td>
+		<td align="right" sdval="409363" sdnum="1033;">409363</td>
+		<td align="right" sdval="175" sdnum="1033;">175</td>
+		<td align="right" sdval="490" sdnum="1033;">490</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="51" sdnum="1033;">51</td>
+		<td align="left">Voyager</td>
+		<td align="right" sdval="2003" sdnum="1033;">2003</td>
+		<td align="left">Morehouse College</td>
+		<td align="right" sdval="2167" sdnum="1033;">2167</td>
+		<td align="right" sdval="1257" sdnum="1033;">1257</td>
+		<td align="right" sdval="12" sdnum="1033;">12</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="52" sdnum="1033;">52</td>
+		<td align="left">ALEPH 500</td>
+		<td align="right" sdval="2004" sdnum="1033;">2004</td>
+		<td align="left">Mount Holyoke College</td>
+		<td align="right" sdval="2215" sdnum="1033;">2215</td>
+		<td align="right" sdval="1558" sdnum="1033;">1558</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1417673" sdnum="1033;">1417673</td>
+		<td align="right" sdval="1384712" sdnum="1033;">1384712</td>
+		<td align="right" sdval="731213" sdnum="1033;">731213</td>
+		<td align="right" sdval="223" sdnum="1033;">223</td>
+		<td align="right" sdval="1825308" sdnum="1033;">1825308</td>
+		<td align="right" sdval="11286" sdnum="1033;">11286</td>
+		<td align="right" sdval="7473" sdnum="1033;">7473</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="53" sdnum="1033;">53</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2005" sdnum="1033;">2005</td>
+		<td align="left">Oberlin College</td>
+		<td align="right" sdval="2929" sdnum="1033;">2929</td>
+		<td align="right" sdval="2437" sdnum="1033;">2437</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="3163266" sdnum="1033;">3163266</td>
+		<td align="right" sdval="1620287" sdnum="1033;">1620287</td>
+		<td align="right" sdval="676883" sdnum="1033;">676883</td>
+		<td align="right" sdval="762" sdnum="1033;">762</td>
+		<td align="right" sdval="2507750" sdnum="1033;">2507750</td>
+		<td align="right" sdval="12214" sdnum="1033;">12214</td>
+		<td align="right" sdval="8889" sdnum="1033;">8889</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="54" sdnum="1033;">54</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="1999" sdnum="1033;">1999</td>
+		<td align="left">Occidental College</td>
+		<td align="right" sdval="2023" sdnum="1033;">2023</td>
+		<td align="right" sdval="1162" sdnum="1033;">1162</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1251227" sdnum="1033;">1251227</td>
+		<td align="right" sdval="255958" sdnum="1033;">255958</td>
+		<td align="right" sdval="629239" sdnum="1033;">629239</td>
+		<td align="right" sdval="342" sdnum="1033;">342</td>
+		<td align="right" sdval="922387" sdnum="1033;">922387</td>
+		<td align="right" sdval="6724" sdnum="1033;">6724</td>
+		<td align="right" sdval="9803" sdnum="1033;">9803</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="55" sdnum="1033;">55</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2002" sdnum="1033;">2002</td>
+		<td align="left">Ohio Wesleyan University</td>
+		<td align="right" sdval="1671" sdnum="1033;">1671</td>
+		<td align="right" sdval="1222" sdnum="1033;">1222</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="888957" sdnum="1033;">888957</td>
+		<td align="right" sdval="631459" sdnum="1033;">631459</td>
+		<td align="right" sdval="314643" sdnum="1033;">314643</td>
+		<td align="right" sdval="343" sdnum="1033;">343</td>
+		<td align="right" sdval="627758" sdnum="1033;">627758</td>
+		<td align="right" sdval="1012" sdnum="1033;">1012</td>
+		<td align="right" sdval="1398" sdnum="1033;">1398</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="56" sdnum="1033;">56</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2014" sdnum="1033;">2014</td>
+		<td align="left">Pitzer College</td>
+		<td align="right" sdval="1067" sdnum="1033;">1067</td>
+		<td align="right" sdval="1540" sdnum="1033;">1540</td>
+		<td align="right" sdval="11" sdnum="1033;">11</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="57" sdnum="1033;">57</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2014" sdnum="1033;">2014</td>
+		<td align="left">Pomona College</td>
+		<td align="right" sdval="1663" sdnum="1033;">1663</td>
+		<td align="right" sdval="1591" sdnum="1033;">1591</td>
+		<td align="right" sdval="7" sdnum="1033;">7</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="58" sdnum="1033;">58</td>
+		<td align="left">Symphony</td>
+		<td align="right" sdval="1996" sdnum="1033;">1996</td>
+		<td align="left">Randolph-Macon College</td>
+		<td align="right" sdval="1418" sdnum="1033;">1418</td>
+		<td align="right" sdval="676" sdnum="1033;">676</td>
+		<td align="right" sdval="12" sdnum="1033;">12</td>
+		<td align="right" sdval="523063" sdnum="1033;">523063</td>
+		<td align="right" sdval="164081" sdnum="1033;">164081</td>
+		<td align="right" sdval="69523" sdnum="1033;">69523</td>
+		<td align="right" sdval="111" sdnum="1033;">111</td>
+		<td align="right" sdval="296337" sdnum="1033;">296337</td>
+		<td align="right" sdval="1509" sdnum="1033;">1509</td>
+		<td align="right" sdval="1633" sdnum="1033;">1633</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="59" sdnum="1033;">59</td>
+		<td align="left">Alma</td>
+		<td align="right" sdval="2012" sdnum="1033;">2012</td>
+		<td align="left">Reed College</td>
+		<td align="right" sdval="1453" sdnum="1033;">1453</td>
+		<td align="right" sdval="3444" sdnum="1033;">3444</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="1594877" sdnum="1033;">1594877</td>
+		<td align="right" sdval="730705" sdnum="1033;">730705</td>
+		<td align="right" sdval="994754" sdnum="1033;">994754</td>
+		<td align="right" sdval="317" sdnum="1033;">317</td>
+		<td align="right" sdval="2821286" sdnum="1033;">2821286</td>
+		<td align="right" sdval="14271" sdnum="1033;">14271</td>
+		<td align="right" sdval="15116" sdnum="1033;">15116</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="60" sdnum="1033;">60</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2015" sdnum="1033;">2015</td>
+		<td align="left">Rhodes College</td>
+		<td align="right" sdval="2063" sdnum="1033;">2063</td>
+		<td align="right" sdval="754" sdnum="1033;">754</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="652248" sdnum="1033;">652248</td>
+		<td align="right" sdval="376735" sdnum="1033;">376735</td>
+		<td align="right" sdval="78780" sdnum="1033;">78780</td>
+		<td align="right" sdval="153" sdnum="1033;">153</td>
+		<td align="right" sdval="912700" sdnum="1033;">912700</td>
+		<td align="right" sdval="918" sdnum="1033;">918</td>
+		<td align="right" sdval="1720" sdnum="1033;">1720</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="61" sdnum="1033;">61</td>
+		<td align="left">Alma</td>
+		<td align="right" sdval="2014" sdnum="1033;">2014</td>
+		<td align="left">Rollins College</td>
+		<td align="right" sdval="3260" sdnum="1033;">3260</td>
+		<td align="right" sdval="772" sdnum="1033;">772</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1069677" sdnum="1033;">1069677</td>
+		<td align="right" sdval="212677" sdnum="1033;">212677</td>
+		<td align="right" sdval="50995" sdnum="1033;">50995</td>
+		<td align="right" sdval="93" sdnum="1033;">93</td>
+		<td align="right" sdval="880492" sdnum="1033;">880492</td>
+		<td align="right" sdval="3410" sdnum="1033;">3410</td>
+		<td align="right" sdval="5970" sdnum="1033;">5970</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="62" sdnum="1033;">62</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2015" sdnum="1033;">2015</td>
+		<td align="left">Saint Johns University</td>
+		<td align="right" sdval="1869" sdnum="1033;">1869</td>
+		<td align="right" sdval="976" sdnum="1033;">976</td>
+		<td align="right" sdval="12" sdnum="1033;">12</td>
+		<td align="right" sdval="908464" sdnum="1033;">908464</td>
+		<td align="right" sdval="484533" sdnum="1033;">484533</td>
+		<td align="right" sdval="57768" sdnum="1033;">57768</td>
+		<td align="right" sdval="242" sdnum="1033;">242</td>
+		<td align="right" sdval="524111" sdnum="1033;">524111</td>
+		<td align="right" sdval="3771" sdnum="1033;">3771</td>
+		<td align="right" sdval="3807" sdnum="1033;">3807</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="63" sdnum="1033;">63</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2013" sdnum="1033;">2013</td>
+		<td align="left">Sarah Lawrence College</td>
+		<td align="right" sdval="1643" sdnum="1033;">1643</td>
+		<td align="right" sdval="813" sdnum="1033;">813</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="863460" sdnum="1033;">863460</td>
+		<td align="right" sdval="399949" sdnum="1033;">399949</td>
+		<td align="right" sdval="239754" sdnum="1033;">239754</td>
+		<td align="right" sdval="116" sdnum="1033;">116</td>
+		<td align="right" sdval="535486" sdnum="1033;">535486</td>
+		<td align="right" sdval="2331" sdnum="1033;">2331</td>
+		<td align="right" sdval="9088" sdnum="1033;">9088</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="64" sdnum="1033;">64</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2014" sdnum="1033;">2014</td>
+		<td align="left">Scripps College</td>
+		<td align="right" sdval="989" sdnum="1033;">989</td>
+		<td align="right" sdval="1456" sdnum="1033;">1456</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="65" sdnum="1033;">65</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2002" sdnum="1033;">2002</td>
+		<td align="left">Sewanee-The University of the South</td>
+		<td align="right" sdval="1797" sdnum="1033;">1797</td>
+		<td align="right" sdval="1667" sdnum="1033;">1667</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1088654" sdnum="1033;">1088654</td>
+		<td align="right" sdval="917735" sdnum="1033;">917735</td>
+		<td align="right" sdval="622710" sdnum="1033;">622710</td>
+		<td align="right" sdval="342" sdnum="1033;">342</td>
+		<td align="right" sdval="1213595" sdnum="1033;">1213595</td>
+		<td align="right" sdval="4210" sdnum="1033;">4210</td>
+		<td align="right" sdval="2837" sdnum="1033;">2837</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="66" sdnum="1033;">66</td>
+		<td align="left">Millennium</td>
+		<td align="right" sdval="1998" sdnum="1033;">1998</td>
+		<td align="left">Simmons College</td>
+		<td align="right" sdval="5662" sdnum="1033;">5662</td>
+		<td align="right" sdval="519" sdnum="1033;">519</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1162489" sdnum="1033;">1162489</td>
+		<td align="right" sdval="226581" sdnum="1033;">226581</td>
+		<td align="right" sdval="30605" sdnum="1033;">30605</td>
+		<td align="right" sdval="94" sdnum="1033;">94</td>
+		<td align="right" sdval="1077839" sdnum="1033;">1077839</td>
+		<td align="right" sdval="3138" sdnum="1033;">3138</td>
+		<td align="right" sdval="4707" sdnum="1033;">4707</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="67" sdnum="1033;">67</td>
+		<td align="left">Voyager</td>
+		<td align="right" sdval="1999" sdnum="1033;">1999</td>
+		<td align="left">Skidmore College</td>
+		<td align="right" sdval="2642" sdnum="1033;">2642</td>
+		<td align="right" sdval="1294" sdnum="1033;">1294</td>
+		<td align="right" sdval="8" sdnum="1033;">8</td>
+		<td align="right" sdval="1333031" sdnum="1033;">1333031</td>
+		<td align="right" sdval="424619" sdnum="1033;">424619</td>
+		<td align="right" sdval="68462" sdnum="1033;">68462</td>
+		<td align="right" sdval="319" sdnum="1033;">319</td>
+		<td align="right" sdval="1693326" sdnum="1033;">1693326</td>
+		<td align="right" sdval="12678" sdnum="1033;">12678</td>
+		<td align="right" sdval="16632" sdnum="1033;">16632</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="68" sdnum="1033;">68</td>
+		<td align="left">ALEPH 500</td>
+		<td align="right" sdval="2004" sdnum="1033;">2004</td>
+		<td align="left">Smith College</td>
+		<td align="right" sdval="2874" sdnum="1033;">2874</td>
+		<td align="right" sdval="2797" sdnum="1033;">2797</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="3178653" sdnum="1033;">3178653</td>
+		<td align="right" sdval="1872998" sdnum="1033;">1872998</td>
+		<td align="right" sdval="1146757" sdnum="1033;">1146757</td>
+		<td align="right" sdval="426" sdnum="1033;">426</td>
+		<td align="right" sdval="3898988" sdnum="1033;">3898988</td>
+		<td align="right" sdval="21034" sdnum="1033;">21034</td>
+		<td align="right" sdval="18363" sdnum="1033;">18363</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="69" sdnum="1033;">69</td>
+		<td align="left">Voyager</td>
+		<td align="left">NA</td>
+		<td align="left">Spelman College</td>
+		<td align="right" sdval="2144" sdnum="1033;">2144</td>
+		<td align="right" sdval="1192" sdnum="1033;">1192</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+		<td align="left">NA</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="70" sdnum="1033;">70</td>
+		<td align="left">Alma</td>
+		<td align="right" sdval="2015" sdnum="1033;">2015</td>
+		<td align="left">St. Olaf College</td>
+		<td align="right" sdval="3046" sdnum="1033;">3046</td>
+		<td align="right" sdval="1329" sdnum="1033;">1329</td>
+		<td align="right" sdval="12" sdnum="1033;">12</td>
+		<td align="right" sdval="1436994" sdnum="1033;">1436994</td>
+		<td align="right" sdval="732809" sdnum="1033;">732809</td>
+		<td align="right" sdval="503398" sdnum="1033;">503398</td>
+		<td align="right" sdval="317" sdnum="1033;">317</td>
+		<td align="right" sdval="1837261" sdnum="1033;">1837261</td>
+		<td align="right" sdval="2251" sdnum="1033;">2251</td>
+		<td align="right" sdval="5649" sdnum="1033;">5649</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="71" sdnum="1033;">71</td>
+		<td align="left">Millennium</td>
+		<td align="right" sdval="2000" sdnum="1033;">2000</td>
+		<td align="left">Swarthmore College</td>
+		<td align="right" sdval="1581" sdnum="1033;">1581</td>
+		<td align="right" sdval="3414" sdnum="1033;">3414</td>
+		<td align="right" sdval="8" sdnum="1033;">8</td>
+		<td align="right" sdval="2450707" sdnum="1033;">2450707</td>
+		<td align="right" sdval="1053822" sdnum="1033;">1053822</td>
+		<td align="right" sdval="645727" sdnum="1033;">645727</td>
+		<td align="right" sdval="252" sdnum="1033;">252</td>
+		<td align="right" sdval="2223630" sdnum="1033;">2223630</td>
+		<td align="right" sdval="7371" sdnum="1033;">7371</td>
+		<td align="right" sdval="3906" sdnum="1033;">3906</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="72" sdnum="1033;">72</td>
+		<td align="left">Alma</td>
+		<td align="right" sdval="2016" sdnum="1033;">2016</td>
+		<td align="left">Trinity College</td>
+		<td align="right" sdval="2397" sdnum="1033;">2397</td>
+		<td align="right" sdval="1699" sdnum="1033;">1699</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1624359" sdnum="1033;">1624359</td>
+		<td align="right" sdval="1321038" sdnum="1033;">1321038</td>
+		<td align="right" sdval="341784" sdnum="1033;">341784</td>
+		<td align="right" sdval="537" sdnum="1033;">537</td>
+		<td align="right" sdval="1564189" sdnum="1033;">1564189</td>
+		<td align="right" sdval="4892" sdnum="1033;">4892</td>
+		<td align="right" sdval="18936" sdnum="1033;">18936</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="73" sdnum="1033;">73</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2008" sdnum="1033;">2008</td>
+		<td align="left">Trinity University</td>
+		<td align="right" sdval="2438" sdnum="1033;">2438</td>
+		<td align="right" sdval="1481" sdnum="1033;">1481</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="1367323" sdnum="1033;">1367323</td>
+		<td align="right" sdval="900025" sdnum="1033;">900025</td>
+		<td align="right" sdval="194867" sdnum="1033;">194867</td>
+		<td align="right" sdval="279" sdnum="1033;">279</td>
+		<td align="right" sdval="1950228" sdnum="1033;">1950228</td>
+		<td align="right" sdval="5431" sdnum="1033;">5431</td>
+		<td align="right" sdval="3267" sdnum="1033;">3267</td>
+	</tr>
+	<tr style="color:#fff">
+		<td bgcolor="#990000"  height="17" align="right" sdval="74" sdnum="1033;">74</td>
+		<td bgcolor="#990000"  align="left">Sierra</td>
+		<td bgcolor="#990000"  align="right" sdval="2003" sdnum="1033;" bgcolor="#990000" >2003</td>
+		<td bgcolor="#990000"  align="left" bgcolor="#990000" >Union College</td>
+		<td bgcolor="#990000"  align="right" sdval="2269" sdnum="1033;">2269</td>
+		<td bgcolor="#990000"  align="right" sdval="1802" sdnum="1033;">1802</td>
+		<td bgcolor="#990000"  align="right" sdval="10" sdnum="1033;">10</td>
+		<td bgcolor="#990000"  align="right" sdval="1654705" sdnum="1033;">1654705</td>
+		<td bgcolor="#990000"  align="right" sdval="637199" sdnum="1033;">637199</td>
+		<td bgcolor="#990000"  align="right" sdval="498172" sdnum="1033;">498172</td>
+		<td bgcolor="#990000"  align="right" sdval="390" sdnum="1033;">390</td>
+		<td bgcolor="#990000"  align="right" sdval="2081610" sdnum="1033;">2081610</td>
+		<td bgcolor="#990000"  align="right" sdval="8793" sdnum="1033;">8793</td>
+		<td bgcolor="#990000"  align="right" sdval="5434" sdnum="1033;">5434</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="75" sdnum="1033;">75</td>
+		<td align="left">Sierra</td>
+		<td align="right" sdval="2002" sdnum="1033;">2002</td>
+		<td align="left">Vassar College</td>
+		<td align="right" sdval="2435" sdnum="1033;">2435</td>
+		<td align="right" sdval="2356" sdnum="1033;">2356</td>
+		<td align="right" sdval="8" sdnum="1033;">8</td>
+		<td align="right" sdval="2483311" sdnum="1033;">2483311</td>
+		<td align="right" sdval="1041553" sdnum="1033;">1041553</td>
+		<td align="right" sdval="508523" sdnum="1033;">508523</td>
+		<td align="right" sdval="297" sdnum="1033;">297</td>
+		<td align="right" sdval="2708447" sdnum="1033;">2708447</td>
+		<td align="right" sdval="6069" sdnum="1033;">6069</td>
+		<td align="right" sdval="4543" sdnum="1033;">4543</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="76" sdnum="1033;">76</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2013" sdnum="1033;">2013</td>
+		<td align="left">Wabash College</td>
+		<td align="right" sdval="868" sdnum="1033;">868</td>
+		<td align="right" sdval="1216" sdnum="1033;">1216</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="529923" sdnum="1033;">529923</td>
+		<td align="right" sdval="217840" sdnum="1033;">217840</td>
+		<td align="right" sdval="150934" sdnum="1033;">150934</td>
+		<td align="right" sdval="80" sdnum="1033;">80</td>
+		<td align="right" sdval="510715" sdnum="1033;">510715</td>
+		<td align="right" sdval="1457" sdnum="1033;">1457</td>
+		<td align="right" sdval="1365" sdnum="1033;">1365</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="77" sdnum="1033;">77</td>
+		<td align="left">Alma</td>
+		<td align="right" sdval="2016" sdnum="1033;">2016</td>
+		<td align="left">Washington and Lee University</td>
+		<td align="right" sdval="2172" sdnum="1033;">2172</td>
+		<td align="right" sdval="2426" sdnum="1033;">2426</td>
+		<td align="right" sdval="8" sdnum="1033;">8</td>
+		<td align="right" sdval="2229341" sdnum="1033;">2229341</td>
+		<td align="right" sdval="1034252" sdnum="1033;">1034252</td>
+		<td align="right" sdval="321493" sdnum="1033;">321493</td>
+		<td align="right" sdval="441" sdnum="1033;">441</td>
+		<td align="right" sdval="2094094" sdnum="1033;">2094094</td>
+		<td align="right" sdval="5422" sdnum="1033;">5422</td>
+		<td align="right" sdval="3767" sdnum="1033;">3767</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="78" sdnum="1033;">78</td>
+		<td align="left">Millennium</td>
+		<td align="right" sdval="2001" sdnum="1033;">2001</td>
+		<td align="left">Wellesley College</td>
+		<td align="right" sdval="2510" sdnum="1033;">2510</td>
+		<td align="right" sdval="2022" sdnum="1033;">2022</td>
+		<td align="right" sdval="7" sdnum="1033;">7</td>
+		<td align="right" sdval="1845471" sdnum="1033;">1845471</td>
+		<td align="right" sdval="1121916" sdnum="1033;">1121916</td>
+		<td align="right" sdval="755148" sdnum="1033;">755148</td>
+		<td align="right" sdval="283" sdnum="1033;">283</td>
+		<td align="right" sdval="2232149" sdnum="1033;">2232149</td>
+		<td align="right" sdval="14374" sdnum="1033;">14374</td>
+		<td align="right" sdval="10626" sdnum="1033;">10626</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="79" sdnum="1033;">79</td>
+		<td align="left">Alma</td>
+		<td align="right" sdval="2016" sdnum="1033;">2016</td>
+		<td align="left">Wesleyan University</td>
+		<td align="right" sdval="3138" sdnum="1033;">3138</td>
+		<td align="right" sdval="2128" sdnum="1033;">2128</td>
+		<td align="right" sdval="8" sdnum="1033;">8</td>
+		<td align="right" sdval="2458488" sdnum="1033;">2458488</td>
+		<td align="right" sdval="1690951" sdnum="1033;">1690951</td>
+		<td align="right" sdval="489183" sdnum="1033;">489183</td>
+		<td align="right" sdval="216" sdnum="1033;">216</td>
+		<td align="right" sdval="3925583" sdnum="1033;">3925583</td>
+		<td align="right" sdval="9765" sdnum="1033;">9765</td>
+		<td align="right" sdval="7612" sdnum="1033;">7612</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="80" sdnum="1033;">80</td>
+		<td align="left">WMS</td>
+		<td align="right" sdval="2016" sdnum="1033;">2016</td>
+		<td align="left">Wheaton College</td>
+		<td align="right" sdval="1598" sdnum="1033;">1598</td>
+		<td align="right" sdval="1074" sdnum="1033;">1074</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="712339" sdnum="1033;">712339</td>
+		<td align="right" sdval="364693" sdnum="1033;">364693</td>
+		<td align="right" sdval="100000" sdnum="1033;">100000</td>
+		<td align="right" sdval="87" sdnum="1033;">87</td>
+		<td align="right" sdval="916349" sdnum="1033;">916349</td>
+		<td align="right" sdval="5029" sdnum="1033;">5029</td>
+		<td align="right" sdval="2787" sdnum="1033;">2787</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="81" sdnum="1033;">81</td>
+		<td align="left">Alma</td>
+		<td align="right" sdval="2015" sdnum="1033;">2015</td>
+		<td align="left">Whitman College</td>
+		<td align="right" sdval="1470" sdnum="1033;">1470</td>
+		<td align="right" sdval="1763" sdnum="1033;">1763</td>
+		<td align="right" sdval="9" sdnum="1033;">9</td>
+		<td align="right" sdval="838187" sdnum="1033;">838187</td>
+		<td align="right" sdval="574568" sdnum="1033;">574568</td>
+		<td align="right" sdval="296203" sdnum="1033;">296203</td>
+		<td align="right" sdval="631" sdnum="1033;">631</td>
+		<td align="right" sdval="1133046" sdnum="1033;">1133046</td>
+		<td align="right" sdval="7311" sdnum="1033;">7311</td>
+		<td align="right" sdval="5569" sdnum="1033;">5569</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="82" sdnum="1033;">82</td>
+		<td align="left">Millennium</td>
+		<td align="right" sdval="1999" sdnum="1033;">1999</td>
+		<td align="left">Whittier College</td>
+		<td align="right" sdval="2187" sdnum="1033;">2187</td>
+		<td align="right" sdval="567" sdnum="1033;">567</td>
+		<td align="right" sdval="12" sdnum="1033;">12</td>
+		<td align="right" sdval="717990" sdnum="1033;">717990</td>
+		<td align="right" sdval="192974" sdnum="1033;">192974</td>
+		<td align="right" sdval="136877" sdnum="1033;">136877</td>
+		<td align="right" sdval="62" sdnum="1033;">62</td>
+		<td align="right" sdval="430800" sdnum="1033;">430800</td>
+		<td align="right" sdval="3113" sdnum="1033;">3113</td>
+		<td align="right" sdval="2998" sdnum="1033;">2998</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="83" sdnum="1033;">83</td>
+		<td align="left">Alma</td>
+		<td align="right" sdval="2012" sdnum="1033;">2012</td>
+		<td align="left">Willamette University</td>
+		<td align="right" sdval="2746" sdnum="1033;">2746</td>
+		<td align="right" sdval="1193" sdnum="1033;">1193</td>
+		<td align="right" sdval="10" sdnum="1033;">10</td>
+		<td align="right" sdval="1588179" sdnum="1033;">1588179</td>
+		<td align="right" sdval="791061" sdnum="1033;">791061</td>
+		<td align="right" sdval="42556" sdnum="1033;">42556</td>
+		<td align="right" sdval="244" sdnum="1033;">244</td>
+		<td align="right" sdval="1321085" sdnum="1033;">1321085</td>
+		<td align="right" sdval="9652" sdnum="1033;">9652</td>
+		<td align="right" sdval="10009" sdnum="1033;">10009</td>
+	</tr>
+	<tr>
+		<td height="17" align="right" sdval="84" sdnum="1033;">84</td>
+		<td align="left">Alma</td>
+		<td align="right" sdval="2015" sdnum="1033;">2015</td>
+		<td align="left">Williams College</td>
+		<td align="right" sdval="2171" sdnum="1033;">2171</td>
+		<td align="right" sdval="3129" sdnum="1033;">3129</td>
+		<td align="right" sdval="7" sdnum="1033;">7</td>
+		<td align="right" sdval="2514696" sdnum="1033;">2514696</td>
+		<td align="right" sdval="1007137" sdnum="1033;">1007137</td>
+		<td align="right" sdval="140954" sdnum="1033;">140954</td>
+		<td align="right" sdval="1435" sdnum="1033;">1435</td>
+		<td align="right" sdval="2599567" sdnum="1033;">2599567</td>
+		<td align="right" sdval="22942" sdnum="1033;">22942</td>
+		<td align="right" sdval="15532" sdnum="1033;">15532</td>
+	</tr>
+</table>
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#myTable').DataTable(
+     	{
+     	 "fixedHeader": {
+         "header": true,
+         "footer": false
+    	},
+     	"autoWidth": true,
+     	"fixedColumns": {
+        "leftColumns": 1
+       },
+        "scrollX": true,
+  		"pageLength": 84,
+		"lengthMenu": [25, 50, 75]
+	});
+});
+</script>
+
+</body>
+
+</html>
