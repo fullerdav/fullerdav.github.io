@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>D3: Force layout</title>
+		<script type="text/javascript" src="js/d3.v3.min.js"></script>
+	<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+<style type="text/css">
+#B {margin-right:5px;}
+#C {padding-right:10px;}
+#D {padding-right:15px;}
+#E {padding-right:20px;}
+#F {padding-right:24px;}
+#G {padding-right:28px;}
+#H {padding-right:32px;}
+#I {padding-right:35px;}
+#J {padding-right:36px;}
+#K {padding-right:35px;}
+#L {padding-right:32px;}
+#M {padding-right:28px;}
+#N {padding-right:24px;}
+#O {padding-right:20px;}
+#P {padding-right:15px;}
+#Q {padding-right:10px;}
+#R {padding-right:5px;}
+
+#BBB {padding-left:5px;}
+#CCC {padding-left:10px;}
+#DDD {padding-left:15px;}
+#EEE {padding-left:20px;}
+#FFF {padding-left:24px;}
+#GGG {padding-left:28px;}
+#HHH {padding-left:32px;}
+#III {padding-left:35px;}
+#JJJ {padding-left:36px;}
+#KKK {padding-left:35px;}
+#LLL {padding-left:32px;}
+#MMM {padding-left:28px;}
+#NNN {padding-left:24px;}
+#OOO {padding-left:20px;}
+#PPP {padding-left:15px;}
+#QQQ {padding-left:10px;}
+#RRR {padding-left:5px;}
+
+		
+* {
+  box-sizing: border-box;
+}
+.container {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  
+}
+.framework {
+	width: 240px;
+	margin: auto 0;
+	justify-self: center;
+	text-align: center;
+	font-size:  14px;
+}
+.framework .node {
+	margin:  16px 0px;
+}
+
+.outcomes1 {
+	justify-self: end;
+	align-self: end;
+	text-align: end;
+	font-size:  12px;
+	width: 280px;
+}
+.outcomes1 .node {
+  margin: 12px 0;
+  height: auto;
+}
+
+.outcomes2 {
+	justify-self: start;
+	font-size:  12px;
+	width: 280px;
+}
+.outcomes2 .node {
+	margin:  14px 0px;
+}
+
+.fa-circle {
+	font-size: 10px;
+	color: teal;
+	margin: auto 10px;
+}
+.wac { color: teal; }
+.gened { color: blue; }
+.wpa {color: orangered;}
+.ilcs {color: firebrick;}
+.acrl {color: indigo;}
+</style>
+
+	</head>
+<body>
+
+<div class="container">
+ 
+
+<div class="outcomes1">
+	<div class="node wac" id="A">demonstrate proficiency in writing genres appropriate to the various disciplines addressed to critical readers.</div>
+	<div class="node wac" id="B">demonstrate proficiency in constructing discipline-appropriate claims/theses/questions to put forward ideas in a focused manner.</div>
+	<div class="node wac" id="C">use evidence appropriately to support claims.</div>
+	<div class="node wac" id="D">use analysis/synthesis/reflection/argument to develop ideas, which may include organization, structure, coherence, and depth of thinking.</div>
+	<div class="node wac" id="E">integrate the ideas of others appropriately for the discipline.</div>
+	<div class="node wac" id="F">practice ethical and professional standards of citation.</div>
+	<div class="node wac" id="G">demonstrate use of language appropriate for the audience and purpose.</div>
+	<div class="node wac" id="H">use constructive feedback from readers to revise writing to be more effective in achieving its purpose for readers.</div>
+	<div class="node gened" id="I">Discuss Ideas</div>
+	<div class="node gened" id="J">Read Texts Critically</div>
+	<div class="node gened" id="K">Develop Effective Arguments</div>
+	<div class="node gened" id="L">Incorporates Revision</div>
+	<div class="node gened" id="M">Develop A Research Topic</div>
+	<div class="node gened" id="N">Find Evidence</div>
+	<div class="node gened" id="O">Evaluate Evidence</div>
+	<div class="node gened" id="P">Develop an Evidence Based Argument</div>
+	<div class="node gened" id="Q">Present Research Findings</div>
+	<div class="node gened" id="R">Practice Professional Standards of Citation</div>
+	<div class="node gened" id="S">Make Connections or Original Contributions</div>
+</div>
+
+<div class="framework">
+	<div class="node" id="AA">Tropic Creation</div>
+	<div class="node" id="BB">Evolution of Research Over Time</div>
+	<div class="node" id="CC">Boolean Operators and Keyword Searching</div>
+	<div class="node" id="DD">Credibilty and Evaluation</div>
+	<div class="node" id="EE">Primary and Secondary Sources</div>
+	<div class="node" id="FF">Reading Sources</div>
+	<div class="node" id="GG">When to Use What Research Tools and the Value of Each One</div>
+	<div class="node" id="HH">Citations</div>
+	<div class="node" id="II">Engaging with the Scholarly Conversation to Find Significance</div>
+	<div class="node" id="JJ">Peer Review and the Information/Publishing Cycle</div>
+	<div class="node" id="KK">Navigating Online search and Request Systems</div>
+	<div class="node" id="LL">Ability to Navigate the Library</div>
+</div>
+
+<div class="outcomes2">
+	<div class="node wpa" id="AAA">Curiosity</div>
+	<div class="node wpa" id="BBB">Openness</div>
+	<div class="node wpa" id="CCC">Engagement</div>
+	<div class="node wpa" id="DDD">Creativity</div>
+	<div class="node wpa" id="EEE">Persistence</div>
+	<div class="node wpa" id="FFF">Responsibility</div>
+	<div class="node wpa" id="GGG">Flexibility</div>
+	<div class="node wpa" id="HHH">Metacognition</div>
+	<div class="node acrl" id="III">Authority is Constructed and Contextual</div>
+	<div class="node acrl" id="JJJ">Information Creation as a Process</div>
+	<div class="node acrl" id="KKK">Information has Value</div>
+	<div class="node acrl" id="LLL">Research as Inquiry</div>
+	<div class="node acrl" id="MMM">Scholarship as Conversation</div>
+	<div class="node acrl" id="NNN">Searching as Strategic Exploration</div>
+	<div class="node ilcs" id="OOO">Determine the nature and extent of information needed</div>
+	<div class="node ilcs" id="PPP">Accesses needed information effectively and efficiently</div>
+	<div class="node ilcs" id="QQQ">Evaluates information and its sources critically and incorporates selected</div>
+	<div class="node ilcs" id="RRR">Individually or as a member of a group,uses information effectively to accomplish a specific purpose</div>
+	<div class="node ilcs" id="SSS">Understands many of the economic, legal, and social issues surrounding thre use of information and accesses and uses information ethically and legally</div>
+</div>
+
+</div>
+<script>
+var assoc = {
+	"AA":  ["B","DDD","HHH","NNN","OOO","K","M","N"],
+	"BB":  ["AAA","BBB","CCC","HHH","FFF","LLL","NNN","OOO","QQQ","B","J","M","N"],
+	"CC":  ["BBB","EEE","QQQ","NNN","OOO","PPP","N"],
+	"DD":  ["III","JJJ","AAA","J","KKK","GGG","O","OOO","QQQ","G","HHH"],
+	"EE":  ["AAA","BBB","DDD","III","JJJ","OOO","PPP","QQQ","C","O","S"],
+	"FF":  ["AAA","BBB","CCC","FFF","KKK","LLL","QQQ","D","J","O","P","S"],
+	"GG":  ["AAA","BBB","NNN","PPP","O"],
+	"HH":  ["F","SSS","GGG","MMM","KKK","PPP","FFF"],
+	"II":  ["MMM","I","A","C","E","BBB","CCC","FFF","L","O","P","Q","S","H","QQQ","RRR"],
+	"JJ":  ["HHH","JJJ","N","O","KKK","OOO","III"],
+	"KK":  ["EEE","NNN","N","R","O","OOO","PPP","QQQ"],
+	"LL":  ["N","PPP","NNN"]
+};
+
+var allnodes = d3.selectAll("div.node");
+var fwnodes = d3.selectAll(".framework .node");
+fwnodes
+	.on("mouseover", function() {
+		  let linkedDivs = assoc[this.id];
+		  allnodes.style("opacity", .25);
+		  d3.select("#" + this.id).style("opacity", 1);
+		  linkedDivs.forEach(function(k,index){
+		  	let n = d3.select("#" + k);
+		    n.style("opacity", 1);
+		  	
+		  });
+			
+	})
+  .on("mouseout", function(){
+  	allnodes.style("opacity", 1);
+  });
+
+
+// var svg = d3.select("svg")
+// 	.append("clipPath")
+//   .attr("id", "clipping")
+//   .append("rect")
+//   .attr("width", "100%")
+//   .attr("height", "100%");
+
+
+
+// var data = { 
+//  "links": 
+//   [
+//    {"source": "HH", "target": "B"}, 
+//    {"source": "AA", "target": "C"},
+//    {"source": "CC", "target": "A"},
+//    {"source": "KK", "target": "PPP"}
+//   ]
+// }
+// data.nodes = d3.selectAll(".node")[0];
+
+// var link = d3.select("svg")
+//   .append("g")
+//   .attr("clip-path", "url(#clipping)")
+// 	.selectAll("line")
+//   .data(data.links)
+//   .enter()
+//  	.append("g")
+//   .append("line").style("stroke","black").style("stroke-width", 1).style("opacity", "1")
+//  // .data(data.nodes)
+//   .attr("x1", function(d) { return d3.select("#" + d[0].source)[0][0].offsetLeft;})
+//   .attr("y1", function(d) { return d.source.offsetTop + d.source.offsetHeight/2;})
+//   .attr("x2", function(d) { return d.target.offsetLeft + d.target.offsetWidth;})
+//   .attr("y2", function(d) { return d.target.offsetLeft + d.target.offsetHeight/2;});
+// //d3.select("#" + data.links[0].source)[0][0].offsetHeight
+</script>
+
+</body>
+</html>
