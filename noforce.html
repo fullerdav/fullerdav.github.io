@@ -117,7 +117,6 @@
 .wpa {color: orangered;}
 .ilcs {color: firebrick;}
 .acrl {color: indigo;}
-.objective {}
 
 .cclo rect {fill: blue;}
 .wac rect {fill: teal; }
@@ -179,7 +178,6 @@ span {
   transition-property: width, margin-right;
   transition-duration: 1s;
   transition-timing-function: ease-out;
-  cursor: pointer;
  
 }
 
@@ -201,9 +199,9 @@ span {
 	z-index: 9;
 	position: fixed;
 	width: 5em;
-	float: left;
+	cursor: pointer;
 	display: none;
-	height: 3em;
+	height: auto;
 	border-radius: 4px;
 	border: 1px solid black;
 	padding:  4px;
@@ -217,13 +215,14 @@ span {
 #return {
 	top: 16em;
 	vertical-align: middle;
+	 cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 <div id="d3force1">
-<div id="clear">Clear Selections</div>
+<div id="clear">Clear</div>
 <span id="return">Return</span>
 
 </div>
@@ -373,7 +372,7 @@ allnodes
 
 	});
 
-		function modalClose() {
+	function modalClose() {
        $("#d3force").css("width", "0%").css("margin-left", "100%");
        $("#d3force1").css("width", "0%").css("margin-right", "100%");
        $("#d3force1").css("border", "none");
@@ -435,5 +434,3 @@ allnodes
 
 </script>
 </body></html>
-
-
