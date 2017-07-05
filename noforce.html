@@ -7,7 +7,7 @@
 <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
 
-<script src="js/d3.min.js"></script>
+<script src="js/d3.v3.min.js"></script>
 <script src="js/d3plus.js"></script>
 
 
@@ -202,7 +202,7 @@ span {
 	position: fixed;
 	width: 5em;
 	float: left;
-	display: inline-block;
+	display: none;
 	height: 3em;
 	border-radius: 4px;
 	border: 1px solid black;
@@ -370,6 +370,8 @@ allnodes
 		$("#d3force").css("width", "calc(96% - 6px)").css("margin-left", "calc(4% + 6px)");
 		$("#d3force1").css("width", "calc(4% + 6px)").css("margin-right", "calc(96% - 6px)");
 		$("#d3force1").css("border-right", "2px solid black");
+		$("#clear").css("display","inline;");
+		$("#return").css("display","inline;")
 		d3draw(this.id);
 	});
 
