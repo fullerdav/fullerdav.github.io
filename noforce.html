@@ -7,7 +7,7 @@
 <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
 
-<script src="js/d3.v3.min.js"></script>
+<script src="js/d3.min.js"></script>
 <script src="js/d3plus.js"></script>
 
 
@@ -211,8 +211,8 @@ span {
 	background-color: white;
 	margin: 1px;
 	transform: rotate(-90deg);
-
 }
+
 #clear {top:10em;}
 #return {
 	top: 16em;
@@ -325,9 +325,7 @@ const assoc = {
 	"KK":  ["KKK","LLL","MMM","R","O","EEE","SSS"],
 	"LL":  ["N","LLL","SSS"]
 };
-const types = {
 
-};	
 var allnodes = $(".node");
 var nodeset = new Set(["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","AA","BB","CC","DD","EE","FF","GG","HH","II","JJ","KK","LL","AAA","BBB","CCC","DDD","EEE","FFF","GGG","HHH","III","JJJ","KKK","LLL","MMM","NNN","OOO","PPP","QQQ","RRR","SSS"]);
 var activeDivs = new Set();
@@ -370,15 +368,17 @@ allnodes
 		$("#d3force").css("width", "calc(96% - 6px)").css("margin-left", "calc(4% + 6px)");
 		$("#d3force1").css("width", "calc(4% + 6px)").css("margin-right", "calc(96% - 6px)");
 		$("#d3force1").css("border-right", "2px solid black");
-		$("#clear").css("display","inline;");
-		$("#return").css("display","inline;")
+		
 		d3draw(this.id);
+
 	});
 
 		function modalClose() {
        $("#d3force").css("width", "0%").css("margin-left", "100%");
        $("#d3force1").css("width", "0%").css("margin-right", "100%");
        $("#d3force1").css("border", "none");
+       $("#clear").css("display","none");
+			 $("#return").css("display","none");
        $("#d3force").empty();
     }
     $("#return").on("click", () => {
@@ -426,6 +426,9 @@ allnodes
     .class("class")
    // .ui({"position": "left", "align": "left","margin":5,"padding":5})
     .draw();
+
+    	$("#clear").css("display","inline");
+		$("#return").css("display","inline");
 
 }
 
