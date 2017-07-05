@@ -1,312 +1,434 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8"><meta name="viewport" content="initial-scale=1, maximum-scale=1">
-		<title>D3: Force layout</title>
-		
-		<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-		<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
-		<style type="text/css">
-			* {
-			box-sizing: border-box;
-			margin: 0; 
-			padding: 0
-		}
-		#B {margin-right:5px;}
-		#C {margin-right:10px;}
-		#D {margin-right:15px;}
-		#E {margin-right:20px;}
-		#F {margin-right:24px;}
-		#G {margin-right:28px;}
-		#H {margin-right:32px;}
-		#I {margin-right:35px;}
-		#J {margin-right:36px;}
-		#K {margin-right:35px;}
-		#L {margin-right:32px;}
-		#M {margin-right:28px;}
-		#N {margin-right:24px;}
-		#O {margin-right:20px;}
-		#P {margin-right:15px;}
-		#Q {margin-right:10px;}
-		#R {margin-right:5px;}
-		#BBB {margin-left:5px;}
-		#CCC {margin-left:10px;}
-		#DDD {margin-left:15px;}
-		#EEE {margin-left:20px;}
-		#FFF {margin-left:24px;}
-		#GGG {margin-left:28px;}
-		#HHH {margin-left:32px;}
-		#III {margin-left:35px;}
-		#JJJ {margin-left:36px;}
-		#KKK {margin-left:35px;}
-		#LLL {margin-left:32px;}
-		#MMM {margin-left:28px;}
-		#NNN {margin-left:24px;}
-		#OOO {margin-left:20px;}
-		#PPP {margin-left:15px;}
-		#QQQ {margin-left:10px;}
-		#RRR {margin-left:5px;}
-				
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>D3: Force layout</title>
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
 
-		.container {
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			grid-auto-rows: 100px;
-		}
-		.framework {
-			margin: auto 0;
-			justify-self: center;
-			grid-column-start: 2; 
-      grid-row-start: 2; 
-		}
-	.banner {
-		width: 100%;
-		height: 100%;
-		grid-column-start: 1; 
-		grid-column-end: 3; 
-    grid-row-start: 1; 
-		justify-self: start;
-		align-self: start;
-	
-	}
+<script src="js/d3.min.js"></script>
+<script src="js/d3plus.js"></script>
 
-		.framework .node {
-			width: 240px;
-			margin:  16px 0px;
-			text-align: center;
-			font-size:  14px;		
-		}
-		.node {
-			height: auto;
-			padding: 4px;
-			text-indent: 0;
-			min-height: 30px;
-			vertical-align: middle;	
-		}
-		.outcomes1 {
-			justify-self: end;
-			width: 280px;
-			grid-column-start: 1; 
-      grid-row-start: 2; 
-		}
-		.outcomes2 {
-			width: 280px;
-			grid-column-start: 3; 
-      grid-row-start: 2; 
-		}
-		.outcomes1 .node {
-			text-align: right;
-			font-size:  12px;
-		}
-		.outcomes2 .node {
-			font-size:  12px;
-			padding-left: 8px;
-		}
-		.hilite {
-			border-radius: 8px;
-			box-shadow:  2px 2px 0 rgba(0,0,0,0.16),0 0 0 1px rgba(0,0,0,0.08);
-			opacity: 1;
-		}
-/*
-			.circlebox {
-			justify-self: center;
-			align-self: center;
-			position: relative;
+
+<style type="text/css">
+
+* {
+	box-sizing: border-box;
+	margin: 0; 
+	padding: 0
+}
+
+#B {margin-right:5px;}
+#C {margin-right:10px;}
+#D {margin-right:15px;}
+#E {margin-right:20px;}
+#F {margin-right:24px;}
+#G {margin-right:28px;}
+#H {margin-right:32px;}
+#I {margin-right:35px;}
+#J {margin-right:36px;}
+#K {margin-right:35px;}
+#L {margin-right:32px;}
+#M {margin-right:28px;}
+#N {margin-right:24px;}
+#O {margin-right:20px;}
+#P {margin-right:15px;}
+#Q {margin-right:10px;}
+#R {margin-right:5px;}
+#BBB {margin-left:5px;}
+#CCC {margin-left:10px;}
+#DDD {margin-left:15px;}
+#EEE {margin-left:20px;}
+#FFF {margin-left:24px;}
+#GGG {margin-left:28px;}
+#HHH {margin-left:32px;}
+#III {margin-left:35px;}
+#JJJ {margin-left:36px;}
+#KKK {margin-left:35px;}
+#LLL {margin-left:32px;}
+#MMM {margin-left:28px;}
+#NNN {margin-left:24px;}
+#OOO {margin-left:20px;}
+#PPP {margin-left:15px;}
+#QQQ {margin-left:10px;}
+#RRR {margin-left:5px;}
+
+.container {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-row: auto;
+	margin: auto;
+}
+
+.framework {
+	margin: auto 0;
+	justify-self: center;
+	text-align: center;
+}
+
+.framework .node {
+	margin:  12px 0px;
+	font-size:  14px;
+}
+.node {
+	height: auto;
+	min-height: 24px;
+	vertical-align: middle;	
+	transition-property: opacity;
+  transition-duration: .75s;
+  transition-timing-function: ease-out;	
+}
+
+.outcomes1 {
+	justify-self: end;
+	justify-items: end;
+	text-align: right;
+	font-size:  12px;
+}
+
+.outcomes1 .node {
+ 	justify-items: end;
+}
+
+.outcomes2 {
+	justify-self: start;
+	justify-items: start;
+	text-align: left;
+	font-size:  12px;
+}
+
+.outcomes2 .node {
+	justify-items: start;
+}
+
+.hilite {
+	border-radius: 8px;
+	box-shadow:  2px 2px 0 rgba(0,0,0,0.16),0 0 0 1px rgba(0,0,0,0.08);
+	opacity: 1;
+}
+
+.lolite {
+	opacity: .4;
+}
+
+.wac { color: teal; }
+.cclo { color: blue;}
+.wpa {color: orangered;}
+.ilcs {color: firebrick;}
+.acrl {color: indigo;}
+.objective {}
+
+.cclo rect {fill: blue;}
+.wac rect {fill: teal; }
+.wpa rect {fill: orangered;}
+.ilcs rect {fill: firebrick;}
+.acrl rect {fill: indigo;}
+.objective rect {fill:#f4d442;}
+.objective text {fill:#333;}
+
+span {
+	display: inline-block;
+	width: inherit;
+	height: inherit;
+	padding: 8px;
+}
+
+#legend {
+	font-size: 11px; 
+	display: inline;
+	padding: 10px 0;
+	float: right;
+	z-index: 2;
+	background-color: #fff;
+	position: static;
+	width: 67%;
+}
+
+.label { 
+	margin-left: 4px; 
+	padding: 2px 4px;
+}
+#wac {background:teal; height:8px; width:10px; display: inline-block; }
+#wpa {background:orangered; height:10px; width:10px; display: inline-block;}
+#ilcs {background: firebrick; height:10px; width:10px; display: inline-block;}
+#acrl {background-color:indigo; height:10px; width:10px;display: inline-block;}
+#cclo { background-color: blue;  height:10px; width:10px; display: inline-block;}
+
+#d3force {
+	position: fixed;
+	background-color:  rgba(255,255,255,.85);
+	z-index: 10;
+	margin-left: 100%;
+	height: 100%;
+	width: 0%;
+  float: right;
+  transition-property: width, margin-left;
+  transition-duration: 1s;
+  transition-timing-function: ease-out;
+}
+
+#d3force1 {
+	position: fixed;
+	background-color:  rgb(100,100,100);
+	z-index: 9;
+	margin-right: 100%;
+	height: 100%;
+	width: 0%;
+  float: left;
+  transition-property: width, margin-right;
+  transition-duration: 1s;
+  transition-timing-function: ease-out;
+  cursor: pointer;
+ 
+}
+
+
+.d3plus_label {fill:white;}
+
+@media (max-width: 900px) {
+  #legend {
+    display: none;
+  }
+}
+@media (max-width: 1100px) {
+  #legend {
+    font-size: 9px;
+  }
+}
+
+#clear, #return  {
+	z-index: 9;
+	position: fixed;
+	width: 5em;
+	float: left;
+	display: inline-block;
+	height: 3em;
+	border-radius: 4px;
+	border: 1px solid black;
+	padding:  4px;
+	text-align: center;
+	background-color: white;
+	margin: 1px;
+	transform: rotate(-90deg);
+
+}
+#clear {top:10em;}
+#return {
+	top: 16em;
+	vertical-align: middle;
+}
+</style>
+</head>
+
+<body>
+<div id="d3force1">
+<div id="clear">Clear Selections</div>
+<span id="return">Return</span>
+
+</div>
+<div id="d3force"></div>
+
+<div class="container">
+	<div class="outcomes1">
+		<div class="node" id="A"><span class="wac">Demonstrate proficiency in writing genres appropriate to the various disciplines addressed to critical readers.</span></div>
+		<div class="node" id="B"><span class="wac">Demonstrate proficiency in constructing discipline-appropriate claims/theses/questions to put forward ideas in a focused manner.</span></div>
+		<div class="node" id="C"><span class="wac">Use evidence appropriately to support claims.</span></div>
+		<div class="node" id="D"><span class="wac">Use analysis/synthesis/reflection/argument to develop ideas, which may include organization, structure, coherence, and depth of thinking.</span></div>
+		<div class="node" id="E"><span class="wac">Practice ethical and professional standards of citation.</span></div>
+		<div class="node" id="F"><span class="wac">Demonstrate use of language appropriate for the audience and purpose.</span></div>
+		<div class="node" id="G"><span class="wac">Integrate the ideas of others appropriately for the discipline.</span></div>
+		<div class="node" id="H"><span class="wac">Use constructive feedback from readers to revise writing to be more effective in achieving its purpose for readers.</span></div>
+		<div class="node" id="I"><span class="cclo">Discuss Ideas</span></div>
+		<div class="node" id="J"><span class="cclo">Read Texts Critically</span></div>
+		<div class="node" id="K"><span class="cclo">Develop Effective Arguments</span></div>
+		<div class="node" id="L"><span class="cclo">Incorporates Revision</span></div>
+		<div class="node" id="M"><span class="cclo">Develop A Research Topic</span></div>
+		<div class="node" id="N"><span class="cclo">Find Evidence</span></div>
+		<div class="node" id="O"><span class="cclo">Evaluate Evidence</span></div>
+		<div class="node" id="P"><span class="cclo">Develop an Evidence Based Argument</span></div>
+		<div class="node" id="Q"><span class="cclo">Present Research Findings</span></div>
+		<div class="node" id="R"><span class="cclo">Practice Professional Standards of Citation</span></div>
+		<div class="node" id="S"><span class="cclo">Make Connections or Original Contributions</span></div>
+	</div>
+
+
+
+<div class="framework">
+		<div class="node" id="AA"><span class="objective">Topic Creation</span></div>
+		<div class="node" id="BB"><span class="objective">Evolution of Research Over Time</span></div>
+		<div class="node" id="CC"><span class="objective">Boolean Operators and Keyword Searching</span></div>
+		<div class="node" id="DD"><span class="objective">Credibilty and Evaluation</span></div>
+		<div class="node" id="EE"><span class="objective">Primary and Secondary Sources</span></div>
+		<div class="node" id="FF"><span class="objective">Reading Sources</span></div>
+		<div class="node" id="GG"><span class="objective">When to Use What Research Tools and the Value of Each One</span></div>
+		<div class="node" id="HH"><span class="objective">Citations</span></div>
+		<div class="node" id="II"><span class="objective">Engaging with the Scholarly Conversation to Find Significance</span></div>
+		<div class="node" id="JJ"><span class="objective">Peer Review and the Information/Publishing Cycle</span></div>
+		<div class="node" id="KK"><span class="objective">Navigating Online Search and Request Systems</span></div>
+		<div class="node" id="LL"><span class="objective">Ability to Navigate the Library</span></div>
+</div>
+
+<div class="outcomes2">
+		<div id="legend">
+		<div><div id="wac"></div><span class="label">Writing Across the Curriculum Learning Outcomes</span></div>
+		<div><div id="cclo"></div><span class="label">Common Curriculum Learning Outcomes</span></div>
+		<div><div id="wpa"></div><span class="label">WPA Framework Habits of Mind</span></div>
+		<div><div id="ilcs"></div><span class="label">Information Literacy Competency Standards</span></div>
+		<div><div id="acrl"></div><span class="label">ACRL Information Literacy Framework</span></div>
+		</div>
+
+		<div class="node" id="AAA"><span class="wpa">Curiosity</span></div>
+		<div class="node" id="BBB"><span class="wpa">Openness</span></div>
+		<div class="node" id="CCC"><span class="wpa">Engagement</span></div>
+		<div class="node" id="DDD"><span class="wpa">Creativity</span></div>
+		<div class="node" id="EEE"><span class="wpa">Persistence</span></div>
+		<div class="node" id="FFF"><span class="wpa">Responsibility</span></div>
+		<div class="node" id="GGG"><span class="wpa">Flexibility</span></div>
+		<div class="node" id="HHH"><span class="wpa">Metacognition</span></div>
+		<div class="node" id="III"><span class="ilcs">Individually or as a member of a group,uses information effectively to accomplish a specific purpose</span></div>
+		<div class="node" id="JJJ"><span class="ilcs">Understands many of the economic, legal, and social issues surrounding thre use of information and accesses and uses information ethically and legally</span></div>
+		<div class="node" id="KKK"><span class="ilcs">Determine the nature and extent of information needed</span></div>
+		<div class="node" id="LLL"><span class="ilcs">Accesses needed information effectively and efficiently</span></div>
+		<div class="node" id="MMM"><span class="ilcs">Evaluates information and its sources critically and incorporates selected information into her or his knowledge base or value system</span></div>
+		<div class="node" id="NNN"><span class="acrl">Authority is Constructed and Contextual</span></div>
+		<div class="node" id="OOO"><span class="acrl">Information Creation as a Process</span></div>
+		<div class="node" id="PPP"><span class="acrl">Information has Value</span></div>
+		<div class="node" id="QQQ"><span class="acrl">Research as Inquiry</span></div>
+		<div class="node" id="RRR"><span class="acrl">Scholarship as Conversation</span></div>
+		<div class="node" id="SSS"><span class="acrl">Searching as Strategic Exploration</span></div>
+	</div>
+</div>
 			
-			height: auto;
-			width: auto;
-		}
-		.outcomes2 .circlebox {
-			left:  -16px;
-		}
-		.outcomes1 .circlebox {
-			justify-self: end;
-			align-self: end;
-			left: 16px;
-		}
-	
-
-.fa-circle {
-			font-size: 10px;
-			color: teal;
-			position: relative;
-		}
-		*/
-.outcomes1 .node:after {
-    content: "\f111";
-    font-family: FontAwesome;
-    font-weight: normal;
-    font-size: 10px;
-    padding-right: 0.5em;
-    position: relative;
-    top: 0px;
-    left: 30px;
-}
-
-.outcomes2 .node:before {
-    content: "\f111";
-    font-family: FontAwesome;
-    font-weight: normal;
-    font-size: 10px;
-    padding-right: 0.5em;
-    position: relative;
-    top: 0px;
-    left: -30px;
-}
- 		
-	
-		.wac { color: teal; }
-		.gened { color: blue; }
-		.wpa {color: orangered;}
-		.ilcs {color: firebrick;}
-		.acrl {color: indigo;}
-	
-	#legend {
-		grid-column-start: 3;  
-    grid-row-start: 1;
-    font-size: 12px; 
-		display: inline-block;
-		padding: 8px;
-	}
-	.label { margin-left: 4px; }
-		#wac {background:teal; height:10px; width:10px; display: inline-block; }
-		#wpa {background:orangered; height:10px; width:10px; display: inline-block;}
-		#ilcs {background: firebrick; height:10px; width:10px; display: inline-block;}
-		#acrl {background-color:indigo; height:10px; width:10px;display: inline-block;}
-		#cclo { background-color: blue;  height:10px; width:10px; display: inline-block;}
-		</style>
-	</head>
-	<body>
-	<div class="container">
-
-<div class="banner"></div>
-
-<div id="legend">
-
-<div><div id="wac"></div><span class="label">Writing Across the Curriculum Learning Outcomes</span></div>
-<div><div id="cclo"></div><span class="label">Common Curriculum Learning Outcomes</span></div>
-<div><div id="wpa"></div><span class="label">WPA Framework Habits of Mind</span></div>
-<div><div id="ilcs"></div><span class="label">Information Literacy Competency Standards</span></div>
-<div><div id="acrl"></div><span class="label">ACRL Information Literacy Framework</span></div>
-</div>
-
-
-<div class="outcomes1">
-		<div class="node wac" id="A">demonstrate proficiency in writing genres appropriate to the various disciplines addressed to critical readers.</div>
-		<div class="node wac" id="B">demonstrate proficiency in constructing discipline-appropriate claims/theses/questions to put forward ideas in a focused manner.</div>
-		<div class="node wac" id="C">use evidence appropriately to support claims.</div>
-		<div class="node wac" id="D">use analysis/synthesis/reflection/argument to develop ideas, which may include organization, structure, coherence, and depth of thinking.</div>
-		<div class="node wac" id="E">practice ethical and professional standards of citation.</div>
-		<div class="node wac" id="F">demonstrate use of language appropriate for the audience and purpose.</div>
-		<div class="node wac" id="G">integrate the ideas of others appropriately for the discipline.</div>
-		<div class="node wac" id="H">use constructive feedback from readers to revise writing to be more effective in achieving its purpose for readers.</div>
-		<div class="node gened" id="I">Discuss Ideas</div>
-		<div class="node gened" id="J">Read Texts Critically</div>
-		<div class="node gened" id="K">Develop Effective Arguments</div>
-		<div class="node gened" id="L">Incorporates Revision</div>
-		<div class="node gened" id="M">Develop A Research Topic</div>
-		<div class="node gened" id="N">Find Evidence</div>
-		<div class="node gened" id="O">Evaluate Evidence</div>
-		<div class="node gened" id="P">Develop an Evidence Based Argument</div>
-		<div class="node gened" id="Q">Present Research Findings</div>
-		<div class="node gened" id="R">Practice Professional Standards of Citation</div>
-		<div class="node gened" id="S">Make Connections or Original Contributions</div>
-</div>
-
-
-			<div class="framework">
-					<div class="node" id="AA">Topic Creation</div>
-					<div class="node" id="BB">Evolution of Research Over Time</div>
-					<div class="node" id="CC">Boolean Operators and Keyword Searching</div>
-					<div class="node" id="DD">Credibilty and Evaluation</div>
-					<div class="node" id="EE">Primary and Secondary Sources</div>
-					<div class="node" id="FF">Reading Sources</div>
-					<div class="node" id="GG">When to Use What Research Tools and the Value of Each One</div>
-					<div class="node" id="HH">Citations</div>
-					<div class="node" id="II">Engaging with the Scholarly Conversation to Find Significance</div>
-					<div class="node" id="JJ">Peer Review and the Information/Publishing Cycle</div>
-					<div class="node" id="KK">Navigating Online search and Request Systems</div>
-					<div class="node" id="LL">Ability to Navigate the Library</div>
-			</div>
-
-
-			<div class="outcomes2">
-					<div class="node wpa" id="AAA">Curiosity</div>
-					<div class="node wpa" id="BBB">Openness</div>
-					<div class="node wpa" id="CCC">Engagement</div>
-					<div class="node wpa" id="DDD">Creativity</div>
-					<div class="node wpa" id="EEE">Persistence</div>
-					<div class="node wpa" id="FFF">Responsibility</div>
-					<div class="node wpa" id="GGG">Flexibility</div>
-					<div class="node wpa" id="HHH">Metacognition</div>
-					<div class="node ilcs" id="III">Individually or as a member of a group,uses information effectively to accomplish a specific purpose</div>
-					<div class="node ilcs" id="JJJ">Understands many of the economic, legal, and social issues surrounding thre use of information and accesses and uses information ethically and legally</div>
-					<div class="node ilcs" id="KKK">Determine the nature and extent of information needed</div>
-					<div class="node ilcs" id="LLL">Accesses needed information effectively and efficiently</div>
-					<div class="node ilcs" id="MMM">Evaluates information and its sources critically and incorporates selected information into her or his knowledge base or value system</div>
-					<div class="node acrl" id="NNN">Authority is Constructed and Contextual</div>
-					<div class="node acrl" id="OOO">Information Creation as a Process</div>
-					<div class="node acrl" id="PPP">Information has Value</div>
-					<div class="node acrl" id="QQQ">Research as Inquiry</div>
-					<div class="node acrl" id="RRR">Scholarship as Conversation</div>
-					<div class="node acrl" id="SSS">Searching as Strategic Exploration</div>
-			</div>
-</div>
-			</div>
 		
-		<script>
-		$(".circlebox").each(function(i, el){
-		//	if ($(el).parent().height() > 15) {
-				let top = ($(el).height()/2 - 5);
-				// top = $(el).hasClass("left") ? -(top) : top;
-				$(el).css("padding-top", top + "px");
-		  //  }
-		});
-	
-		var assoc = {
-			"AA":  ["B","K","M","N","DDD","KKK","SSS"],
-			"BB":  ["B","J","M","N","AAA","BBB","CCC","FFF","HHH","KKK","MMM","SSS","QQQ"],
-			"CC":  ["BBB","EEE","KKK","LLL","MMM","SSS","N"],
-			"DD":  ["O","F","J","AAA","GGG","HHH","KKK","MMM","NNN","OOO","PPP"],
-			"EE":  ["C","O","S","AAA","BBB","DDD","KKK","LLL","OOO","MMM","NNN"],
-			"FF":  ["AAA","BBB","CCC","FFF","KKK","LLL","QQQ","D","J","O","P","S"],
-			"GG":  ["AAA","BBB","LLL","SSS","O"],
-			"HH":  ["E","R","FFF","GGG","JJJ","LLL","PPP","RRR"],
-			"II":  ["BBB","CCC","FFF","MMM","III","RRR","A","C","G","H","I","L","O","P","Q","S"],
-			"JJ":  ["HHH","NNN","N","O","KKK","OOO","PPP"],
-			"KK":  ["KKK","LLL","MMM","R","O","EEE","SSS"],
-			"LL":  ["N","LLL","SSS"]
-		};
-		var allnodes = $("div.node");
-		var linkedDivs = [];
-		allnodes
-			.on("mouseover", function() {		
-					if (this.id.length === 2) {
-					  linkedDivs = assoc[this.id];	
-					} else {
-						for (let key in assoc) {
-							if (assoc[key].indexOf(this.id) !== -1) {
-								linkedDivs.push(key);	
-							}
-						}
+<script>
+
+Set.prototype.difference = function(setB) {
+    var difference = new Set(this);
+    for (var elem of setB) {
+        difference.delete(elem);
+    }
+    return difference;
+}
+
+const assoc = {
+	"AA":  ["B","K","M","N","DDD","KKK","SSS"],
+	"BB":  ["B","J","M","N","AAA","BBB","CCC","FFF","HHH","KKK","MMM","SSS","QQQ"],
+	"CC":  ["BBB","EEE","KKK","LLL","MMM","SSS","N"],
+	"DD":  ["O","F","J","AAA","GGG","HHH","KKK","MMM","NNN","OOO","PPP"],
+	"EE":  ["C","O","S","AAA","BBB","DDD","KKK","LLL","OOO","MMM","NNN"],
+	"FF":  ["AAA","BBB","CCC","FFF","KKK","LLL","QQQ","D","J","O","P","S"],
+	"GG":  ["AAA","BBB","LLL","SSS","O"],
+	"HH":  ["E","R","FFF","GGG","JJJ","LLL","PPP","RRR"],
+	"II":  ["BBB","CCC","FFF","MMM","III","RRR","A","C","G","H","I","L","O","P","Q","S"],
+	"JJ":  ["HHH","NNN","N","O","KKK","OOO","PPP"],
+	"KK":  ["KKK","LLL","MMM","R","O","EEE","SSS"],
+	"LL":  ["N","LLL","SSS"]
+};
+const types = {
+
+};	
+var allnodes = $(".node");
+var nodeset = new Set(["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","AA","BB","CC","DD","EE","FF","GG","HH","II","JJ","KK","LL","AAA","BBB","CCC","DDD","EEE","FFF","GGG","HHH","III","JJJ","KKK","LLL","MMM","NNN","OOO","PPP","QQQ","RRR","SSS"]);
+var activeDivs = new Set();
+var fadedDivs = new Set();
+
+allnodes
+	.on("mouseover", function() {	
+			activeDivs.clear();
+			fadedDivs.clear();
+			if (this.id.length === 2) {
+			  assoc[this.id].forEach(function(k){
+			  	activeDivs.add(k);	
+			  });
+			} else {
+				for (let key in assoc) {
+					if (assoc[key].indexOf(this.id) !== -1) {
+						activeDivs.add(key);	
 					}
-					linkedDivs.push(this.id);	
-					linkedDivs.forEach(function(k, index){
-						if (linkedDivs.indexOf(k) !== -1) {
-							$("#" + k).toggleClass("hilite");	
-						} else {
-							$("#" + k).css("opacity", .5);
-						}
-					});
-			})
-			.on("mouseout", function(){
-				linkedDivs.forEach(function(k,index){
-					$("#" + k).toggleClass("hilite");
-				});
-				linkedDivs = [];
+				}
+			}
+			activeDivs.add(this.id);
+			
+			fadedDivs = nodeset.difference(activeDivs);	
+			activeDivs.forEach(function(k, index){
+				$("#" + k + " span").toggleClass("hilite");	
+			});
+			fadedDivs.forEach(function(k, index){
+				$("#" + k + " span").toggleClass("lolite");
+			});
+	})
+	.on("mouseout", function(){
+		activeDivs.forEach(function(k,index){
+			$("#" + k + " span").toggleClass("hilite");
 		});
+		fadedDivs.forEach(function(k, index){
+			$("#" + k + " span").toggleClass("lolite");
+		});
+	})
+	.on("click", function() {
+		$("#d3force").css("width", "calc(96% - 6px)").css("margin-left", "calc(4% + 6px)");
+		$("#d3force1").css("width", "calc(4% + 6px)").css("margin-right", "calc(96% - 6px)");
+		$("#d3force1").css("border-right", "2px solid black");
+		d3draw(this.id);
+	});
+
+		function modalClose() {
+       $("#d3force").css("width", "0%").css("margin-left", "100%");
+       $("#d3force1").css("width", "0%").css("margin-right", "100%");
+       $("#d3force1").css("border", "none");
+       $("#d3force").empty();
+    }
+    $("#return").on("click", () => {
+        modalClose();
+    });
+    $("#clear").on("click", () => {
+        modalClose();
+        links = [];
+    });
+    document.addEventListener('keyup', (e) => {
+        if (e.keyCode == 27) {
+            modalClose();
+        }
+     });
+
+   var links = new Array(), nodes = new Array();
+    
+    var d3draw = function(id) {
+    	
+    	activeDivs.forEach(function(v) {
+		    		if (v !== id) {
+		    			links.push({"source":id, "target": v, "weight": 2});
+		    		} 
+		    	 let tmp = {"name": v, "label": $("#" + v + " span").text()};
+		    	 if ($("#" + v + " span").hasClass("cclo")) { tmp["class"] = "cclo"; tmp["Source"] = "Common Curriculum Learning Outcome";}
+		    	 if ($("#" + v + " span").hasClass("ilcs")) { tmp["class"] = "ilcs"; tmp["Source"] = "Information Literacy Competency Standards";}
+		    	 if ($("#" + v + " span").hasClass("wac")) { tmp["class"] = "wac"; tmp["Source"] = "Writing Across the Curriculum";}
+		    	 if ($("#" + v + " span").hasClass("wpa")) { tmp["class"] = "wpa"; tmp["Source"] = "WPA Habits of Mind";}
+		    	 if ($("#" + v + " span").hasClass("acrl")) { tmp["class"] = "acrl"; tmp["Source"] = "Association of College & Research Libraries";}
+		    	 if ($("#" + v + " span").hasClass("objective")) { tmp["class"] = "objective"; tmp["Source"] = "Objective";}
+
+		    	 nodes.push(tmp);
+    	});
+   
+     
+  var visualization = d3plus.viz()
+    .container("#d3force")
+    .type("network")
+    .edges(links)
+    .data(nodes)
+    .id("name")
+    .text("label")
+    .size(5)
+    .tooltip("Source")
+    .class("class")
+   // .ui({"position": "left", "align": "left","margin":5,"padding":5})
+    .draw();
+
+}
 
 
-		</script>
-									</body>
-								</html>
+</script>
+</body></html>
+
+
