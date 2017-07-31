@@ -1,18 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:svg="http://www.w3.org/2000/svg">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>D3: Force layout</title>
-<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
-
-<script src="js/d3.min.js"></script>
-<script src="js/d3plus.js"></script>
 
 
 <style type="text/css">
-
+:root {
+  font-size: .875em;
+}
 * {
 	box-sizing: border-box;
 	margin: 0; 
@@ -68,38 +66,31 @@
 }
 
 .framework .node {
-	margin:  12px 0px;
-	font-size:  14px;
+	margin:  1rem 0;
+	font-size:  1.1rem;
 }
-.node {
-	height: auto;
-	min-height: 24px;
-	vertical-align: middle;	
-	transition-property: opacity;
-  transition-duration: .75s;
-  transition-timing-function: ease-out;	
-}
-
 .outcomes1 {
 	justify-self: end;
 	justify-items: end;
 	text-align: right;
-	font-size:  12px;
+	font-size:  1rem;
 }
 
 .outcomes1 .node {
  	justify-items: end;
+  min-height: 2rem;
 }
 
 .outcomes2 {
 	justify-self: start;
 	justify-items: start;
 	text-align: left;
-	font-size:  12px;
+	font-size:  1rem;
 }
 
 .outcomes2 .node {
 	justify-items: start;
+  min-height: 2rem;
 }
 
 .hilite {
@@ -111,6 +102,7 @@
 .lolite {
 	opacity: .4;
 }
+
 
 .wac { color: teal; }
 .cclo { color: blue;}
@@ -127,12 +119,6 @@
 .objective rect {fill:#f4d442;}
 .objective text {fill:#333;}
 
-span {
-	display: inline-block;
-	width: inherit;
-	height: inherit;
-	padding: 8px;
-}
 
 #legend {
 	font-size: 11px; 
@@ -156,13 +142,12 @@ span {
 #cclo { background-color: blue;  height:10px; width:10px; display: inline-block;}
 
 #d3force {
-	position: fixed;
-	background-color:  rgba(255,255,255,.85);
+  position: fixed;
+	background-color: #d8e7ff;
 	z-index: 10;
-	margin-left: 100%;
-	height: 100%;
+  height: 100vh;
 	width: 0%;
-  float: right;
+  margin-left: 100%;
   transition-property: width, margin-left;
   transition-duration: 1s;
   transition-timing-function: ease-out;
@@ -170,21 +155,15 @@ span {
 
 #d3force1 {
 	position: fixed;
-	background-color:  rgb(100,100,100);
+	background-color:  rgb(200,200,200);
 	z-index: 9;
-	margin-right: 100%;
-	height: 100%;
+	height: 100vh;
 	width: 0%;
-  float: left;
+  margin-right: 100%;
   transition-property: width, margin-right;
   transition-duration: 1s;
   transition-timing-function: ease-out;
-  cursor: pointer;
- 
 }
-
-
-.d3plus_label {fill:white;}
 
 @media (max-width: 900px) {
   #legend {
@@ -197,44 +176,46 @@ span {
   }
 }
 
-#clear, #return  {
-	z-index: 9;
-	position: fixed;
-	width: 5em;
-	float: left;
-	display: none;
-	height: 3em;
-	border-radius: 4px;
-	border: 1px solid black;
-	padding:  4px;
-	text-align: center;
-	background-color: white;
-	margin: 1px;
-	transform: rotate(-90deg);
+span {
+  display: inline-block;
+  padding: 8px;
 }
 
-#clear {top:10em;}
-#return {
-	top: 16em;
-	vertical-align: middle;
+text {
+  font-size: 1em;
+  line-height: 1em;
+  pointer-events: inherit;
 }
+
+path.link {
+  fill: none;
+  stroke: #333;
+  stroke-width: 1px;
+}
+
+circle.cclo {fill: blue;}
+circle.wac {fill: teal; }
+circle.wpa {fill: orangered;}
+circle.ilcs {fill: firebrick;}
+circle.acrl {fill: indigo;}
+circle.objective {fill:#f4d442;}
+circle.objective text {fill:#333;}
+
+
 </style>
 </head>
 
 <body>
 <div id="d3force1">
-<div id="clear">Clear Selections</div>
-<span id="return">Return</span>
-
 </div>
 <div id="d3force"></div>
 
 <div class="container">
 	<div class="outcomes1">
 		<div class="node" id="A"><span class="wac">Demonstrate proficiency in writing genres appropriate to the various disciplines addressed to critical readers.</span></div>
-		<div class="node" id="B"><span class="wac">Demonstrate proficiency in constructing discipline-appropriate claims/theses/questions to put forward ideas in a focused manner.</span></div>
+		<div class="node" id="B"><span class="wac">Demonstrate proficiency in constructing discipline appropriate claims, theses, or questions to put forward ideas in a focused manner.</span></div>
 		<div class="node" id="C"><span class="wac">Use evidence appropriately to support claims.</span></div>
-		<div class="node" id="D"><span class="wac">Use analysis/synthesis/reflection/argument to develop ideas, which may include organization, structure, coherence, and depth of thinking.</span></div>
+		<div class="node" id="D"><span class="wac">Use analysis, synthesis, reflection, argument to develop ideas, which may include organization, structure, coherence, and depth of thinking.</span></div>
 		<div class="node" id="E"><span class="wac">Practice ethical and professional standards of citation.</span></div>
 		<div class="node" id="F"><span class="wac">Demonstrate use of language appropriate for the audience and purpose.</span></div>
 		<div class="node" id="G"><span class="wac">Integrate the ideas of others appropriately for the discipline.</span></div>
@@ -250,15 +231,15 @@ span {
 		<div class="node" id="Q"><span class="cclo">Present Research Findings</span></div>
 		<div class="node" id="R"><span class="cclo">Practice Professional Standards of Citation</span></div>
 		<div class="node" id="S"><span class="cclo">Make Connections or Original Contributions</span></div>
-	</div>
 
 
+  </div>
 
 <div class="framework">
-		<div class="node" id="AA"><span class="objective">Topic Creation</span></div>
+		<div class="node" id="AA"><span class="objective">Topic Creation</span></a></div>
 		<div class="node" id="BB"><span class="objective">Evolution of Research Over Time</span></div>
 		<div class="node" id="CC"><span class="objective">Boolean Operators and Keyword Searching</span></div>
-		<div class="node" id="DD"><span class="objective">Credibilty and Evaluation</span></div>
+		<div class="node" id="DD"><span class="objective">Credibility and Evaluation</span></div>
 		<div class="node" id="EE"><span class="objective">Primary and Secondary Sources</span></div>
 		<div class="node" id="FF"><span class="objective">Reading Sources</span></div>
 		<div class="node" id="GG"><span class="objective">When to Use What Research Tools and the Value of Each One</span></div>
@@ -270,13 +251,16 @@ span {
 </div>
 
 <div class="outcomes2">
-		<div id="legend">
-		<div><div id="wac"></div><span class="label">Writing Across the Curriculum Learning Outcomes</span></div>
-		<div><div id="cclo"></div><span class="label">Common Curriculum Learning Outcomes</span></div>
-		<div><div id="wpa"></div><span class="label">WPA Framework Habits of Mind</span></div>
-		<div><div id="ilcs"></div><span class="label">Information Literacy Competency Standards</span></div>
-		<div><div id="acrl"></div><span class="label">ACRL Information Literacy Framework</span></div>
-		</div>
+
+  		<div id="legend">
+  		<div><div id="wac"></div><a target="_blank" href="https://www.union.edu/Resources/Campus/assessment/outcomes/academicaffairs/WAC.php"><span class="label">Writing Across the Curriculum Learning Outcomes</span></a></div>
+  		<div><div id="cclo"></div><a target="_blank" href="http://muse.union.edu/commoncurriculum/files/2016/01/CCA-PartII-LearningOutcomes.pdf"><span class="label">Common Curriculum Learning Outcomes</span></a></div>
+  		<div><div id="wpa"></div><a target="_blank" href="http://wpacouncil.org/files/framework-for-success-postsecondary-writing.pdf"><span class="label">WPA Framework Habits of Mind</span></a></div>
+  		<div><div id="ilcs"></div><a target="_blank" href="http://www.ala.org/acrl/standards/informationliteracycompetency"><span class="label">Information Literacy Competency Standards</span></a></div>
+  		<div><div id="acrl"></div><a target="_blank" href="http://www.ala.org/acrl/sites/ala.org.acrl/files/content/issues/infolit/Framework_ILHE.pdf"><span class="label">ACRL Information Literacy Framework</span></a></div>
+      <div><div id="schaffer"></div><a target="_blank" href="https://docs.google.com/document/d/1VtsjEedFkWqKidf0wJ4Pl0iCMloiRwNJrAJspt4VtvE/edit"><span class="label">Schaffer Library IL Outcomes</span></a></div>
+  	   </div>
+   
 
 		<div class="node" id="AAA"><span class="wpa">Curiosity</span></div>
 		<div class="node" id="BBB"><span class="wpa">Openness</span></div>
@@ -299,6 +283,9 @@ span {
 		<div class="node" id="SSS"><span class="acrl">Searching as Strategic Exploration</span></div>
 	</div>
 </div>
+
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+<script src="//d3js.org/d3.v4.min.js"></script>
 			
 		
 <script>
@@ -330,6 +317,7 @@ var allnodes = $(".node");
 var nodeset = new Set(["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","AA","BB","CC","DD","EE","FF","GG","HH","II","JJ","KK","LL","AAA","BBB","CCC","DDD","EEE","FFF","GGG","HHH","III","JJJ","KKK","LLL","MMM","NNN","OOO","PPP","QQQ","RRR","SSS"]);
 var activeDivs = new Set();
 var fadedDivs = new Set();
+var clicked;
 
 allnodes
 	.on("mouseover", function() {	
@@ -365,73 +353,271 @@ allnodes
 		});
 	})
 	.on("click", function() {
-		$("#d3force").css("width", "calc(96% - 6px)").css("margin-left", "calc(4% + 6px)");
-		$("#d3force1").css("width", "calc(4% + 6px)").css("margin-right", "calc(96% - 6px)");
-		$("#d3force1").css("border-right", "2px solid black");
-		
-		d3draw(this.id);
-
+		$("#d3force").css("width", "96%").css("margin-left", "4%");
+    $("#d3force1").css("width", "4%").css("margin-right", "96%").css("border-right", "2px solid black");
+    //$("#return").css("display","inline");
+    clicked = this.id;
+    if (this.id.length === 2) {
+      treeDraw(this.id);  
+    } else {
+      treeDraw(activeDivs);
+    }	
 	});
 
-		function modalClose() {
+	function modalClose() {
        $("#d3force").css("width", "0%").css("margin-left", "100%");
        $("#d3force1").css("width", "0%").css("margin-right", "100%");
        $("#d3force1").css("border", "none");
-       $("#clear").css("display","none");
-			 $("#return").css("display","none");
        $("#d3force").empty();
+       clicked = null;
     }
-    $("#return").on("click", () => {
+    $("#d3force1").on("click", () => {
         modalClose();
     });
-    $("#clear").on("click", () => {
-        modalClose();
-        links = [];
-    });
+  
     document.addEventListener('keyup', (e) => {
         if (e.keyCode == 27) {
             modalClose();
         }
-     });
-
-   var links = new Array(), nodes = new Array();
+     },{passive:true});
     
-    var d3draw = function(id) {
-    	
-    	activeDivs.forEach(function(v) {
-		    		if (v !== id) {
-		    			links.push({"source":id, "target": v, "weight": 2});
-		    		} 
-		    	 let tmp = {"name": v, "label": $("#" + v + " span").text()};
-		    	 if ($("#" + v + " span").hasClass("cclo")) { tmp["class"] = "cclo"; tmp["Source"] = "Common Curriculum Learning Outcome";}
-		    	 if ($("#" + v + " span").hasClass("ilcs")) { tmp["class"] = "ilcs"; tmp["Source"] = "Information Literacy Competency Standards";}
-		    	 if ($("#" + v + " span").hasClass("wac")) { tmp["class"] = "wac"; tmp["Source"] = "Writing Across the Curriculum";}
-		    	 if ($("#" + v + " span").hasClass("wpa")) { tmp["class"] = "wpa"; tmp["Source"] = "WPA Habits of Mind";}
-		    	 if ($("#" + v + " span").hasClass("acrl")) { tmp["class"] = "acrl"; tmp["Source"] = "Association of College & Research Libraries";}
-		    	 if ($("#" + v + " span").hasClass("objective")) { tmp["class"] = "objective"; tmp["Source"] = "Objective";}
+    // document.addEventListener('click', (e) => {
+    //     console.log(e.x, e.y);
+    //  },{passive:true});
 
-		    	 nodes.push(tmp);
-    	});
-   
+//####################################################################
+
+
+function treeDraw(id) {
+    var margin = {top:10, right:10, bottom:10, left:120},
+        width = 1020 - margin.right - margin.left,
+        height = 620 - margin.top - margin.bottom,
+        i = 0, duration = 500,
+        root;
+
+    var treemap = d3.tree().size([height, width]);
+
+    //var diagonal = d3.svg.diagonal().projection(function(d) { return [d.y, d.x]; });
+
+    var vis = d3.select("#d3force").append("svg:svg")
+       .attr("width", width + margin.right + margin.left)
+       .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  
+    d3.json("js/scaffolding.json", function(json) {
      
-  var visualization = d3plus.viz()
-    .container("#d3force")
-    .type("network")
-    .edges(links)
-    .data(nodes)
-    .id("name")
-    .text("label")
-    .size(5)
-    .tooltip("Source")
-    .class("class")
-   // .ui({"position": "left", "align": "left","margin":5,"padding":5})
-    .draw();
+      if (typeof id === "string") {
+          json.children.forEach(function(r){
+            if (id === r.id) {
+              root = r;
+            }
+          });
+      } else {
+          json.children = json.children.filter(function(a){
+            return activeDivs.has(a.id);
+          });
+          root = json;
+          root.name = $("#" + clicked).text();
+      }
+      root.href = "javascript:modalClose()";
+      root = d3.hierarchy(root, function(d) {return d.children;});
 
-    	$("#clear").css("display","inline");
-		$("#return").css("display","inline");
+      root.x0 = height/2;
+      root.y0 = 0;
 
+      function toggleAll(d) {
+        if (d.children) {
+          d.children.forEach(toggleAll);
+          toggle(d);
+        }
+      }
+      
+      root.children.forEach(toggleAll);
+      update(root);   
+    });
+
+    function update(source) {
+
+          var treeData = treemap(root);
+
+          var nodes = treeData.descendants(), 
+            links = treeData.descendants().slice(1);
+
+          nodes.forEach(function(d) { 
+            d.y = typeof id === "string" ? d.depth * 240 : d.depth * 200;
+            d.rx = 100;
+            d.ry = 50; 
+          });
+
+          var node = vis.selectAll("g.node")
+            .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+          var nodeEnter = node.enter().append("svg:g")
+            .attr("class", "node")
+            .attr("transform", function(d) { 
+              return "translate(" + source.y0 + "," + source.x0 + ")"; 
+            })
+            .on("click", function(d) { 
+                let indno = d.parent.children.indexOf(d);
+                if (indno !== null) {
+                     let sibs = d.parent.children.slice(0, indno);
+                     let sibplus = d.parent.children.slice(indno + 1, d.parent.children.length);
+                     sibs = sibs.concat(sibplus);
+                     closeChildren({name:"dummy", children:sibs});
+                 }
+                 toggle(d); 
+
+                 update(d); 
+            });
+            
+            nodeEnter.append("svg:ellipse")
+              .attr("rx", function(d){
+                  return d.rx;
+              })
+              .attr("ry", function(d){
+                  return d.ry;
+              })
+              .style("fill", function(d) { return d.depth > 0 ? "#116cff" : "white"; })
+              .style("stroke-width", "2");
+
+//################################
+
+        var anchors = nodeEnter.append("svg:a")
+            .attr("target", "_blank")
+            .attr("xlink:href", function(d) {
+                return d.data.href;
+            });
+
+        var txts = anchors.append("svg:text")
+          .attr("text-anchor", "middle")
+          .text(function(d) { 
+              return d.data.name; 
+          })
+          .style("cursor", function(d) {
+            return d.depth > 0 ? "pointer" : "inherit"; 
+          })
+          .style("fill", function(d) { 
+            return d.depth > 0 ? "white" : "black"; 
+          });
+
+        txts.each(function(d){
+          let text = d3.select(this);
+          let label = d.data.name;
+          let words = label.split(" ").reverse();
+          let chars = label.length;
+          let totLength = chars * 6;
+          let lines = Math.ceil(totLength/175);
+          let dy = -1;
+
+          let midline = lines/2;
+          let y = lines > 2 ? lines * -2 : 12;
+        
+          let line = [], maxlength = 150, maxlen = 150, linelen = 0, lineno = 1;
+         
+          let tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", "-1em");
+          while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            linelen = maxlength - (Math.abs(midline - lineno) * 12);
+            if (tspan.node().getComputedTextLength() > linelen) {
+              tspan.text(line.join(" "));
+              let curlen = tspan.node().getComputedTextLength();
+              maxlen = maxlen > curlen ? maxlen : curlen;
+              tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", lineno++ * 1.1 + dy + "em");
+              line = [];
+            } 
+          }
+          if (line.length > 0) { tspan.text(line.join(" ")); }
+         
+          d.rx = maxlen / 2 + 16;
+          //d.ry = lineno * 16 > 45 ? lineno * 16 : 50;
+          //console.log("rx: ", d.rx,"ry: ", d.ry,"lines: ", lineno,"totLength: ", totLength,"maxlen: ", maxlen);
+        console.log(y,lines,lineno);
+        });
+           
+//###################################################
+
+        var nodeUpdate = nodeEnter.merge(node);
+
+        nodeUpdate.transition()
+          .duration(duration)
+          .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
+
+        nodeUpdate.select("ellipse")
+          .attr("rx", function(d){
+            return d.rx;
+          })
+          // .attr("ry", function(d){
+          //   return d.ry;
+          // })
+          .style("stroke-width", "2")
+          .style("stroke", function(d) { return d.depth > 0 ? "white" : "#116cff"; });
+
+          
+        var nodeExit = node.exit().transition()
+          .duration(duration)
+          .attr("transform", function(d) { return "translate(" + source.y + "," + source.x + ")"; })
+          .remove();
+
+        var link = vis.selectAll("path.link")
+          .data(links, function(d) { return d.id; });
+
+        var linkEnter = link.enter().insert("path", "g")
+          .attr("class", "link")
+          .attr("d", function(d) {
+              var o = {x: source.x0, y: source.y0};
+              return diagonal(o, o);
+          });
+
+        var linkUpdate = linkEnter.merge(link);
+
+        linkUpdate.transition()
+          .duration(duration)
+          .attr("d", function(d) { return diagonal(d, d.parent); });
+
+        var linkExit = link.exit().transition()
+          .duration(duration)
+          .attr("d", function(d) {
+              var o = {x: source.x, y: source.y};
+              return diagonal(o, o);
+          })
+          .remove();
+
+        nodes.forEach(function(d) {
+          d.x0 = d.x;
+          d.y0 = d.y;
+        });
+
+        function diagonal(s, d) {
+            path = `M ${s.y} ${s.x}
+                    C ${(s.y + d.y) / 2} ${s.x},
+                      ${(s.y + d.y) / 2} ${d.x},
+                      ${d.y} ${d.x}`
+
+            return path;
+        }
+    }
+
+    function closeChildren(el) {   
+      if (el.children) { 
+        el.children.forEach(closeChildren);
+        el._children = el.children;
+        el.children = null;
+      }
+    }
+
+    // Toggle children.
+    function toggle(d) {
+      if (d.children) {
+        d._children = d.children;
+        d.children = null;
+      } else {
+        d.children = d._children;
+        d._children = null;
+      }
+    }
 }
-
 
 </script>
 </body></html>
