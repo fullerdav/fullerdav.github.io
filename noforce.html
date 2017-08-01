@@ -143,10 +143,10 @@
 
 #d3force {
   position: fixed;
-	background-color: #d8e7ff;
+	background-color: #d4d5d6;
 	z-index: 10;
   height: 100vh;
-	width: 0%;
+  width: 0%;
   margin-left: 100%;
   transition-property: width, margin-left;
   transition-duration: 1s;
@@ -185,8 +185,8 @@ text {
   font-size: 1em;
   line-height: 1em;
   pointer-events: inherit;
-  stroke: white; 
-  fill: #ccc; 
+  stroke: #333; 
+  fill: #999; 
   stroke-width: .5;
 }
 
@@ -194,6 +194,10 @@ path.link {
   fill: none;
   stroke: #333;
   stroke-width: 1px;
+}
+
+circle {
+	pointer-events: none;
 }
 
 circle.cclo {fill: blue;}
@@ -535,7 +539,7 @@ function treeDraw(id) {
          
          // d.radius = maxlen/2 + maxlen*.1;
          // d.radius = d.radius > lines * 15 ? d.radius : lines * 15;
-         d.radius = maxlen * .75;
+         d.radius = maxlen * .6;
        
         console.log("lines", lines, "lineno", lineno, "midline", midline);
         });
@@ -618,14 +622,16 @@ function treeDraw(id) {
       }
     }
 }
-
+//#116cff
+//#d4d5d6
+//#d8e7ff
 </script>
 
 <svg>
  <defs>
     <radialGradient id="exampleGradient">
-      <stop offset="30%" stop-color="#116cff"/>
-      <stop offset="100%" stop-color="#d8e7ff"/>
+    <stop offset="50%" stop-color="#efefef"/>
+    <stop offset="100%" stop-color="#d4d5d6"/>  
     </radialGradient>
   </defs>
 </svg>
