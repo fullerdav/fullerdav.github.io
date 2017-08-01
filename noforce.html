@@ -200,13 +200,6 @@ circle {
 	pointer-events: none;
 }
 
-circle.cclo {fill: blue;}
-circle.wac {fill: teal; }
-circle.wpa {fill: orangered;}
-circle.ilcs {fill: firebrick;}
-circle.acrl {fill: indigo;}
-circle.objective {fill:#f4d442;}
-circle.objective text {fill:#333;}
 
 
 </style>
@@ -361,14 +354,14 @@ allnodes
 	})
 	.on("click", function() {
 		$("#d3force").css("width", "96%").css("margin-left", "4%");
-    $("#d3force1").css("width", "4%").css("margin-right", "96%").css("border-right", "2px solid black");
-    //$("#return").css("display","inline");
-    clicked = this.id;
-    if (this.id.length === 2) {
-      treeDraw(this.id);  
-    } else {
-      treeDraw(activeDivs);
-    }	
+	    $("#d3force1").css("width", "4%").css("margin-right", "96%").css("border-right", "2px solid black");
+	    //$("#return").css("display","inline");
+	    clicked = this.id;
+	    if (this.id.length === 2) {
+	      treeDraw(this.id);  
+	    } else {
+	      treeDraw(activeDivs);
+	    }	
 	});
 
 	function modalClose() {
@@ -396,9 +389,9 @@ allnodes
 
 
 function treeDraw(id) {
-    var margin = {top:10, right:10, bottom:10, left:150},
+    var margin = {top:10, right:10, bottom:10, left:100},
         width = 1000 - margin.right - margin.left,
-        height = 800 - margin.top - margin.bottom,
+        height = 720 - margin.top - margin.bottom,
         i = 0, duration = 500,
         root;
 
@@ -452,7 +445,7 @@ function treeDraw(id) {
             links = treeData.descendants().slice(1);
 
           nodes.forEach(function(d) { 
-            d.y = d.depth * 220;
+            d.y = d.depth * 200;
           });
 
           var node = vis.selectAll("g.node")
