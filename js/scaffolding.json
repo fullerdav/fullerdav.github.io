@@ -394,9 +394,7 @@
         },
         {
           "name": "Recognize when it is appropriate to expand search to resources not available locally and what steps to take next to acquire those resources.",
-          "children":[{
-            "name":"nnnnnnnn nnnnnnnnn nnnn n nnnn nnnnnnnnnnn nn nnnn nnnnnnnnn nnnnnnnnnn nnnnnnnnn n nnnnn nnnnn nnnnnnnnn nnnnnnnn nnnnnnnnnn nn nnnnnnn nnnnn nnnnnnnnnnnn nnnnnnnnn nnnnnnnnnnnn nn nnnnnnnnnn nnnnnnnnnnnnn nnnnnnnnnnnnnn nnnn nnn nnnnnnnnnnnn nnnnn nnnnnnnnnnnnn nnnnnnnn nn"
-          }]
+          "children":[]
         },
         {
           "name": "Use basic search techniques (i.e. Boolean AND, limiters, facets) to focus a search for resources in any given search interface.",

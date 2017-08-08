@@ -1,0 +1,228 @@
+:root {
+  font-size: .875em;
+}
+* {
+  box-sizing: border-box;
+  margin: 0; 
+  padding: 0;
+}
+
+#B {margin-right:5px;}
+#C {margin-right:10px;}
+#D {margin-right:15px;}
+#E {margin-right:20px;}
+#F {margin-right:24px;}
+#G {margin-right:28px;}
+#H {margin-right:32px;}
+#I {margin-right:35px;}
+#J {margin-right:36px;}
+#K {margin-right:35px;}
+#L {margin-right:32px;}
+#M {margin-right:28px;}
+#N {margin-right:24px;}
+#O {margin-right:20px;}
+#P {margin-right:15px;}
+#Q {margin-right:10px;}
+#R {margin-right:5px;}
+#BBB {margin-left:5px;}
+#CCC {margin-left:10px;}
+#DDD {margin-left:15px;}
+#EEE {margin-left:20px;}
+#FFF {margin-left:24px;}
+#GGG {margin-left:28px;}
+#HHH {margin-left:32px;}
+#III {margin-left:35px;}
+#JJJ {margin-left:36px;}
+#KKK {margin-left:35px;}
+#LLL {margin-left:32px;}
+#MMM {margin-left:28px;}
+#NNN {margin-left:24px;}
+#OOO {margin-left:20px;}
+#PPP {margin-left:15px;}
+#QQQ {margin-left:10px;}
+#RRR {margin-left:5px;}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-row: auto;
+  margin: auto;
+}
+
+.framework {
+  margin: auto 0;
+  justify-self: center;
+  text-align: center;
+}
+
+.framework .node {
+  margin:  1rem 0;
+  font-size:  1.1rem;
+}
+.outcomes1 {
+  justify-self: end;
+  justify-items: end;
+  text-align: right;
+  font-size:  1rem;
+}
+
+.outcomes1 .node {
+  justify-items: end;
+  min-height: 2rem;
+}
+
+.outcomes2 {
+  justify-self: start;
+  justify-items: start;
+  text-align: left;
+  font-size:  1rem;
+}
+
+.outcomes2 .node {
+  justify-items: start;
+  min-height: 2rem;
+}
+
+.hilite {
+  border-radius: 8px;
+  box-shadow:  2px 2px 0 rgba(0,0,0,0.16),0 0 0 1px rgba(0,0,0,0.08);
+  opacity: 1;
+}
+
+.lolite {
+  opacity: .25;
+}
+
+
+.wac { color: teal; }
+.cclo { color: blue;}
+.wpa {color: orangered;}
+.ilcs {color: firebrick;}
+.acrl {color: indigo;}
+.objective {}
+
+.cclo rect {fill: blue;}
+.wac rect {fill: teal; }
+.wpa rect {fill: orangered;}
+.ilcs rect {fill: firebrick;}
+.acrl rect {fill: indigo;}
+.objective rect {fill:#f4d442;}
+.objective text {fill:#333;}
+
+
+#legend {
+  font-size: 1em; 
+  display: inline;
+  padding: 10px 0;
+  float: right;
+  z-index: 2;
+  background-color: #fff;
+  position: static;
+  width: 67%;
+}
+
+.label { 
+  margin-left: 4px; 
+  padding: 2px 4px;
+}
+#wac {background:teal; height:8px; width:10px; display: inline-block; }
+#wpa {background:orangered; height:10px; width:10px; display: inline-block;}
+#ilcs {background: firebrick; height:10px; width:10px; display: inline-block;}
+#acrl {background-color:indigo; height:10px; width:10px;display: inline-block;}
+#cclo { background-color: blue;  height:10px; width:10px; display: inline-block;}
+
+#d3force {
+  position: fixed;
+  background-color: #d4d5d6;
+  height: 100vh;
+  width: 0%;
+  margin-left: 100%;
+  transition-property: width, margin-left;
+  transition-duration: 1s;
+  transition-timing-function: ease-out;
+}
+
+#d3force1 {
+  position: fixed;
+  background-color:  rgb(200,200,200);
+  z-index: 8;
+  height: 100vh;
+  width: 0%;
+  margin-right: 100%;
+  transition-property: width, margin-right;
+  transition-duration: 1s;
+  transition-timing-function: ease-out;
+}
+
+div.tooltip {
+  width: 10em;
+  height: auto;
+  position: absolute;
+  opacity: 0;
+  background: #d4d5d6; 
+  border: 1px solid white;    
+  border-radius: 4px;     
+  pointer-events: none;
+  padding: 4px;
+}
+
+@media (max-width: 900px) {
+  #legend {
+    display: none;
+  }
+}
+@media (max-width: 1100px) {
+  #legend {
+    font-size: 9px;
+  }
+}
+
+span {
+  display: inline-block;
+  padding: 8px;
+  background: #fff;
+}
+
+text {
+  font-size: 1em;
+  line-height: 1em;
+  pointer-events: inherit;
+  stroke: #333; 
+  fill: #999; 
+  stroke-width: .5;
+}
+
+path.link {
+  fill: none;
+  stroke: #333;
+  stroke-width: "1";
+}
+
+circle {
+  pointer-events: none;
+}
+   
+#svgcontainer {
+  z-index:-1;
+   position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;s
+}
+svg {
+  z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+@keyframes mymove {
+    from {background-color: red;}
+    to {background-color: blue;}
+}
+@keyframes rotary {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
