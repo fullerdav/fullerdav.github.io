@@ -85,6 +85,7 @@
 
 .hilite {
   border-radius: 8px;
+  border:  1px solid black;
   box-shadow:  2px 2px 0 rgba(0,0,0,0.16),0 0 0 1px rgba(0,0,0,0.08);
   opacity: 1;
 }
