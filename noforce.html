@@ -6,90 +6,106 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Learning Outcomes DLO</title>
 <link rel="stylesheet" href="css/noforce.css">
-
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Cousine' rel='stylesheet' type='text/css' />
+<link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css' />
 </head>
 
-<body>
+<body id="topnode">
 
-<div id="d3force1"></div>
+<div id="d3force1">
+   <span id="chevron"><i class="fa fa-2x fa-chevron-circle-left"></i></span>
+</div>
+<div id="d3force">
+ 
+</div>
 
-<div id="d3force"></div>
+<header>
+  Information Literacy Learning Outcomes, Frameworks, Habits of Mind and related good things
+</header>
+<div class="container" id="root">
 
-
-<div class="container">
-
-
-	<div class="outcomes1">
-		<div class="node" id="A"><span class="wac">Demonstrate proficiency in writing genres appropriate to the various disciplines addressed to critical readers.</span></div>
-		<div class="node" id="B"><span class="wac">Demonstrate proficiency in constructing discipline appropriate claims, theses, or questions to put forward ideas in a focused manner.</span></div>
-		<div class="node" id="C"><span class="wac">Use evidence appropriately to support claims.</span></div>
+	<div class="outcomes1" id="leftcol">
+		<div class="node" id="H"><span class="wac">Use constructive feedback from readers to revise writing to be more effective in achieving its purpose for readers.</span></div>
+    <div class="node" id="A"><span class="wac">Demonstrate proficiency in writing genres appropriate to the various disciplines addressed to critical readers.</span></div>
+    <div class="node" id="B"><span class="wac">Demonstrate proficiency in constructing discipline appropriate claims, theses, or questions to put forward ideas in a focused manner.</span></div>
 		<div class="node" id="D"><span class="wac">Use analysis, synthesis, reflection, argument to develop ideas, which may include organization, structure, coherence, and depth of thinking.</span></div>
 		<div class="node" id="E"><span class="wac">Practice ethical and professional standards of citation.</span></div>
 		<div class="node" id="F"><span class="wac">Demonstrate use of language appropriate for the audience and purpose.</span></div>
 		<div class="node" id="G"><span class="wac">Integrate the ideas of others appropriately for the discipline.</span></div>
-		<div class="node" id="H"><span class="wac">Use constructive feedback from readers to revise writing to be more effective in achieving its purpose for readers.</span></div>
+    <div class="node" id="C"><span class="wac">Use evidence appropriately to support claims.</span></div>
 		<div class="node" id="I"><span class="cclo">Discuss Ideas</span></div>
-		<div class="node" id="J"><span class="cclo">Read Texts Critically</span></div>
-		<div class="node" id="K"><span class="cclo">Develop Effective Arguments</span></div>
+		<div class="node" id="N"><span class="cclo">Find Evidence</span></div>
+    <div class="node" id="O"><span class="cclo">Evaluate Evidence</span></div>
+    <div class="node" id="J"><span class="cclo">Read Texts Critically</span></div>
 		<div class="node" id="L"><span class="cclo">Incorporates Revision</span></div>
 		<div class="node" id="M"><span class="cclo">Develop A Research Topic</span></div>
-		<div class="node" id="N"><span class="cclo">Find Evidence</span></div>
-		<div class="node" id="O"><span class="cclo">Evaluate Evidence</span></div>
+    <div class="node" id="Q"><span class="cclo">Present Research Findings</span></div>
+		<div class="node" id="K"><span class="cclo">Develop Effective Arguments</span></div>
 		<div class="node" id="P"><span class="cclo">Develop an Evidence Based Argument</span></div>
-		<div class="node" id="Q"><span class="cclo">Present Research Findings</span></div>
 		<div class="node" id="R"><span class="cclo">Practice Professional Standards of Citation</span></div>
 		<div class="node" id="S"><span class="cclo">Make Connections or Original Contributions</span></div>
-
-
   </div>
 
 <div class="framework">
-		<div class="node" id="AA"><span class="objective">Topic Creation</span></a></div>
+   	<div class="node" id="AA"><span class="objective">Topic Creation</span></a></div>
+    <div class="node" id="DD"><span class="objective">Credibility and Evaluation</span></div>
+    <div class="node" id="EE"><span class="objective">Primary and Secondary Sources</span></div>
 		<div class="node" id="BB"><span class="objective">Evolution of Research Over Time</span></div>
-		<div class="node" id="CC"><span class="objective">Boolean Operators and Keyword Searching</span></div>
-		<div class="node" id="DD"><span class="objective">Credibility and Evaluation</span></div>
-		<div class="node" id="EE"><span class="objective">Primary and Secondary Sources</span></div>
-		<div class="node" id="FF"><span class="objective">Reading Sources</span></div>
 		<div class="node" id="GG"><span class="objective">When to Use What Research Tools and the Value of Each One</span></div>
-		<div class="node" id="HH"><span class="objective">Citations</span></div>
 		<div class="node" id="II"><span class="objective">Engaging with the Scholarly Conversation to Find Significance</span></div>
 		<div class="node" id="JJ"><span class="objective">Peer Review and the Information/Publishing Cycle</span></div>
 		<div class="node" id="KK"><span class="objective">Navigating Online Search and Request Systems</span></div>
+    <div class="node" id="CC"><span class="objective">Boolean Operators and Keyword Searching</span></div>
 		<div class="node" id="LL"><span class="objective">Ability to Navigate the Library</span></div>
+    <div class="node" id="FF"><span class="objective">Reading Sources</span></div>
+    <div class="node" id="HH"><span class="objective">Citations</span></div>
 </div>
 
 <div class="outcomes2">
 
-  		<div id="legend">
-  		<div><div id="wac"></div><a target="_blank" href="https://www.union.edu/Resources/Campus/assessment/outcomes/academicaffairs/WAC.php"><span class="label">Writing Across the Curriculum Learning Outcomes</span></a></div>
-  		<div><div id="cclo"></div><a target="_blank" href="http://muse.union.edu/commoncurriculum/files/2016/01/CCA-PartII-LearningOutcomes.pdf"><span class="label">Common Curriculum Learning Outcomes</span></a></div>
-  		<div><div id="wpa"></div><a target="_blank" href="http://wpacouncil.org/files/framework-for-success-postsecondary-writing.pdf"><span class="label">WPA Framework Habits of Mind</span></a></div>
-  		<div><div id="ilcs"></div><a target="_blank" href="http://www.ala.org/acrl/standards/informationliteracycompetency"><span class="label">Information Literacy Competency Standards</span></a></div>
-  		<div><div id="acrl"></div><a target="_blank" href="http://www.ala.org/acrl/sites/ala.org.acrl/files/content/issues/infolit/Framework_ILHE.pdf"><span class="label">ACRL Information Literacy Framework</span></a></div>
-      <div><div id="schaffer"></div><a target="_blank" href="https://docs.google.com/document/d/1VtsjEedFkWqKidf0wJ4Pl0iCMloiRwNJrAJspt4VtvE/edit"><span class="label">Schaffer Library IL Outcomes</span></a></div>
-  	   </div>
-   
+  <div id="legend">
+  <span class="iline">Sources for the concepts listed on this page:</span>
+    <dl id="sources">
+      <dt><a class="acrl" target="_blank" href="http://www.ala.org/acrl/sites/ala.org.acrl/files/content/issues/infolit/Framework_ILHE.pdf">ACRL Information Literacy Framework</a></dt>
+      <!--dd><cite>Framework for Information Literacy for Higher Education (Association of College andResearch Libraries)</cite></dd-->
+      <dt><a class="cclo" target="_blank" href="http://muse.union.edu/commoncurriculum/files/2016/01/CCA-PartII-LearningOutcomes.pdf">Common Curriculum Learning Outcomes</a></dt>
+      <!--dd>General Education Board</dd-->
+      <dt>
+      <a class="ilcs" target="_blank" href="http://www.ala.org/acrl/standards/informationliteracycompetency">Information Literacy Competency Standards</a>
+      </dt><!--dd><cite>American Library Association</cite></dd-->
+      <dt>
+      <a class="schaffer" target="_blank" href="https://docs.google.com/document/d/1VtsjEedFkWqKidf0wJ4Pl0iCMloiRwNJrAJspt4VtvE/edit">Schaffer Library IL Outcomes</a>
+      </dt>
+      <dt><a class="wpa" target="_blank" href="http://wpacouncil.org/files/framework-for-success-postsecondary-writing.pdf">WPA Framework Habits of Mind</a></dt>
+      <!--dd><cite>Framework for Success in Post Secondary Writing (Developed by Council of Writing Program Administrators, National Council of Teachers of English, National Writing Project)</cite></dd-->
+      <dt><a class="wac" target="_blank" href="https://www.union.edu/Resources/Campus/assessment/outcomes/academicaffairs/WAC.php">WAC Learning Outcomes</a></dt>
+      <!--dd><cite>Writing Across the Curriculum</cite></dd-->
+      </dl>
+  </div>
 
-		<div class="node" id="AAA"><span class="wpa">Curiosity</span></div>
-		<div class="node" id="BBB"><span class="wpa">Openness</span></div>
-		<div class="node" id="CCC"><span class="wpa">Engagement</span></div>
-		<div class="node" id="DDD"><span class="wpa">Creativity</span></div>
-		<div class="node" id="EEE"><span class="wpa">Persistence</span></div>
-		<div class="node" id="FFF"><span class="wpa">Responsibility</span></div>
-		<div class="node" id="GGG"><span class="wpa">Flexibility</span></div>
-		<div class="node" id="HHH"><span class="wpa">Metacognition</span></div>
-		<div class="node" id="III"><span class="ilcs">Individually or as a member of a group,uses information effectively to accomplish a specific purpose</span></div>
-		<div class="node" id="JJJ"><span class="ilcs">Understands many of the economic, legal, and social issues surrounding thre use of information and accesses and uses information ethically and legally</span></div>
-		<div class="node" id="KKK"><span class="ilcs">Determine the nature and extent of information needed</span></div>
-		<div class="node" id="LLL"><span class="ilcs">Accesses needed information effectively and efficiently</span></div>
-		<div class="node" id="MMM"><span class="ilcs">Evaluates information and its sources critically and incorporates selected information into her or his knowledge base or value system</span></div>
-		<div class="node" id="NNN"><span class="acrl">Authority is Constructed and Contextual</span></div>
-		<div class="node" id="OOO"><span class="acrl">Information Creation as a Process</span></div>
-		<div class="node" id="PPP"><span class="acrl">Information has Value</span></div>
-		<div class="node" id="QQQ"><span class="acrl">Research as Inquiry</span></div>
-		<div class="node" id="RRR"><span class="acrl">Scholarship as Conversation</span></div>
-		<div class="node" id="SSS"><span class="acrl">Searching as Strategic Exploration</span></div>
-	</div>
+  <div class="node" id="AAA"><span class="wpa">Curiosity</span></div>
+  <div class="node" id="BBB"><span class="wpa">Openness</span></div>
+  <div class="node" id="CCC"><span class="wpa">Engagement</span></div>
+  <div class="node" id="DDD"><span class="wpa">Creativity</span></div>
+  <div class="node" id="EEE"><span class="wpa">Persistence</span></div>
+  <div class="node" id="FFF"><span class="wpa">Responsibility</span></div>
+  <div class="node" id="GGG"><span class="wpa">Flexibility</span></div>
+  <div class="node" id="HHH"><span class="wpa">Metacognition</span></div>
+  <div class="node" id="QQQ"><span class="acrl">Research as Inquiry</span></div>
+  <div class="node" id="PPP"><span class="acrl">Information has Value</span></div>
+  <div class="node" id="OOO"><span class="acrl">Information Creation as a Process</span></div>
+  <div class="node" id="RRR"><span class="acrl">Scholarship as Conversation</span></div>
+  <div class="node" id="NNN"><span class="acrl">Authority is Constructed and Contextual</span></div>
+  <div class="node" id="SSS"><span class="acrl">Searching as Strategic Exploration</span></div>
+  <div class="node" id="KKK"><span class="ilcs">Determine the nature and extent of information needed</span></div>
+  <div class="node" id="LLL"><span class="ilcs">Accesses needed information effectively and efficiently</span></div>
+  <div class="node" id="III"><span class="ilcs">Individually or as a member of a group,uses information effectively to accomplish a specific purpose</span></div>
+  <div class="node" id="JJJ"><span class="ilcs">Understands many of the economic, legal, and social issues surrounding thre use of information and accesses and uses information ethically and legally</span></div>
+  <div class="node" id="MMM"><span class="ilcs">Evaluates information and its sources critically and incorporates selected information into her or his knowledge base or value system</span></div>
+
+  </div>
 </div>
 
 <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
@@ -98,14 +114,34 @@
 
 <svg>
  <defs>
-    <radialGradient id="exampleGradient">
-    <stop offset="50%" stop-color="#efefef"/>
-    <stop offset="100%" stop-color="#d4d5d6"/>  
+    <radialGradient id="circleGradient">
+      <stop offset="40%" stop-color="#efefef"/>
+      <stop offset="60%" stop-color="#eaeaea"/>
+      <stop offset="80%" stop-color="#e0e0e0"/>
+      <stop offset="100%" stop-color="#d4d5d6"/>  
+    </radialGradient>
+     <radialGradient id="bulbGradient">
+     <stop offset="60%" stop-color="#ffffff"/>
+      <stop offset="90%" stop-color="#eaeaea"/>
+      <stop offset="100%" stop-color="#e0e0e0"/>  
+    </radialGradient>
+     <radialGradient id="glowGradient">
+     <stop offset="30%" stop-color="#efefef"/>
+      <stop offset="70%" stop-color="#eaeaea"/>
+      <stop offset="100%" stop-color="#e0e0e0"/> 
     </radialGradient>
   </defs>
 </svg>
-
+<svg viewBox="0 0 16 24">
+  <path id="lightbulb" d="M1120 576q0 13-9.5 22.5t-22.5 9.5-22.5-9.5-9.5-22.5q0-46-54-71t-106-25q-13 0-22.5-9.5t-9.5-22.5 9.5-22.5 22.5-9.5q50 0 99.5 16t87 54 37.5 90zm160 0q0-72-34.5-134t-90-101.5-123-62-136.5-22.5-136.5 22.5-123 62-90 101.5-34.5 134q0 101 68 180 10 11 30.5 33t30.5 33q128 153 141 298h228q13-145 141-298 10-11 30.5-33t30.5-33q68-79 68-180zm128 0q0 155-103 268-45 49-74.5 87t-59.5 95.5-34 107.5q47 28 47 82 0 37-25 64 25 27 25 64 0 52-45 81 13 23 13 47 0 46-31.5 71t-77.5 25q-20 44-60 70t-87 26-87-26-60-70q-46 0-77.5-25t-31.5-71q0-24 13-47-45-29-45-81 0-37 25-64-25-27-25-64 0-54 47-82-4-50-34-107.5t-59.5-95.5-74.5-87q-103-113-103-268 0-99 44.5-184.5t117-142 164-89 186.5-32.5 186.5 32.5 164 89 117 142 44.5 184.5z" style="border:none; background-color:white; fill:#666"></path>   
+  <clipPath id="bulbPath">
+        <path d="M1120 576q0 13-9.5 22.5t-22.5 9.5-22.5-9.5-9.5-22.5q0-46-54-71t-106-25q-13 0-22.5-9.5t-9.5-22.5 9.5-22.5 22.5-9.5q50 0 99.5 16t87 54 37.5 90zm160 0q0-72-34.5-134t-90-101.5-123-62-136.5-22.5-136.5 22.5-123 62-90 101.5-34.5 134q0 101 68 180 10 11 30.5 33t30.5 33q128 153 141 298h228q13-145 141-298 10-11 30.5-33t30.5-33q68-79 68-180zm128 0q0 155-103 268-45 49-74.5 87t-59.5 95.5-34 107.5q47 28 47 82 0 37-25 64 25 27 25 64 0 52-45 81 13 23 13 47 0 46-31.5 71t-77.5 25q-20 44-60 70t-87 26-87-26-60-70q-46 0-77.5-25t-31.5-71q0-24 13-47-45-29-45-81 0-37 25-64-25-27-25-64 0-54 47-82-4-50-34-107.5t-59.5-95.5-74.5-87q-103-113-103-268 0-99 44.5-184.5t117-142 164-89 186.5-32.5 186.5 32.5 164 89 117 142 44.5 184.5z"></path>   
+    </clipPath>
+</svg>
 <div id="svgcontainer"></div>
+
 </body></html>
 
 
+
+     

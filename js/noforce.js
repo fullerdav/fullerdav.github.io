@@ -1,5 +1,19 @@
 const { log, time } = console;
 
+ // $( "body" ).bind("DOMNodeInserted", function( objEvent ){
+ //          console.log("Node inserted: " + $(objEvent.target).attr("id"));
+ //  });
+  
+// var target = document.getElementById('topnode');
+// var observer = new MutationObserver(function(mutations) {
+//   mutations.forEach(function(mutation) {
+//     console.log(mutation);
+//   });    
+// });
+// var config = { attributes: true, childList: true, characterData: true };
+// observer.observe(target, config);
+
+
 Set.prototype.difference = function(setB) {
     var difference = new Set(this);
     for (var elem of setB) {
@@ -62,36 +76,25 @@ const assoc = {
 };
 
 var htmlnodes = $(".node");
-var nodeset = new Set(["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","AA","BB","CC","DD","EE","FF","GG","HH","II","JJ","KK","LL","AAA","BBB","CCC","DDD","EEE","FFF","GGG","HHH","III","JJJ","KKK","LLL","MMM","NNN","OOO","PPP","QQQ","RRR","SSS"]);
+
+let nset = Object.keys(assoc);
+nset = new Set(nset);
 
 var activeDivs = new Set();
 var fadedDivs = new Set();
 var clicked;
 
-
 htmlnodes
   .on("mouseover", function() { 
       activeDivs.clear();
       fadedDivs.clear();
-      if (this.id.length === 2) {
-        assoc[this.id].forEach(function(k){
+      assoc[this.id].forEach(function(k){
           activeDivs.add(k);  
-        });
-      } else {
-        for (let key in assoc) {
-          if (assoc[key].indexOf(this.id) !== -1) {
-            activeDivs.add(key);  
-          }
-        }
-      }
+      });
       activeDivs.add(this.id);
-      fadedDivs = nodeset.difference(activeDivs); 
-
-      activeDivs.forEach(function(k, index){
+      fadedDivs = nset.difference(activeDivs); 
+      activeDivs.forEach(function(k, index){ 
         $("#" + k + " span").toggleClass("hilite");
-        let cls = $("#" + k + " span").attr("class").split(" ");
-        $("#" + cls[0]).css("font-size", "1.5em").css("line-height", "2em");
-        
       });
       fadedDivs.forEach(function(k, index){
         $("#" + k + " span").toggleClass("lolite");
@@ -99,73 +102,32 @@ htmlnodes
       makeSVG(this.id, assoc[this.id]);
   })
   .on("mouseout", function(){
-    $("#svgcontainer").empty();
     activeDivs.forEach(function(k,index){
       $("#" + k + " span").toggleClass("hilite");
-      let cls = $("#" + k + " span").attr("class").split(" ");
-        $("#" + cls[0]).css("font-size", "1em").css("line-height", "1em");
     });
     fadedDivs.forEach(function(k, index){
       $("#" + k + " span").toggleClass("lolite");
     });
+    $("#svgcontainer").empty("svg");
   })
   .on("click", function() {
-    $("#svgcontainer").empty();
-    $("#d3force").css("width", "96%").css("margin-left", "4%");
-    $("#d3force1").css("width", "4%").css("margin-right", "96%").css("border-right", "2px solid black");
-      clicked = this.id;
-      if (this.id.length === 2) {
-        treeDraw(this.id);  
+    $("#d3force").css("width", "97%").css("margin-left", "3%");
+    $("#d3force1").css("width", "3%").css("margin-right", "97%").css("border-right", "2px solid black");
+    clicked = this.id;
+      if (clicked.length === 2) {
+        treeDraw(clicked);  
       } else {
         treeDraw(activeDivs);
       } 
   });
 
-  function makeSVG(src, targs) {
-    var ns = {svg:"http://www.w3.org/2000/svg", xlink: "http://www.w3.org/1999/xlink"};
-    var svg = document.createElementNS(ns.svg, "svg");
-    let g = document.createElementNS(ns.svg, "g");
-  
-    let elsrc = document.querySelector("#" + src + " span");
-    let length2 = src.length === 2 ? true : false;
-    let s = {x: elsrc.offsetTop + elsrc.offsetHeight/2};
-    
-    targs.forEach(function(targ){
-      let targsrc = document.querySelector("#" + targ + " span");
-      let length1 = targ.length === 1 ? true : false;
-      let t = {x: targsrc.offsetTop + targsrc.offsetHeight/2};
-
-      if (length2) {
-        t.y = length1 ? (targsrc.offsetLeft + targsrc.offsetWidth) : targsrc.offsetLeft; 
-        s.y = length1 ? elsrc.offsetLeft : (elsrc.offsetLeft + elsrc.offsetWidth);
-        log("length2", t.y, s.y);
-      } else {
-        t.y = src.length === 1 ?  targsrc.offsetLeft : (targsrc.offsetWidth + targsrc.offsetLeft); 
-        s.y = src.length === 1 ?  elsrc.offsetLeft + elsrc.offsetWidth : elsrc.offsetLeft; 
-         log("else", t.y, s.y);
-      }
-     
-      let d = `M ${s.y} ${s.x}
-          C ${(s.y + t.y) / 2} ${s.x},
-            ${(s.y + t.y) / 2} ${t.x},
-            ${t.y} ${t.x}`;
-
-       let path = document.createElementNS(ns.svg, "path");
-       
-        path.setAttribute("class", "link");
-        path.setAttribute("d", d);
-        g.appendChild(path); 
-    });
-    svg.appendChild(g); 
-    $("#svgcontainer").append(svg);
-    
-  }
+//############################
 
   function modalClose() {
-       $("#d3force").css("width", "0%").css("margin-left", "100%");
-       $("#d3force1").css("width", "0%").css("margin-right", "100%");
-       $("#d3force1").css("border", "none");
-       $("#d3force").empty();
+       $("#chevron").css("display", "none");
+       $(".container").css("display", "grid");
+       $("#d3force").css("width", "0%").css("margin-left", "100%").empty("svg");
+       $("#d3force1").css("width", "0%").css("margin-right", "100%").css("border", "none");
        clicked = null;
     }
     $("#d3force1").on("click", () => {
@@ -178,19 +140,68 @@ htmlnodes
         }
      },{passive:true});
     
-    document.addEventListener('click', (e) => {
-        console.log(e.x, e.y);
-     },{passive:true});
+    // document.addEventListener('click', (e) => {
+    //     console.log(e.x, e.y);
+    //  },{passive:true});
+
+
+     let element = document.getElementById("d3force1");
+     element.addEventListener("transitionend", function(event) {
+          let w = $(element).css("width");
+          if (parseFloat(w) > 0) {
+            $(".container").css("display", "none");
+            $("#chevron").css("display", "inline-block");
+          }
+      }, false);
+
+//############################
+
+    function makeSVG(src, targs) {
+        var ns = {svg:"http://www.w3.org/2000/svg", xlink: "http://www.w3.org/1999/xlink"};
+        var svg = document.createElementNS(ns.svg, "svg");
+        let g = document.createElementNS(ns.svg, "g");
+      
+        let elsrc = document.querySelector("#" + src + " span");
+        let length2 = src.length === 2 ? true : false;
+        let s = {x: elsrc.offsetTop + elsrc.offsetHeight/2};
+        
+        targs.forEach(function(targ){
+          let targsrc = document.querySelector("#" + targ + " span");
+          let length1 = targ.length === 1 ? true : false;
+          let t = {x: targsrc.offsetTop + targsrc.offsetHeight/2};
+
+          if (length2) {
+            t.y = length1 ? (targsrc.offsetLeft + targsrc.offsetWidth) : targsrc.offsetLeft; 
+            s.y = length1 ? elsrc.offsetLeft : (elsrc.offsetLeft + elsrc.offsetWidth);
+          } else {
+            t.y = src.length === 1 ?  targsrc.offsetLeft : (targsrc.offsetWidth + targsrc.offsetLeft); 
+            s.y = src.length === 1 ?  elsrc.offsetLeft + elsrc.offsetWidth : elsrc.offsetLeft; 
+          }
+         
+          let d = `M ${s.y} ${s.x}
+              C ${(s.y + t.y) / 2} ${s.x},
+                ${(s.y + t.y) / 2} ${t.x},
+                ${t.y} ${t.x}`;
+
+           let path = document.createElementNS(ns.svg, "path");
+           
+            path.setAttribute("class", "link");
+            path.setAttribute("d", d);
+            g.appendChild(path); 
+        });
+        svg.appendChild(g); 
+        $("#svgcontainer").append(svg);
+  }
 
 //####################################################################
 
 
 function treeDraw(id) {
-    var margin = {top:10, right:10, bottom:10, left:100},
+    var margin = {top:0, right:0, bottom:0, left:120},
         width = 1000 - margin.right - margin.left,
-        height = 720 - margin.top - margin.bottom,
+        height = 800 - margin.top - margin.bottom,
         i = 0, duration = 500,
-        root;
+        shape = "circle", root;
 
     var treemap = d3.tree().size([height, width]);
 
@@ -215,7 +226,7 @@ function treeDraw(id) {
           root = json;
           root.name = $("#" + clicked).text();
       }
-      root.href = "javascript:modalClose()";
+     
       root = d3.hierarchy(root, function(d) {return d.children;});
 
       root.x0 = height/2;
@@ -232,16 +243,19 @@ function treeDraw(id) {
       update(root);   
     });
 
+    function countSibs(n) {
+      return n.depth > 0 ? {length:n.parent.children.length, index:n.parent.children.indexOf(n)} : {length:0, index:null};
+    }
+
     function update(source) {
-
         var treeData = treemap(root);
-        var tooltip = d3.select("#d3force").append("div").attr("class", "tooltip").style("opacity", 0);
-
+        var tooltip = $("<div></div>").addClass("tooltip").appendTo("#d3force");
+  
         var nodes = treeData.descendants(), 
             links = treeData.descendants().slice(1);
 
           nodes.forEach(function(d) { 
-            d.y = d.depth * 200;
+            d.y = d.depth * 225;
           });
 
           var node = vis.selectAll("g.node")
@@ -251,8 +265,22 @@ function treeDraw(id) {
             .attr("class", "node")
             .attr("transform", function(d) {
               return "translate(" + source.y0 + "," + source.x0 + ")"; 
+            });
+ 
+            nodeEnter.append(shape)
+              .style("fill", function(d) { return "url(#circlleGradient)"; })
+              .style("fill-opacity", ".65");
+
+
+//################################
+
+        var anchors = nodeEnter.append("svg:a")
+            .attr("target", "_blank")
+            .attr("xlink:href", function(d) {
+                return d.data.href;
             })
             .on("click", function(d) { 
+              if (d.depth > 0) {
                 let indno = d.parent.children.indexOf(d);
                 if (indno !== null) {
                      let sibs = d.parent.children.slice(0, indno);
@@ -261,39 +289,9 @@ function treeDraw(id) {
                      closeChildren({name:"dummy", children:sibs});
                  }
                  toggle(d); 
-                 update(d); 
+                 update(d);
+               }
             }); 
-            // .on("mouseover", function(d){
-            //         var xspot = d.y0 + 200, yspot = d.x0 - 20;
-            //         log(xspot);
-            //         tooltip
-            //           .transition(200)
-            //           .style("opacity", ".9");
-            //         tooltip.html(d.data.name)
-            //           .style("top", function(d){
-            //             return (yspot) + "px";                      
-            //           })
-            //           .style("left", function(d){
-            //             return xspot + "px";                     
-            //           })
-            //     })
-            //     .on("mouseout", function(d){
-            //       tooltip.style("opacity", "0");
-            //       tooltip.exit();
-            //     });
- 
-                nodeEnter.append("circle")
-                  .style("fill", function(d) { return "url(#exampleGradient)"; })
-                  .style("fill-opacity", ".65");
-                 
-
-//################################
-
-        var anchors = nodeEnter.append("svg:a")
-            .attr("target", "_blank")
-            .attr("xlink:href", function(d) {
-                return d.data.href;
-            });
 
         var txts = anchors.append("svg:text")
           .attr("text-anchor", "middle")
@@ -304,7 +302,6 @@ function treeDraw(id) {
             return d.depth > 0 ? "pointer" : "inherit"; 
           });
         
-
         txts.each(function(d){
           let text = d3.select(this);
           let label = d.data.name;
@@ -337,9 +334,59 @@ function treeDraw(id) {
             tspan.text(line.join(" ")); 
           }
          
-         d.radius = maxlen * .6;
+           d.radius = maxlen * .55;
        
         });
+
+  var bulb = nodeEnter.filter(function(d){
+      let {} = d.data;
+      return d.data.id !== undefined;
+    })
+    .append("g").attr("transform", "translate(-10, -50)");
+   
+    var circ = bulb.append("svg:circle")
+    .attr("transform", "translate(16, 10)")
+      .attr("class", "watts")
+      .attr("r", 18)
+      .attr("fill", "none")
+      .style("pointer-events", "fill");
+      
+    circ.on("mouseover", function(){
+      this.style.setProperty("fill", "url(#glowGradient)", null);
+    })
+    .on("mouseout", function(){
+      this.style.setProperty("fill", "none", null);
+      tooltip.css("opacity", 0);
+    
+      if (tooltip.hasClass("tiptop")) { tooltip.removeClass("tiptop");}
+      if (tooltip.hasClass("tipright")) { tooltip.removeClass("tipright");}
+
+    })
+    .on("mousedown", function(d) {
+      let sibs = countSibs(d);
+      this.style.setProperty("fill", "url(#bulbGradient)", null);
+      
+      tooltip
+        .html(function(){
+          return d.data.name || d.name;
+        }) 
+        .css("top", function(){
+            return sibs.length > 3 ? d.x - (50 + this.offsetHeight/2) + "px" : d.x - (50 + this.offsetHeight) + "px";
+        })
+        .css("left", function() {
+           return sibs.length > 3 ? (d.y + margin.left + 30) + "px" : (d.y + margin.left) - this.offsetWidth/2 + "px";
+        });
+
+        if (sibs.length > 3) {
+          tooltip.addClass("tipright").css("opacity", 1);
+        } else {
+          tooltip.addClass("tiptop").css("opacity", 1);
+        }
+
+  });
+    
+    bulb.append("use").attr("xlink:href", "#lightbulb")
+      .style("transform", "scale(.018,.018)");
            
 //###################################################
 
@@ -353,7 +400,7 @@ function treeDraw(id) {
             return d.radius;
           })
           .style("fill", function(d) { 
-            return "url(#exampleGradient)"; 
+            return "url(#circleGradient)"; 
           })
           .style("fill-opacity", ".65");
     
@@ -386,7 +433,6 @@ function treeDraw(id) {
           })
           .remove();
 
-         
         nodes.forEach(function(d) {
           d.x0 = d.x;
           d.y0 = d.y;
@@ -420,3 +466,4 @@ function treeDraw(id) {
       }
     }
 }
+
