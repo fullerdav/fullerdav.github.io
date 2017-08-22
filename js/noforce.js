@@ -22,6 +22,14 @@ Set.prototype.difference = function(setB) {
     return difference;
 }
 
+const reasons = {
+  "EE": { 
+          "KKK": "As part of this standard, students are able to differentiate between primary and secondary sources, recognizing how their use and importance vary with each discipline, which mirrors our first basic outcome.  We build upon another part of this standard by students not only realizing that information may need to be constructed with raw data from primary sources, but to use disciplinary standards to collect and format that data.",
+          "NNN": "Students recognize that authoritative content may be packaged formally or informally and may include sources of all types, including primary sources. Students deduce that primary sources have their own authority even though they can be types of resources that typically would not be considered scholarly."
+        }
+}
+
+
 const assoc = {
   "AA":  ["B", "K", "M", "N", "DDD", "KKK", "SSS"],
   "BB":  ["B", "J", "M", "N", "AAA", "BBB", "CCC", "FFF", "HHH", "KKK", "MMM", "SSS", "QQQ"],
@@ -74,6 +82,8 @@ const assoc = {
   "RRR": ["HH", "II"],
   "SSS": ["AA", "BB", "CC", "GG", "KK", "LL"]
 };
+
+
 
 var htmlnodes = $(".node");
 
@@ -195,7 +205,6 @@ htmlnodes
 
 //####################################################################
 
-
 function treeDraw(id) {
     var margin = {top:0, right:0, bottom:0, left:120},
         width = 1000 - margin.right - margin.left,
@@ -238,7 +247,7 @@ function treeDraw(id) {
           toggle(d);
         }
       }
-      
+
       root.children.forEach(toggleAll);
       update(root);   
     });
@@ -250,6 +259,7 @@ function treeDraw(id) {
     function update(source) {
         var treeData = treemap(root);
         var tooltip = $("<div></div>").addClass("tooltip").appendTo("#d3force");
+        var circletxt = $("<div></div>").addClass("circletxt").appendTo("#d3force");
   
         var nodes = treeData.descendants(), 
             links = treeData.descendants().slice(1);
@@ -267,10 +277,9 @@ function treeDraw(id) {
               return "translate(" + source.y0 + "," + source.x0 + ")"; 
             });
  
-            nodeEnter.append(shape)
-              .style("fill", function(d) { return "url(#circlleGradient)"; })
-              .style("fill-opacity", ".65");
-
+          nodeEnter.append("circle")
+            .style("fill", function(d) { return "url(#circlleGradient)"; })
+            .style("fill-opacity", ".65");
 
 //################################
 
@@ -295,63 +304,44 @@ function treeDraw(id) {
 
         var txts = anchors.append("svg:text")
           .attr("text-anchor", "middle")
-          .text(function(d) { 
-              return d.data.name; 
-          })
           .style("cursor", function(d) {
-            return d.depth > 0 ? "pointer" : "inherit"; 
+            return d.depth === 0 || (!d.children && !d._children) ? "inherit" : "pointer"; 
           });
         
         txts.each(function(d){
           let text = d3.select(this);
-          let label = d.data.name;
-          let words = label.split(" ").reverse();
-          let chars = label.length;
-          let totLength = chars * 6;
-          let lines = Math.floor(totLength/125);
-         
-          let midline = lines/2;
-          let y = lines > 2 ? lines * -2 : 6;
-        
-          let line = [], maxlength = 125, maxlen = 90, linelen = 0, lineno = 1;
-          let dy = -.5; 
-        
-          let tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", "-.5em");
-          while (word = words.pop()) {
-            line.push(word);
-            tspan.text(line.join(" "));
-            linelen = maxlength - (Math.abs(midline - lineno) * 12);
-            if (tspan.node().getComputedTextLength() > linelen) {
-              tspan.text(line.join(" "));
-              let curlen = tspan.node().getComputedTextLength();
-              maxlen = maxlen > curlen ? maxlen : curlen;
+          let maxlen = 0, dy = -.5;
+          let lbl = d.data.name, index = 0;
+          
+         let midline = Math.ceil(lbl.length * .045);
+         let y = midline * -.2 + "em";
+         let rx = /([^\b]{5,25})\b/g;
 
-              tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", lineno++ * 1.1 + dy + "em");
-              line = [];
-            } 
-          }
-          if (line.length > 0) { 
-            tspan.text(line.join(" ")); 
-          }
-         
-           d.radius = maxlen * .55;
-       
-        });
+          let str = lbl.match(rx);
+          str.forEach(function(s){
+              let tspan = text.append("tspan").text(s).attr("x", 0).attr("y", y).attr("dy", index++ * 1.1 + dy + "em");
+              maxlen = maxlen > tspan.node().getComputedTextLength() ? maxlen : tspan.node().getComputedTextLength();
+              log(tspan.node().getComputedTextLength()/s.length);
+          });
+          
+          d.radius = maxlen * .65;
 
-  var bulb = nodeEnter.filter(function(d){
-      let {} = d.data;
-      return d.data.id !== undefined;
-    })
-    .append("g").attr("transform", "translate(-10, -50)");
-   
-    var circ = bulb.append("svg:circle")
-    .attr("transform", "translate(16, 10)")
-      .attr("class", "watts")
-      .attr("r", 18)
-      .attr("fill", "none")
-      .style("pointer-events", "fill");
+
+         });
+          
       
-    circ.on("mouseover", function(){
+  var bulb = nodeEnter.filter(function(d){
+      return d.parent && d.data.id !== undefined;
+    })
+    .append("g").attr("transform", "translate(-10, -60)");
+   
+  var circ = bulb.append("svg:circle")
+    .attr("transform", "translate(16, 10)")
+    .attr("class", "watts")
+    .attr("r", 18);
+    
+      
+  circ.on("mouseover", function(){
       this.style.setProperty("fill", "url(#glowGradient)", null);
     })
     .on("mouseout", function(){
@@ -360,21 +350,33 @@ function treeDraw(id) {
     
       if (tooltip.hasClass("tiptop")) { tooltip.removeClass("tiptop");}
       if (tooltip.hasClass("tipright")) { tooltip.removeClass("tipright");}
-
     })
     .on("mousedown", function(d) {
-      let sibs = countSibs(d);
+      let sibs = countSibs(d), top, left;
       this.style.setProperty("fill", "url(#bulbGradient)", null);
+      let outcome = d.data.id;
+      let reason = reasons[outcome];
       
       tooltip
         .html(function(){
-          return d.data.name || d.name;
+          if (reason !== undefined && reason[clicked] !== undefined) {
+            return reason[clicked];
+          } else {
+            return "Place holder text";
+          }
+        })
+        .css("width", function(d) {
+           let len = tooltip.html().length;
+           return len > 150 ? Math.ceil(len) + "px" : "150px";
         }) 
         .css("top", function(){
-            return sibs.length > 3 ? d.x - (50 + this.offsetHeight/2) + "px" : d.x - (50 + this.offsetHeight) + "px";
+            top = sibs.length > 3 ? d.x - (50 + this.offsetHeight/2) : d.x - (50 + this.offsetHeight);
+            top = top < 0 ? 0 : top;
+            return top + "px";
         })
         .css("left", function() {
-           return sibs.length > 3 ? (d.y + margin.left + 30) + "px" : (d.y + margin.left) - this.offsetWidth/2 + "px";
+           left = sibs.length > 3 ? (d.y + margin.left + 30) : (d.y + margin.left) - this.offsetWidth/2;
+           return left + "px";
         });
 
         if (sibs.length > 3) {
@@ -382,7 +384,6 @@ function treeDraw(id) {
         } else {
           tooltip.addClass("tiptop").css("opacity", 1);
         }
-
   });
     
     bulb.append("use").attr("xlink:href", "#lightbulb")
@@ -393,7 +394,8 @@ function treeDraw(id) {
         var nodeUpdate = nodeEnter.merge(node);
 
         nodeUpdate.transition()
-          .duration(duration).attr("transform", function(d) {return "translate(" + d.y + "," + d.x + ")"; });
+          .duration(duration).attr("transform", function(d) {
+            return "translate(" + d.y + "," + d.x + ")"; });
 
         nodeUpdate.select("circle")
           .attr("r", function(d){
@@ -423,7 +425,8 @@ function treeDraw(id) {
 
         linkUpdate.transition()
           .duration(duration)
-          .attr("d", function(d) { return diagonal(d, d.parent); });
+          .attr("d", function(d) {
+            return diagonal(d, d.parent); });
 
         var linkExit = link.exit().transition()
           .duration(duration)
@@ -450,7 +453,9 @@ function treeDraw(id) {
 
     function closeChildren(el) {   
       if (el.children) { 
-        el.children.forEach(closeChildren);
+        el.children.forEach(function(x) {
+          closeChildren(x);
+        });
         toggle(el);
       }
     }

@@ -27,22 +27,23 @@
 <div class="container" id="root">
 
 	<div class="outcomes1" id="leftcol">
-		<div class="node" id="H"><span class="wac">Use constructive feedback from readers to revise writing to be more effective in achieving its purpose for readers.</span></div>
-    <div class="node" id="A"><span class="wac">Demonstrate proficiency in writing genres appropriate to the various disciplines addressed to critical readers.</span></div>
-    <div class="node" id="B"><span class="wac">Demonstrate proficiency in constructing discipline appropriate claims, theses, or questions to put forward ideas in a focused manner.</span></div>
-		<div class="node" id="D"><span class="wac">Use analysis, synthesis, reflection, argument to develop ideas, which may include organization, structure, coherence, and depth of thinking.</span></div>
-		<div class="node" id="E"><span class="wac">Practice ethical and professional standards of citation.</span></div>
-		<div class="node" id="F"><span class="wac">Demonstrate use of language appropriate for the audience and purpose.</span></div>
-		<div class="node" id="G"><span class="wac">Integrate the ideas of others appropriately for the discipline.</span></div>
-    <div class="node" id="C"><span class="wac">Use evidence appropriately to support claims.</span></div>
+		<div class="node" id="H"><span class="wac">Use constructive feedback from readers to revise writing to be more effective in achieving its purpose for readers</span></div>
+    <div class="node" id="A"><span class="wac">Demonstrate proficiency in writing genres appropriate to the various disciplines addressed to critical readers</span></div>
+    <div class="node" id="B"><span class="wac">Demonstrate proficiency in constructing discipline appropriate claims, theses, or questions to put forward ideas in a focused manner</span></div>
+		<div class="node" id="D"><span class="wac">Use analysis, synthesis, reflection, argument to develop ideas, which may include organization, structure, coherence, and depth of thinking</span></div>
+		<div class="node" id="E"><span class="wac">Practice ethical and professional standards of citation</span></div>
+		<div class="node" id="F"><span class="wac">Demonstrate use of language appropriate for the audience and purpose</span></div>
+		<div class="node" id="G"><span class="wac">Integrate the ideas of others appropriately for the discipline</span></div>
+    <div class="node" id="C"><span class="wac">Use evidence appropriately to support claims</span></div>
 		<div class="node" id="I"><span class="cclo">Discuss Ideas</span></div>
-		<div class="node" id="N"><span class="cclo">Find Evidence</span></div>
-    <div class="node" id="O"><span class="cclo">Evaluate Evidence</span></div>
     <div class="node" id="J"><span class="cclo">Read Texts Critically</span></div>
-		<div class="node" id="L"><span class="cclo">Incorporates Revision</span></div>
+     <div class="node" id="K"><span class="cclo">Develop Effective Arguments</span></div>
+    <div class="node" id="L"><span class="cclo">Incorporates Revision</span></div>
+   
+    <div class="node" id="N"><span class="cclo">Find Evidence</span></div>
+    <div class="node" id="O"><span class="cclo">Evaluate Evidence</span></div>
 		<div class="node" id="M"><span class="cclo">Develop A Research Topic</span></div>
     <div class="node" id="Q"><span class="cclo">Present Research Findings</span></div>
-		<div class="node" id="K"><span class="cclo">Develop Effective Arguments</span></div>
 		<div class="node" id="P"><span class="cclo">Develop an Evidence Based Argument</span></div>
 		<div class="node" id="R"><span class="cclo">Practice Professional Standards of Citation</span></div>
 		<div class="node" id="S"><span class="cclo">Make Connections or Original Contributions</span></div>
@@ -66,22 +67,17 @@
 <div class="outcomes2">
 
   <div id="legend">
-  <span class="iline">Sources for the concepts listed on this page:</span>
+  <span class="iline">Sources for the concepts listed:</span>
     <dl id="sources">
       <dt><a class="acrl" target="_blank" href="http://www.ala.org/acrl/sites/ala.org.acrl/files/content/issues/infolit/Framework_ILHE.pdf">ACRL Information Literacy Framework</a></dt>
-      <!--dd><cite>Framework for Information Literacy for Higher Education (Association of College andResearch Libraries)</cite></dd-->
       <dt><a class="cclo" target="_blank" href="http://muse.union.edu/commoncurriculum/files/2016/01/CCA-PartII-LearningOutcomes.pdf">Common Curriculum Learning Outcomes</a></dt>
-      <!--dd>General Education Board</dd-->
       <dt>
       <a class="ilcs" target="_blank" href="http://www.ala.org/acrl/standards/informationliteracycompetency">Information Literacy Competency Standards</a>
-      </dt><!--dd><cite>American Library Association</cite></dd-->
       <dt>
       <a class="schaffer" target="_blank" href="https://docs.google.com/document/d/1VtsjEedFkWqKidf0wJ4Pl0iCMloiRwNJrAJspt4VtvE/edit">Schaffer Library IL Outcomes</a>
       </dt>
       <dt><a class="wpa" target="_blank" href="http://wpacouncil.org/files/framework-for-success-postsecondary-writing.pdf">WPA Framework Habits of Mind</a></dt>
-      <!--dd><cite>Framework for Success in Post Secondary Writing (Developed by Council of Writing Program Administrators, National Council of Teachers of English, National Writing Project)</cite></dd-->
       <dt><a class="wac" target="_blank" href="https://www.union.edu/Resources/Campus/assessment/outcomes/academicaffairs/WAC.php">WAC Learning Outcomes</a></dt>
-      <!--dd><cite>Writing Across the Curriculum</cite></dd-->
       </dl>
   </div>
 
@@ -109,8 +105,26 @@
 </div>
 
 <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="//127.0.0.1/js/d3.v4.js"></script>
 <script src="js/noforce.js"></script>
+
+<script>
+let nodes =  document.querySelectorAll("div.node");
+let n = nodes[0];
+for ( prop in n) {
+  if (n.hasOwnProperty(prop)) {
+    log(n[prop]);
+  }
+}
+log(typeof nodes[0]);
+//let rx = /([\w\s\u{0028}\u{0029}\u{0027}\u{003A}\u{002E}\u{002F}\u{0028}]{5,25})\b/g;
+//$(".nodes").each( n => {
+ //let str = n.text();
+  //log(str.match(rx));
+//});
+ 
+ let str =";"
+</script>
 
 <svg>
  <defs>

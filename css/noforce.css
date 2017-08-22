@@ -9,29 +9,29 @@
 }
 
 #H {margin-right:0rem;}
-#A {margin-right:1rem;}
-#B {margin-right:2rem;}
+#A {margin-right:.5rem;}
+#B {margin-right:1rem;}
 
-#D {margin-right:2.4rem;}
-#E {margin-right:2.8rem;}
-#F {margin-right:3.2rem;}
+#D {margin-right:1.4rem;}
+#E {margin-right:1.8rem;}
+#F {margin-right:2.2rem;}
 
-#G {margin-right:3.4rem;}
-#C {margin-right:3.6rem;}
+#G {margin-right:2.5rem;}
+#C {margin-right:2.8rem;}
 
-#I {margin-right:3.7rem;}
-#N {margin-right:3.8rem;}
-#O {margin-right:3.7rem;}
+#I {margin-right:3rem;}
+#J {margin-right:3rem;}
+#K {margin-right:3rem;}
 
-#J {margin-right:3.6rem;}
-#L {margin-right:3.4rem;}
+#L {margin-right:2.8rem;}
+#N {margin-right:2.5rem;}
 
-#M {margin-right:3.2rem;}
-#Q {margin-right:2.8rem;}
-#K {margin-right:2.4rem;}
+#O {margin-right:2.2rem;}
+#M {margin-right:1.8rem;}
+#Q {margin-right:1.4rem;}
 
-#P {margin-right:2rem;}
-#R {margin-right:1rem;}
+#P {margin-right:1rem;}
+#R {margin-right:.5rem;}
 #S {margin-right:0rem;}
 
 #AAA {margin-left:0rem;}
@@ -178,27 +178,38 @@ div.tooltip {
   border-radius: 8%;
 }
 
+div.circletxt {
+  width: 150px;
+  height: auto;
+  position: absolute;
+  opacity: 0;
+  pointer-events: inherit;
+  padding: 8px;
+  border: none; 
+  border-radius: 8%;
+}
+
 .tiptop {
    border-bottom:  2px solid white;
-   box-shadow: 0 20px 40px -1px rgba(255, 248, 238, .8);
-   background: -webkit-linear-gradient(top, #d4d5d6, rgba(255, 248, 238, .2) 30%, rgba(255,248,238, .9));
-   background: -o-linear-gradient(top, #d4d5d6, rgba(255, 248, 238, .2) 30%, rgba(255,248,238, .9));
-   background: linear-gradient(to bottom,#d4d5d6, rgba(255, 248, 238, .2) 30%, rgba(255,248,238, .9));
+   box-shadow: 0 20px 40px -1px rgba(244, 244, 225, .8);
+   background: -webkit-linear-gradient(top, #d4d5d6, rgba(244, 244, 225, .2) 30%, rgba(255,197,143, .8));
+   background: -o-linear-gradient(top, #d4d5d6, rgba(244, 244, 225, .2) 30%, rgba(244, 244, 225, .8));
+   background: linear-gradient(to bottom,#d4d5d6, rgba(244, 244, 225, .2) 30%, rgba(244, 244, 225, .8));
   transition-property: opacity;
   transition-duration: .75s;
-  transition-timing-function: ease-in;
+  transition-timing-function: ease-in-out;
 }
 
 .tipright {
-  box-shadow:-30px 0px 25px -1px rgba(255,248,238,.8);  
-  background: -webkit-linear-gradient(right, #d4d5d6, rgba(255, 248, 238, .2) 30%, rgba(255,248,238, .9));
-  background: -o-linear-gradient(right, #d4d5d6, rgba(255, 248, 238, .2) 30%, rgba(255,248,238, .9));
-  background: linear-gradient(to left, #d4d5d6, rgba(255, 248, 238, .2) 30%, rgba(255,248,238, .9));
+  box-shadow:-30px 0px 25px -1px rgba(244, 244, 225, .8);  
+  background: -webkit-linear-gradient(right, #d4d5d6, rgba(244, 244, 225, .2) 30%, rgba(244, 244, 225, .8));
+  background: -o-linear-gradient(right, #d4d5d6, rgba(244, 244, 225, .2) 30%, rgba(244, 244, 225, .8));
+  background: linear-gradient(to left, #d4d5d6, rgba(244, 244, 225, .2) 30%, rgba(244, 244, 225, .8));
   border-bottom:  2px solid white;
   border-left:  2px solid white;
   transition-property: opacity;
   transition-duration: .75s;
-  transition-timing-function: ease-in;
+  transition-timing-function: ease-in-out;
 }
 
 @media (max-width: 900px) {
@@ -225,12 +236,15 @@ text {
   stroke: #666; 
   fill: #000; 
   stroke-width: 1;
+  background-color: rgba(244, 244, 225, .8);
 
 } 
+
 tspan {
   letter-spacing: .1em;
   font-size: 1rem;
   line-height: 1em;
+   background: rgba(244, 244, 225, .8);
 }
 
 path.link {
@@ -250,6 +264,10 @@ path.link {
 
 circle {
   pointer-events: none;
+}
+circle.watts {
+  fill: none;
+  pointer-events: fill;
 }
    
 #svgcontainer {
@@ -273,9 +291,11 @@ svg {
 span.iline {
   display: inline;
 }
+
 dl {
   margin-left: 12px;
 }
+
 #legend span::before { 
   font-family:  FontAwesome;
   content:  "\f05a";
@@ -284,6 +304,7 @@ dl {
   top: 0;
   left: 0;
 }
+
 a.acrl::after, a.wpa::after, a.cclo::after {
   font-family:  FontAwesome;
   content:  "\f1c1";

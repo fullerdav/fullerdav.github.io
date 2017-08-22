@@ -1,25 +1,25 @@
 {
   "name": "Scaffolded Outcomes",
-  "href":"javascript:modalClose()",
+  "href":"#",
   "children": [{
     "id":"AA",
     "name": "Topic Creation",
     "children": [{
       "name": "Level I: Basic Skills",
       "children": [{
-          "name": "Identify different places to consult in order to select an interesting topic.",
+          "name": "Identify different places to consult in order to select an interesting topic",
           "children": [{
             "name": "Boring Topic Challenge",
             "href":"https://docs.google.com/document/d/1gbEfYmY6GvyDo0wvHnQ6u92LoM40UK8T1rImUWc_bBM/edit?usp=sharing"
           }]
         },{
-          "name": "Explore general information sources to increase familiarity with the topic and align it to existing resources.",
+          "name": "Explore general information sources to increase familiarity with the topic and align it to existing resources",
           "children":[{
             "name": "Lesson Plan: Special Collections Mining Exercise",
             "href": "https://docs.google.com/document/d/1M6VIERiWtmVsC4A8H8_jMXw_KgQTBThjqnIcPxkKso4/edit?usp=sharing"
           }]
         },{
-          "name": "Define and use limiters in order to construct a research question that is neither too broad nor too narrow for the length of the paper and research timeline.",
+          "name": "Define and use limiters in order to construct a research question that is neither too broad nor too narrow for the length of the paper and research timeline",
           "children":[{
             "name": "Lesson Plan: Pyramid Exercise",
             "href": "https://docs.google.com/document/d/14m6Wp4QJ66URKzqsfQgbLQEbKeR74aYifRtu7uyr9Rk/edit?usp=sharing"                                                                                 
@@ -32,8 +32,7 @@
     },{
       "name": "Level II: Advanced Skills",
       "children": [{
-        "name": "Formulate a discipline specific research question and continually reevaluate it as the research process progresses.",
-        "children":[]
+        "name": "Formulate a discipline specific research question and continually reevaluate it as the research process progresses"
       }]
     }]
   }, {
@@ -42,13 +41,13 @@
     "children": [{
       "name": "Level I: Basic Skills",
       "children": [{
-          "name": "Construct multiple research questions they will try to answer that relate to their overall topic in order to determine their information need.",
+          "name": "Construct multiple research questions they will try to answer that relate to their overall topic in order to determine their information need",
           "children":[{
             "name": "Assignment: Research Log",
             "href": "https://docs.google.com/document/d/1Az4jBQs-i2LuhKj_Nyu-zww1aOKp7IcHhDSO2JeQ_vE/edit?usp=sharing"
           }]
         },{
-          "name": "Develop an awareness that the discovery and creation of knowledge is a dynamic process that evolves over time.",
+          "name": "Develop an awareness that the discovery and creation of knowledge is a dynamic process that evolves over time",
           "children":[{
             "name": "Assignment: Dear Reader Letter", 
             "href": "https://docs.google.com/a/union.edu/document/d/1Yru0EedDuGKR1hqZhtHq_tQChbJ0977Vyu0lB6sF934/edit?usp=sharing"
@@ -58,8 +57,7 @@
     },{
       "name": "Level II: Advanced Skills",
       "children": [{
-        "name": "Formulate a hypothesis and look at multiple perspectives to create a robust research paper.",
-        "children":[]
+        "name": "Formulate a hypothesis and look at multiple perspectives to create a robust research paper"
       }]
     }]
   },{
@@ -68,7 +66,7 @@
     "children": [{
       "name": "Level I: Basic Skills",
       "children": [{
-          "name": "Recognize the difference between a natural language search and a keyword search and identify where they are best used.",
+          "name": "Recognize the difference between a natural language search and a keyword search and identify where they are best used",
           "children": [{   
               "name": "Assignment: Research Log",
               "href": "https://docs.google.com/document/d/1Az4jBQs-i2LuhKj_Nyu-zww1aOKp7IcHhDSO2JeQ_vE/edit?usp=sharing"
@@ -80,13 +78,13 @@
               "href": "https://docs.google.com/document/d/1CG5JppYqgkXomt4ds82mp8sy5h99yXgcIhxHHIdgtPA/edit?usp=sharing"
           }]
         },{
-          "name": "Find and use general information resources to identify keywords within the topic area.",
+          "name": "Find and use general information resources to identify keywords within the topic area",
            "children":[{
             "name": "Lesson Plan: Special Collections Mining Exercise",
             "href": "https://docs.google.com/document/d/1M6VIERiWtmVsC4A8H8_jMXw_KgQTBThjqnIcPxkKso4/edit?usp=sharing"
           }]
         },{
-          "name": "Construct multiple keyword searches using synonyms and varying the search syntax.",
+          "name": "Construct multiple keyword searches using synonyms and varying the search syntax",
           "children": [{   
               "name": "Assignment: Research Log",
               "href": "https://docs.google.com/document/d/1Az4jBQs-i2LuhKj_Nyu-zww1aOKp7IcHhDSO2JeQ_vE/edit?usp=sharing"
@@ -99,13 +97,13 @@
     },{
     "name": "Level II: Advanced Skills",
     "children": [{
-        "name": "Assess and modify the search based on the usefulness of the results in order to focus and refine the search.",
+        "name": "Assess and modify the search based on the usefulness of the results in order to focus and refine the search",
         "children": [{   
               "name": "Assignment: Research Log",
               "href": "https://docs.google.com/document/d/1Az4jBQs-i2LuhKj_Nyu-zww1aOKp7IcHhDSO2JeQ_vE/edit?usp=sharing"
           }]
       },{
-        "name": "Use advanced searching (i.e. truncation, wildcard, NOT) in order to narrow or expand the search based on the assessment of the results.",
+        "name": "Use advanced searching (i.e. truncation, wildcard, NOT) in order to narrow or expand the search based on the assessment of the results",
         "children": [{   
               "name": "Assignment: Research Log",
               "href": "https://docs.google.com/document/d/1Az4jBQs-i2LuhKj_Nyu-zww1aOKp7IcHhDSO2JeQ_vE/edit?usp=sharing"
@@ -118,7 +116,7 @@
     "children": [{
       "name": "Level I: Basic Skills",
       "children": [{
-        "name": "Articulate different aspects - author, publisher, date - and integrate these aspects into a comprehensive evaluation; one aspect alone does not define value.",
+        "name": "Articulate different aspects - author, publisher, date - and integrate these aspects into a comprehensive evaluation; one aspect alone does not define value",
         "children":[{
           "name":"Lesson Plan: Evaluation",
           "href":"https://docs.google.com/a/union.edu/document/d/1w5vvJSph3_h_B--eFBXLiZ2pXM5doySwnem1kFlmIUw/edit?usp=sharing"
@@ -127,7 +125,7 @@
     }, {
       "name": "Level II: Advanced Skills",
       "children": [{
-          "name": "Identify the usefulness as well as the limitations of unmediated sources (i.e. social media, blogs) in order to use them when appropriate.",
+          "name": "Identify the usefulness as well as the limitations of unmediated sources (i.e. social media, blogs) in order to use them when appropriate",
           "children":[{
             "name":"Lesson Plan: Evaluation",
             "href":"https://docs.google.com/a/union.edu/document/d/1w5vvJSph3_h_B--eFBXLiZ2pXM5doySwnem1kFlmIUw/edit?usp=sharing"
@@ -148,7 +146,7 @@
     "children": [{
       "name": "Level I: Basic Skills",
       "children": [{
-          "name": "Identify the difference between primary and secondary resources in the context of a variety of disciplines.",
+          "name": "Identify the difference between primary and secondary resources in the context of a variety of disciplines",
           "children":[{
             "name":"Lesson Plan: Exploring the Archives and Special Collections",
             "href":"http://libguides.union.edu/visualliteracy"
@@ -158,7 +156,7 @@
         }]
         },
         {
-          "name": "Incorporate materials beyond secondary sources in their work in order to support and demonstrate original thinking.",
+          "name": "Incorporate materials beyond secondary sources in their work in order to support and demonstrate original thinking",
           "children":[{
             "name":"Lesson Plan: Exploring the Archives and Special Collections",
             "href":"http://libguides.union.edu/visualliteracy"
@@ -168,17 +166,15 @@
     }, {
       "name": "Level II: Advanced Skills",
       "children": [{
-          "name": "Recognize the shifting nature of primary sources in order to use them appropriately within the context of the research question.",
-          "children":[]
+          "name": "Recognize the shifting nature of primary sources in order to use them appropriately within the context of the research question"
         },{
-          "name": "Identify how specific disciplines collect and format data in order to follow these standards in their own data collection and data visualization.",
+          "name": "Identify how specific disciplines collect and format data in order to follow these standards in their own data collection and data visualization",
           "children":[{
             "name":"Where does data come from?",
             "href":"https://www.projectcora.org/assignment/where-does-data-come"
           }]
         },{
-          "name": "Identify specific types of primary sources in order to provide the best evidence to support an argument or answer a research question (testimony, census data, stock market data).",
-          "children":[]
+          "name": "Identify specific types of primary sources (testimony, census data, stock market data) in order to provide the best evidence to support an argument or answer a research question"
         }
       ]
     }]
@@ -188,15 +184,13 @@
     "children": [{
       "name": "Level I: Basic Skills",
       "children": [{
-          "name": "Identify the scope and nature of a work (e.g., abstract vs. full article) in order to identify the limitations of its use.",
-          "children":[]
+          "name": "Identify the scope and nature of a work (e.g., abstract vs. full article) in order to identify the limitations of its use"
         },
         {
-          "name": "Recognize when an author is quoting or using the work of others in order to avoid using or citing content without the correct attribution.",
-          "children":[]
+          "name": "Recognize when an author is quoting or using the work of others in order to avoid using or citing content without the correct attribution"
         },
         {
-          "name": "Identify the main arguments in a source in order to write a summary.",
+          "name": "Identify the main arguments in a source in order to write a summary",
           "children":[{
             "name":"Lesson Plan: Reformatting The Resource",
             "href":"http://libguides.union.edu/visualliteracy"
@@ -206,8 +200,7 @@
     }, {
       "name": "Level II: Advanced Skills",
       "children": [{
-        "name": "Students evaluate the main arguments of a source based on their own knowledge to raise new research questions.",
-        "children":[]
+        "name": "Students evaluate the main arguments of a source based on their own knowledge to raise new research questions"
       }]
     }]
   }, {
@@ -216,23 +209,19 @@
     "children": [{
       "name": "Level I: Basic Skills",
       "children": [{
-          "name": "Identifies and uses general purpose databases (i.e. EBSCO, Proquest, JSTOR)",
-          "children":[]
+          "name": "Identifies and uses general purpose databases, (i.e. EBSCO, Proquest, JSTOR)"
         },
         {
-          "name": "Student matches information needs and search strategies to appropriate search tools.",
-          "children":[]
+          "name": "Student matches information needs and search strategies to appropriate search tools"
         }
       ]
     }, {
       "name": "Level II: Advanced Skills",
       "children": [{
-          "name": "Identifies and uses subject specific databases (i.e. PsychInfo, DRAM, Accessible Archives).",
-          "children":[]
+          "name": "Identifies and uses subject specific databases (i.e. PsychInfo, DRAM, Accessible Archives)"
         },
         {
-          "name": "Identifies and uses advanced search techniques in discovery and online search platforms when applicable in order to find relevant sources.",
-          "children":[]
+          "name": "Identifies and uses advanced search techniques in discovery and online search platforms when applicable in order to find relevant sources"
         }
       ]
     }]
@@ -242,7 +231,7 @@
     "children": [{
       "name": "Level I: Basic Skills",
       "children": [{
-          "name": "Identify the parts of common (i.e. books, articles, web pages) example citations and copy that format in order to write other citations for items that are the same type of source.",
+          "name": "Identify the parts of common (i.e. books, articles, web pages) example citations and copy that format in order to write other citations for items that are the same type of source",
           "children":[{
             "name":"Lesson Plan: Seeing The Citation",
             "href":"http://libguides.union.edu/visualliteracy"
@@ -257,7 +246,7 @@
             "href":"https://docs.google.com/a/union.edu/document/d/1xg73zzlYZqvZDk_McYXKQ-vUl-kz9qPKJ3zo1zmNjaA/edit?usp=sharing"
           }]
         },{
-          "name": "Articulate why citations are used in academic research and writing, and why and how styles differ among the disciplines.",
+          "name": "Articulate why citations are used in academic research and writing, and why and how styles differ among the disciplines",
           "children":[{
             "name":"Lesson Plan: Seeing The Citation",
             "href":"http://libguides.union.edu/visualliteracy"
@@ -267,7 +256,7 @@
           }]
         },
         {
-          "name": "Create footnotes, endnotes, or in-text citations, as dictated by the citation style they have chosen or been instructed to use.",
+          "name": "Create footnotes, endnotes, or in-text citations, as dictated by the citation style they have chosen or been instructed to use",
           "children":[{
             "name":"Lesson Plan: Seeing The Citation",
             "href":"http://libguides.union.edu/visualliteracy"
@@ -283,7 +272,7 @@
     }, {
       "name": "Level II: Advanced Skills",
       "children": [{
-          "name": "Identify the parts of uncommon citations (i.e. manuscript images, original research: focus groups/interviews) in order to construct more complicated citations. ",
+          "name": "Identify the parts of uncommon citations (i.e. manuscript images, original research: focus groups/interviews) in order to construct more complicated citations",
           "children":[{
             "name":"Activity: Poster Citations",
             "href":"https://docs.google.com/a/union.edu/document/d/1l6AZaUArMyBRSBQ3z0g1ClPzCzDzdkEjpfh7AH5LRUw/edit?usp=sharing"
@@ -296,8 +285,7 @@
           }]
         },
         {
-          "name": "Uses advanced features of citation software in order to organize research and to create and manage notes and bibliographies.",
-          "children":[]
+          "name": "Uses advanced features of citation software in order to organize research and to create and manage notes and bibliographies"
         }
       ]
     }]
@@ -307,7 +295,7 @@
     "children": [{
       "name": "Level I: Basic Skills",
       "children": [{
-          "name": "Students engage with their topic within the scholarly conversation inside and outside of the classroom in order to find the gaps in the conversation and contribute something new.",
+          "name": "Students engage with their topic within the scholarly conversation inside and outside of the classroom in order to find the gaps in the conversation and contribute something new",
           "children":[{
               "name":"Lesson Plan: Exploring the Archives and Special Collections",
               "href":"http://libguides.union.edu/visualliteracy"
@@ -322,19 +310,16 @@
               "href":"http://libguides.union.edu/visualliteracy"
             }]
         },{
-          "name": "Students examine a source of information to determine the point of view in order to interpret bias.",
-          "children":[]
+          "name": "Students examine a source of information to determine the point of view in order to interpret bias"
         }
       ]
     }, {
       "name": "Level II: Advanced Skills",
       "children": [{
-          "name": "Students adapt their research and raise new questions based on comments made by voices outside of the class (steinmetz, poster sessions)",
-          "children":[]
+          "name": "Students adapt their research and raise new questions based on comments made by voices outside (Steinmetz, poster sessions) of the class"
         },
         {
-          "name": "Students engage with the scholarly conversation looking for alternative points of view in order to better support their claims.",
-          "children":[]
+          "name": "Students engage with the scholarly conversation looking for alternative points of view in order to better support their claims"
         }
       ]
     }]
@@ -344,7 +329,7 @@
     "children": [{
       "name": "Level I: Basic Skills",
       "children": [{
-          "name": "Recognize what peer review is and when selecting peer reviewed resources can improve the quality of their own research.",
+          "name": "Recognize what peer review is and when selecting peer reviewed resources can improve the quality of their own research",
           "children":[{
             "name":"Lesson Plan: Evaluation",
             "href":"https://docs.google.com/a/union.edu/document/d/1w5vvJSph3_h_B--eFBXLiZ2pXM5doySwnem1kFlmIUw/edit?usp=sharing"
@@ -354,7 +339,7 @@
           }]
         },
         {
-          "name": "Recognize and utilize a variety of information types appropriate to their topic.",
+          "name": "Recognize and utilize a variety of information types appropriate to their topic",
           "children":[{
             "name":"Lesson Plan: Information Cycle",
             "href":"https://docs.google.com/a/union.edu/document/d/1GUJgdIeZbb0jyvfxYE8MXwv00YtM9xJiBwc7mHjm5Xc/edit?usp=sharing"
@@ -370,7 +355,7 @@
     }, {
       "name": "Level II: Advanced Skills",
       "children": [{
-        "name": "Apply an understanding of the information cycle for their disciplines as appropriate for their research.",
+        "name": "Apply an understanding of the information cycle for their disciplines as appropriate for their research",
         "children":[{
             "name":"Lesson Plan: Information Cycle",
             "href":"https://docs.google.com/a/union.edu/document/d/1GUJgdIeZbb0jyvfxYE8MXwv00YtM9xJiBwc7mHjm5Xc/edit?usp=sharing"
@@ -383,7 +368,7 @@
     "children": [{
       "name": "Level I: Basic Skills",
       "children": [{
-          "name": "Use a citation in order to find a known resource.",
+          "name": "Use a citation in order to find a known resource",
            "children":[{
             "name":"AOP Scavenger Hunt",
             "href":"https://docs.google.com/a/union.edu/document/d/19Okl15qiFkPiMhTBceaPCHe8mUexip0nE2K8GG2Y168/edit?usp=sharing"
@@ -393,11 +378,10 @@
           }]
         },
         {
-          "name": "Recognize when it is appropriate to expand search to resources not available locally and what steps to take next to acquire those resources.",
-          "children":[]
+          "name": "Recognize when it is appropriate to expand search to resources not available locally and what steps to take next to acquire those resources"
         },
         {
-          "name": "Use basic search techniques (i.e. Boolean AND, limiters, facets) to focus a search for resources in any given search interface.",
+          "name": "Use basic search techniques (i.e. Boolean AND, limiters, facets) to focus a search for resources in any given search interface",
            "children":[{
             "name": "Lesson Plan: Mind Mapping",
             "href": "https://docs.google.com/document/d/1Cz6LNAVXB6LzqhnSt8XWlHbDW2CTFF2fAs9lnepli3w/edit?usp=sharing"
@@ -407,14 +391,12 @@
     }, {
       "name": "Level II: Advanced Skills",
       "children": [{
-          "name": "Navigate advanced library services (i.e. making purchase requests, ILL, Worldcat requests.) in order to access additional, relevant resources",
-          "children":[]
+          "name": "Navigate advanced library services (i.e. making purchase requests, ILL, Worldcat requests.) in order to access additional, relevant resources"
         },
         {
-          "name": "Identify when to go outside of Union’s resources (i.e. Internet Archive for older sources, Hathi Trust, Worldcat) for a larger catalog.",
-          "children":[]
+          "name": "Identify when to go outside of Union’s resources (i.e. Internet Archive for older sources, Hathi Trust, Worldcat) for a larger catalog"
         },{
-          "name": "Use the advanced searching options in the library resources in order to access advanced types of sources (i.e. theses & dissertations). ",
+          "name": "Use the advanced searching options in the library resources in order to access advanced types of sources (i.e. theses & dissertations",
           "children":[{
             "name":"Lesson Plan: Exploring the Archives and Special Collections",
             "href":"http://libguides.union.edu/visualliteracy"
@@ -423,8 +405,7 @@
             "href":"http://libguides.union.edu/visualliteracy"
           }]
         },{
-          "name": "Use advanced search techniques (i.e. OR, nesting, truncation, wildcard) to focus a search for resources in any given search interface.",
-          "children":[]
+          "name": "Use advanced search techniques (i.e. OR, nesting, truncation, wildcard) to focus a search for resources in any given search interface"
         }
       ]
     }]
