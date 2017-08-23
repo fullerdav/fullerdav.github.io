@@ -108,23 +108,6 @@
 <script src="js/d3.v4.js"></script>
 <script src="js/noforce.js"></script>
 
-<script>
-let nodes =  document.querySelectorAll("div.node");
-let n = nodes[0];
-for ( prop in n) {
-  if (n.hasOwnProperty(prop)) {
-    log(n[prop]);
-  }
-}
-log(typeof nodes[0]);
-//let rx = /([\w\s\u{0028}\u{0029}\u{0027}\u{003A}\u{002E}\u{002F}\u{0028}]{5,25})\b/g;
-//$(".nodes").each( n => {
- //let str = n.text();
-  //log(str.match(rx));
-//});
- 
- let str =";"
-</script>
 
 <svg>
  <defs>
@@ -140,9 +123,9 @@ log(typeof nodes[0]);
       <stop offset="100%" stop-color="#e0e0e0"/>  
     </radialGradient>
      <radialGradient id="glowGradient">
-     <stop offset="30%" stop-color="#efefef"/>
-      <stop offset="70%" stop-color="#eaeaea"/>
-      <stop offset="100%" stop-color="#e0e0e0"/> 
+     <stop offset="30%" stop-color="#eaeaea"/>
+      <stop offset="70%" stop-color="#e0e0e0"/>
+      <stop offset="100%" stop-color="#d6d6d6"/> 
     </radialGradient>
   </defs>
 </svg>

@@ -321,7 +321,7 @@ function treeDraw(id) {
           str.forEach(function(s){
               let tspan = text.append("tspan").text(s).attr("x", 0).attr("y", y).attr("dy", index++ * 1.1 + dy + "em");
               maxlen = maxlen > tspan.node().getComputedTextLength() ? maxlen : tspan.node().getComputedTextLength();
-              log(tspan.node().getComputedTextLength()/s.length);
+              //log(tspan.node().getComputedTextLength()/s.length);
           });
           
           d.radius = maxlen * .65;
@@ -370,12 +370,12 @@ function treeDraw(id) {
            return len > 150 ? Math.ceil(len) + "px" : "150px";
         }) 
         .css("top", function(){
-            top = sibs.length > 3 ? d.x - (50 + this.offsetHeight/2) : d.x - (50 + this.offsetHeight);
+            top = sibs.length > 3 ? d.x - (50 + this.offsetHeight/2) : d.x - (65 + this.offsetHeight);
             top = top < 0 ? 0 : top;
             return top + "px";
         })
         .css("left", function() {
-           left = sibs.length > 3 ? (d.y + margin.left + 30) : (d.y + margin.left) - this.offsetWidth/2;
+           left = sibs.length > 3 ? (d.y + margin.left + 35) : (d.y + margin.left) - this.offsetWidth/2;
            return left + "px";
         });
 
