@@ -315,7 +315,7 @@ function treeDraw(id) {
           
          let midline = Math.ceil(lbl.length * .045);
          let y = midline * -.2 + "em";
-         let rx = /([^\b]{5,25})\b/g;
+         let rx = /([^\b]{5,25})(\b|$)/g;
 
           let str = lbl.match(rx);
           str.forEach(function(s){

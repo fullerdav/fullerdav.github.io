@@ -266,6 +266,10 @@ path.link {
 circle {
   pointer-events: none;
 }
+
+path#lightbulb {
+  pointer-events: none;
+}
 circle.watts {
   fill: none;
   pointer-events: fill;
