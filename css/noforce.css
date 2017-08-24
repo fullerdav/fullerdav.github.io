@@ -195,9 +195,11 @@ div.circletxt {
   background: -webkit-linear-gradient(top, #d4d5d6, rgba(244, 244, 225, .2) 30%, rgba(255,197,143, .8));
   background: -o-linear-gradient(top, #d4d5d6, rgba(244, 244, 225, .2) 30%, rgba(244, 244, 225, .8));
   background: linear-gradient(to bottom,#d4d5d6, rgba(244, 244, 225, .2) 30%, rgba(244, 244, 225, .8));
-  transition-property: opacity, box-shadow, background;
+  transition-property: opacity;
   transition-duration: 1s;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: ease-in;
+  animation:  glower .75s ease-in;
+  animation:  alight 1s ease-in;
 }
 
 .tipright {
@@ -212,7 +214,26 @@ div.circletxt {
   transition-timing-function: ease-in-out;
 }
 
-
+@keyframes glower {
+  from {
+    box-shadow: 0 0 #d4d5d6; 
+  }
+  to {
+    box-shadow: 0 25px 40px -4px rgba(244, 244, 225, .8)
+  }
+}
+@keyframes alight {
+  from {
+    background: -webkit-linear-gradient(#d4d5d6, #d4d5d6);
+    background: -o-linear-gradient(#d4d5d6, #d4d5d6);
+    background: linear-gradient(#d4d5d6, rgba(244, 244, 225, .2) 10%, rgba(244, 244, 225, .4));
+  }
+  to {
+    background: -webkit-linear-gradient(#d4d5d6, rgba(244, 244, 225, .2) 30%, rgba(244, 244, 225, .8));
+    background: -o-linear-gradient(#d4d5d6, rgba(244, 244, 225, .2) 30%, rgba(244, 244, 225, .8));
+    background: linear-gradient(#d4d5d6, rgba(244, 244, 225, .2) 30%, rgba(244, 244, 225, .8));
+  }
+}
 @media (max-width: 900px) {
   #legend {
     display: none;
