@@ -1,18 +1,6 @@
 const { log, time } = console;
 
- // $( "body" ).bind("DOMNodeInserted", function( objEvent ){
- //          console.log("Node inserted: " + $(objEvent.target).attr("id"));
- //  });
-  
-// var target = document.getElementById('topnode');
-// var observer = new MutationObserver(function(mutations) {
-//   mutations.forEach(function(mutation) {
-//     console.log(mutation);
-//   });    
-// });
-// var config = { attributes: true, childList: true, characterData: true };
-// observer.observe(target, config);
-
+var ns = {svg:"http://www.w3.org/2000/svg", xlink: "http://www.w3.org/1999/xlink"};
 
 Set.prototype.difference = function(setB) {
     var difference = new Set(this);
@@ -24,8 +12,17 @@ Set.prototype.difference = function(setB) {
 
 const reasons = {
   "EE": { 
-          "KKK": "As part of this standard, students are able to differentiate between primary and secondary sources, recognizing how their use and importance vary with each discipline, which mirrors our first basic outcome.  We build upon another part of this standard by students not only realizing that information may need to be constructed with raw data from primary sources, but to use disciplinary standards to collect and format that data.",
-          "NNN": "Students recognize that authoritative content may be packaged formally or informally and may include sources of all types, including primary sources. Students deduce that primary sources have their own authority even though they can be types of resources that typically would not be considered scholarly."
+          "C": "This mirrors the last advanced outcome where students identify specific types of primary sources that will provide the best evidence to support an argument or answer a research question.", 
+          "O": 'Many of the library outcomes for this concept require students to evaluate evidence.  Most specifically, students need to evaluate primary source evidence critically and ethically to make sure that it is the best evidence to use to support an argument or research question.', 
+          "S": "Incorporating primary sources into students’ work will often require them to think critically in order to synthesize the information themselves and demonstrate original thinking.", 
+          "AAA": 'This habit of mind “is fostered when students are encouraged to conduct research using methods of investigation which are appropriate to the discipline” (Framework for Success in Postsecondary Writing, 4).  In order to do that, students need to be able to identify how specific disciplines collect and format data in order to follow these standards in their own data collection.', 
+          "BBB": '“Openness is fostered when students are challenged to practice different ways of gathering, investigating, and presenting information” (Framework for Success in Postsecondary Writing, 4).  Collecting information from primary sources is often a new information gathering method and requires students to figure out how to visualize the information in effective ways.', 
+          "DDD": 'Primary sources often challenge students to “use methods that are new to them to investigate questions, topics, and ideas” by going beyond using just secondary sources (Framework for Success in Postsecondary Writing, 5).',
+          "KKK": 'As part of this standard, “students are able to differentiate between primary and secondary sources, recognizing how their use and importance vary with each discipline.” This mirrors our first basic outcome.  We build upon another part of this standard, by students not only “realiz[ing] that information may need to be constructed with raw data from primary sources,” but to use disciplinary standards to collect and format that data', 
+          "LLL": 'Part of this standard is to “identify appropriate investigative methods” including “us[ing] surveys, letters, interviews and other forms of inquiry to retrieve primary information” (Information Literacy Competency Standards for Higher Education, 9). This directly relates to the second advanced outcome, which discusses using discipline specific data collection methods.',
+          "MMM": 'Part of this standard is to recognize the “context within which the information was created and understand the impact of [that] context on interpreting the information” (Information Literacy Competency Standards for Higher Education, 11).  While recognizing the context of any source is important, it is especially vital with primary sources.',
+          "NNN": 'Students recognize that authoritative content may be packaged formally or informally and may include sources of all types,” including primary sources (Framework for Information Literacy for Higher Education, 4). Students deduce that primary sources have their own authority even though they can be types of resources that typically would not be considered scholarly.',
+          "OOO": 'In order to use primary sources appropriately within the context of the research question, students must understand the source’s creation process in order to identify the limitations of its use and identify which ones will provide the best evidence to support a research question.'
         }
 }
 
@@ -83,8 +80,6 @@ const assoc = {
   "SSS": ["AA", "BB", "CC", "GG", "KK", "LL"]
 };
 
-
-
 var htmlnodes = $(".node");
 
 let nset = Object.keys(assoc);
@@ -109,6 +104,7 @@ htmlnodes
       fadedDivs.forEach(function(k, index){
         $("#" + k + " span").toggleClass("lolite");
       });
+
       makeSVG(this.id, assoc[this.id]);
   })
   .on("mouseout", function(){
@@ -121,8 +117,8 @@ htmlnodes
     $("#svgcontainer").empty("svg");
   })
   .on("click", function() {
-    $("#d3force").css("width", "97%").css("margin-left", "3%");
-    $("#d3force1").css("width", "3%").css("margin-right", "97%").css("border-right", "2px solid black");
+    $("#d3force").css("margin-left", "4%");
+    $("#d3force1").css("width", "4%").css("margin-right", "96%").css("border-right", "2px solid black");
     clicked = this.id;
       if (clicked.length === 2) {
         treeDraw(clicked);  
@@ -136,7 +132,7 @@ htmlnodes
   function modalClose() {
        $("#chevron").css("display", "none");
        $(".container").css("display", "grid");
-       $("#d3force").css("width", "0%").css("margin-left", "100%").empty("svg");
+       $("#d3force").css("margin-left", "100%").empty("svg");
        $("#d3force1").css("width", "0%").css("margin-right", "100%").css("border", "none");
        clicked = null;
     }
@@ -154,7 +150,6 @@ htmlnodes
     //     console.log(e.x, e.y);
     //  },{passive:true});
 
-
      let element = document.getElementById("d3force1");
      element.addEventListener("transitionend", function(event) {
           let w = $(element).css("width");
@@ -165,27 +160,24 @@ htmlnodes
       }, false);
 
 //############################
-
+ 
     function makeSVG(src, targs) {
-        var ns = {svg:"http://www.w3.org/2000/svg", xlink: "http://www.w3.org/1999/xlink"};
-        var svg = document.createElementNS(ns.svg, "svg");
+        let svg = document.createElementNS(ns.svg, "svg");
         let g = document.createElementNS(ns.svg, "g");
-      
-        let elsrc = document.querySelector("#" + src + " span");
-        let length2 = src.length === 2 ? true : false;
-        let s = {x: elsrc.offsetTop + elsrc.offsetHeight/2};
         
+        function endPoints (node1, node2) {
+            return [{x: node1.offsetTop + node1.offsetHeight/2, y: node1.offsetLeft + node1.offsetWidth}, {x: node2.offsetTop + node2.offsetHeight/2, y: node2.offsetLeft}];
+        }
+   
+        let elsrc = document.querySelector("#" + src + " span");
+       
         targs.forEach(function(targ){
           let targsrc = document.querySelector("#" + targ + " span");
-          let length1 = targ.length === 1 ? true : false;
-          let t = {x: targsrc.offsetTop + targsrc.offsetHeight/2};
-
-          if (length2) {
-            t.y = length1 ? (targsrc.offsetLeft + targsrc.offsetWidth) : targsrc.offsetLeft; 
-            s.y = length1 ? elsrc.offsetLeft : (elsrc.offsetLeft + elsrc.offsetWidth);
+          let s, t;
+          if (src.length === 2) {
+            [s, t] = targ.length === 1 ? endPoints(targsrc, elsrc) : endPoints(elsrc, targsrc); 
           } else {
-            t.y = src.length === 1 ?  targsrc.offsetLeft : (targsrc.offsetWidth + targsrc.offsetLeft); 
-            s.y = src.length === 1 ?  elsrc.offsetLeft + elsrc.offsetWidth : elsrc.offsetLeft; 
+            [s, t] = src.length === 1 ? endPoints(elsrc, targsrc) : endPoints(targsrc, elsrc); 
           }
          
           let d = `M ${s.y} ${s.x}
@@ -193,12 +185,12 @@ htmlnodes
                 ${(s.y + t.y) / 2} ${t.x},
                 ${t.y} ${t.x}`;
 
-           let path = document.createElementNS(ns.svg, "path");
-           
-            path.setAttribute("class", "link");
-            path.setAttribute("d", d);
-            g.appendChild(path); 
+          let path = document.createElementNS(ns.svg, "path");
+          path.setAttribute("class", "link");
+          path.setAttribute("d", d);
+          g.appendChild(path); 
         });
+
         svg.appendChild(g); 
         $("#svgcontainer").append(svg);
   }
@@ -206,11 +198,11 @@ htmlnodes
 //####################################################################
 
 function treeDraw(id) {
+  
     var margin = {top:0, right:0, bottom:0, left:120},
         width = 1000 - margin.right - margin.left,
         height = 800 - margin.top - margin.bottom,
-        i = 0, duration = 500,
-        shape = "circle", root;
+        i = 0, duration = 500, root;
 
     var treemap = d3.tree().size([height, width]);
 
@@ -219,6 +211,13 @@ function treeDraw(id) {
        .attr("height", height + margin.top + margin.bottom)
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    window.onresize = function(e) {
+      //log(e);
+      height = window.innerHeight;
+      width = window.innerWidth;
+     // zoom();
+    }
   
     d3.json("js/scaffolding.json", function(json) {
      
@@ -263,6 +262,8 @@ function treeDraw(id) {
   
         var nodes = treeData.descendants(), 
             links = treeData.descendants().slice(1);
+
+            log(nodes);
 
           nodes.forEach(function(d) { 
             d.y = d.depth * 225;
@@ -321,11 +322,9 @@ function treeDraw(id) {
           str.forEach(function(s){
               let tspan = text.append("tspan").text(s).attr("x", 0).attr("y", y).attr("dy", index++ * 1.1 + dy + "em");
               maxlen = maxlen > tspan.node().getComputedTextLength() ? maxlen : tspan.node().getComputedTextLength();
-              //log(tspan.node().getComputedTextLength()/s.length);
           });
           
-          d.radius = maxlen * .65;
-
+          d.radius = (maxlen/10) * .65 + "em";
 
          });
           
@@ -338,7 +337,7 @@ function treeDraw(id) {
   var circ = bulb.append("svg:circle")
     .attr("transform", "translate(16, 10)")
     .attr("class", "watts")
-    .attr("r", 18);
+    .attr("r", 10);
     
       
   circ.on("mouseover", function(){
@@ -450,6 +449,7 @@ function treeDraw(id) {
             return path;
         }
     }
+
 
     function closeChildren(el) {   
       if (el.children) { 
