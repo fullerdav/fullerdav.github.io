@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>File(s) size</title>
+
+
+<script src="js/jquery-3.2.1.min.js">
+
+</script>
+
+</head>
+
+<body>
+<form name="uploadForm">
+<p><input id="fileinput" type="file" name="myFiles" multiple></p>
+<p><input type="submit" value="Send file"></p>
+</form>
+
+
+<script>
+const {log} = console;
+
+function readDocument(input) {
+ if (input.files && input.files[0]) {
+  var fileReader = new FileReader();
+ 
+  fileReader.onloadend = function(e) {
+    if (e.target.readyState === 2) {
+
+
+
+      log(e.target.result.length);
+    }
+  }
+ 
+  fileReader.readAsText(input.files[0], "utf-8");
+ }
+}
+
+$("#fileinput").change(function () {
+ readDocument(this);
+});
+
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
