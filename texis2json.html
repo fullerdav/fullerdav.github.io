@@ -5,42 +5,90 @@
 <title>File(s) size</title>
 
 
-<script src="js/jquery-3.2.1.min.js">
+<!--script src="js/jquery-3.2.1.min.js"-->
 
 </script>
 
 </head>
 
 <body>
+
 <form name="uploadForm">
-<p><input id="fileinput" type="file" name="myFiles" multiple></p>
-<p><input type="submit" value="Send file"></p>
+<p><input id="fileload" type="file" multiple></p>
 </form>
 
+<div id="output"></div>
 
 <script>
 const {log} = console;
 
-function readDocument(input) {
- if (input.files && input.files[0]) {
+const articles = [];
+
+function readDocument() {
+ var fileInput = document.querySelector("#fileload");
+ var file = fileInput.files[0];
+ 
+ if (file) {
   var fileReader = new FileReader();
  
   fileReader.onloadend = function(e) {
     if (e.target.readyState === 2) {
+      let txt = new String(e.target.result);
+     
+      let splitter = /\d+\s+of\s+\d+\s+DOCUMENTS/;
+      let splitter2 = /LENGTH:\s+\d+\s+words/;
+      let newlines = /\n|\r|\r\n/g;
+      let blanklines = new RegExp(/\n\s*\n/g);
+      
+      let arr = txt.split(splitter);
+      //arr.shift();
 
+      arr.forEach(function(article, index) {
+        let obj = {};
+        let length = article.match(splitter2);
+        let [meta, body] = article.split(splitter2);
 
+        meta = meta.trim();
+        meta = meta.split(/(\s*\r){2}/);
+        let metaclean =  meta.filter(function(m){
+            m = m.trim();
+            return m.length > 0 && m.indexOf(":") === -1;
+        });
+        let [source, date, title] = metaclean;
 
-      log(e.target.result);
+        if(body) {
+          body = body.replace(blanklines, "  ");
+          articles.push({index, source, date, title, body});
+        }
+
+        
+      });
+
+      let div = document.getElementById("output");
+      var str = "", tmpstr = "";
+      articles.forEach(function(article){
+          tmpstr = JSON.stringify(article);
+          tmpstr = tmpstr.replace(/\\n|\\r|\\r\\n/g, " ");
+          str += tmpstr;
+      });
+       div.innerHTML =  str;
+
     }
   }
+  
+  
+
+  }
  
-  fileReader.readAsText(input.files[0], "utf-8");
- }
+  fileReader.readAsText(file, 'utf-8');
+
 }
 
-$("#fileinput").change(function () {
- readDocument(this);
-});
+document.querySelector("#fileload").onchange = readDocument;
+
+// $("#fileload").change(function () {
+//   readDocument(this);
+// });
 
 </script>
 
