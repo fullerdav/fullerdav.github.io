@@ -34,44 +34,52 @@ function readDocument() {
   fileReader.onloadend = function(e) {
     if (e.target.readyState === 2) {
       let txt = new String(e.target.result);
+      let divout = document.getElementById("output");
      
       let splitter = /\d+\s+of\s+\d+\s+DOCUMENTS/;
       let splitter2 = /LENGTH:\s+\d+\s+words/;
-      let newlines = /\n|\r|\r\n/g;
-      let blanklines = new RegExp(/\n\s*\n/g);
+      let newline = /\r\n*/;
+      let blanklines = new RegExp(/(\s*\r\n*){2}/, "g");
       
       let arr = txt.split(splitter);
-      //arr.shift();
+      arr.shift();
 
       arr.forEach(function(article, index) {
-        let obj = {};
-        let length = article.match(splitter2);
         let [meta, body] = article.split(splitter2);
+        meta = meta.split(blanklines);
+        let tmpobj = {};
 
-        meta = meta.trim();
-        meta = meta.split(/(\s*\r){2}/);
         let metaclean =  meta.filter(function(m){
             m = m.trim();
             return m.length > 0 && m.indexOf(":") === -1;
         });
-        let [source, date, title] = metaclean;
+        body = body.split(newline);
+        let bodyclean =  body.filter(function(b){
+            if (b.length > 0 && b.indexOf(":") === -1) {
+                return b + " ";
+            }
+        });
+        [tmpobj.source, tmpobj.date, tmpobj.title] = metaclean;
 
         if(body) {
-          body = body.replace(blanklines, "  ");
-          articles.push({index, source, date, title, body});
+          //body = body.replace(blanklines, "  ");
+          let p = document.createElement("p"), pbody = document.createElement("p");
+          let str = "";
+
+          for (let prop in tmpobj) {
+            str += "<b>" + prop + "</b>: " + tmpobj[prop] + ", ";  
+          }
+          p.innerHTML = str;
+          pbody.innerHTML = bodyclean.join(" ");
+          divout.appendChild(p);
+          divout.appendChild(pbody);
+     
         }
 
         
       });
 
-      let div = document.getElementById("output");
-      var str = "", tmpstr = "";
-      articles.forEach(function(article){
-          tmpstr = JSON.stringify(article);
-          tmpstr = tmpstr.replace(/\\n|\\r|\\r\\n/g, " ");
-          str += tmpstr;
-      });
-       div.innerHTML =  str;
+      
 
     }
   }
