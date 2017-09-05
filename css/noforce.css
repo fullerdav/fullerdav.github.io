@@ -118,11 +118,11 @@ header {
   opacity: .25;
 }
 
-.wac { color: #2bb; }
-.cclo { color: #60c;}
-.wpa {color: #a60;}
-.ilcs {color: #f0f;}
-.acrl {color: #3a3;}
+.wac { color: hsla( 180, 100%, 40%, 1); }
+.cclo { color:hsla( 240, 100%, 50%, 1);}
+.wpa {color:hsla( 30, 100%, 50%, 1);}
+.ilcs {color: hsla( 300, 100%, 50%, 1);}
+.acrl {color: hsla( 120, 100%, 50%, 1);}
 .schaffer {color: #000}
 
 #legend {
@@ -346,4 +346,8 @@ a.schaffer::after {
   position: relative;
   top: 0;
   left: 4px;
+}
+
+#credits {
+  font-size: 8px;
 }
