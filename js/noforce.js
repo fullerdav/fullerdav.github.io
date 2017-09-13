@@ -81,6 +81,7 @@ const assoc = {
 };
 
 var htmlnodes = $(".node");
+const slides = ["schaffer", "acrl", "cclo","ilcs", "wpa", "wac"];
 
 let nset = Object.keys(assoc);
 nset = new Set(nset);
@@ -98,6 +99,9 @@ htmlnodes
       });
       activeDivs.add(this.id);
       fadedDivs = nset.difference(activeDivs); 
+     
+       rotateCarousel($("#" + this.id + " span").attr("class"));  
+      
       activeDivs.forEach(function(k, index){ 
         $("#" + k + " span").toggleClass("hilite");
       });
@@ -117,6 +121,7 @@ htmlnodes
     $("#svgcontainer").empty("svg");
   })
   .on("click", function() {
+    $("header").css("display", "none");
     $("#d3force").css("margin-left", "4%");
     $("#d3force1").css("width", "4%").css("margin-right", "96%").css("border-right", "2px solid black");
     clicked = this.id;
@@ -129,9 +134,16 @@ htmlnodes
 
 //############################
 
+ document.getElementById("d3force").addEventListener("transitionend", function(event) {
+   let m = $("#d3force").css("margin-left");
+   if (parseFloat(m) > 98) {
+      $("header").css("display", "block");
+      $(".container").css("display", "grid");
+    }
+  });
+
   function modalClose() {
        $("#chevron").css("display", "none");
-       $(".container").css("display", "grid");
        $("#d3force").css("margin-left", "100%").empty("svg");
        $("#d3force1").css("width", "0%").css("margin-right", "100%").css("border", "none");
        clicked = null;
@@ -211,13 +223,6 @@ function treeDraw(id) {
        .attr("height", height + margin.top + margin.bottom)
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    window.onresize = function(e) {
-      //log(e);
-      height = window.innerHeight;
-      width = window.innerWidth;
-     // zoom();
-    }
   
     d3.json("js/scaffolding.json", function(json) {
      
@@ -262,8 +267,6 @@ function treeDraw(id) {
   
         var nodes = treeData.descendants(), 
             links = treeData.descendants().slice(1);
-
-            log(nodes);
 
           nodes.forEach(function(d) { 
             d.y = d.depth * 225;
@@ -316,7 +319,7 @@ function treeDraw(id) {
           
          let midline = Math.ceil(lbl.length * .045);
          let y = midline * -.2 + "em";
-         let rx = /([^\b]{5,25})(\b|$)/g;
+         let rx = /([^\b]{5,22})(\b|$)/g;
 
           let str = lbl.match(rx);
           str.forEach(function(s){
@@ -324,7 +327,7 @@ function treeDraw(id) {
               maxlen = maxlen > tspan.node().getComputedTextLength() ? maxlen : tspan.node().getComputedTextLength();
           });
           
-          d.radius = (maxlen/10) * .65 + "em";
+          d.radius = (maxlen/16) * .65 + "em";
 
          });
           
@@ -470,5 +473,38 @@ function treeDraw(id) {
         d._children = null;
       }
     }
+}
+
+
+rotateCarousel = function(n) {
+      let carousel = document.getElementById('carousel');
+      let increment = slides.indexOf(n), rotate=0;
+      rotate += -60 * increment;
+      carousel.style[ "transform" ] = 'translateZ( -442px ) rotateY(' + rotate + 'deg)';
+}
+
+var init = function() {
+      var carousel = document.getElementById('carousel'),
+          navButton = document.querySelector('#left'), theta = 0,
+          navButtonClick = function( event ){
+            theta += -60 * 1;
+            carousel.style["transform"] = 'translateZ( -288px ) rotateY(' + theta + 'deg)';
+          };
+      navButton.addEventListener( 'click', navButtonClick, false);
+};
+
+window.addEventListener( 'DOMContentLoaded', init, false);
+
+
+
+function findMissing(arr) {
+  let tester = [...Array(100).keys()];
+  let results = [];
+  tester.forEach(function(t){
+    if (arr.indexOf(t) === -1) {
+      results.push(t);
+    }
+  });
+  return results;
 }
 
