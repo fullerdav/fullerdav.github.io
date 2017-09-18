@@ -41,6 +41,13 @@
                     "href": "https://docs.google.com/a/union.edu/document/d/1B9doWhGFYt4ds-Ywy5IymJxBiT_Qvv6YdbU6_XHl7R0/edit?usp=sharing"
                 }]
             }]
+        },
+        {
+            "name": "Level II: Advanced Skills",
+            "children": [
+            {
+                "name": "Formulate a discipline specific research question and continually reevaluate it as the research process progresses"
+            }]
         }]
     },
     {
@@ -300,7 +307,7 @@
             "name": "Level I: Basic Skills",
             "children": [
             {
-                "name": "Identify the scope and nature of a work (e.g., abstract vs full article) in order to identify the limitations of its use"
+                "name": "Identify the scope and nature of a work (e.g., abstract vs full article) in order to identify the limitations of its use."
             },
             {
                 "name": "Recognize when an author is quoting or using the work of others in order to avoid using or citing content without the correct attribution"
