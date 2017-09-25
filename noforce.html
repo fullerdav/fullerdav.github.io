@@ -2,62 +2,58 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:svg="http://www.w3.org/2000/svg">
 <head>
-<meta charset="utf-8">
+<meta charset="utf-16">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Learning Outcomes DLO</title>
 <link rel="stylesheet" href="css/noforce.css">
 <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
 <link href='//fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css' />
 <link href='//fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css' />
-<link href='//fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css' />
 </head>
-
-
 
 <body>
 <header>
 
-<!--span id="lefturn"><i class="fa fa-2x fa-refresh"></i></span-->
 <section class="carcontain">
 
 <div id="carousel">
 
 
-<figure class="slide">  
+<figure class="slide" id="schaffer">  
   Schaffer Library IL Outcome
-<a href="//docs.google.com/document/d/1VtsjEedFkWqKidf0wJ4Pl0iCMloiRwNJrAJspt4VtvE/edit">
+<a target="_blank" href="//docs.google.com/document/d/1VtsjEedFkWqKidf0wJ4Pl0iCMloiRwNJrAJspt4VtvE/edit">
  <i class="fa fa-1x fa-download"></i> 
 </a>
 </figure>
 
-<figure class="slide">
+<figure class="slide" id="cclo">
   Common Curriculum Learning Outcomes
-<a href="//muse.union.edu/commoncurriculum/files/2016/01/CCA-PartII-LearningOutcomes.pdf">
+<a target="_blank" href="http://muse.union.edu/commoncurriculum/files/2016/01/CCA-PartII-LearningOutcomes.pdf">
  <i class="fa fa-1x fa-download"></i></a>
 </figure>
 
-<figure class="slide">
+<figure class="slide" id="wac">
   WAC Learning Outcomes
-<a href="//www.union.edu/Resources/Campus/assessment/outcomes/academicaffairs/WAC.php">
+<a target="_blank" href="http://www.union.edu/Resources/Campus/assessment/outcomes/academicaffairs/WAC.php">
  <i class="fa fa-1x fa-download"></i></a>
 </figure>
 
-<figure class="slide">
+<figure class="slide" id="wpa">
   WPA Framework Habits of Mind
-<a  href="http://wpacouncil.org/files/framework-for-success-postsecondary-writing.pdf">
+<a target="_blank" href="http://wpacouncil.org/files/framework-for-success-postsecondary-writing.pdf">
  <i class="fa fa-1x fa-download"></i></a>
 </figure>
 
-<figure class="slide">
+<figure class="slide" id="acrl">
   ACRL Information Literacy Framework
-<a href="//www.ala.org/acrl/sites/ala.org.acrl/files/content/issues/infolit/Framework_ILHE.pdf">
+<a target="_blank" href="http//www.ala.org/acrl/sites/ala.org.acrl/files/content/issues/infolit/Framework_ILHE.pdf">
    <i class="fa fa-1x fa-download"></i>
 </a>
 </figure>
 
-<figure class="slide">
+<figure class="slide" id="ilcs">
   Information Literacy Competency Standards
-<a href="https://drive.google.com/file/d/0B92zIYwSHAVtTUpIQ19RSUZYeTQ/view?usp=sharing">
+<a target="_blank" href="https://drive.google.com/file/d/0B92zIYwSHAVtTUpIQ19RSUZYeTQ/view?usp=sharing">
  <i class="fa fa-1x fa-download"></i></a>
 </figure>
 
@@ -75,7 +71,7 @@
 <div class="container">
 
 	<div class="outcomes1" id="leftcol">
-  <section id="cclo" tabindex="2">
+   <section data-key="2">
 		<div class="node" id="I"><span class="cclo">Discuss Ideas</span></div>
     <div class="node" id="N"><span class="cclo">Find Evidence</span></div>
     <div class="node" id="O"><span class="cclo">Evaluate Evidence</span></div>
@@ -87,8 +83,8 @@
 		<div class="node" id="P"><span class="cclo">Develop an Evidence Based Argument</span></div>
 		<div class="node" id="R"><span class="cclo">Practice Professional Standards of Citation</span></div>
 		<div class="node" id="S"><span class="cclo">Make Connections or Original Contributions</span></div>
-</section>
-<section id="wac" tabindex="3">
+  </section>
+  <section data-key="3">
     <div class="node" id="E"><span class="wac">Practice ethical and professional standards of citation</span></div>
     <div class="node" id="C"><span class="wac">Use evidence appropriately to support claims</span></div>
     <div class="node" id="G"><span class="wac">Integrate the ideas of others appropriately for the discipline</span></div>
@@ -96,12 +92,12 @@
     <div class="node" id="H"><span class="wac">Use constructive feedback from readers to revise writing to be more effective in achieving its purpose for readers</span></div>
     <div class="node" id="A"><span class="wac">Demonstrate proficiency in writing genres appropriate to the various disciplines addressed to critical readers</span></div>
     <div class="node" id="B"><span class="wac">Demonstrate proficiency in constructing discipline appropriate claims, theses, or questions to put forward ideas in a focused manner</span></div>
-    <div class="node" id="D"><span class="wac">Use analysis, synthesis, reflection, argument to develop ideas, which may include organization, structure, coherence, and depth of thinking</span></div>
-</section>   
+    <div class="node" id="D"><span class="wac">Use analysis, synthesis, reflection, argument to develop ideas, which may include organization, structure, coherence, and depth of thinking</span></div> 
+  </section>
 </div>
 
 <div class="framework">
-  <section id="schaffer" tabindex="1">
+  <section data-key="1">
    	<div class="node" id="AA"><span class="schaffer">Topic Creation</span></div>
     <div class="node" id="DD"><span class="schaffer">Credibility and Evaluation</span></div>
     <div class="node" id="EE"><span class="schaffer">Primary and Secondary Sources</span></div>
@@ -114,11 +110,11 @@
     <div class="node" id="LL"><span class="schaffer">Ability to Navigate the Library</span></div>
     <div class="node" id="FF"><span class="schaffer">Reading Sources</span></div>
     <div class="node" id="HH"><span class="schaffer">Citations</span></div>
-  </section>
+</section>
 </div>
 
 <div class="outcomes2">
-<section id="wpa" tabindex="4">
+  <section data-key="4">
   <div class="node" id="AAA"><span class="wpa">Curiosity</span></div>
   <div class="node" id="BBB"><span class="wpa">Openness</span></div>
   <div class="node" id="CCC"><span class="wpa">Engagement</span></div>
@@ -128,7 +124,7 @@
   <div class="node" id="GGG"><span class="wpa">Flexibility</span></div>
   <div class="node" id="HHH"><span class="wpa">Metacognition</span></div>
 </section>
-<section id="acrl" tabindex="5">
+<section data-key="5">
   <div class="node" id="QQQ"><span class="acrl">Research as Inquiry</span></div>
   <div class="node" id="PPP"><span class="acrl">Information has Value</span></div>
   <div class="node" id="OOO"><span class="acrl">Information Creation as a Process</span></div>
@@ -136,20 +132,25 @@
   <div class="node" id="NNN"><span class="acrl">Authority is Constructed and Contextual</span></div>
   <div class="node" id="SSS"><span class="acrl">Searching as Strategic Exploration</span></div>
 </section>
-<section id="ilcs" tabindex="6">
+<section data-key="6">
   <div class="node" id="KKK"><span class="ilcs">Determine the nature and extent of information needed</span></div>
   <div class="node" id="LLL"><span class="ilcs">Accesses needed information effectively and efficiently</span></div>
   <div class="node" id="III"><span class="ilcs">Individually or as a member of a group,uses information effectively to accomplish a specific purpose</span></div>
   <div class="node" id="JJJ"><span class="ilcs">Understands many of the economic, legal, and social issues surrounding thre use of information and accesses and uses information ethically and legally</span></div>
   <div class="node" id="MMM"><span class="ilcs">Evaluates information and its sources critically and incorporates selected information into her or his knowledge base or value system</span></div>
-</section>  
+</section>
 </div>
 
 </div>
 
-
-<svg>
- <defs>
+<div id="svgcontainer"></div>
+<svg id="defs" style="z-index:-1;">
+<defs>
+<path id="lightbulb" d="M1120 576q0 13-9.5 22.5t-22.5 9.5-22.5-9.5-9.5-22.5q0-46-54-71t-106-25q-13 0-22.5-9.5t-9.5-22.5 9.5-22.5 22.5-9.5q50 0 99.5 16t87 54 37.5 90zm160 0q0-72-34.5-134t-90-101.5-123-62-136.5-22.5-136.5 22.5-123 62-90 101.5-34.5 134q0 101 68 180 10 11 30.5 33t30.5 33q128 153 141 298h228q13-145 141-298 10-11 30.5-33t30.5-33q68-79 68-180zm128 0q0 155-103 268-45 49-74.5 87t-59.5 95.5-34 107.5q47 28 47 82 0 37-25 64 25 27 25 64 0 52-45 81 13 23 13 47 0 46-31.5 71t-77.5 25q-20 44-60 70t-87 26-87-26-60-70q-46 0-77.5-25t-31.5-71q0-24 13-47-45-29-45-81 0-37 25-64-25-27-25-64 0-54 47-82-4-50-34-107.5t-59.5-95.5-74.5-87q-103-113-103-268 0-99 44.5-184.5t117-142 164-89 186.5-32.5 186.5 32.5 164 89 117 142 44.5 184.5z" style="border:none; background-color:white; fill:#666; pointer-events:stroke;"></path>   
+  <clipPath id="bulbPath">
+        <path d="M1120 576q0 13-9.5 22.5t-22.5 9.5-22.5-9.5-9.5-22.5q0-46-54-71t-106-25q-13 0-22.5-9.5t-9.5-22.5 9.5-22.5 22.5-9.5q50 0 99.5 16t87 54 37.5 90zm160 0q0-72-34.5-134t-90-101.5-123-62-136.5-22.5-136.5 22.5-123 62-90 101.5-34.5 134q0 101 68 180 10 11 30.5 33t30.5 33q128 153 141 298h228q13-145 141-298 10-11 30.5-33t30.5-33q68-79 68-180zm128 0q0 155-103 268-45 49-74.5 87t-59.5 95.5-34 107.5q47 28 47 82 0 37-25 64 25 27 25 64 0 52-45 81 13 23 13 47 0 46-31.5 71t-77.5 25q-20 44-60 70t-87 26-87-26-60-70q-46 0-77.5-25t-31.5-71q0-24 13-47-45-29-45-81 0-37 25-64-25-27-25-64 0-54 47-82-4-50-34-107.5t-59.5-95.5-74.5-87q-103-113-103-268 0-99 44.5-184.5t117-142 164-89 186.5-32.5 186.5 32.5 164 89 117 142 44.5 184.5z"></path>   
+    </clipPath>
+     <defs>
     <radialGradient id="circleGradient">
       <stop offset="50%" stop-color="#efefef"/>
       <stop offset="70%" stop-color="#eaeaea"/>
@@ -168,27 +169,11 @@
     </radialGradient>
   </defs>
 </svg>
-<svg viewBox="0 0 16 24">
-  <path id="lightbulb" d="M1120 576q0 13-9.5 22.5t-22.5 9.5-22.5-9.5-9.5-22.5q0-46-54-71t-106-25q-13 0-22.5-9.5t-9.5-22.5 9.5-22.5 22.5-9.5q50 0 99.5 16t87 54 37.5 90zm160 0q0-72-34.5-134t-90-101.5-123-62-136.5-22.5-136.5 22.5-123 62-90 101.5-34.5 134q0 101 68 180 10 11 30.5 33t30.5 33q128 153 141 298h228q13-145 141-298 10-11 30.5-33t30.5-33q68-79 68-180zm128 0q0 155-103 268-45 49-74.5 87t-59.5 95.5-34 107.5q47 28 47 82 0 37-25 64 25 27 25 64 0 52-45 81 13 23 13 47 0 46-31.5 71t-77.5 25q-20 44-60 70t-87 26-87-26-60-70q-46 0-77.5-25t-31.5-71q0-24 13-47-45-29-45-81 0-37 25-64-25-27-25-64 0-54 47-82-4-50-34-107.5t-59.5-95.5-74.5-87q-103-113-103-268 0-99 44.5-184.5t117-142 164-89 186.5-32.5 186.5 32.5 164 89 117 142 44.5 184.5z" style="border:none; background-color:white; fill:#666; pointer-events:stroke;"></path>   
-  <clipPath id="bulbPath">
-        <path d="M1120 576q0 13-9.5 22.5t-22.5 9.5-22.5-9.5-9.5-22.5q0-46-54-71t-106-25q-13 0-22.5-9.5t-9.5-22.5 9.5-22.5 22.5-9.5q50 0 99.5 16t87 54 37.5 90zm160 0q0-72-34.5-134t-90-101.5-123-62-136.5-22.5-136.5 22.5-123 62-90 101.5-34.5 134q0 101 68 180 10 11 30.5 33t30.5 33q128 153 141 298h228q13-145 141-298 10-11 30.5-33t30.5-33q68-79 68-180zm128 0q0 155-103 268-45 49-74.5 87t-59.5 95.5-34 107.5q47 28 47 82 0 37-25 64 25 27 25 64 0 52-45 81 13 23 13 47 0 46-31.5 71t-77.5 25q-20 44-60 70t-87 26-87-26-60-70q-46 0-77.5-25t-31.5-71q0-24 13-47-45-29-45-81 0-37 25-64-25-27-25-64 0-54 47-82-4-50-34-107.5t-59.5-95.5-74.5-87q-103-113-103-268 0-99 44.5-184.5t117-142 164-89 186.5-32.5 186.5 32.5 164 89 117 142 44.5 184.5z"></path>   
-    </clipPath>
-</svg>
-<div id="svgcontainer"></div>
-
-<script>
-
-
-
-</script>
 
 <footer>
-
-
 <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 <script src="js/d3.v4.js"></script>
 <script src="js/noforce.js"></script>
-
 </footer>
 
 </body>

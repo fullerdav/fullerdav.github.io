@@ -329,7 +329,7 @@
             "name": "Level II: Advanced Skills",
             "children": [
             {
-                "name": "Students evaluate the main arguments of a source based on their own knowledge to raise new research questions"
+                "name": "Students evaluate the main arguments of a source based on their own knowledge to raise new research questions."
             }]
         }]
     },
@@ -341,10 +341,10 @@
             "name": "Level I: Basic Skills",
             "children": [
             {
-                "name": "Identifies and uses general purpose research tools, (i.e. EBSCO, Proquest, catalog, discovery)"
+                "name": "Identifies and uses general purpose research tools, (i.e., EBSCO, Proquest, catalog, discovery)"
             },
             {
-                "name": "Student matches information needs and search strategies to appropriate search tools"
+                "name": "Student matches information needs and search strategies to appropriate search tools."
             }]
         },
         {
@@ -354,7 +354,7 @@
                 "name": "Identifies and uses subject specific databases (i.e. PsychInfo, DRAM, Accessible Archives)"
             },
             {
-                "name": "Identifies and uses advanced search techniques in discovery and online search platforms when applicable in order to find relevant sources"
+                "name": "Identifies and uses advanced search techniques in discovery and online search platforms when applicable in order to find relevant sources."
             }]
         }]
     },

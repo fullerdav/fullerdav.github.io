@@ -10,6 +10,23 @@ Set.prototype.difference = function(setB) {
     return difference;
 }
 
+let docFrag = document.createDocumentFragment();
+function createFrag(el, cls, html) {
+  newEl = html ? document.createElement(el) : document.createElementNS(ns.svg, el);
+  newEl.style.cssText = html ? '' : "z-index:-1; position: absolute; top: 0; left:0; width:100%; height:100%";
+  newEl.setAttribute('class', cls);
+  docFrag.append(newEl);
+}
+        
+createFrag('div', 'tooltip', true);
+createFrag('svg', 'svgfrag', false);
+createFrag('g', 'gfrag', false);
+createFrag('path', 'link', false);
+
+const svgfrag = docFrag.querySelector("svg.svgfrag");
+const gfrag = docFrag.querySelector("g.gfrag");
+const pathfrag = docFrag.querySelector(".link");
+
 const reasons = {
     "EE": {
         "C": "This mirrors the last advanced outcome where students identify specific types of primary sources that will provide the best evidence to support an argument or answer a research question.",
@@ -25,7 +42,6 @@ const reasons = {
         "OOO": 'In order to use primary sources appropriately within the context of the research question, students must understand the source’s creation process in order to identify the limitations of its use and identify which ones will provide the best evidence to support a research question.'
     }
 }
-
 
 const assoc = {
     "AA": ["B", "K", "M", "N", "DDD", "KKK", "SSS"],
@@ -81,7 +97,7 @@ const assoc = {
 };
 
 const htmlnodes = $(".node");
-const sections = $(".container section");
+//const sections = $(".container section");
 
 let nset = Object.keys(assoc);
 nset = new Set(nset);
@@ -100,60 +116,55 @@ htmlnodes
         activeDivs.add(this.id);
         fadedDivs = nset.difference(activeDivs);
 
-        let tb = this.parentNode.getAttribute("tabindex");
+        let tb = this.parentNode.dataset.key;
         timeoutid = window.setTimeout(function() {
                 rotateCarousel(tb);            
          }, 1500); 
-       
-        
+
         activeDivs.forEach(function(k, index) {
-            $("#" + k + " span").toggleClass("hilite");
+            $(`#${k} span`).toggleClass("hilite");
         });
         fadedDivs.forEach(function(k, index) {
-            $("#" + k + " span").toggleClass("lolite");
+            $(`#${k} span`).toggleClass("lolite");
         });
 
         makeSVG(this.id, assoc[this.id]);
+
     })
     .on("mouseout", function(e) {
         activeDivs.forEach(function(k, index) {
-            $("#" + k + " span").toggleClass("hilite");
+            $(`#${k} span`).toggleClass("hilite");
         });
         fadedDivs.forEach(function(k, index) {
-            $("#" + k + " span").toggleClass("lolite");
+            $(`#${k} span`).toggleClass("lolite");
         });
-        $("#svgcontainer").empty("svg");
+         $("#svgcontainer").empty("svg");
 
         window.clearTimeout(timeoutid);
     
     })
     .on("click", function() {
         $("#svgcontainer").empty("svg");
-        $("#d3force").css("margin-left", "4%");
+        $("#d3force").css("width", "96%").css("margin-left", "4%");
         $("#d3force1").css("width", "4%").css("margin-right", "96%").css("border-right", "2px solid black");
         $("header").css("display", "none");
+        $(".container").css("display", "none");
+       
         clicked = this.id;
         if (clicked.length === 2) {
             treeDraw(clicked);
         } else {
-            treeDraw(activeDivs);
+            treeDraw(activeDivs, false);
         }
     });
 
 //############################
 
-document.getElementById("d3force").addEventListener("transitionend", function(event) {
-    let m = $("#d3force").css("margin-left");
-    if (parseFloat(m) > 98) {
-        $("header").css("display", "block");
-        $(".container").css("display", "grid");
-    }
-});
-
 function modalClose() {
     $("#chevron").css("display", "none");
-    $("#d3force").css("margin-left", "100%").empty("svg");
-    $("#d3force1").css("width", "0%").css("margin-right", "100%").css("border", "none");
+    $("#d3force").css("width", "0%").css("margin-left", "100%");
+    $("#d3force1").css("width", "0%").css("margin-right", "100%");
+   
     clicked = null;
 }
 $("#d3force1").on("click", () => {
@@ -166,37 +177,44 @@ document.addEventListener('keyup', (e) => {
     }
 }, { passive: true });
 
-// document.addEventListener('click', (e) => {
-//     console.log(e.x, e.y);
-//  },{passive:true});
-
-document.getElementById("d3force1").addEventListener("transitionend", function(event) {
-    let w = $("#d3force1").css("width");
-    if (parseFloat(w) > 0) {
-        $(".container").css("display", "none");
+document.getElementById("d3force").addEventListener("transitionend", function(event) {
+    let w = $("#d3force").css("width");
+    if (parseFloat(w) > 92) {
         $("#chevron").css("display", "inline-block");
+    }
+    if (parseFloat(w) < 4) {
+      $("#d3force1").css("border", "none");
+      $("#d3force").empty("svg")
+      $(".container").css("opacity", "1").css("display", "grid");
+      $("header").css("opacity", "1").css("display", "block");
     }
 }, false);
 
 //############################
 
 function makeSVG(src, targs) {
-    let svg = document.createElementNS(ns.svg, "svg");
-    let g = document.createElementNS(ns.svg, "g");
+   let g = gfrag.cloneNode(true);
 
-    function endPoints(node1, node2) {
-        return [{ x: node1.offsetTop + node1.offsetHeight / 2, y: node1.offsetLeft + node1.offsetWidth }, { x: node2.offsetTop + node2.offsetHeight / 2, y: node2.offsetLeft }];
+    let endPoints = function(node, len) {
+        let x = node.offsetTop + node.offsetHeight/2, y;
+        if (len === 2) {
+          y = node.offsetWidth + node.offsetLeft;
+        } else {
+          y = len === 1 ? node.offsetWidth + node.offsetLeft : node.offsetLeft;
+        }
+        return {x:x, y:y, len:len};
     }
 
-    let elsrc = document.querySelector("#" + src + " span");
+    let elsrc = document.querySelector(`#${src} span`);
+    let s = endPoints(elsrc, src.length);
 
     targs.forEach(function(targ) {
-        let targsrc = document.querySelector("#" + targ + " span");
-        let s, t;
-        if (src.length === 2) {
-            [s, t] = targ.length === 1 ? endPoints(targsrc, elsrc) : endPoints(elsrc, targsrc);
+        let targsrc = document.querySelector(`#${targ} span`);
+        let t = endPoints(targsrc, targ.length);
+        if (t.len === 2) {
+            t.y = s.len === 1 ? targsrc.offsetLeft : t.y;
         } else {
-            [s, t] = src.length === 1 ? endPoints(elsrc, targsrc) : endPoints(targsrc, elsrc);
+            s.y = t.len === 1 ? elsrc.offsetLeft : elsrc.offsetLeft + elsrc.offsetWidth;
         }
 
         let d = `M ${s.y} ${s.x}
@@ -204,37 +222,34 @@ function makeSVG(src, targs) {
                 ${(s.y + t.y) / 2} ${t.x},
                 ${t.y} ${t.x}`;
 
-        let path = document.createElementNS(ns.svg, "path");
-        path.setAttribute("class", "link");
+        let path = pathfrag.cloneNode(true);
+//        path.setAttribute("d", "M 625 60 C 500 164 500 606 625 710");
         path.setAttribute("d", d);
         g.appendChild(path);
     });
 
+    let svg = svgfrag.cloneNode(true);
     svg.appendChild(g);
     $("#svgcontainer").append(svg);
 }
 
 //####################################################################
 
-function treeDraw(id) {
+function treeDraw(id, redraw) {
+    var i = 0, duration = 500, 
+        margin = { top: 20, right: 0, bottom: 20, left: 120 },
+        width = width || window.outerWidth - margin.right - margin.left,
+        height = height || window.outerHeight - margin.top - margin.bottom;
 
-    var margin = { top: 0, right: 0, bottom: 0, left: 120 },
-        width = 1000 - margin.right - margin.left,
-        height = 800 - margin.top - margin.bottom,
-        i = 0,
-        duration = 500,
-        root;
-
-    var treemap = d3.tree().size([height, width]);
-
-    var vis = d3.select("#d3force").append("svg:svg")
-        .attr("width", width + margin.right + margin.left)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
+   var treemap = d3.tree().size([height, width]);
+   var vis = d3.select("#d3force").append("svg:svg")
+          .attr("id", "vis")
+          .attr("width", width + margin.right + margin.left)
+          .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+ 
     d3.json("js/scaffolding.json", function(json) {
-
         if (typeof id === "string") {
             json.children.forEach(function(r) {
                 if (id === r.id) {
@@ -246,7 +261,7 @@ function treeDraw(id) {
                 return activeDivs.has(a.id);
             });
             root = json;
-            root.name = $("#" + clicked).text();
+            root.name = $(`#${clicked}`).text();
         }
 
         root = d3.hierarchy(root, function(d) { return d.children; });
@@ -260,32 +275,25 @@ function treeDraw(id) {
                 toggle(d);
             }
         }
-
-        root.children.forEach(toggleAll);
-        update(root);
+    
+          root.children.forEach(toggleAll);
+          update(root);
+        
     });
 
     function countSibs(n) {
         return n.depth > 0 ? { length: n.parent.children.length, index: n.parent.children.indexOf(n) } : { length: 0, index: null };
     }
 
-    function update(source) {
-        var treeData = treemap(root);
-        //var tooltip = $("<div></div>").addClass("tooltip").appendTo("#d3force");
-        
-        var divElm = document.createElement('div');
-        var docFrag = document.createDocumentFragment();
-        docFrag.append(divElm);
-        var tooltip = docFrag.querySelector('div');
-        tooltip.setAttribute('class', 'tooltip');
+    var update = function(source) {
 
-        var circletxt = $("<div></div>").addClass("circletxt").appendTo("#d3force");
+        var treeData = treemap(root);
 
         var nodes = treeData.descendants(),
             links = treeData.descendants().slice(1);
 
         nodes.forEach(function(d) {
-            d.y = d.depth * 225;
+            d.y = d.depth * 250;
         });
 
         var node = vis.selectAll("g.node")
@@ -336,11 +344,12 @@ function treeDraw(id) {
                 index = 0;
 
             let midline = Math.ceil(lbl.length * .045);
-            let y = midline * -.2 + "em";
-            let rx = /([^\b]|[.\,()\-]){5,25}(\b|$)/g;
-            //let rx = /[^\b]{5,25}(\b|$)/g;
-
+            let y = midline * -.25 + "em";
+            //let rx = /([.\,()\-]|[^\b]){5,25}(\b|$)/g;
+            let rx = /[\w\s.()\,\-\:]{8,25}(\s|$)/g;
+        
             let str = lbl.match(rx);
+    
             str.forEach(function(s) {
                 let tspan = text.append("tspan").text(s).attr("x", 0).attr("y", y).attr("dy", index++ * 1.1 + dy + "em");
                 maxlen = maxlen > tspan.node().getComputedTextLength() ? maxlen : tspan.node().getComputedTextLength();
@@ -365,48 +374,46 @@ function treeDraw(id) {
             })
             .on("mousedown", function(d) {
                 this.style.setProperty("fill", "url(#bulbGradient)", null);
-                let sibs = countSibs(d), top, left;
-                
+                let moresibs = countSibs(d).length > 3;
                 let outcome = d.data.id;
                 let reason = reasons[outcome];
-                let thisbox = this.getBoundingClientRect();
-                reason = reason !== undefined && reason[clicked] !== undefined ? reason[clicked] : "Place holder text";
-
-                let d3f = document.querySelector('#d3force');
-                d3f.appendChild(docFrag.cloneNode(true));
-                tt = document.querySelector('.tooltip');
-
-                tt.innerHTML = reason;
-                let len = reason.length > 150 ?  Math.ceil(reason.length) + "px" : "150px";
-                tt.style["width"] = len;
-
-                top = sibs.length > 3 ? d.x - (50 + tt.offsetHeight / 2) : d.x - (65 + tt.offsetHeight);
-                top = top < 0 ? 0 : top + "px";
-                tt.style["top"] = top;
-                
-                left = sibs.length > 3 ? (d.y + margin.left + 35) : (d.y + margin.left) - tt.offsetWidth / 2;
-                tt.style["left"] = left + "px";
-
-                tt.style["opacity"] = 1;
-
-                if (sibs.length > 3) {
-                    tt.classList.add("tipright");
-                    tt.style["animation"] = "rlight .4s";
+                if (reason !== undefined && reason[clicked] !== undefined) {
+                  reason = reason[clicked];
                 } else {
-                   tt.classList.add("tiptop");
-                   tt.style["animation"] = "toplight .4s";
+                  reason = `Place holder text \u{1F30D}`;
+                } 
+     
+                let tip = docFrag.querySelector('div.tooltip'); 
+                $('#d3force').append(tip.cloneNode(true));
+                let tooltip = document.querySelector('#d3force .tooltip');
+                  
+                tooltip.innerHTML = reason;
+                tooltip.style["width"] = reason.length > 150 ?  `${Math.ceil(reason.length)}px` : "150px";
+                
+                if (moresibs) {
+                  let top = d.x - (50 + tooltip.offsetHeight / 2);
+                  tooltip.style["top"] =  top < 8 ? "8px" : top + "px";
+                  tooltip.style["left"] = (d.y + margin.left + 35) + "px";
+                  tooltip.classList.add("tipright");
+                  tooltip.style["animation"] = "rlight .4s";
+                } else {
+                  tooltip.style["top"] = d.x - (65 + tooltip.offsetHeight) + "px";
+                  tooltip.classList.add("tiptop");
+                  tooltip.style["left"] = (d.y + margin.left) - tooltip.offsetWidth / 2 + "px";
+                  tooltip.style["animation"] = "toplight .4s";
                 }
+    
+                tooltip.style["opacity"] = 1;
             })
             .on("mouseout", function() {
                 this.style.setProperty("fill", "none", null);
                 let tt = document.querySelector('#d3force .tooltip');
-                if (tt.classList.contains("tiptop")) { tt.classList.remove("tiptop"); }
-                if (tt.classList.contains("tipright")) { tt.classList.remove("tipright"); }
-                tt.parentNode.removeChild(tt);
+                if (tt) {tt.parentNode.removeChild(tt);}
             });
 
         bulb.append("use").attr("xlink:href", "#lightbulb")
             .style("transform", "scale(.018,.018)");
+
 
         //###################################################
 
@@ -470,8 +477,17 @@ function treeDraw(id) {
 
             return path;
         }
-    }
 
+        // window.addEventListener("resize", function(e){
+        //   let r = document.querySelector("body").getBoundingClientRect();
+        //   height = r.height;
+        //   width = r.width;
+        //  // $("#d3force").empty();
+        //  // treeDraw(activeDivs, true);
+        //  update(root);
+        // });
+
+    }
 
     function closeChildren(el) {
         if (el.children) {
@@ -482,7 +498,6 @@ function treeDraw(id) {
         }
     }
 
-    // Toggle children.
     function toggle(d) {
         if (d.children) {
             d._children = d.children;
@@ -492,10 +507,11 @@ function treeDraw(id) {
             d._children = null;
         }
     }
+
+
 }
 
 let carousel = document.getElementById('carousel');
-const slides = ["schaffer", "cclo", "wac", "wpa", "acrl", "ilcs"];
 let rotate = 0;
 
 const rotateCarousel = function(n) {
@@ -511,17 +527,12 @@ carousel.addEventListener('wheel', function(e){
       carousel.style["transform"] = 'translateZ( -442px ) rotateY(' + rotate + 'deg)';
 }, {passive:false});
 
-// let edges = document.querySelector('.framework').getBoundingClientRect();
-// console.log(edges);
 
+       
+// http://wpacouncil.org/files/framework-for-success-postsecondary-writing.pdf
+// https://drive.google.com/file/d/0B92zIYwSHAVtTUpIQ19RSUZYeTQ/view?usp=sharing
+// http://www.ala.org/acrl/sites/ala.org.acrl/files/content/issues/infolit/Framework_ILHE.pdf
+// http://wpacouncil.org/files/framework-for-success-postsecondary-writing.pdf
+// https://docs.google.com/document/d/1VtsjEedFkWqKidf0wJ4Pl0iCMloiRwNJrAJspt4VtvE/edit
+// https://muse.union.edu/commoncurriculum/files/2016/01/CCA-PartII-LearningOutcomes.pdf
 
-// function findMissing(arr) {
-//     let tester = [...Array(100).keys()];
-//     let results = [];
-//     tester.forEach(function(t) {
-//         if (arr.indexOf(t) === -1) {
-//             results.push(t);
-//         }
-//     });
-//     return results;
-// }
