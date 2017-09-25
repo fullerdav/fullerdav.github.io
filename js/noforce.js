@@ -380,7 +380,7 @@ function treeDraw(id, redraw) {
                 if (reason !== undefined && reason[clicked] !== undefined) {
                   reason = reason[clicked];
                 } else {
-                  reason = `Place holder text \u{1F30D}`;
+                  reason = `Place holder text`;
                 } 
      
                 let tip = docFrag.querySelector('div.tooltip'); 
