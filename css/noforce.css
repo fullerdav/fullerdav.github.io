@@ -340,8 +340,8 @@ path.link {
   fill: none;
   stroke: #789;
   stroke-width: 1px;
-  stroke-dasharray:  1200;
-  stroke-dashoffset: 1200px;
+  stroke-dasharray:  1500px;
+  stroke-dashoffset: 1500px;
   animation: dash 1.25s linear forwards;
 }
 
