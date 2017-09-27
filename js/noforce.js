@@ -97,7 +97,6 @@ const assoc = {
 };
 
 const htmlnodes = $(".node");
-//const sections = $(".container section");
 
 let nset = Object.keys(assoc);
 nset = new Set(nset);
@@ -305,36 +304,33 @@ function treeDraw(id, redraw) {
                 return "translate(" + source.y0 + "," + source.x0 + ")";
             });
 
-        nodeEnter.append("circle")
-            .style("fill", function(d) { return "url(#circleGradient)"; })
-            .style("fill-opacity", ".65");
-
         //################################
 
         var anchors = nodeEnter.append("svg:a")
             .attr("target", "_blank")
             .attr("xlink:href", function(d) {
                 return d.data.href;
-            })
-            .on("click", function(d) {
-                if (d.depth > 0) {
-                    let indno = d.parent.children.indexOf(d);
-                    if (indno !== null) {
-                        let sibs = d.parent.children.slice(0, indno);
-                        let sibplus = d.parent.children.slice(indno + 1, d.parent.children.length);
-                        sibs = sibs.concat(sibplus);
-                        closeChildren({ name: "dummy", children: sibs });
-                    }
-                    toggle(d);
-                    update(d);
-                }
             });
+        
+         var circles = anchors.append("circle")
+          .style("fill", function(d) { return "url(#circleGradient)"; })
+          .style("fill-opacity", ".75")
+          .on("mousedown", function(d){
+             if (d.depth > 0) {
+              let indno = d.parent.children.indexOf(d);
+              if (indno !== null) {
+                  let sibs = d.parent.children.slice(0, indno);
+                  let sibplus = d.parent.children.slice(indno + 1, d.parent.children.length);
+                  sibs = sibs.concat(sibplus);
+                  closeChildren({ name: "dummy", children: sibs });
+              }
+              toggle(d);
+              update(d);
+            }
+        });
 
-        var txts = anchors.append("svg:text")
-            .attr("text-anchor", "middle")
-            .style("cursor", function(d) {
-                return d.depth === 0 || (!d.children && !d._children) ? "inherit" : "pointer";
-            });
+        var txts = anchors.append("svg:text").attr("text-anchor", "middle")
+          .style("pointer-events", "none");
 
         txts.each(function(d) {
             let text = d3.select(this);
@@ -345,11 +341,10 @@ function treeDraw(id, redraw) {
 
             let midline = Math.ceil(lbl.length * .045);
             let y = midline * -.25 + "em";
-            //let rx = /([.\,()\-]|[^\b]){5,25}(\b|$)/g;
-            let rx = /[\w\s.()\,\-\:]{8,25}(\s|$)/g;
+            let rx = /[\w\s.():'\,\-]{6,25}(\s|$)/g;
         
-            let str = lbl.match(rx);
-    
+            const str = lbl.match(rx);
+  
             str.forEach(function(s) {
                 let tspan = text.append("tspan").text(s).attr("x", 0).attr("y", y).attr("dy", index++ * 1.1 + dy + "em");
                 maxlen = maxlen > tspan.node().getComputedTextLength() ? maxlen : tspan.node().getComputedTextLength();
@@ -478,15 +473,6 @@ function treeDraw(id, redraw) {
             return path;
         }
 
-        // window.addEventListener("resize", function(e){
-        //   let r = document.querySelector("body").getBoundingClientRect();
-        //   height = r.height;
-        //   width = r.width;
-        //  // $("#d3force").empty();
-        //  // treeDraw(activeDivs, true);
-        //  update(root);
-        // });
-
     }
 
     function closeChildren(el) {
@@ -507,7 +493,6 @@ function treeDraw(id, redraw) {
             d._children = null;
         }
     }
-
 
 }
 
