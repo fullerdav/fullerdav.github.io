@@ -114,17 +114,17 @@ htmlnodes
         });
         activeDivs.add(this.id);
         fadedDivs = nset.difference(activeDivs);
-
+     
         let tb = this.parentNode.dataset.key;
         timeoutid = window.setTimeout(function() {
                 rotateCarousel(tb);            
          }, 1500); 
 
         activeDivs.forEach(function(k, index) {
-            $(`#${k} span`).toggleClass("hilite");
+            $(`#${k}`).toggleClass("hilite");
         });
         fadedDivs.forEach(function(k, index) {
-            $(`#${k} span`).toggleClass("lolite");
+            $(`#${k}`).toggleClass("lolite");
         });
 
         makeSVG(this.id, assoc[this.id]);
@@ -132,10 +132,10 @@ htmlnodes
     })
     .on("mouseout", function(e) {
         activeDivs.forEach(function(k, index) {
-            $(`#${k} span`).toggleClass("hilite");
+            $(`#${k}`).toggleClass("hilite");
         });
         fadedDivs.forEach(function(k, index) {
-            $(`#${k} span`).toggleClass("lolite");
+            $(`#${k}`).toggleClass("lolite");
         });
          $("#svgcontainer").empty("svg");
 
@@ -204,11 +204,11 @@ function makeSVG(src, targs) {
         return {x:x, y:y, len:len};
     }
 
-    let elsrc = document.querySelector(`#${src} span`);
+    let elsrc = document.querySelector(`#${src}`);
     let s = endPoints(elsrc, src.length);
 
     targs.forEach(function(targ) {
-        let targsrc = document.querySelector(`#${targ} span`);
+        let targsrc = document.querySelector(`#${targ}`);
         let t = endPoints(targsrc, targ.length);
         if (t.len === 2) {
             t.y = s.len === 1 ? targsrc.offsetLeft : t.y;
@@ -222,6 +222,8 @@ function makeSVG(src, targs) {
                 ${t.y} ${t.x}`;
 
         let path = pathfrag.cloneNode(true);
+        path.classList.add("growline");
+        path.classList.add(elsrc.classList[1]);
 //        path.setAttribute("d", "M 625 60 C 500 164 500 606 625 710");
         path.setAttribute("d", d);
         g.appendChild(path);
@@ -341,7 +343,7 @@ function treeDraw(id, redraw) {
 
             let midline = Math.ceil(lbl.length * .045);
             let y = midline * -.25 + "em";
-            let rx = /[\w\s.():'\,\-]{6,25}(\s|$)/g;
+            let rx = /[\w\s.():\,\-]{6,25}(\s|$)/g;
         
             const str = lbl.match(rx);
   
