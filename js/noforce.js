@@ -96,6 +96,8 @@ const assoc = {
     "SSS": ["AA", "BB", "CC", "GG", "KK", "LL"]
 };
 
+$("#chevron").append('\u2039');
+
 const htmlnodes = $(".node");
 
 let nset = Object.keys(assoc);
@@ -343,7 +345,7 @@ function treeDraw(id, redraw) {
 
             let midline = Math.ceil(lbl.length * .045);
             let y = midline * -.25 + "em";
-            let rx = /[\w\s.():\,\-]{6,25}(\s|$)/g;
+            let rx = /[\w\s.()':\,\-]{6,25}(\s|$)/g;
         
             const str = lbl.match(rx);
   
@@ -509,9 +511,9 @@ const rotateCarousel = function(n) {
 }
 
 carousel.addEventListener('wheel', function(e){
-      e.preventDefault();
       rotate += e.deltaY < 0 ? -60 : 60;
       carousel.style["transform"] = 'translateZ( -442px ) rotateY(' + rotate + 'deg)';
+      e.preventDefault();
 }, {passive:false});
 
 
@@ -523,3 +525,12 @@ carousel.addEventListener('wheel', function(e){
 // https://docs.google.com/document/d/1VtsjEedFkWqKidf0wJ4Pl0iCMloiRwNJrAJspt4VtvE/edit
 // https://muse.union.edu/commoncurriculum/files/2016/01/CCA-PartII-LearningOutcomes.pdf
 
+function findOdd(A) {
+  return A.reduce(function(c,v){
+    log(c,v, c^v);
+    return c^v;
+  },0);
+}
+
+let odd = findOdd([17,202,202]);
+log(odd);

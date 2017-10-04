@@ -22,7 +22,7 @@
 <figure class="slide" id="schaffer">  
   Schaffer Library IL Outcome
 <a target="_blank" href="//docs.google.com/document/d/1VtsjEedFkWqKidf0wJ4Pl0iCMloiRwNJrAJspt4VtvE/edit">
- <i class="fa fa-1x fa-download"></i> 
+ <i class="fa fa-1x fa-download"></i></span>
 </a>
 </figure>
 
@@ -63,14 +63,14 @@
 
 </header>
 <div id="d3force1">
-   <div id="chevron"><i class="fa fa-2x fa-chevron-circle-left"></i></div>
+   <div id="chevron"></div>
 </div>
 <div id="d3force"></div>
 
 
-<div class="container">
+<article class="container">
 
-	<section class="outcomes1">
+	<article class="outcomes1">
    <section data-key="2">
 		<div class="node cclo" id="I">Discuss Ideas</div>
     <div class="node cclo" id="N">Find Evidence</div>
@@ -94,7 +94,7 @@
     <div class="node wac" id="B">Demonstrate proficiency in constructing discipline appropriate claims, theses, or questions to put forward ideas in a focused manner</div>
     <div class="node wac" id="D">Use analysis, synthesis, reflection, argument to develop ideas, which may include organization, structure, coherence, and depth of thinking</div> 
   </section>
-</section>
+</article>
 
 <article class="framework">
   <section data-key="1">
@@ -135,13 +135,13 @@
 <section data-key="6">
   <div class="node ilcs" id="KKK">Determine the nature and extent of information needed</div>
   <div class="node ilcs" id="LLL">Accesses needed information effectively and efficiently</div>
-  <div class="node ilcs" id="III">Individually or as a member of a group,uses information effectively to accomplish a specific purpose</span></div>
-  <div class="node ilcs" id="JJJ">Understands many of the economic, legal, and social issues surrounding thre use of information and accesses and uses information ethically and legally</span></div>
+  <div class="node ilcs" id="III">Individually or as a member of a group,uses information effectively to accomplish a specific purpose</div>
+  <div class="node ilcs" id="JJJ">Understands many of the economic, legal, and social issues surrounding thre use of information and accesses and uses information ethically and legally</div>
   <div class="node ilcs" id="MMM">Evaluates information and its sources critically and incorporates selected information into her or his knowledge base or value system</div>
+</section>
 </article>
-</div>
 
-</div>
+</article>
 
 <div id="svgcontainer" style="z-index:-1; position: absolute; top: 0; left:0; width:100%; height:100%"></div>
 <svg id="defs" style="z-index:-1;">
@@ -170,12 +170,24 @@
   </defs>
 </svg>
 
+
 <footer>
 <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
-<script src="js/d3.v4.js"></script>
-<script src="js/noforce.js"></script>
+<script async src="js/d3.v4.js"></script>
+<script async src="js/noforce.js"></script>
+<script>
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker
+           .register('/sw.js')
+           .then(function() { console.log("Service Worker Registered"); });
+}
+</script>
 </footer>
-
+<article style="color:#757575; font-size:11px; padding:4px; font-style:italic;">
+Credits<br>
+Concept and content: Lindsay Bush<br>
+Web design: David Fuller and Lindsay Bush
+</article>
 </body>
 </html>
 
