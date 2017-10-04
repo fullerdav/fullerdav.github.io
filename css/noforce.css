@@ -306,10 +306,10 @@ div.tooltip {
 }
 
 #chevron {
-  margin: 50vh .75rem;
+  margin: 50vh .75em;
   background-color: transparent;
   color: white;
-  font-size: 4em;
+  font-size: 4rem;
   font-weight: 800;
   display: none;
 }
@@ -374,6 +374,11 @@ circle.watts {
 #vis {
   resize:  both;
   overflow: scroll;
+}
+
+.fa {
+  color: ivory;
+  float: right;
 }
 
 /* div#acrl a::after, div#cclo a::after, div#ilcs a::after, div#wpa a::after, div#wac a::after ,div#schaffer a::after {

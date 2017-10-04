@@ -146,6 +146,7 @@ htmlnodes
     })
     .on("click", function() {
         $("#svgcontainer").empty("svg");
+        $("#credits").css("display", "none");
         $("#d3force").css("width", "96%").css("margin-left", "4%");
         $("#d3force1").css("width", "4%").css("margin-right", "96%").css("border-right", "2px solid black");
         $("header").css("display", "none");
@@ -188,6 +189,7 @@ document.getElementById("d3force").addEventListener("transitionend", function(ev
       $("#d3force").empty("svg")
       $(".container").css("opacity", "1").css("display", "grid");
       $("header").css("opacity", "1").css("display", "block");
+      $("#credits").css("display", "block");
     }
 }, false);
 
