@@ -21,11 +21,11 @@ function createFrag(el, cls, html) {
 createFrag('div', 'tooltip', true);
 createFrag('svg', 'svgfrag', false);
 createFrag('g', 'gfrag', false);
-createFrag('path', 'link', false);
+createFrag('path', 'growline', false);
 
 const svgfrag = docFrag.querySelector("svg.svgfrag");
 const gfrag = docFrag.querySelector("g.gfrag");
-const pathfrag = docFrag.querySelector(".link");
+const pathfrag = docFrag.querySelector(".growline");
 
 const reasons = {
     "EE": {
@@ -146,7 +146,6 @@ htmlnodes
     })
     .on("click", function() {
         $("#svgcontainer").empty("svg");
-        $("#credits").css("display", "none");
         $("#d3force").css("width", "96%").css("margin-left", "4%");
         $("#d3force1").css("width", "4%").css("margin-right", "96%").css("border-right", "2px solid black");
         $("header").css("display", "none");
@@ -189,7 +188,6 @@ document.getElementById("d3force").addEventListener("transitionend", function(ev
       $("#d3force").empty("svg")
       $(".container").css("opacity", "1").css("display", "grid");
       $("header").css("opacity", "1").css("display", "block");
-      $("#credits").css("display", "block");
     }
 }, false);
 
@@ -226,7 +224,6 @@ function makeSVG(src, targs) {
                 ${t.y} ${t.x}`;
 
         let path = pathfrag.cloneNode(true);
-        path.classList.add("growline");
         path.classList.add(elsrc.classList[1]);
 //        path.setAttribute("d", "M 625 60 C 500 164 500 606 625 710");
         path.setAttribute("d", d);
