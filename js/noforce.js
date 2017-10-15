@@ -10,11 +10,12 @@ Set.prototype.difference = function(setB) {
     return difference;
 }
 
+
 let docFrag = document.createDocumentFragment();
 function createFrag(el, cls, html) {
-  newEl = html ? document.createElement(el) : document.createElementNS(ns.svg, el);
+  let newEl = html ? document.createElement(el) : document.createElementNS(ns.svg, el);
   newEl.style.cssText = html ? '' : "z-index:-1; position: absolute; top: 0; left:0; width:100%; height:100%";
-  newEl.setAttribute('class', cls);
+  newEl.classList.add(cls);
   docFrag.append(newEl);
 }
         
@@ -146,6 +147,7 @@ htmlnodes
     })
     .on("click", function() {
         $("#svgcontainer").empty("svg");
+        $("#credits").css("display", "none");
         $("#d3force").css("width", "96%").css("margin-left", "4%");
         $("#d3force1").css("width", "4%").css("margin-right", "96%").css("border-right", "2px solid black");
         $("header").css("display", "none");
@@ -165,7 +167,6 @@ function modalClose() {
     $("#chevron").css("display", "none");
     $("#d3force").css("width", "0%").css("margin-left", "100%");
     $("#d3force1").css("width", "0%").css("margin-right", "100%");
-   
     clicked = null;
 }
 $("#d3force1").on("click", () => {
@@ -188,6 +189,7 @@ document.getElementById("d3force").addEventListener("transitionend", function(ev
       $("#d3force").empty("svg")
       $(".container").css("opacity", "1").css("display", "grid");
       $("header").css("opacity", "1").css("display", "block");
+      $("#credits").css("display", "block");
     }
 }, false);
 
@@ -468,7 +470,7 @@ function treeDraw(id, redraw) {
         });
 
         function diagonal(s, d) {
-            path = `M ${s.y} ${s.x}
+            let path = `M ${s.y} ${s.x}
                     C ${(s.y + d.y) / 2} ${s.x},
                       ${(s.y + d.y) / 2} ${d.x},
                       ${d.y} ${d.x}`
@@ -515,7 +517,6 @@ carousel.addEventListener('wheel', function(e){
       e.preventDefault();
 }, {passive:false});
 
-
        
 // http://wpacouncil.org/files/framework-for-success-postsecondary-writing.pdf
 // https://drive.google.com/file/d/0B92zIYwSHAVtTUpIQ19RSUZYeTQ/view?usp=sharing
@@ -524,12 +525,3 @@ carousel.addEventListener('wheel', function(e){
 // https://docs.google.com/document/d/1VtsjEedFkWqKidf0wJ4Pl0iCMloiRwNJrAJspt4VtvE/edit
 // https://muse.union.edu/commoncurriculum/files/2016/01/CCA-PartII-LearningOutcomes.pdf
 
-function findOdd(A) {
-  return A.reduce(function(c,v){
-    log(c,v, c^v);
-    return c^v;
-  },0);
-}
-
-let odd = findOdd([17,202,202]);
-log(odd);
