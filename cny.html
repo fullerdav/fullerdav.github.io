@@ -93,7 +93,7 @@ const schools = [
 
 schools.forEach(function(school, i){
   var {latlong, symbol, ill, cny, connectny} = school;
-  let total = cny connectny * 50 ? : ill * 50;
+  let total = cny ? connectny * 50 : ill * 50;
   let color = cny ? 'blue' : 'red';
   let fillcolor = cny ? 'skyblue' : 'firebrick';
   let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34,2);
