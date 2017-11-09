@@ -29,29 +29,7 @@ const {log} = console;
 //center of US [44.58, -103.46]
 //Union [42.817222, -73.9279]
 
-//  var latlngs = [
-//     [
-//      [42.817222, -73.9279],
-//      [44.59201, -75.16076]
-//     ], [
-//      [42.817222, -73.9279],
-//      [41.68704, -73.89541]
-//     ], [
-//       [42.817222, -73.9279],
-//       [42.0212, -73.90652]
-//     ]
-// ];
-
-// var polyline = L.polyline(latlngs, {color: 'blue'}).addTo(mymap);
-// // zoom the map to the polyline
-// mymap.fitBounds(polyline.getBounds());
-
 //let marker = L.marker([42.817222, -73.9279]).addTo(mymap);
-
-
-
-
-
 
 const illiads = [
   {ill: 206, symbol:"NAM", name:"SUNY Albany", distance:10, latlong: [42.686193, -73.823884]},
@@ -72,17 +50,45 @@ const illiads = [
   {ill: 24, symbol:"YQR", name:"Rochester Public Library",  distance:186, latlong:[43.14241, -77.587]},
   {ill: 23, symbol:"HDC", name:"Claremont College", distance:2415, latlong:[34.10307, -117.71388]},
   {ill: 23, symbol:"WCM", name:"Williams Coll", latlong: [42.71675, -73.20288]},
-  {ill: 21, symbol:"PSC", name:"Swarthmore Coll", distance:214, latlong: [39.90539, -75.3538]},
-  {ill: 22, symbol:"HTM", name:"Whitman Coll", distance:2173, latlong: [46.07069, -118.32885]},
-  {ill: 22, symbol:"MNN", name:"Carleton Coll", distance:966, latlong: [44.4623, -93.15467]},
-  {ill: 21, symbol:"CBY", name:"Colby Coll", distance:245, latlong: [44.56413, -69.66317]},
+  {ill: 21, symbol:"PSC", name:"Swarthmore Coll", distance:214, latlong:[39.90539, -75.3538]},
+  {ill: 22, symbol:"HTM", name:"Whitman Coll", distance:2173, latlong:[46.07069, -118.32885]},
+  {ill: 22, symbol:"MNN", name:"Carleton Coll", distance:966, latlong:[44.4623, -93.15467]},
+  {ill: 21, symbol:"CBY", name:"Colby Coll", distance:245, latlong:[44.56413, -69.66317]},
   {ill: 21, symbol:"CGU", name:"Univ of Chicago", distance:701, latlong:[41.78976, -87.59977]},
   {ill: 20, symbol:"PBU", name:"Bucknell Univ", distance:199, latlong:[40.95889, -76.88167]},
-  {ill: 19, symbol:"BMC", name:"Bryn Mawr Coll",  distance:206, latlong: [40.029, -75.31269]},
-  {ill: 19, symbol:"GDC", name:"Gettysburg Coll", distance:268, latlong: [39.83833, -77.23694]},
-  {ill: 19, symbol:"MTH", name:"Mount Holyoke Coll", distance:79, latlong: [42.25565, -72.57453]},
-  {ill: 18, symbol:"DKC", name:"Dickinson Coll", distance:249, latlong: [40.20287, -77.24526]},
-  {ill:18,  symbol:"AUM", name:"UMASS Amherst", distance:77, latlong:[42.3895, -72.5281]}
+  {ill: 19, symbol:"BMC", name:"Bryn Mawr Coll",  distance:206, latlong:[40.029, -75.31269]},
+  {ill: 19, symbol:"GDC", name:"Gettysburg Coll", distance:268, latlong:[39.83833, -77.23694]},
+  {ill: 19, symbol:"MTH", name:"Mount Holyoke Coll", distance:79, latlong:[42.25565, -72.57453]},
+  {ill: 18, symbol:"DKC", name:"Dickinson Coll", distance:249, latlong:[40.20287, -77.24526]},
+  {ill: 18, symbol:"AUM", name:"UMASS Amherst", distance:77, latlong:[42.3895, -72.5281]},
+  {ill: 18, symbol:"MAC", name:"Macalester Coll", distance:967, latlong:[44.93742, -93.16921]},
+  {ill: 18, symbol:"WEL", name:"Wellesley Coll", distance:138, latlong:[42.29537, -71.30617]},
+  {ill: 17, symbol:"BTS", name:"Bates Coll", distance:207, latlong:[44.10522, -70.20357]},
+  {ill: 16, symbol:"CTL", name:"Connecticut College", distance:136, latlong:[41.3826, -72.10813]},
+  {ill: 16, symbol:"NYG", name:"New York State Lib", distance:14, latlong:[42.64833, -73.76194]},
+  {ill: 16, symbol:"OKS", name:"Oklahoma State Univ", distance:1313, latlong:[36.12198, -97.07032]},
+  {ill: 15, symbol:"EYM", name:"Univ of Michigan", distance:500, latlong:[42.28373, -83.72895]},
+  {ill: 15, symbol:"IDU", name:"DePauw Univ", distance:706, latlong:[39.64088, -86.86032]},
+  {ill: 15, symbol:"MDY", name:"Middlebury Coll", distance:91, latlong:[44.00849, -73.17614]},
+  {ill: 15, symbol:"ZYU", name:"New York Univ", distance:144, latlong:[40.72871, -73.99597]}, 
+  {ill: 14, symbol:"BNG", name:"SUNY Binghamton", distance:116, latlong:[42.0898, -75.96825]},
+  {ill: 14, symbol:"NNM", name:"Davidson Coll", distance:626, latlong:[35.50233, -80.83912]},
+  {ill: 14, symbol:"TNY", name:"Trinity Univ", distance:1642, latlong:[29.46329, -98.48279]},
+  {ill: 13, symbol:"FDA", name:"Florida State Univ", distance:1028, latlong:[30.4419, -84.29085]},
+  {ill: 13, symbol:"HLS", name:"Harvard Univ", distance:146, latlong:[42.37843, -71.11644]},
+  {ill: 13, symbol:"HVC", name:"Haverford Coll", distance:207, latlong:[40.01178, -75.30574]},
+  {ill: 13, symbol:"MUU", name:"Univ of Missouri", distance:996, latlong:[38.94526, -92.32888]},
+  {ill: 13, symbol:"VLW", name:"Washington & Lee Univ", distance:453, latlong:[37.78825, -79.44321]},
+  {ill: 12, symbol:"BUF", name:"SUNY BUffalo", distance:248, latlong:[42.95311, -78.82087]},
+  {ill: 12, symbol:"KEN", name:"Kenyon Coll", distance:469, latlong:[40.37684, -82.39659]},
+  {ill: 12, symbol:"MNO", name:"St. Olaf Coll", distance:967, latlong:[44.46184, -93.18276]},
+  {ill: 11, symbol:"PUL", name:"Princeton Univ", distance:175, latlong:[40.34285, -74.65682]},
+  {ill: 11, symbol:"TWU", name:"Univ of the South", distance:830, latlong:[35.2048, -85.9197]},
+  {ill: 10, symbol:"IUP", name:"Purdue Univ", distance:690, latlong:[40.42809, -86.92251]},
+  {ill: 10, symbol:"ORE", name:"Oregon State Univ", distance:2431, latlong:[44.56311, -123.27871]},
+  {ill: 10, symbol:"TYC", name:"Trinity College", distance:97, latlong:[41.75093, -72.6912]},
+  {ill: 10, symbol:"UWC", name:"Univ of Connecticut", distance:110, latlong:[41.80926, -72.25369]},
+  {ill: 10, symbol:"VJN", name:"College of St. Rose", distance:13, latlong:[42.66258, -73.7879]}
 ];
 
 
@@ -118,15 +124,68 @@ var mymap = L.map('mapid').setView([42.4467, -75.2], 7);
     accessToken: 'pk.eyJ1IjoiZGF2aWRmdWxsZXIiLCJhIjoiY2o4dXhzbzZ1MHl5bTJxbjd3OHp2c2JoZiJ9.YQBmM8H2KwUyp_i3ADY3tg'
 }).addTo(mymap);
 
+var myLines = [{
+    "type": "LineString",
+    "coordinates": [[-77.61, 43.16],[-78.85, 42.9]]
+}, {
+    "type": "LineString",
+    "coordinates": [[-77.61, 43.16], [-76.14, 43.04]]
+}, {
+    "type": "LineString",
+    "coordinates": [ [-76.14, 43.04],[-76.14, 42.1]]
+}, {
+    "type": "LineString",
+    "coordinates": [[-74, 40.7],[-74,41.54]]
+},{
+    "type": "LineString",
+    "coordinates": [[-73.76, 42.65],[-74,41.54]]
+}, {
+    "type": "LineString",
+    "coordinates": [[-76.14, 42.1],[-74, 40.7]]
+}, {
+    "type": "LineString",
+    "coordinates": [[-76.14, 43.04],[-73.76, 42.65]]
+}
+];
 
+var myStyle = {
+    "color": "#00a",
+    "weight": 2,
+    "opacity": 0.65
+};
 
-var UnionCollege = L.circle([42.817222, -73.9279], {
-    color: 'red',
-    fillColor: '#fff',
-    fillOpacity: 0,
-    strokeWidth: 1,
-    radius: 200000
+L.geoJSON(myLines, {
+    style: myStyle
 }).addTo(mymap);
+
+// var latlngs = [
+// [
+//   [43.165556, -77.611389],
+//   [42.904722, -78.849444]
+// ],[
+//   [42.904722, -78.849444],
+//   [43.046944, -76.144444]
+// ],[
+//   [43.046944, -76.144444],
+//   [42.102222, -75.911667]
+// ],[
+// [42.102222, -75.911667],
+//   [41.519722, -74.021389]
+// ],[
+// [41.519722, -74.021389],
+//   [42.6525, -73.757222]
+// ],[
+// [42.6525, -73.757222],
+//   [40.7127, -74.0059]
+// ]
+// ];
+// var UnionCollege = L.circle([42.817222, -73.9279], {
+//     color: '#aaa',
+//     fillColor: '#fff',
+//     fillOpacity: 0,
+//     strokeWidth: 1,
+//     radius: 200000
+// }).addTo(mymap);
 
 let ills = [], cnys = [];
 
@@ -144,8 +203,6 @@ illiads.forEach(function(school, i){
   }); //.addTo(mymap);
   let tiptext = name + "<br>distance: " + distance + "mi, <br>illiad: " + ill;
   symbol.bindTooltip(tiptext);
- 
-log(name + " distance:" + distance);  
   //symbol.on('click', symbol.openTooltip());
   ills.push(symbol);
 });
@@ -164,8 +221,7 @@ connectnys.forEach(function(school, i){
   }); //.addTo(mymap);
   let tiptext = name + "<br>distance: " + distance + "mi, <br>connectny: " + ill;
   symbol.bindTooltip(tiptext);
- 
-log(name + " distance:" + distance);  
+
   //symbol.on('click', symbol.openTooltip());
   cnys.push(symbol);
 });
