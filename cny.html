@@ -10,8 +10,8 @@
    crossorigin=""></script>
 <style>
 #mapid { 
-  height: 80vh; 
-  width:  80vw;
+  height: 50vh; 
+  width:  50vw;
   margin: auto;
   vertical-align: bottom;
 }
@@ -114,7 +114,7 @@ const connectnys =  [
 
 // var streetsV7 = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {id: 'mapbox.streets-version-7', attribution: mapboxAttribution}),
 //     streets   = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {id: 'mapbox.streets', attribution: mapboxAttribution});
-var mymap = L.map('mapid').setView([42.4467, -75.2], 7);
+var mymap = L.map('mapid').setView([42.4467, -75.2], 6);
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 15,
@@ -175,6 +175,58 @@ edls.forEach(function(edl) {
     "color":"#333"
   }).addTo(mymap);
 });
+
+let ills = [], cnys = [];
+
+illiads.forEach(function(school, i){
+  let {latlong, symbol, name, ill} = school;
+  let total = ill * 40;
+  let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
+ 
+  symbol = L.circle(latlong, {
+      color: 'red',
+      strokeWidth: 1,
+      fillColor: 'firebrick',
+      fillOpacity: 0.25,
+      radius: total
+  }); //.addTo(mymap);
+  let tiptext = name + "<br>distance: " + distance + "mi, <br>borrowed: " + ill;
+  symbol.bindTooltip(tiptext);
+  //symbol.on('click', symbol.openTooltip());
+  ills.push(symbol);
+});
+
+connectnys.forEach(function(school, i){
+  let {latlong, symbol, name, ill, connectny} = school;
+  let total = connectny * 20;
+  let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
+ 
+  symbol = L.circle(latlong, {
+      color: 'blue',
+      strokeWidth: 1,
+      fillColor: 'skyblue',
+      fillOpacity: 0.25,
+      radius: total
+  }); //.addTo(mymap);
+  let tiptext = name + "<br>distance: " + distance + "mi, <br>connectny: " + connectny;
+  symbol.bindTooltip(tiptext);
+
+  //symbol.on('click', symbol.openTooltip());
+  cnys.push(symbol);
+});
+
+var ill_schools = L.layerGroup(ills);
+var cny_schools = L.layerGroup(cnys);
+var baseMaps = {
+
+};
+var overlayMaps = {
+    "Connect NY": cny_schools,
+    "Illiad": ill_schools
+};
+L.control.layers(overlayMaps).addTo(mymap);
+
+
 // var latlngs = [
 // [
 //   [43.165556, -77.611389],
@@ -204,55 +256,6 @@ edls.forEach(function(edl) {
 //     radius: 200000
 // }).addTo(mymap);
 
-let ills = [], cnys = [];
-
-illiads.forEach(function(school, i){
-  let {latlong, symbol, name, ill} = school;
-  let total = ill * 40;
-  let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
- 
-  symbol = L.circle(latlong, {
-      color: 'red',
-      strokeWidth: 1,
-      fillColor: 'firebrick',
-      fillOpacity: 0.25,
-      radius: total
-  }); //.addTo(mymap);
-  let tiptext = name + "<br>distance: " + distance + "mi, <br>illiad: " + ill;
-  symbol.bindTooltip(tiptext);
-  //symbol.on('click', symbol.openTooltip());
-  ills.push(symbol);
-});
-
-connectnys.forEach(function(school, i){
-  let {latlong, symbol, name, ill, connectny} = school;
-  let total = connectny * 20;
-  let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
- 
-  symbol = L.circle(latlong, {
-      color: 'blue',
-      strokeWidth: 1,
-      fillColor: 'skyblue',
-      fillOpacity: 0.25,
-      radius: total
-  }); //.addTo(mymap);
-  let tiptext = name + "<br>distance: " + distance + "mi, <br>connectny: " + ill;
-  symbol.bindTooltip(tiptext);
-
-  //symbol.on('click', symbol.openTooltip());
-  cnys.push(symbol);
-});
-
-var ill_schools = L.layerGroup(ills);
-var cny_schools = L.layerGroup(cnys);
-var baseMaps = {
-
-};
-var overlayMaps = {
-    "Connect NY": cny_schools,
-    "Illiad": ill_schools
-};
-L.control.layers(overlayMaps).addTo(mymap);
 </script>
 
 
