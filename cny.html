@@ -10,8 +10,8 @@
    crossorigin=""></script>
 <style>
 #mapid { 
-  height: 90vh; 
-  width:  75vw;
+  height: 80vh; 
+  width:  80vw;
   margin: auto;
   vertical-align: bottom;
 }
@@ -91,7 +91,6 @@ const illiads = [
   {ill: 10, symbol:"VJN", name:"College of St. Rose", distance:13, latlong:[42.66258, -73.7879]}
 ];
 
-
 const connectnys =  [
   {ill: 0, connectny:150, symbol:"VJA", name:"Adelphi Univ", distance:143, latlong:[40.809486, -73.237846]},
   {ill: 4, connectny:418, symbol:"VVP", name:"Bard College",  distance:55, latlong:[42.0212, -73.90652]},
@@ -132,7 +131,7 @@ var myLines = [{
     "coordinates": [[-77.61, 43.16], [-76.14, 43.04]]
 }, {
     "type": "LineString",
-    "coordinates": [ [-76.14, 43.04],[-76.14, 42.1]]
+    "coordinates": [ [-76.14, 43.04],[-75.91, 42.1]]
 }, {
     "type": "LineString",
     "coordinates": [[-74, 40.7],[-74,41.54]]
@@ -141,7 +140,7 @@ var myLines = [{
     "coordinates": [[-73.76, 42.65],[-74,41.54]]
 }, {
     "type": "LineString",
-    "coordinates": [[-76.14, 42.1],[-74, 40.7]]
+    "coordinates": [[-75.91, 42.1],[-74, 40.7]]
 }, {
     "type": "LineString",
     "coordinates": [[-76.14, 43.04],[-73.76, 42.65]]
@@ -149,15 +148,33 @@ var myLines = [{
 ];
 
 var myStyle = {
-    "color": "#999",
-    "weight": 1,
+    "color": "#000",
+    "weight": 1.5,
     "opacity": 0.65
 };
 
-L.geoJSON(myLines, {
-    style: myStyle
-}).addTo(mymap);
 
+    
+const geoj = L.geoJSON(myLines, {"style":myStyle}).addTo(mymap);
+//geojson.addData(myLines, {"color":"#000", "weight":1.5, "opacity":0.5});
+//geojson.addData(geojsonFeature);
+const edls = [
+  [42.6525, -73.757222],
+  [43.165556, -77.611389],
+  [42.904722, -78.849444],
+  [43.046944, -76.144444],
+  [42.102222,-75.911667],
+  [41.519722, -74.021389],
+  [40.7127, -74.0059]
+];
+
+edls.forEach(function(edl) {
+  L.circle(edl, {
+    "radius":2500, 
+    "fillColor":"#333",
+    "color":"#333"
+  }).addTo(mymap);
+});
 // var latlngs = [
 // [
 //   [43.165556, -77.611389],
