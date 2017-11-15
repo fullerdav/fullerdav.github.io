@@ -11,52 +11,53 @@
    integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
    crossorigin=""></script>
 <style>
-/* p {
-width: 75%;
-margin: 4px auto;
-} */
+
 * {
   box-sizing: border-box;
 }
+
 h4 {
   text-align: center;
   padding-top: 8px;
 }
+
 section {
   height: 100vh;
+  vertical-align: bottom;
   width: 100vw;
+  margin: 60px auto;
 }
+
 div.status, div.turnaround {
   width: 100%;
   margin-left: 20%;
 }
+
 #mapid { 
-  height: 80vh; 
-  width:  90vw;
+  height: 70vh; 
+  width:  80vw;
   margin: auto;
 }
 
 #intro {
-  background-color: hsla(195, 100%, 90%, 0.5);
   padding: 8px;
+}
+p {
+    padding-top: 10px 0 20px 10px;
+    margin-top: 30px;
+    border-left: 2px solid #eee;
 }
 p.turnaround {
   width: 60%;
   margin: 12px auto;
 }
 p.osm {
- width:90%;
+ width:70%;
  margin: 8px auto;
 }
-
-#osm {
-  background-color: #efefef;
-}
-#status {
-  background-color: rgba(240,240,240,0.5);
-}
-#turnaround {
-  background-color: rgba(128,192,255,0.5);
+p.intro {
+  width: 60%;
+  margin: auto;
 }
 object {
     width:80%;
@@ -64,26 +65,50 @@ object {
     margin: auto;
 }
 
+#header {
+  top: 0px;
+  display: block;
+  font-size: 1.2em;
+  font-family:  Roboto-slab;
+  line-height: 1.4;
+  position: fixed;
+  height: 60px;
+  z-index: 1500;
+  width: 100%;
+  text-align: center;
+  background-color: #fff;
+  color: #555;
+  -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+  -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+}
+
 </style>
 </head>
 
 
-<body>  
+<body> 
+<div id="header">
+Something borrowed, nothing new:  Illiad<style="color:teal">&</style>ConnectNY
+<button onclick="goToSection();">go to</button>
+</div>
+
 <section id="intro">
-<p>
-As we prepare to move to a new Library System it makes sense to look at some of the patterns and rhythms of the library.  These
-graphs are a peek at our main resource sharing systems, Inter-Library Loan and ConnectNY.  
-</p>
-<p>
-They illustrate the volume of our borrowing requests
-by user status (faculty, student), the turnaround time of our ILL requests, and a brief look at IDS which has only been in use for about a year.
+<p class="intro">
+As we prepare to move to a new Library System it makes sense to look at some of the patterns and rhythms of our users.
+
+The following graphs compare our ConnectNY borrowing requests with ILLiad.  Only returnable items (typically books) are compared (ConnectNY doesn't include articles/photocopies).
+
+We've been using IDS for about a year.  IDS "plugs in" to Illiad and helps to automate some of the more routine tasks, automtically searching our catalog and remote catalogs to determine the availability of items and routing requests more intelligently.
+
+From January through September 2017 Union borrowed 573 returnables via Illiad, 184 requests were filled within New York State while 136 of those were from IDS libraries. 
 </p>
 
 </section>
 
 
 <section id="status">
-<h4>Borrowed items by patron status</h4>
+<h4>Borrowed items by status and resource sharing network</h4>
 <div class="status">
 <div class="svg">
   <object type="image/svg+xml" data="undergraduate.svg"></object>
@@ -103,7 +128,7 @@ by user status (faculty, student), the turnaround time of our ILL requests, and 
   The lines extending up and down represent the extent of remaining values, up to (2*IQR).  Any values beyond that are considered outliers and are represented as dots.
 </p>
 <p class="turnaround">
-  The band acros the middle is the <b>median</b> and it is pretty steady across the 4 years represented here, <b>about 7 days</b>.
+  The band across the middle is the <b>median</b> and it is pretty steady across the 4 years represented here, <b>about 7 days</b>.
 </p>
 <div class="turnaround">
 <object type="image/svg+xml" data="turnaround.svg"></object>
@@ -111,9 +136,8 @@ by user status (faculty, student), the turnaround time of our ILL requests, and 
 </section> 
 
 <section id="osm">
-<h4>Map it</h4>
 <p class="osm">
-Behold the Empire Library Delivery service. The delivery network handles items for ConnectNY and IDS libraries using Illiad.
+The Empire Library Delivery service handles items for ConnectNY and IDS libraries using Illiad.
 The data layers represent the volume of requests from Fall 2013 through Summer 2017.
 </p>
 
@@ -121,9 +145,28 @@ The data layers represent the volume of requests from Fall 2013 through Summer 2
 </section>
 
 <script>
+
+
+
 const {log} = console;  
 //center of US [44.58, -103.46]
 //Union [42.817222, -73.9279]
+var currentid="intro";
+var nxtSection = function() {
+  if (currentid === "intro") {
+    document.getElementById("status").scrollIntoView(0, -60);
+    currentid="status";
+  } else if (currentid === "status") {
+    document.getElementById("turn").scrollIntoView(0, -60);
+    currentid="turn";
+  } else if (currentid === "turn")
+    document.getElementById("mapid").scrollIntoView(0, -60);
+    currentid="mapid";
+  }
+}
+window.addEventListener('scroll', function(e){
+   nxtSection();
+});
 
 const illiads = [
   {borrowed: 206, symbol:"NAM", name:"SUNY Albany", distance:10, latlong: [42.686193, -73.823884], turn:4.48},
@@ -213,12 +256,12 @@ const connectnys =  [
 ];
 
 const mymap = L.map('mapid').setView( [42.102222,-75.911667], 7);
-mymap.createPane("labels");
-mymap.getPane('labels').style.zIndex = -650;
-mymap.getPane('labels').style.pointerEvents = 'none';
+// mymap.createPane("labels");
+// mymap.getPane('labels').style.zIndex = 650;
+// mymap.getPane('labels').style.pointerEvents = 'none';
 
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    pane:'labels',
+  //  pane:'labels',
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(mymap);
 
