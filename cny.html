@@ -4,12 +4,12 @@
   <head>
   <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.css">
    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
-   integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
-   crossorigin=""/>
+   integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
-   integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
-   crossorigin=""></script>
+   integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
 <style>
 
 * {
@@ -22,16 +22,16 @@ h4 {
 }
 
 section {
+  overflow-y: hidden;
+  overflow-x: hidden;
   height: 100vh;
-  vertical-align: bottom;
   width: 100vw;
   margin: 60px auto;
+  -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+  -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
 }
 
-div.status, div.turnaround {
-  width: 100%;
-  margin-left: 20%;
-}
 
 #mapid { 
   height: 70vh; 
@@ -39,28 +39,18 @@ div.status, div.turnaround {
   margin: auto;
 }
 
-#intro {
-  padding: 8px;
-}
 p {
-    padding-top: 10px 0 20px 10px;
-    margin-top: 30px;
+    padding: 8px;
+    margin-bottom: 10px;
+    font-weight: 300;
+    text-align: left;
     border-left: 2px solid #eee;
+    width: 60%;
 }
-p.turnaround {
-  width: 60%;
-  margin: 12px auto;
-}
-p.osm {
- width:70%;
- margin: 8px auto;
-}
-p.intro {
-  width: 60%;
-  margin: auto;
-}
+
+
 object {
-    width:80%;
+    
     height: 70%;
     margin: auto;
 }
@@ -83,6 +73,7 @@ object {
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
 }
 
+
 </style>
 </head>
 
@@ -90,11 +81,12 @@ object {
 <body> 
 <div id="header">
 Something borrowed, nothing new:  Illiad<style="color:teal">&</style>ConnectNY
-<button onclick="goToSection();">go to</button>
+
 </div>
 
 <section id="intro">
 <p class="intro">
+
 As we prepare to move to a new Library System it makes sense to look at some of the patterns and rhythms of our users.
 
 The following graphs compare our ConnectNY borrowing requests with ILLiad.  Only returnable items (typically books) are compared (ConnectNY doesn't include articles/photocopies).
@@ -103,7 +95,7 @@ We've been using IDS for about a year.  IDS "plugs in" to Illiad and helps to au
 
 From January through September 2017 Union borrowed 573 returnables via Illiad, 184 requests were filled within New York State while 136 of those were from IDS libraries. 
 </p>
-
+            
 </section>
 
 
@@ -122,17 +114,25 @@ From January through September 2017 Union borrowed 573 returnables via Illiad, 1
 
 <section id="turnaround">
 
-<h4>ILL turnaround time, Fall 2013 through Summer 2017</h4>
-
-  <p class="turnaround">A boxplot shows a distribution of values according to quartiles, or 4 equal groups.  The boxy part represents half of the items borrowed for each term.  It is known as the <i>inner quartile</i> range or IQR.
+              <span class="card-title">ILL turnaround time, Fall 2013 through Summer 2017</span>
+              <p>
+  A boxplot shows a distribution of values according to quartiles, or 4 equal groups.  The boxy part represents half of the items borrowed for each term.  It is known as the <i>inner quartile</i> range or IQR.
   The lines extending up and down represent the extent of remaining values, up to (2*IQR).  Any values beyond that are considered outliers and are represented as dots.
-</p>
-<p class="turnaround">
+
   The band across the middle is the <b>median</b> and it is pretty steady across the 4 years represented here, <b>about 7 days</b>.
-</p>
-<div class="turnaround">
+
+              </p>
+          
+        
 <object type="image/svg+xml" data="turnaround.svg"></object>
-</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
 </section> 
 
 <section id="osm">
@@ -151,22 +151,7 @@ The data layers represent the volume of requests from Fall 2013 through Summer 2
 const {log} = console;  
 //center of US [44.58, -103.46]
 //Union [42.817222, -73.9279]
-var currentid="intro";
-var nxtSection = function() {
-  if (currentid === "intro") {
-    document.getElementById("status").scrollIntoView(0, -60);
-    currentid="status";
-  } else if (currentid === "status") {
-    document.getElementById("turn").scrollIntoView(0, -60);
-    currentid="turn";
-  } else if (currentid === "turn")
-    document.getElementById("mapid").scrollIntoView(0, -60);
-    currentid="mapid";
-  }
-}
-window.addEventListener('scroll', function(e){
-   nxtSection();
-});
+
 
 const illiads = [
   {borrowed: 206, symbol:"NAM", name:"SUNY Albany", distance:10, latlong: [42.686193, -73.823884], turn:4.48},
@@ -422,8 +407,16 @@ illiads.filter(function(i) {
 //     pane:'labels',
 //     accessToken: 'pk.eyJ1IjoiZGF2aWRmdWxsZXIiLCJhIjoiY2o4dXhzbzZ1MHl5bTJxbjd3OHp2c2JoZiJ9.YQBmM8H2KwUyp_i3ADY3tg'
 // }).addTo(mymap);
-
 </script>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.iife.js"></script>
+
+    <script>
+     // mdc.autoInit();
+    </script>
+
+
+
 
 
 </body>
