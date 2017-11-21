@@ -5,7 +5,6 @@
   <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.css">
    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
    integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
@@ -22,21 +21,50 @@ h4 {
 }
 
 section {
-  overflow-y: hidden;
-  overflow-x: hidden;
-  height: 100vh;
-  width: 100vw;
-  margin: 60px auto;
+  height: 95vh;
+  width: 85%;
+  margin: 60px 10px;
+}
+
+#header {
+  top: 0px;
+  padding: 8px;
+  font-size: 1.5em;
+  font-family:  Roboto-slab;
+  line-height: 1.4;
+  position: fixed;
+  height: 50px;
+  z-index: 1500;
+  width: 100%;
+  text-align: center;
+  background-color: #fff;
+  color: #fff;
   -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
   -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
 }
 
+#map, #boxplot, #summary {
+ 
+}
 
 #mapid { 
-  height: 70vh; 
-  width:  80vw;
-  margin: auto;
+  height: 90%; 
+  width: 80%;
+  margin:auto;
+}
+
+#linegraph {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: none;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+#linegraph .infocard {
+    position: relative;
+    background-color: #fff;
+    color: #fff;
 }
 
 p {
@@ -44,35 +72,74 @@ p {
     margin-bottom: 10px;
     font-weight: 300;
     text-align: left;
-    border-left: 2px solid #eee;
     width: 60%;
 }
 
-
-object {
-    
-    height: 70%;
-    margin: auto;
+.infocard {
+    position: relative;
+    /* border: 1px inset black; */
 }
-
-#header {
-  top: 0px;
-  display: block;
-  font-size: 1.2em;
-  font-family:  Roboto-slab;
-  line-height: 1.4;
-  position: fixed;
-  height: 60px;
-  z-index: 1500;
-  width: 100%;
+.infocard-header {
+  background-color: hsla(200,30%, 55%, 0.8);
+  color: white;
   text-align: center;
-  background-color: #fff;
-  color: #555;
-  -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
-  -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
-  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+  font-weight: 600;
+  font-border: ;
+  padding: 8px 16px;
+ font-kerning: auto;
+ letter-spacing: .06em;
+}
+.description {
+  
+ /*  border-left: 1px inset black;
+  border-right: 1px inset black; */
+}
+.infocard-footer {
+    border-top: 1px solid #E0E0E0;
 }
 
+.cny {
+  color: blue;
+}
+.ill {
+  color: red;
+}
+
+div.nav {
+  position: fixed;
+  top: 0%;
+  left: 85%;
+  width:10vw;
+  height: 100%;
+}
+
+ul.nav {
+  list-style-type:none;
+  position:fixed;
+  left:90%;
+  top: 33%;
+  line-height: 2.5em;
+  list-style-type:none;
+  
+}
+
+ul.nav li {
+  font-size: 1.5rem;
+  transition-property: font-size;
+  transition-duration: .25s;
+}
+
+ul.nav li.active {
+ font-size: 1.5rem;
+}
+
+ul.nav li:hover {
+  font-size: 2.5rem;
+}
+
+ul.nav li:before {
+  content: '\25cf';
+}
 
 </style>
 </head>
@@ -80,78 +147,97 @@ object {
 
 <body> 
 <div id="header">
-Something borrowed, nothing new:  Illiad<style="color:teal">&</style>ConnectNY
-
+Something borrowed, nothing new:  Illiad<span class="teal">&</span>ConnectNY
 </div>
 
-<section id="intro">
-<p class="intro">
 
-As we prepare to move to a new Library System it makes sense to look at some of the patterns and rhythms of our users.
-
-The following graphs compare our ConnectNY borrowing requests with ILLiad.  Only returnable items (typically books) are compared (ConnectNY doesn't include articles/photocopies).
-
-We've been using IDS for about a year.  IDS "plugs in" to Illiad and helps to automate some of the more routine tasks, automtically searching our catalog and remote catalogs to determine the availability of items and routing requests more intelligently.
-
-From January through September 2017 Union borrowed 573 returnables via Illiad, 184 requests were filled within New York State while 136 of those were from IDS libraries. 
-</p>
-            
+<section id="map">
+<a class="infocard">
+  <div class="infocard-header">
+    <span class="cny">ConnectNY</span> & <span class="ill">Illiad</span> borrowing requests from Fall 2013 through Summer 2017.
+  </div>
+  <div class="description" id="mapid">
+  </div>
+  <div id="ticker" class="infocard-footer"></div>
+</a>
 </section>
 
+<section id="linegraph">
+<a class="infocard">
+  <div class="infocard-header">Student</div>
+  <div class="description svg">
+      <object id="ug" type="image/svg+xml" data="undergraduate.svg"></object>
+  </div>
+  <div class="infocard-footer"></div>
+</a>
 
-<section id="status">
-<h4>Borrowed items by status and resource sharing network</h4>
-<div class="status">
-<div class="svg">
-  <object type="image/svg+xml" data="undergraduate.svg"></object>
-</div>
-<div class="svg">
-<object type="image/svg+xml" data="faculty.svg"></object>
-</div>
-</div>
+<a class="infocard">
+  <div class="infocard-header">Faculty</div>
+  <div class="description svg">
+      <object id="fac" type="image/svg+xml" data="faculty.svg"></object>
+  </div>
+  <div class="infocard-footer"></div>
+</a>
 </section>
 
-
-<section id="turnaround">
-
-              <span class="card-title">ILL turnaround time, Fall 2013 through Summer 2017</span>
-              <p>
-  A boxplot shows a distribution of values according to quartiles, or 4 equal groups.  The boxy part represents half of the items borrowed for each term.  It is known as the <i>inner quartile</i> range or IQR.
-  The lines extending up and down represent the extent of remaining values, up to (2*IQR).  Any values beyond that are considered outliers and are represented as dots.
-
-  The band across the middle is the <b>median</b> and it is pretty steady across the 4 years represented here, <b>about 7 days</b>.
-
-              </p>
-          
-        
-<object type="image/svg+xml" data="turnaround.svg"></object>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-
+<section id="boxplot">
+<a class="infocard">
+  <div class="infocard-header">ILL turnaround time, Fall 2013 through Summer 2017</div>
+  <div class="description svg">
+      <object type="image/svg+xml" data="turnaround.svg"></object>
+  </div>
+  <div class="infocard-footer">
+  <ul style="list-style-type:none; line-height:1.4em">
+  <li>
+  A boxplot shows a range of values according to quartiles, or 4 equal groups.  The boxy part represents half of the items borrowed for each term.  It is known as the <i>inner quartile</i>.
+  </li><li>
+  The band across the middle is the <b>median</b> and it is pretty steady across 4 years, <b>about 7 days</b>.
+  </li><li>
+  Extreme outliers (greater than 21 days) were excluded from the graph.
+  </li>
+  <li>
+  The widest ranges, especially for the IQR are in the Summer, when academic library services are more unpredictable.
+  </li>
+  </ul>
+  </div>
+</a>
 </section> 
 
-<section id="osm">
-<p class="osm">
-The Empire Library Delivery service handles items for ConnectNY and IDS libraries using Illiad.
-The data layers represent the volume of requests from Fall 2013 through Summer 2017.
-</p>
-
-<div id="mapid"></div>
+<section id="summary">
+<a class="infocard">
+  <div class="infocard-header">Summary</div>
+  <div class="description svg">
+     We've been using IDS for about a year.  IDS "plugs in" to Illiad and helps to automate some of the more routine tasks, automtically searching our catalog and remote catalogs to determine the availability of items and routing requests more intelligently.
+  </div>
+  <div class="infocard-footer">
+   From January through September 2017 Union borrowed 573 returnables via Illiad, 184 requests were filled within New York State while 136 of those were from IDS libraries. 
+  </div>
+</a>
+<a class="infocard">
+  <div class="infocard-header">Summary</div>
+  <div class="description svg">
+     We've been using IDS for about a year.  IDS "plugs in" to Illiad and helps to automate some of the more routine tasks, automtically searching our catalog and remote catalogs to determine the availability of items and routing requests more intelligently.
+  </div>
+  <div class="infocard-footer">
+   From January through September 2017 Union borrowed 573 returnables via Illiad, 184 requests were filled within New York State while 136 of those were from IDS libraries. 
+  </div>
+</a>
 </section>
 
+<div class="nav">
+<ul class="nav">
+<li class="nav active" data-id="map"></li>
+<li class="nav" data-id="linegraph"></li>
+<li class="nav" data-id="boxplot"></li>
+<li class="nav" data-id="summary"></li>
+</ul>
+</div>
+
+
 <script>
-
-
-
 const {log} = console;  
 //center of US [44.58, -103.46]
 //Union [42.817222, -73.9279]
-
 
 const illiads = [
   {borrowed: 206, symbol:"NAM", name:"SUNY Albany", distance:10, latlong: [42.686193, -73.823884], turn:4.48},
@@ -240,13 +326,19 @@ const connectnys =  [
   {borrowed:1176, symbol:"VZS", name:"Skidmore Coll", distance:21, latlong: [43.095199,-73.78004]}
 ];
 
-const mymap = L.map('mapid').setView( [42.102222,-75.911667], 7);
-// mymap.createPane("labels");
-// mymap.getPane('labels').style.zIndex = 650;
-// mymap.getPane('labels').style.pointerEvents = 'none';
+const historical = [
+  { name: "Titanic Disaster", latlong:[41.726931, -49.948253]}
+];
+
+
+
+const mymap = L.map('mapid').setView( [42.502222,-75.911667], 7);
+ //mymap.createPane("labels");
+ //mymap.getPane('labels').style.zIndex = 650;
+ //mymap.getPane('labels').style.pointerEvents = 'none';
 
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-  //  pane:'labels',
+   // pane:'labels',
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(mymap);
 
@@ -295,7 +387,6 @@ var empireDelivery = {
         ]
       },
       "properties": {
-        "name": "Empire Delivery Network",
         "title":"Empire Delivery Network"
       }
     }
@@ -310,8 +401,9 @@ var myStyle = {
 };
     
 L.geoJSON(empireDelivery, {"style":myStyle}).addTo(mymap);
+//L.geoJSON(cnycoll,{"style":myStyle}).addData(mymap);
 
-let ills = [], cnys = [];
+let ills = [], cnys = [], hist = [];
 
 illiads.forEach(function(school, i){
   let {latlong, symbol, name, borrowed, turn} = school;
@@ -342,27 +434,78 @@ connectnys.forEach(function(school, i){
       fillOpacity: 0.25,
       radius: total
   });
-  let tiptext = name + "<br>distance: " + distance + "mi, <br>borrowed: " + borrowed;
+  let tiptext = name + "<br>distance: " + distance + "mi <br>borrowed: " + borrowed;
   symbol.bindTooltip(tiptext);
-
-  //symbol.on('click', symbol.openTooltip());
   cnys.push(symbol);
 });
 
-var ill_schools = L.layerGroup(ills);
-var cny_schools = L.layerGroup(cnys);
+historical.forEach(function(h, i){
+  symbol = L.circle(h.latlong, {
+      color: 'blue',
+      strokeWidth: 1,
+      fillColor: 'skyblue',
+      fillOpacity: 0.25,
+      radius: 100
+  });
+  hist.push(symbol);
+});
 
-var overlayMaps = {
+const ill_schools = L.layerGroup(ills);
+const cny_schools = L.layerGroup(cnys);
+const historic = L.layerGroup(hist);
+
+const overlayMaps = {
     "Connect NY": cny_schools,
     "Illiad": ill_schools
 };
 L.control.layers(overlayMaps).addTo(mymap);
 
-var turnLimit = 10;
-illiads.filter(function(i) {
-  return i.turn < turnLimit;
+var ug = document.getElementById('ug');
+var fc = document.getElementById('fac');
+[ug, fc].forEach(function(linegraph){
+    linegraph.onload = function() {
+        let undergrad = linegraph.contentDocument; 
+        let svgpaths = undergrad.querySelectorAll('g');
+          
+        svgpaths.forEach(function(g) {
+            if (g.hasAttribute("clip-path")) {
+              let clip = g.getAttribute('clip-path');
+              let num = Number(clip.match(/\d+/)[0]);
+              if (num > 60 && num < 109) {
+                  let p = g.querySelector('path'); 
+                  p.style.strokeWidth = 2;  
+                   p.onmouseover = function() { p.style.stroke = 'rgba(10%, 10%, 10%, 0.5)';}
+                   p.onmouseout = function() { p.style.stroke = 'rgba(100%, 100%, 100%, 1)';}
+              }
+            }
+          });
+    }
 });
 
+var scroller = function(targ) {
+    let sect = document.getElementById(targ.dataset.id);
+    window.scrollTo({top: sect.offsetTop - 60, left: 0, behavior: 'smooth'});
+}
+
+document.querySelector('ul.nav').addEventListener('click',function(event){scroller(event.target);}, true);
+const sectids = ["map", "linegraph", "boxplot", "summary"];
+
+const sections = document.querySelectorAll('section');
+sections.forEach(function(section){
+    section.addEventListener('wheel', function(e) {
+      e.preventDefault();
+      let forward = e.deltaY > 0 ? true : false;
+      let targid = sectids.indexOf(this.id);
+
+      if (forward && targid < 3) {
+        let next = document.getElementById(sectids[++targid]);
+        window.scrollTo({top: next.offsetTop - 60, left: 0, behavior: 'smooth'});
+      } else if (!forward && targid > 0) {
+        let next = document.getElementById(sectids[--targid]);
+        window.scrollTo({top: next.offsetTop - 60, left: 0, behavior: 'smooth'});
+      }
+    }, false);
+});
 
 // const edls = [
 //   [42.6525, -73.757222], // Albany
@@ -383,21 +526,6 @@ illiads.filter(function(i) {
 // 
 
 
-// var myPoints = {
-//   "type": "FeatureCollection",
-//   "features": [
-//     {
-//       "type": "Feature",
-//       "geometry": {
-//         "type": "Point",
-//         "coordinates": [-76.144444, 43.046944]
-//       },
-//       "properties": {
-//         "name": "Albany"
-//       }
-//     }
-//   ]
-// };
 //let attribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>';
 
 // L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -407,17 +535,8 @@ illiads.filter(function(i) {
 //     pane:'labels',
 //     accessToken: 'pk.eyJ1IjoiZGF2aWRmdWxsZXIiLCJhIjoiY2o4dXhzbzZ1MHl5bTJxbjd3OHp2c2JoZiJ9.YQBmM8H2KwUyp_i3ADY3tg'
 // }).addTo(mymap);
-</script>
-
- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.iife.js"></script>
-
-    <script>
-     // mdc.autoInit();
-    </script>
-
-
-
-
+ 
+ </script>
 
 </body>
 </html>
