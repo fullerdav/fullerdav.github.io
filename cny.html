@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
   <head>
@@ -9,6 +8,8 @@
    integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
    integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+<script src="js/mapdata.json"></script>
+  
 <style>
 
 * {
@@ -21,7 +22,7 @@ h4 {
 }
 
 section {
-  height: 95vh;
+  height: 98vh;
   width: 85%;
   margin: 60px 10px;
 }
@@ -38,18 +39,14 @@ section {
   width: 100%;
   text-align: center;
   background-color: #fff;
-  color: #fff;
+  color: #333;
   -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
   -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
 }
-
-#map, #boxplot, #summary {
  
-}
-
 #mapid { 
-  height: 90%; 
+  height: 80%; 
   width: 80%;
   margin:auto;
 }
@@ -95,7 +92,11 @@ p {
   border-right: 1px inset black; */
 }
 .infocard-footer {
-    border-top: 1px solid #E0E0E0;
+    padding-top:8px;   
+}
+
+.center {
+   text-align: center;
 }
 
 .cny {
@@ -116,11 +117,11 @@ div.nav {
 ul.nav {
   list-style-type:none;
   position:fixed;
-  left:90%;
   top: 33%;
+  padding: 0 8px;
+  margin:auto;
   line-height: 2.5em;
   list-style-type:none;
-  
 }
 
 ul.nav li {
@@ -147,9 +148,8 @@ ul.nav li:before {
 
 <body> 
 <div id="header">
-Something borrowed, nothing new:  Illiad<span class="teal">&</span>ConnectNY
+A comparison of <span class="ill center">Illiad</span> & <span class="cny">ConnectNY</span> returnables
 </div>
-
 
 <section id="map">
 <a class="infocard">
@@ -158,7 +158,9 @@ Something borrowed, nothing new:  Illiad<span class="teal">&</span>ConnectNY
   </div>
   <div class="description" id="mapid">
   </div>
-  <div id="ticker" class="infocard-footer"></div>
+  <div class="infocard-footer center">
+    Behold, the Empire Delivery Network, which delivers items for <span class="cny">ConnectNY</span> and libraries using IDS
+  </div>
 </a>
 </section>
 
@@ -233,104 +235,10 @@ Something borrowed, nothing new:  Illiad<span class="teal">&</span>ConnectNY
 </ul>
 </div>
 
-
 <script>
 const {log} = console;  
 //center of US [44.58, -103.46]
 //Union [42.817222, -73.9279]
-
-const illiads = [
-  {borrowed: 206, symbol:"NAM", name:"SUNY Albany", distance:10, latlong: [42.686193, -73.823884], turn:4.48},
-  {borrowed: 70, symbol:"COO", name:"Cornell Univ", distance:133, latlong: [42.446700, -76.495700], turn:5.05},  
-  {borrowed: 45, symbol:"SNN", name:"Smith Coll", distance:74, latlong: [42.3178, -72.6348], turn:8.98},
-  {borrowed: 40, symbol:"OBE", name:"Oberlin Coll", distance:438, latlong: [41.29477, -82.21942], turn:10.31},
-  {borrowed: 40, symbol:"PIT", name:"Univ of Pittsburgh", distance:352, latlong: [40.44285,-79.95922], turn:5.72},
-  {borrowed: 39, symbol:"ZCU", name:"Columbia Univ", distance:139, latlong: [40.80899, -73.96125], turn:6.51},
-  {borrowed: 37, symbol:"AMH", name:"Amherst Coll", distance:78, latlong: [42.37092, -72.5162], turn:6.26},
-  {borrowed: 36, symbol:"WLU", name:"Wesleyan Univ", distance:109, latlong: [41.55565,-72.65565], turn:6.18},
-  {borrowed: 36, symbol:"YUS", name:"Yale Univ", distance:116, latlong: [41.31121, -72.92649], turn:5.62},
-  {borrowed: 32, symbol:"ORC", name:"Reed Coll",  distance:2384, latlong: [45.48096,-122.63028], turn:9.72}, 
-  {borrowed: 32, symbol:"SYB", name:"Syracuse Univ", distance:113, latlong: [43.03784,-76.13465], turn:7.32},
-  {borrowed: 31, symbol:"DLM", name:"Univ of Delaware", distance:237, latlong: [39.67956, -75.75299], turn:8.8},
-  {borrowed: 30, symbol:"BBH", name:"Bowdoin Coll", distance:213, latlong: [43.9073, -69.96311], turn:5.12},
-  {borrowed: 25, symbol:"VZS", name:"Skidmore Coll", distance:21, latlong: [43.095199,-73.78004], turn:2.63},
-  {borrowed: 24, symbol:"GZQ", name:"Marquette Univ", distance:708, latlong: [43.03896, -87.92798], turn:7.62},
-  {borrowed: 24, symbol:"WYU", name:"Univ of Wyoming", distance:1617, latlong:[41.31192, -105.57638], turn:8.18},
-  {borrowed: 24, symbol:"YQR", name:"Rochester Public Library",  distance:186, latlong:[43.14241, -77.587], turn:10.91},
-  {borrowed: 23, symbol:"HDC", name:"Claremont College", distance:2415, latlong:[34.10307, -117.71388], turn:8.38},
-  {borrowed: 23, symbol:"WCM", name:"Williams Coll", latlong: [42.71675, -73.20288], turn:6.92},
-  {borrowed: 21, symbol:"PSC", name:"Swarthmore Coll", distance:214, latlong:[39.90539, -75.3538], turn:7.68},
-  {borrowed: 22, symbol:"HTM", name:"Whitman Coll", distance:2173, latlong:[46.07069, -118.32885], turn:6.96},
-  {borrowed: 22, symbol:"MNN", name:"Carleton Coll", distance:966, latlong:[44.4623, -93.15467], turn:12.96},
-  {borrowed: 21, symbol:"CBY", name:"Colby Coll", distance:245, latlong:[44.56413, -69.66317], turn:3.57},
-  {borrowed: 21, symbol:"CGU", name:"Univ of Chicago", distance:701, latlong:[41.78976, -87.59977], turn:9.15},
-  {borrowed: 20, symbol:"PBU", name:"Bucknell Univ", distance:199, latlong:[40.95889, -76.88167], turn:6.95},
-  {borrowed: 19, symbol:"BMC", name:"Bryn Mawr Coll",  distance:206, latlong:[40.029, -75.31269], turn:5.56},
-  {borrowed: 19, symbol:"GDC", name:"Gettysburg Coll", distance:268, latlong:[39.83833, -77.23694], turn:6.04},
-  {borrowed: 19, symbol:"MTH", name:"Mount Holyoke Coll", distance:79, latlong:[42.25565, -72.57453], turn:6.75},
-  {borrowed: 18, symbol:"DKC", name:"Dickinson Coll", distance:249, latlong:[40.20287, -77.24526], turn:3.7},
-  {borrowed: 18, symbol:"AUM", name:"UMASS Amherst", distance:77, latlong:[42.3895, -72.5281], turn:7.94},
-  {borrowed: 18, symbol:"MAC", name:"Macalester Coll", distance:967, latlong:[44.93742, -93.16921], turn:9.16},
-  {borrowed: 18, symbol:"WEL", name:"Wellesley Coll", distance:138, latlong:[42.29537, -71.30617], turn:6.83},
-  {borrowed: 17, symbol:"BTS", name:"Bates Coll", distance:207, latlong:[44.10522, -70.20357], turn:10.04},
-  {borrowed: 16, symbol:"CTL", name:"Connecticut College", distance:136, latlong:[41.3826, -72.10813], turn:3.41},
-  {borrowed: 16, symbol:"NYG", name:"New York State Lib", distance:14, latlong:[42.64833, -73.76194], turn:4.88},
-  {borrowed: 16, symbol:"OKS", name:"Oklahoma State Univ", distance:1313, latlong:[36.12198, -97.07032], turn:8.47},
-  {borrowed: 15, symbol:"EYM", name:"Univ of Michigan", distance:500, latlong:[42.28373, -83.72895], turn:9.86},
-  {borrowed: 15, symbol:"IDU", name:"DePauw Univ", distance:706, latlong:[39.64088, -86.86032], turn:8.36},
-  {borrowed: 15, symbol:"MDY", name:"Middlebury Coll", distance:91, latlong:[44.00849, -73.17614], turn:6.94},
-  {borrowed: 15, symbol:"ZYU", name:"New York Univ", distance:144, latlong:[40.72871, -73.99597], turn:9.8}, 
-  {borrowed: 14, symbol:"BNG", name:"SUNY Binghamton", distance:116, latlong:[42.0898, -75.96825], turn:4.05},
-  {borrowed: 14, symbol:"VKM", name:"Siena College", distance:11, latlong:[42.71841, -73.75373], turn:3.37},
-  {borrowed: 14, symbol:"YRM", name:"Rensselaer Polytechnic",  distance:14, latlong:[42.73258, -73.68095], turn:1.83},
-  {borrowed: 14, symbol:"NNM", name:"Davidson Coll", distance:626, latlong:[35.50233, -80.83912], turn:4.62},
-  {borrowed: 14, symbol:"TNY", name:"Trinity Univ", distance:1642, latlong:[29.46329, -98.48279], turn:5.06},
-  {borrowed: 13, symbol:"VVC", name:"Colgate University", distance:81, latlong:[42.81729, -75.53573], turn:3.15},
-  {borrowed: 13, symbol:"FDA", name:"Florida State Univ", distance:1028, latlong:[30.4419, -84.29085], turn:7.34},
-  {borrowed: 13, symbol:"HLS", name:"Harvard Univ", distance:146, latlong:[42.37843, -71.11644], turn:9.2},
-  {borrowed: 13, symbol:"HVC", name:"Haverford Coll", distance:207, latlong:[40.01178, -75.30574], turn:4.84},
-  {borrowed: 13, symbol:"MUU", name:"Univ of Missouri", distance:996, latlong:[38.94526, -92.32888], turn:6.69},
-  {borrowed: 13, symbol:"VXW", name:"Vassar College", distance:78, latlong:[41.68704, -73.89541], turn:8.79},
-  {borrowed: 13, symbol:"VLW", name:"Washington & Lee Univ", distance:453, latlong:[37.78825, -79.44321], turn:6.34},
-  {borrowed: 12, symbol:"BUF", name:"SUNY BUffalo", distance:248, latlong:[42.95311, -78.82087], turn:3.93},
-  {borrowed: 12, symbol:"KEN", name:"Kenyon Coll", distance:469, latlong:[40.37684, -82.39659], turn:5.95},
-  {borrowed: 12, symbol:"MNO", name:"St. Olaf Coll", distance:967, latlong:[44.46184, -93.18276], turn:7.62},
-  {borrowed: 11, symbol:"PUL", name:"Princeton Univ", distance:175, latlong:[40.34285, -74.65682], turn:3.7},
-  {borrowed: 11, symbol:"TWU", name:"Univ of the South", distance:830, latlong:[35.2048, -85.9197], turn:11.64},
-  {borrowed: 10, symbol:"IUP", name:"Purdue Univ", distance:690, latlong:[40.42809, -86.92251], turn:5.12},
-  {borrowed: 10, symbol:"ORE", name:"Oregon State Univ", distance:2431, latlong:[44.56311, -123.27871], turn:8.6},
-  {borrowed: 10, symbol:"TYC", name:"Trinity College", distance:97, latlong:[41.75093, -72.6912], turn:6.9},
-  {borrowed: 10, symbol:"UCW", name:"Univ of Connecticut", distance:110, latlong:[41.80926, -72.25369], turn:4.5},
-  {borrowed: 10, symbol:"VJN", name:"College of St. Rose", distance:13, latlong:[42.66258, -73.7879], turn:2.21}
-];
-
-
-const connectnys =  [
-  {borrowed:150, symbol:"VJA", name:"Adelphi Univ", distance:143, latlong:[40.809486, -73.237846]},
-  {borrowed:418, symbol:"VVP", name:"Bard College",  distance:55, latlong:[42.0212, -73.90652]},
-  {borrowed:223, symbol:"VKC", name:"Canisius College", distance:249, latlong:[42.92534, -78.85254]},
-  {borrowed:541, symbol:"VVC", name:"Colgate University", distance:81, latlong:[42.81729, -75.53573]},
-  {borrowed:371, symbol:"YHM", name:"Hamilton College", distance:76, latlong:[43.052364, -75.405657]},
-  {borrowed:217, symbol:"VFL", name:"Le Moyne College", distance:110, latlong:[43.04896, -76.08826]},
-  {borrowed:41, symbol:"YJT", name:"Medaille", distance:250, latlong:[42.92889, -78.85528]},
-  {borrowed:33, symbol:"VZQ", name:"Pratt Institute", distance:147, latlong:[40.69066, -73.9643]},
-  {borrowed:200, symbol:"VZP", name:"Pace Univ", distance:117, latlong:[41.12565, -73.80763]},
-  {borrowed:303, symbol:"RVE", name:"Rochester Institute of Technology", distance:190, latlong:[43.0859, -77.67028]},
-  {borrowed:798, symbol:"VKM", name:"Siena College", distance:11, latlong:[42.71841, -73.75373]},
-  {borrowed:525, symbol:"YRM", name:"Rensselaer Polytechnic",  distance:14, latlong:[42.73258, -73.68095]},
-  {borrowed:395, symbol:"XLM", name:"St. Lawrence Univ", distance:137, latlong:[44.59201, -75.16076]},
-  {borrowed:220, symbol:"YWM", name:"US Military Academy",  distance:101, latlong:[41.35352, -74.02831]},
-  {borrowed:2, symbol:"VYM", name:"US Merchant Marine", distance:139, latlong:[40.81232, -73.76263]},
-  {borrowed:1136, symbol:"VXW", name:"Vassar College", distance:78, latlong:[41.68704, -73.89541]},
-  {borrowed:2, symbol:"XMA", name:"Marist College", distance:250, latlong:[41.725974, -73.93354]},
-  {borrowed:1176, symbol:"VZS", name:"Skidmore Coll", distance:21, latlong: [43.095199,-73.78004]}
-];
-
-const historical = [
-  { name: "Titanic Disaster", latlong:[41.726931, -49.948253]}
-];
-
-
 
 const mymap = L.map('mapid').setView( [42.502222,-75.911667], 7);
  //mymap.createPane("labels");
@@ -342,56 +250,6 @@ L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(mymap);
 
-var empireDelivery = {
-  "type": "FeatureCollection",
-  "features": [
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              -73.74349594116211,
-              42.65012181368023
-            ],
-            [
-              -76.16048812866211,
-              43.04480541304369
-            ],
-            [
-              -77.59969711303711,
-              43.15710884095329
-            ],
-            [
-              -78.88509750366211,
-              42.867912483915305
-            ],
-            [
-              -75.91878890991211,
-              42.09822241118974
-            ],
-            [
-              -74.00716781616211,
-              40.713955826286046
-            ],
-            [
-              -74.00004386901855,
-              41.50857729743936
-            ],
-            [
-              -73.74349594116211,
-              42.65012181368023
-            ]
-          ]
-        ]
-      },
-      "properties": {
-        "title":"Empire Delivery Network"
-      }
-    }
-  ]
-};
 
 var myStyle = {
     "color": "#000",
@@ -508,35 +366,7 @@ sections.forEach(function(section){
     }, false);
 });
 
-// const edls = [
-//   [42.6525, -73.757222], // Albany
-//   [43.165556, -77.611389], //Rochester
-//   [42.904722, -78.849444], //Buffalo
-//   [43.046944, -76.144444], //Syracuse
-//   [42.102222,-75.911667],  //binghamton
-//   [41.519722, -74.021389],  //Newburgh
-//   [40.7127, -74.0059] // New York
-// ];
 
-// edls.forEach(function(edl) {
-//   L.circle(edl, {
-//     "radius":5000, 
-//     "fillColor": 'hsl(0%, 0%, 10%)',
-//     "color": 'hsl(0%, 0%, 90%)'
-//   }).addTo(mymap);
-// 
-
-
-//let attribution = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>';
-
-// L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-//     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-//     maxZoom: 15,
-//     id: 'mapbox.streets',
-//     pane:'labels',
-//     accessToken: 'pk.eyJ1IjoiZGF2aWRmdWxsZXIiLCJhIjoiY2o4dXhzbzZ1MHl5bTJxbjd3OHp2c2JoZiJ9.YQBmM8H2KwUyp_i3ADY3tg'
-// }).addTo(mymap);
- 
  </script>
 
 </body>
