@@ -21,15 +21,6 @@ h4 {
   padding-top: 8px;
 }
 
-section {
-  height: 100vh;
-  width: 85%;
-  margin: 56px 10px;
-  transform-style: preserve-3d;
-  perspective: 400px; 
-  segoe-ui-semilight;
-}
-
 #header {
   top: 0px;
   padding: 8px;
@@ -47,7 +38,20 @@ section {
   -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
 }
- 
+
+section {
+  height: 100vh;
+  width: 85%;
+  margin: 56px 10px;
+  transform-style: preserve-3d;
+  perspective: 400px; 
+  segoe-ui-semilight;
+}
+
+
+#map .infocard-footer {
+   width:80%
+}
 #mapid { 
   height: 80%; 
   width: 80%;
@@ -77,17 +81,52 @@ section {
 
 #summary .infocard {
     border-radius:8px;
-    
     font-size:.9em;
     height:auto;
 }
-
+#summary .infocard-footer, #map .infocard-footer {
+   width:80%;
+}
 #summary p {
     padding: 8px;
     margin: auto;
     font-weight: 300;
     text-align: left;
     width:90%;
+}
+
+.infocard {
+  position: relative;  
+}
+
+.infocard-header {
+  background-color: hsla(200,30%, 55%, 0.8);
+  color: white;
+  text-align: center;
+  font-weight: 600;
+  font-border: ;
+  padding: 8px 16px;
+  font-kerning: auto;
+  letter-spacing: .08em;
+}
+
+.infocard-footer {
+  margin:auto;
+  padding-top:8px;   
+}
+
+#goals {
+  display:inline-block;
+  width:80%;
+}
+#funbox {
+  display:inline;
+  float:right;
+  word-wrap:break-word;
+}
+input {
+display:inline;
+  
 }
 
 .btn {
@@ -110,27 +149,6 @@ section {
     transition: all .2s ease-in-out;  
 }
 
-.infocard {
-  position: relative;
-  
-}
-
-.infocard-header {
-  background-color: hsla(200,30%, 55%, 0.8);
-  color: white;
-  text-align: center;
-  font-weight: 600;
-  font-border: ;
-  padding: 8px 16px;
- font-kerning: auto;
- letter-spacing: .08em;
-}
-
-.infocard-footer {
-  width:80%;
-  margin:auto;
-  padding-top:8px;   
-}
 
 .center {
    text-align: center;
@@ -213,9 +231,12 @@ A comparison of returnables borrowed via <span class="ill center">Illiad</span> 
   </div>
   <div class="description" id="mapid">
   </div>
-  <div class="infocard-footer center">
+  <div class="infocard-footer">
+  <div id="goals">
     As we prepare tomove to a new library system it seems worthwhile to have a better understanding of our users, their needs and expectations of the library.  Requests for items we don't own reflects an instance of need.  ILL and ConnectNY are systems, among others, designed to meet those needs.
     Understanding the volume of requests in each system, by whom (faculty or student), when, in what subject areas, and the "turn around tme" for filling those requests are the goals for this analysis.
+    </div>
+  
   </div>
 </a>
 </section>
@@ -283,7 +304,7 @@ A comparison of returnables borrowed via <span class="ill center">Illiad</span> 
     <p>
      We typically say that ConnectNY takes about a week.  That is roughly the median turnaround for ILL.  So while ILL may take longer at least half of the requests are filled with the same timeliness.  Within NY State the median turn around time for ILL is only 5 days which compares favorably to ConnectNY.
 </p><p>
-     Turnaround varies more by library than any other factor.  Average time to receive an item from SUNY Albany is 4.48 days, the New York State Library is 4.88,  while Skidmore is 2.63.  We receive items faster from Davidson College (4.62) in North Carolina than from Albany.  
+     Turnaround varies more by library than any other factor.  Average time to receive an item from SUNY Albany is 4.48 days, the New York State Library is 4.88,  while Skidmore is 2.63.  We receive items faster from Davidson College in North Carolina (4.62) than from Albany.  
     </p>
 <p>
 While we borrow items from all over the world international requests take longer and are probably outliers for this analysis.
@@ -293,16 +314,16 @@ While we borrow items from all over the world international requests take longer
 </a>
 
 <a class="infocard">
-  <div class="infocard-header">IDS</div>
+  <div class="infocard-header">IDS notes</div>
   <div class="description">
     <p>
      We've been using IDS for about a year.  IDS automates the more routine tasks, searching our catalog and remote catalogs to determine availability and routing requests more intelligently (than bare OCLC).
     </p>
     <p>
-     From January through September 2017 Union borrowed 573 returnables via Illiad, with 184 requests being filled within New York State and 136 of those were filled by IDS libraries. That is roughly 1/3 filled with NY and roughly 3/4 of those were by IDs.
+     From January through September 2017 Union borrowed 573 returnables via Illiad, with 184 requests being filled within New York State and 136 of those were filled by IDS libraries. That is roughly 1/3 filled within New York State and roughly 3/4 were IDS.
     </p>
     <p>
-      IDS (returnables) had a slightly longer turn-around than non-IDS requests.  That can be explained by Skidmore, a nearby non-IDS library that filled many requests.  Also IDS speeds up the placing of requests but can't speed the delivery mechanisms.
+      IDS returnables had a slightly longer turn-around than non-IDS within New York State.  That can be explained by Skidmore, a nearby non-IDS library that filled many of our requests very quickly.  While IDS speeds up the placing of requests it doesn't speed up the lending institution or delivery mechanisms.  These are more of an issue for returnable items.
     </p>
   </div>
   <div class="infocard-footer"></div>
@@ -318,7 +339,7 @@ While we borrow items from all over the world international requests take longer
    All of our transactions need to be cleared before we can use Inn-Reach with our new system.
     </p>
     <p>
- 
+ March is typically a busy month for resource sharing and it gradually tapers until June.  Faculty requests increase over the Summer, especially August but don't exceed about 50 for ConnectNY.
     </p>
     <p>
     
@@ -334,7 +355,7 @@ While we borrow items from all over the world international requests take longer
 
 <div class="nav">
 <ul class="nav">
-<li class="nav active" data-id="map"></li>
+<li class="nav" data-id="map"></li>
 <li class="nav" data-id="linegraph"></li>
 <li class="nav" data-id="boxplot"></li>
 <li class="nav" data-id="summary"></li>
@@ -346,7 +367,7 @@ const {log} = console;
 //center of US [44.58, -103.46]
 //Union [42.817222, -73.9279]
 
-const mymap = L.map('mapid', {maxZoom:10, deltaZoom:0.25, scrollWheelZoom: 'center', doubleClickZoom: 'center'}).setView([42.502222,-75.911667], 7);
+const mymap = L.map('mapid', {zoom:'animate', maxZoom:10, deltaZoom:0.25, scrollWheelZoom: 'center', doubleClickZoom: 'center'}).setView([42.502222,-75.911667], 7);
 
 const waterColor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
   attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -386,10 +407,7 @@ var myStyle = {
     "fillOpacity": 0,
      "weight": 2
 };
-    
-L.geoJSON(empireDelivery, {"style":myStyle}).addTo(mymap);
-//L.geoJSON(cnycoll,{"style":myStyle}).addData(mymap);
-
+  
 let ills = [], cnys = [], hist = [];
 
 illiads.forEach(function(school, i){
@@ -436,11 +454,15 @@ historical.forEach(function(h, i){
   hist.push(symbol);
 });
 
-const ill_schools = L.layerGroup(ills);
+const empire = L.geoJSON(empireDelivery, {"style":myStyle});
+//L.geoJSON(cnycoll,{"style":myStyle}).addData(mymap);
+
+var ill_schools = L.layerGroup(ills);
 const cny_schools = L.layerGroup(cnys);
 const historic = L.layerGroup(hist);
 
 const overlayMaps = {
+    "Empire Delivery Network": empire,
     "Connect NY": cny_schools,
     "Illiad": ill_schools,
     "Titanic": historic
@@ -460,6 +482,40 @@ mymap.on('click', function(ev) {
     let distance = Math.round(mymap.distance(ev.latlng, [42.817222, -73.9279])/1609.34, 4);
     log(distance); // ev is an event object (MouseEvent in this case)
 });
+
+const filterIll = function() {
+    let dist = document.getElementById('ibox').value;
+    let illfilter = illiads.filter(ill => ill.distance > dist);
+    //const sumill = illfilter.reduce(function(a,b){return a + b.turn;}, 0)/illfilter.length;
+    //log(sumill/illfilter.length);
+    //log(sumill);
+
+let schools = [];
+illfilter.forEach(function(school, i){
+  let {latlong, symbol, name, borrowed, turn, IDS} = school;
+  let radius = borrowed * 100;  // 
+  let color = IDS ? 'purple' : 'firebrick';
+  let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
+ 
+  symbol = L.circle(latlong, {
+      color: color,
+      strokeWidth: 1,
+      fillColor: color,
+      fillOpacity: 0.25,
+      radius: radius
+  });
+  let tiptext = `<span class="ill">IDS: ${IDS}<br> ${name} <br>distance:${distance}mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`;
+  symbol.bindTooltip(tiptext);
+  schools.push(symbol);
+});
+ill_schools = L.layerGroup(schools);
+    if (mymap.hasLayer(ill_schools)) {
+        mymap.removeLayer(ill_schools);
+        mymap.addLayer(ill_schools);
+    }
+}
+log(ills);
+
 
 var ug = document.getElementById('ug');
 var fc = document.getElementById('fac');
