@@ -48,10 +48,6 @@ section {
   segoe-ui-semilight;
 }
 
-
-#map .infocard-footer {
-   width:80%
-}
 #mapid { 
   height: 80%; 
   width: 80%;
@@ -87,6 +83,7 @@ section {
 #summary .infocard-footer, #map .infocard-footer {
    width:80%;
 }
+
 #summary p {
     padding: 8px;
     margin: auto;
@@ -115,18 +112,31 @@ section {
   padding-top:8px;   
 }
 
-#goals {
-  display:inline-block;
-  width:80%;
+#map .infocard-footer {
+   margin-top:16px;
+   width:80%;
+   display:grid;
+   grid-template-columns: 1fr 16%;
+   grid-column-gap:16px;
 }
-#funbox {
-  display:inline;
-  float:right;
+
+#fundiv {
   word-wrap:break-word;
 }
-input {
-display:inline;
-  
+
+#funbox {
+    border: 2px solid #C6C6C6;
+    padding: 8px;
+    background: #fcfcfc;
+    height:100%;
+    -webkit-box-shadow:inset 1px 1px 1px 1px #d9d9d9;
+    box-shadow:inset 1px 1px 1px 1px #d9d9d9;
+     word-wrap:break-word;
+}
+
+input#slider {
+  visibility:hidden;
+  margin-top:8px;
 }
 
 .btn {
@@ -161,9 +171,7 @@ display:inline;
 .ill {
   color: red;
 }
-.tooltip {
-  line-height:1;
-}
+
 .faculty {
   font-size: .8em;
   padding-left: 8%; 
@@ -236,7 +244,10 @@ A comparison of returnables borrowed via <span class="ill center">Illiad</span> 
     As we prepare tomove to a new library system it seems worthwhile to have a better understanding of our users, their needs and expectations of the library.  Requests for items we don't own reflects an instance of need.  ILL and ConnectNY are systems, among others, designed to meet those needs.
     Understanding the volume of requests in each system, by whom (faculty or student), when, in what subject areas, and the "turn around tme" for filling those requests are the goals for this analysis.
     </div>
-  
+  <div id="fundiv">
+      <div id="funbox"></div>
+      <input type="range" min="0" max="2500" value="0" step="100" id="slider">
+  </div>
   </div>
 </a>
 </section>
@@ -323,7 +334,7 @@ While we borrow items from all over the world international requests take longer
      From January through September 2017 Union borrowed 573 returnables via Illiad, with 184 requests being filled within New York State and 136 of those were filled by IDS libraries. That is roughly 1/3 filled within New York State and roughly 3/4 were IDS.
     </p>
     <p>
-      IDS returnables had a slightly longer turn-around than non-IDS within New York State.  That can be explained by Skidmore, a nearby non-IDS library that filled many of our requests very quickly.  While IDS speeds up the placing of requests it doesn't speed up the lending institution or delivery mechanisms.  These are more of an issue for returnable items.
+      IDS returnables had a slightly longer turn-around than non-IDS within New York State.  That can be explained by Skidmore, a nearby non-IDS library that filled many of our requests very quickly while SUNY Albany and the New York State Library (bothh IDS) were comparatively slow.  While IDS speeds up the placing of requests it doesn't speed up the lending institution or delivery mechanisms.  This are more of an issue for returnable items.
     </p>
   </div>
   <div class="infocard-footer"></div>
@@ -367,26 +378,26 @@ const {log} = console;
 //center of US [44.58, -103.46]
 //Union [42.817222, -73.9279]
 
-const mymap = L.map('mapid', {zoom:'animate', maxZoom:10, deltaZoom:0.25, scrollWheelZoom: 'center', doubleClickZoom: 'center'}).setView([42.502222,-75.911667], 7);
+const mymap = L.map('mapid', {zoom:'animate', maxZoom:10, deltaZoom:0.5, scrollWheelZoom: 'center', doubleClickZoom: 'center'}).setView([42.502222,-75.911667], 7);
 
 const waterColor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
   attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   subdomains: 'abcd',
-  minZoom: 1,
+  minZoom: 3,
   maxZoom: 16,
   ext: 'png'
 });
 
-
 const tonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
   attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   subdomains: 'abcd',
-  minZoom: 0,
+  minZoom: 3,
   maxZoom: 20,
   ext: 'png'
 }).addTo(mymap);
 
 const hyddaFull = L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', {
+  minZoom: 3,
   maxZoom: 18,
   attribution: 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 });
@@ -397,17 +408,11 @@ const openStreetMap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 
 var EsriOceanBasemap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}', {
   attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
+  minZoom: 2,
   maxZoom: 13
 });
 
-var myStyle = {
-    "color": "#000",
-    "weight": 1.5,
-    "opacity": 0.65,
-    "fillOpacity": 0,
-     "weight": 2
-};
-  
+var myStyle = {"color": "#000", "weight": 1.5, "opacity": 0.65, "fillOpacity": 0, "weight": 2};
 let ills = [], cnys = [], hist = [];
 
 illiads.forEach(function(school, i){
@@ -416,15 +421,8 @@ illiads.forEach(function(school, i){
   let color = IDS ? 'purple' : 'firebrick';
   let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
  
-  symbol = L.circle(latlong, {
-      color: color,
-      strokeWidth: 1,
-      fillColor: color,
-      fillOpacity: 0.25,
-      radius: total
-  });
-  let tiptext = `<span class="ill">IDS: ${IDS}<br> ${name} <br>distance:${distance}mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`;
-  symbol.bindTooltip(tiptext);
+  symbol = L.circle(latlong, {color: color, strokeWidth: 1, fillColor: color, fillOpacity: 0.25, radius: total});
+  symbol.bindTooltip(`<span class="ill">IDS: ${IDS}<br> ${name} <br>distance:${distance}mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`);
   ills.push(symbol);
 });
 
@@ -433,23 +431,13 @@ connectnys.forEach(function(school, i){
   let total = borrowed * 25;
   let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
  
-  symbol = L.circle(latlong, {
-      color: 'blue',
-      strokeWidth: 1,
-      fillColor: 'skyblue',
-      fillOpacity: 0.25,
-      radius: total
-  });
-  let tiptext = `<span class="cny">${name} <br>distance:${distance}mi<br>borrowed:${borrowed}</span>`;
-  symbol.bindTooltip(tiptext);
+  symbol = L.circle(latlong, {color: 'blue', strokeWidth: 1, fillColor: 'skyblue', fillOpacity: 0.25, radius: total});
+  symbol.bindTooltip(`<span class="cny">${name} <br>distance:${distance}mi<br>borrowed:${borrowed}</span>`);
   cnys.push(symbol);
 });
 
 historical.forEach(function(h, i){
-  let myIcon = L.icon({
-    iconUrl: 'images/titanic.png',
-    iconSize: [50, 50]
-  });
+  let myIcon = L.icon({iconUrl: 'images/titanic.png', iconSize: [50, 50]});
   symbol = L.marker([41.726931, -49.948253], {icon: myIcon});
   hist.push(symbol);
 });
@@ -457,65 +445,61 @@ historical.forEach(function(h, i){
 const empire = L.geoJSON(empireDelivery, {"style":myStyle});
 //L.geoJSON(cnycoll,{"style":myStyle}).addData(mymap);
 
-var ill_schools = L.layerGroup(ills);
+const ill_schools = L.layerGroup(ills);
 const cny_schools = L.layerGroup(cnys);
 const historic = L.layerGroup(hist);
+var illfiltered = L.layerGroup([]);
 
-const overlayMaps = {
-    "Empire Delivery Network": empire,
-    "Connect NY": cny_schools,
-    "Illiad": ill_schools,
-    "Titanic": historic
-};
-
-var baseMaps = {
-    "Toner-Lite": tonerLite,
-    "Open Street Map": openStreetMap,
-    "Hydda Full": hyddaFull,
-    "ESRI Ocean Base Map": EsriOceanBasemap,
-    "Water Color": waterColor
-};
+const overlayMaps = {"Empire Delivery Network": empire, "Connect NY": cny_schools, "Illiad": ill_schools, "Titanic": historic};
+const baseMaps = {"Toner-Lite": tonerLite, "Open Street Map": openStreetMap, "Hydda Full": hyddaFull, "ESRI Ocean Base Map": EsriOceanBasemap, "Water Color": waterColor};
 
 L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 
 mymap.on('click', function(ev) {
     let distance = Math.round(mymap.distance(ev.latlng, [42.817222, -73.9279])/1609.34, 4);
-    log(distance); // ev is an event object (MouseEvent in this case)
+    document.getElementById('funbox').innerHTML = `${distance}mi from Union College`;
 });
 
-const filterIll = function() {
-    let dist = document.getElementById('ibox').value;
-    let illfilter = illiads.filter(ill => ill.distance > dist);
-    //const sumill = illfilter.reduce(function(a,b){return a + b.turn;}, 0)/illfilter.length;
-    //log(sumill/illfilter.length);
-    //log(sumill);
+document.getElementById('slider').addEventListener('change', function(){
+  let illfilter = illiads.filter(ill => ill.distance > this.value);
+  let sumitems = illfilter.reduce(function(a,b){return a + b.borrowed;}, 0);
+  let sumturn = illfilter.reduce(function(a,b){return a + b.turn;}, 0);
+  sumturn = Math.round(sumturn, 2);
+  document.getElementById('funbox').innerHTML = `Beyond ${this.value}mi<br>Avg turn around: ${sumturn/illfilter.length}<br># of items: ${sumitems}`;
 
-let schools = [];
-illfilter.forEach(function(school, i){
-  let {latlong, symbol, name, borrowed, turn, IDS} = school;
-  let radius = borrowed * 100;  // 
-  let color = IDS ? 'purple' : 'firebrick';
-  let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
- 
-  symbol = L.circle(latlong, {
-      color: color,
-      strokeWidth: 1,
-      fillColor: color,
-      fillOpacity: 0.25,
-      radius: radius
+  let schools = [];
+  illfilter.forEach(function(school, i){
+      let {latlong, symbol, name, borrowed, turn, IDS} = school;
+      let radius = borrowed * 100;  // 
+      let color = IDS ? 'purple' : 'firebrick';
+      let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
+      symbol = L.circle(latlong, {color: color, strokeWidth: 1, fillColor: color, fillOpacity: 0.25, radius: radius});
+      let tiptext = `<span class="ill">IDS: ${IDS}<br> ${name} <br>distance:${distance}mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`;
+      symbol.bindTooltip(tiptext);
+      schools.push(symbol);
   });
-  let tiptext = `<span class="ill">IDS: ${IDS}<br> ${name} <br>distance:${distance}mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`;
-  symbol.bindTooltip(tiptext);
-  schools.push(symbol);
+  illfiltered = L.layerGroup(schools);
+  if (mymap.hasLayer(ill_schools)) {
+    mymap.removeLayer(ill_schools);
+  }
+  let zoomlevel = this.value < 800 ? 5 : 4;
+  //if (this.value > 300) {
+    mymap.setZoom(zoomlevel);
+  
+  mymap.addLayer(illfiltered);
 });
-ill_schools = L.layerGroup(schools);
-    if (mymap.hasLayer(ill_schools)) {
-        mymap.removeLayer(ill_schools);
-        mymap.addLayer(ill_schools);
-    }
-}
-log(ills);
 
+mymap.on('overlayadd', function(layer){
+  let slide = document.getElementById('slider');
+  if (layer.name === "Illiad") {
+    slide.style.visibility = 'visible';
+    if (mymap.hasLayer(illfiltered)) {
+      mymap.removeLayer(illfiltered);
+    }
+  } else {
+    slide.style.visibility = 'hidden';
+  } 
+});
 
 var ug = document.getElementById('ug');
 var fc = document.getElementById('fac');
