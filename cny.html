@@ -49,7 +49,7 @@ section {
 }
 
 #mapid { 
-  height: 80%; 
+  height: 72%; 
   width: 80%;
   margin:auto;
 }
@@ -79,6 +79,12 @@ section {
     border-radius:8px;
     font-size:.9em;
     height:auto;
+
+     perspective: 2400px; 
+  perspective-origin:  50% 20%;
+   transform-style: preserve-3d;
+  transition: transform 1s;
+  transform:  rotateY(0deg) translateZ(442px); 
 }
 #summary .infocard-footer, #map .infocard-footer {
    width:80%;
@@ -113,7 +119,6 @@ section {
 }
 
 #map .infocard-footer {
-   margin-top:16px;
    width:80%;
    display:grid;
    grid-template-columns: 1fr 16%;
@@ -125,17 +130,16 @@ section {
 }
 
 #funbox {
-    border: 2px solid #C6C6C6;
+    border: 2px solid rgba(198,198,198,0.9);
     padding: 8px;
     background: #fcfcfc;
+    opacity:0.9,
     height:100%;
     -webkit-box-shadow:inset 1px 1px 1px 1px #d9d9d9;
     box-shadow:inset 1px 1px 1px 1px #d9d9d9;
-     word-wrap:break-word;
 }
 
 input#slider {
-  visibility:hidden;
   margin-top:8px;
 }
 
@@ -222,7 +226,7 @@ ul.nav li:hover {
 ul.nav li:before {
   content: '\25cf';
 }
-
+.spacerl {height:56px;}
 </style>
 </head>
 
@@ -233,6 +237,8 @@ A comparison of returnables borrowed via <span class="ill center">Illiad</span> 
 </div>
 
 <section id="map">
+
+
 <a class="infocard">
   <div class="infocard-header">
    Total volume of requests with distance and avg turn around time (Illiad only) from each lender
@@ -241,11 +247,10 @@ A comparison of returnables borrowed via <span class="ill center">Illiad</span> 
   </div>
   <div class="infocard-footer">
   <div id="goals">
-    As we prepare tomove to a new library system it seems worthwhile to have a better understanding of our users, their needs and expectations of the library.  Requests for items we don't own reflects an instance of need.  ILL and ConnectNY are systems, among others, designed to meet those needs.
-    Understanding the volume of requests in each system, by whom (faculty or student), when, in what subject areas, and the "turn around tme" for filling those requests are the goals for this analysis.
+    As we prepare tomove to a new library system it seems worthwhile to have a better understanding of our users, their needs and expectations of the library.  Understanding the volume of requests in ConnectNY or by ILL, by whom (faculty or student), when, in what subject areas, and the "turn around tme" for filling those requests are the goals of this report.
     </div>
   <div id="fundiv">
-      <div id="funbox"></div>
+      <div id="funbox"> </div>
       <input type="range" min="0" max="2500" value="0" step="100" id="slider">
   </div>
   </div>
@@ -455,24 +460,20 @@ const baseMaps = {"Toner-Lite": tonerLite, "Open Street Map": openStreetMap, "Hy
 
 L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 
-mymap.on('click', function(ev) {
-    let distance = Math.round(mymap.distance(ev.latlng, [42.817222, -73.9279])/1609.34, 4);
-    document.getElementById('funbox').innerHTML = `${distance}mi from Union College`;
-});
-
-document.getElementById('slider').addEventListener('change', function(){
-  let illfilter = illiads.filter(ill => ill.distance > this.value);
+const filterIll = function(val) {  
+  //if (val===undefined) return;
+  let illfilter = illiads.filter(ill => ill.distance > val);
   let sumitems = illfilter.reduce(function(a,b){return a + b.borrowed;}, 0);
   let sumturn = illfilter.reduce(function(a,b){return a + b.turn;}, 0);
-  sumturn = Math.round(sumturn, 2);
-  document.getElementById('funbox').innerHTML = `Beyond ${this.value}mi<br>Avg turn around: ${sumturn/illfilter.length}<br># of items: ${sumitems}`;
+  sumturn = Math.round(sumturn/illfilter.length, 2);
+  document.getElementById('funbox').innerHTML = `Beyond ${val}mi from Union<br># of items: ${sumitems}<br>Avg time: ${sumturn} days`;
 
   let schools = [];
   illfilter.forEach(function(school, i){
       let {latlong, symbol, name, borrowed, turn, IDS} = school;
       let radius = borrowed * 100;  // 
       let color = IDS ? 'purple' : 'firebrick';
-      let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
+      let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 2);
       symbol = L.circle(latlong, {color: color, strokeWidth: 1, fillColor: color, fillOpacity: 0.25, radius: radius});
       let tiptext = `<span class="ill">IDS: ${IDS}<br> ${name} <br>distance:${distance}mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`;
       symbol.bindTooltip(tiptext);
@@ -482,12 +483,12 @@ document.getElementById('slider').addEventListener('change', function(){
   if (mymap.hasLayer(ill_schools)) {
     mymap.removeLayer(ill_schools);
   }
-  let zoomlevel = this.value < 800 ? 5 : 4;
-  //if (this.value > 300) {
-    mymap.setZoom(zoomlevel);
-  
+  let zoomlevel = val > 200 && val < 800 ? 5 : 4;
+  mymap.setZoom(zoomlevel);
   mymap.addLayer(illfiltered);
-});
+}
+
+document.getElementById('slider').addEventListener('input', filterIll(this.value));
 
 mymap.on('overlayadd', function(layer){
   let slide = document.getElementById('slider');
@@ -500,6 +501,14 @@ mymap.on('overlayadd', function(layer){
     slide.style.visibility = 'hidden';
   } 
 });
+
+mymap.on('click', function(ev) {
+    let distance = Math.round(mymap.distance(ev.latlng, [42.817222, -73.9279])/1609.34, 4);
+    distance = distance > 2500 ? 2500 : distance;
+    document.getElementById('funbox').innerHTML = `${val}mi from Union`;
+   // filterIll(distance);
+});
+
 
 var ug = document.getElementById('ug');
 var fc = document.getElementById('fac');
@@ -538,13 +547,13 @@ const gotoSection = function(e) {
    
     sectArray.forEach(function(sect, index){
       if (sect === section) {
-        window.scrollTo({left:0, top:sect.offsetTop - 60,  behavior:'smooth'}); 
-        sect.style.visibility = 'visible'; 
+        window.scrollTo({left:0, top:sect.offsetTop - 58,  behavior:'smooth'}); 
+        sect.style.display = 'grid'; 
         if (!linavs.item(index).classList.contains('active')) {
           linavs.item(index).classList.add("active");
         }
       } else {
-        sect.style.visibility = 'hidden';   
+        sect.style.display = 'none';   
         if (linavs.item(index).classList.contains('active')) {
             linavs.item(index).classList.remove('active');
         }   
@@ -558,6 +567,10 @@ document.querySelector('ul.nav').addEventListener('click', gotoSection);
 window.addEventListener('wheel', function(e) {
   e.preventDefault();
 });
+
+window.onresize = function(){
+  window.scrollTo({left:0, top:document.getElementById("summary").offsetTop - 58,  behavior:'smooth'});
+} 
 
  </script>
 
