@@ -441,7 +441,7 @@ illiads.forEach(function(school, i){
   let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
  
   symbol = L.circle(latlong, {color: color, strokeWidth: 1, fillColor: color, fillOpacity: 0.25, radius: total});
-  symbol.bindTooltip(`<span class="ill">IDS: ${IDS}<br> ${name} <br>distance:${distance}mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`);
+  symbol.bindTooltip(`<span class="ill">IDS: ${IDS}<br> ${name} <br>distance:${distance} mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`);
   ills.push(symbol);
 });
 
@@ -479,7 +479,7 @@ const filterIll = function(val) {
   let sumitems = illfilter.reduce(function(a,b){return a + b.borrowed;}, 0);
   let sumturn = illfilter.reduce(function(a,b){return a + b.turn;}, 0);
   sumturn = Math.round(sumturn/illfilter.length, 2);
-  document.getElementById('funbox').innerHTML = `<span class="ill">${val}mi from Union<br># of items: ${sumitems}<br>Avg time: ${sumturn} days</span>`;
+  document.getElementById('funbox').innerHTML = `<span class="ill">${val} mi from Union<br># of items: ${sumitems}<br>Avg time: ${sumturn} days</span>`;
 
   let schools = [];
   illfilter.forEach(function(school, i){
@@ -527,7 +527,7 @@ mymap.on('click', function(ev) {
     if (mymap.hasLayer(illfiltered) || mymap.hasLayer(ill_schools)) {
         filterIll(distance);
     } else {
-        document.getElementById('funbox').innerHTML = `<span class="ill">${distance}mi from Union</span>`;
+        document.getElementById('funbox').innerHTML = `<span class="ill">${distance} mi from Union</span>`;
     }
     
 });
@@ -577,11 +577,13 @@ const gotoSection = function(e) {
       if (sect === section) {
         window.scrollTo({left:0, top:sect.offsetTop - 58,  behavior:'smooth'}); 
           //sect.style.visibility = 'visible'; 
+          sect.style.display = 'grid'; 
         if (!linavs.item(index).classList.contains('active')) {
           linavs.item(index).classList.add("active");
         }
       } else {
         //sect.style.visibilityy = 'hidden';   
+        sect.style.display = 'none'; 
         if (linavs.item(index).classList.contains('active')) {
             linavs.item(index).classList.remove('active');
         }   
