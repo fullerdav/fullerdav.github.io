@@ -23,14 +23,14 @@ h4 {
 
 #header {
   top: 0px;
-  padding: 8px;
-  font-size: 1.5em;
+  padding: 4px;
+  font-size: 1.35em;
   font-family: Roboto-slab;
-  line-height: 1.4;
+  line-height: 1.2;
   position: fixed;
-  height: 50px;
+  height: 36px;
   z-index: 1500;
-  width: 98%;
+  width: 99%;
   text-align: center;
   background-color: #fff;
   color: #333;
@@ -43,7 +43,7 @@ section {
   display: grid;
   height: 100vh;
   width: 82vw;
-  margin: 56px 10px;
+  margin: 40px 10px;
   segoe-ui-semilight;
   /*transform-style: preserve-3d;
   perspective: 2400px; 
@@ -56,7 +56,7 @@ section {
     font-size: 1.2rem;
   }
   .infocard-header {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 }
 @media (max-width: 875px) {
@@ -64,7 +64,15 @@ section {
     font-size: 1.1rem;
   }
   .infocard-header {
-    font-sze:1rem;
+    font-size:.9rem;
+  }
+}
+@media (max-width: 785px) {
+  #header {
+    font-size: 1rem;
+  }
+  .infocard-header {
+    font-size:.8rem;
   }
 }
 
@@ -232,17 +240,17 @@ li.nav {
 }
 
 li.nav.active {
- font-size: 2.5rem;
+  font-size: 3em;
 }
 
 ul.nav li:hover {
-  font-size: 2.5rem;
+  font-size: 3em;
 }
 
-ul.nav li:before {
-  content: '\25cf';
+ul.nav li{
+  text-align:center;
 }
-.spacerl {height:56px;}
+
 </style>
 </head>
 
@@ -387,17 +395,17 @@ While we borrow items from all over the world international requests take longer
 
 <div class="nav">
 <ul class="nav">
-<li class="nav" data-id="map"></li>
-<li class="nav" data-id="linegraph"></li>
-<li class="nav" data-id="boxplot"></li>
-<li class="nav" data-id="summary"></li>
+<li class="nav" data-id="map">&#9679;</li>
+<li class="nav" data-id="linegraph">&#9679;</li>
+<li class="nav" data-id="boxplot">&#9679;</li>
+<li class="nav" data-id="summary">&#9679;</li>
 </ul>
 </div>
 
 <script>
 const {log} = console;  
 
-const mymap = L.map('mapid', {zoom:'animate', maxZoom:10, deltaZoom:0.5, scrollWheelZoom: 'center', doubleClickZoom: 'center'}).setView([42.502222,-75.911667], 7);
+const mymap = L.map('mapid', {zoom:'animate', maxZoom:10, zoomDelta:0.1, scrollWheelZoom: 'center', doubleClickZoom: 'center'}).setView([42.502222,-75.911667], 7);
 
 const waterColor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
   attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -470,12 +478,13 @@ const historic = L.layerGroup(hist);
 var illfiltered = L.layerGroup([]);
 
 const overlayMaps = {"Empire Delivery Network": empire, "Connect NY": cny_schools, "Illiad": ill_schools, "Titanic": historic};
-const baseMaps = {"Toner-Lite": tonerLite, "Open Street Map": openStreetMap, "Hydda Full": hyddaFull, "ESRI Ocean Base Map": EsriOceanBasemap, "Water Color": waterColor};
+const baseMaps = {"Toner-Lite": tonerLite, "Open Street Map": openStreetMap, "Hydda Full": hyddaFull, "ESRI Ocean Base Map": EsriOceanBasemap};
 
 L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 
-const filterIll = function(val) {  
-  let illfilter = illiads.filter(ill => ill.distance > val);
+const filterIll = function(val) {
+  let illfiler = null;  
+  illfilter = illiads.filter(ill => ill.distance > val);
   let sumitems = illfilter.reduce(function(a,b){return a + b.borrowed;}, 0);
   let sumturn = illfilter.reduce(function(a,b){return a + b.turn;}, 0);
   sumturn = Math.round(sumturn/illfilter.length, 2);
@@ -511,6 +520,9 @@ mymap.on('overlayadd', function(layer){
     if (mymap.hasLayer(illfiltered)) {
       mymap.removeLayer(illfiltered);
     }
+   } else if (layer.name === "Titanic") {
+   log(mymap);
+     mymap.setView([41.726931, -49.948253]).setZoom(4);
   } else {
     slide.style.visibility = 'hidden';
   } 
@@ -522,8 +534,7 @@ mymap.on('zoom', function(){
 mymap.on('click', function(ev) {
     let distance = Math.round(mymap.distance(ev.latlng, [42.817222, -73.9279])/1609.34, 4);
     distance = distance > 2500 ? 2500 : distance;
-   // this.setView(ev.latlng);
-    
+  
     if (mymap.hasLayer(illfiltered) || mymap.hasLayer(ill_schools)) {
         filterIll(distance);
     } else {
@@ -535,8 +546,6 @@ mymap.on('click', function(ev) {
 document.getElementById('slider').addEventListener('change', function(e){
   filterIll(this.value);
 });
-
-
 
 var ug = document.getElementById('ug');
 var fc = document.getElementById('fac');
@@ -551,9 +560,11 @@ var fc = document.getElementById('fac');
               let num = Number(clip.match(/\d+/)[0]);
               if (num > 60 && num < 109) {
                   let p = g.querySelector('path'); 
-                  p.style.strokeWidth = 2;  
+                  p.style.strokeWidth = 2;
+                  if (num !== 72 || num !== 84 || num!==96 || num !== 108) {  
                    p.onmouseover = function() { p.style.stroke = 'rgba(10%, 10%, 10%, 0.5)';}
                    p.onmouseout = function() { p.style.stroke = 'rgba(100%, 100%, 100%, 1)';}
+                  }
               }
             }
           });
@@ -598,9 +609,6 @@ window.addEventListener('wheel', function(e) {
   e.preventDefault();
 });
 
-//window.onresize = function(){
-//  window.scrollTo({left:0, top:document.getElementById("summary").offsetTop - 58,  behavior:'smooth'});
-//} 
 
  </script>
 
