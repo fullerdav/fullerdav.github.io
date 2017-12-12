@@ -693,7 +693,7 @@ for ( i in newschools) {
   let n = newschools[i];
   //n["distance"] = Math.round(mymap.distance(n.latlng, [42.817222, -73.9279])/1609.34, 4);
   //log(JSON.stringify(n));
-  let urlstr = `http://www.worldcat.org/webservices/registry/lookup/Institutions/oclcSymbol/${n.symbol}?serviceLabel=content`;
+  let urlstr = `https://www.worldcat.org/webservices/registry/lookup/Institutions/oclcSymbol/${n.symbol}?serviceLabel=content`;
   var myHeaders = new Headers();
   var myInit = { method: 'GET', headers: myHeaders, mode: 'cors', cache: 'default' };
   var myRequest = new Request(urlstr, myInit);
