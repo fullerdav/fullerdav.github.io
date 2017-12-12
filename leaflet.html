@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" href="css/scatter.css" charset="utf-8" />
+  <!--link rel="stylesheet" href="leaflet/leaflet.css" charset="utf-8" /-->
+  
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+
+  <!--script src="leaflet/leaflet.js"></script-->
+  <script src="js/mapdata.js"></script>
+  
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+<style>
+
+@media (max-width: 1150px) {
+  #header {
+    font-size: 1.2rem;
+  }
+  .infocard-header {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 875px) {
+  #header {
+    font-size: 1.1rem;
+  }
+  .infocard-header {
+    font-size:.9rem;
+  }
+}
+@media (max-width: 785px) {
+  #header {
+    font-size: 1rem;
+  }
+  .infocard-header {
+    font-size:.8rem;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#header {
+  top: 0px;
+  padding: 4px;
+  font-size: 1.35em;
+  font-family: Roboto-slab;
+  line-height: 1.2;
+  position: fixed;
+  height: 36px;
+  z-index: 1500;
+  width: 99%;
+  text-align: center;
+  background-color: #fff;
+  color: #333;
+  -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+  -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+}
+
+
+section {
+  display:grid;
+  margin: 38px 4px;
+  segoe-ui-semilight;
+  border-top: 1px solid #333;
+  width:100vw;
+  height:100vh;
+}
+
+.infocard {
+  position: relative; 
+}
+
+.infocard-header {
+  background-color: hsla(200,30%, 55%, 0.8);
+  color: white;
+  text-align: center;
+  font-weight: 600;
+  font-border: ;
+  padding: 8px 16px;
+  font-kerning: auto;
+  letter-spacing: .06em;
+}
+.infocard-footer {
+  margin:auto;
+  padding-top:8px;   
+}
+#map {
+  background:#eee;
+}
+
+#mapid { 
+  height: 72%; 
+  width: 80%;
+  margin:auto;
+}
+#map .infocard-footer {
+   width:80%;
+   display:grid;
+   grid-template-columns: 1fr 20%;
+   grid-column-gap:16px;
+}
+#funbox {
+    border: 2px solid rgba(198,198,198,0.9);
+    font-size:0.9rem;
+    padding: 8px;
+    background: #fcfcfc;
+    opacity:0.9,
+    height:3em;
+    -webkit-box-shadow:inset 1px 1px 1px 1px #d9d9d9;
+    box-shadow:inset 1px 1px 1px 1px #d9d9d9;
+}
+
+input#slider {
+  margin-top:8px;
+  visibility:hidden;
+  color:red;
+}
+
+#linegraph {
+  background:#ffffff;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 0;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+#linegraph .infocard {
+    background-color: #fff;
+    color: #333;
+    height:auto;
+}
+
+.faculty, .student {
+  font-size: .8em;
+  padding-left: 8%; 
+  white-space:pre;
+  font-kerning:auto;
+}
+.btn {
+    background-color: #fff;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;  
+}
+
+.requests {
+  padding-left: 8%;
+}
+#summary {
+  background:#efefef;
+}
+
+#scatter {
+  background:#fff;
+}
+
+#summary {
+ grid-template-columns: repeat(3, 1fr);
+ grid-column-gap: 1em;
+}
+
+#summary .infocard {
+    border-radius:8px;
+    font-size:.9em;
+    height:auto;
+}
+
+#summary .infocard-footer {
+   width:80%;
+}
+
+#summary p {
+    padding: 8px;
+    margin: auto;
+    font-weight: 300;
+    text-align: left;
+    width:90%;
+}
+
+.center {
+   text-align: center;
+}
+.cny {
+  color: blue;
+}
+.ill {
+  color: red;
+}
+
+</style>
+</head>
+
+
+<body>
+<div id="header">
+A comparison of returnables borrowed via <span class="ill center">Illiad</span> and <span class="cny">ConnectNY</span>from Fall 2013 through Summer 2017
+</div>
+
+<section id="map">
+<a class="infocard">
+  <div class="infocard-header">
+   Total volume of requests with distance and avg turn around time (Illiad only) from each lender
+  </div>
+  <div class="description" id="mapid">
+  </div>
+  <div class="infocard-footer">
+  <div id="goals">
+    As we prepare tomove to a new library system it seems worthwhile to have a better understanding of our users, their rhythms and expectations.  Understanding the volume of requests in ConnectNY or by ILL, by whom (faculty or student), when, in what subject areas, and the "turn around tme" for filling those requests are the goals of this report.
+    </div>
+  <div id="fundiv">
+      <div id="funbox"></div>
+      <input type="range" min="0" max="2500" value="0" step="100" id="slider">
+  </div>
+  </div>
+</a>
+</section>
+
+<section id="linegraph">
+<a class="infocard">
+  <div class="infocard-header">Student</div>
+  <div class="description svg">
+      <object id="ug" type="image/svg+xml" data="undergraduate.svg"></object>
+      <span class="requests">Most requested:</span>
+      <button class="btn ill" onclick='fillPopular(null, illstudent, "div.student");'>ILL</button>
+      <button class="btn cny" onclick='fillPopular(cnystudent, null, "div.student");'>ConnectNY</button>
+  </div>
+  <div class="infocard-footer student"></div>
+</a>
+
+<a class="infocard">
+  <div class="infocard-header">Faculty</div>
+  <div class="description svg">
+      <object id="fac" type="image/svg+xml" data="faculty.svg"></object>
+      <span class="requests">Most requested:</span>
+      <button class="btn ill" onclick='fillPopular(null, illfaculty, "div.faculty");'>ILL</button>
+      <button class="btn cny" onclick='fillPopular(cnyfaculty, null, "div.faculty");'>ConnectNY</button>
+  </div>
+  <div class="infocard-footer faculty"></div>
+</a>
+</section>
+
+<section id="turn">
+<a class="infocard">
+  <div class="infocard-header">ILL turnaround time, Fall 2013 through Summer 2017</div>
+  <div class="description svg">
+      <object type="image/svg+xml" data="turnaround.svg"></object>
+  </div>
+  <div class="infocard-footer">
+  
+ <ul style="list-style-type:none; line-height:1.4em">
+  <li>
+  Turn around time here refers to the lender's receipt of our request and our receipt of the returnable item
+  </li>
+  <li>
+  A boxplot shows a range of values according to quartiles, or 4 equal groups. 
+  </li><li>
+  The band across the middle is the <b>median</b> and it is pretty steady across 4 years, <b>about 7 days</b>.
+  </li><li>
+  Extreme outliers (greater than 21 days) were excluded from the graph.
+  </li>
+  </ul>
+  </div>
+</a>
+</section> 
+
+<section id="wrapper">
+  <div class="description" id="d3canvas"></div>
+</section> 
+
+
+<section id="summary">
+<a class="infocard">
+  <div class="infocard-header">ConnectNY vs ILL</div>
+  <div class="description">
+    <p> 
+     <span class="cny">ConnectNY (6428)</span> has been used more than <span class="ill">ILL (2082)</span> over this 4 year period.  Students (<span class="cny">4310</span>/<span class="ill">969</span>) more than Faculty (<span class="cny">2118</span>/<span class="ill">1113</span>).
+    </p>
+    <p>
+      There are more than 10x as many students as faculty.
+    </p>
+    <p>
+     We typically say that ConnectNY takes about a week.  That is roughly the median turnaround for ILL.  So while ILL may take longer at least half of the requests are filled with the same timeliness.  Within NY State the median turn around time for ILL is only 5 days which compares favorably to ConnectNY.
+</p><p>
+     Turnaround varies more by library than any other factor.  Average time to receive an item from SUNY Albany is 4.48 days, the New York State Library is 4.88,  while Skidmore is 2.63.  We receive items faster from Davidson College in North Carolina (4.62) than from Albany.  
+    </p>
+<p>
+While we borrow items from all over the world international requests take longer and are probably outliers for this analysis.
+</p>
+  </div>
+  <div class="infocard-footer"></div>
+</a>
+
+<a class="infocard">
+  <div class="infocard-header">IDS notes</div>
+  <div class="description">
+    <p>
+     We've been using IDS for about a year.  IDS automates the more routine tasks, searching our catalog and remote catalogs to determine availability and routing requests more intelligently (than bare OCLC).
+    </p>
+    <p>
+     From January through September 2017 Union borrowed 573 returnables via Illiad, with 184 requests being filled within New York State and 136 of those were filled by IDS libraries. That is roughly 1/3 filled within New York State and roughly 3/4 were IDS.
+    </p>
+    <p>
+      IDS returnables had a slightly longer turn-around than non-IDS within New York State.  That can be explained by Skidmore, a nearby non-IDS library that filled many of our requests very quickly while SUNY Albany and the New York State Library (bothh IDS) were comparatively slow.  While IDS speeds up the placing of requests it doesn't speed up the lending institution or delivery mechanisms.  This are more of an issue for returnable items.
+    </p>
+  </div>
+  <div class="infocard-footer"></div>
+</a>
+
+
+<a class="infocard">
+  <div class="infocard-header">Migration to Alma</div>
+  <div class="description">
+    
+    <p>
+   We will need to bring down ConnectNY around April 15th for about two months.  This is required by III because of our transition to Alma.
+   All of our transactions need to be cleared before we can use Inn-Reach with our new system.
+    </p>
+    <p>
+ March is typically a busy month for resource sharing and it gradually tapers until June.  Faculty requests increase over the Summer, especially August but don't exceed about 50 for ConnectNY.
+    </p>
+    <p>
+    
+    </p>
+  </div>
+  <div class="infocard-footer"></div>
+</a>
+</section>
+
+<!--end of html-->
+
+
+<script>
+let {log} = console;
+
+const mymap = L.map('mapid', {zoom:'animate', maxZoom:10, zoomDelta:0.1, scrollWheelZoom: 'center', doubleClickZoom: 'center'}).setView([42.502222,-75.911667], 7);
+
+const waterColor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  subdomains: 'abcd',
+  minZoom: 3,
+  maxZoom: 16,
+  ext: 'png'
+});
+
+const tonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
+  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  subdomains: 'abcd',
+  minZoom: 3,
+  maxZoom: 20,
+  ext: 'png'
+}).addTo(mymap);
+
+const hyddaFull = L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', {
+  minZoom: 3,
+  maxZoom: 18,
+  attribution: 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+});
+
+const openStreetMap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+});
+
+var EsriOceanBasemap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
+  minZoom: 2,
+  maxZoom: 13
+});
+
+var myStyle = {"color": "#000", "weight": 1.5, "opacity": 0.65, "fillOpacity": 0, "weight": 2};
+let ills = [], cnys = [], hist = [];
+
+illiads.forEach(function(school, i){
+  let {latlong, symbol, name, borrowed, turn, IDS} = school;
+  let total = borrowed * 100;  // 
+  let color = IDS ? 'purple' : 'firebrick';
+  let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
+
+  symbol = L.circle(latlong, {color: color, strokeWidth: 1, fillColor: color, fillOpacity: 0.25, radius: total});
+  symbol.bindTooltip(`<span class="ill">IDS: ${IDS}<br> ${name} <br>distance:${distance} mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`);
+  ills.push(symbol);
+  
+});
+
+connectnys.forEach(function(school, i){
+  let {latlong, symbol, name, borrowed} = school;
+  let total = borrowed * 25;
+  let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
+ 
+  symbol = L.circle(latlong, {color: 'blue', strokeWidth: 1, fillColor: 'skyblue', fillOpacity: 0.25, radius: total});
+  symbol.bindTooltip(`<span class="cny">${name} <br>distance:${distance}mi<br>borrowed:${borrowed}</span>`);
+  cnys.push(symbol);
+});
+
+historical.forEach(function(h, i){
+  let myIcon = L.icon({iconUrl: 'images/titanic.png', iconSize: [50, 50]});
+  symbol = L.marker([41.726931, -49.948253], {icon: myIcon});
+  hist.push(symbol);
+});
+
+const empire = L.geoJSON(empireDelivery, {"style":myStyle});
+//L.geoJSON(cnycoll,{"style":myStyle}).addData(mymap);
+
+const ill_schools = L.layerGroup(ills);
+const cny_schools = L.layerGroup(cnys);
+const historic = L.layerGroup(hist);
+var illfiltered = L.layerGroup([]);
+
+const overlayMaps = {"Empire Delivery Network": empire, "Connect NY": cny_schools, "Illiad": ill_schools, "Titanic": historic};
+const baseMaps = {"Toner-Lite": tonerLite, "Open Street Map": openStreetMap, "Hydda Full": hyddaFull, "ESRI Ocean Base Map": EsriOceanBasemap};
+
+L.control.layers(baseMaps, overlayMaps).addTo(mymap);
+
+const filterIll = function(val) {
+  let illfiler = null;  
+  illfilter = illiads.filter(ill => ill.distance > val);
+  let sumitems = illfilter.reduce(function(a,b){return a + b.borrowed;}, 0);
+  let sumturn = illfilter.reduce(function(a,b){return a + b.turn;}, 0);
+  sumturn = Math.round(sumturn/illfilter.length, 2);
+  document.getElementById('funbox').innerHTML = `<span class="ill">${val} mi from Union<br># of items: ${sumitems}<br>Avg time: ${sumturn} days</span>`;
+  let schools = [];
+  illfilter.forEach(function(school, i){
+      let {latlong, symbol, name, borrowed, turn, IDS} = school;
+      let radius = borrowed * 100;  
+      let color = IDS ? 'purple' : 'firebrick';
+      let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 2);
+      symbol = L.circle(latlong, {color: color, strokeWidth: 1, fillColor: color, fillOpacity: 0.25, radius: radius});
+      let tiptext = `<span class="ill">IDS: ${IDS}<br> ${name} <br>distance:${distance}mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`;
+      symbol.bindTooltip(tiptext);
+      schools.push(symbol);
+  });
+  illfiltered = L.layerGroup(schools);
+  if (mymap.hasLayer(ill_schools)) {
+    mymap.removeLayer(ill_schools);
+  }
+  let zoomlevel = val > 750 ? 4 : val > 400 ? 5 : 6;
+  zoomlevel = val < 250 ? 7 : zoomlevel;
+  let view = zoomlevel > 5 ? [42.817222, -73.9279] : [44.58, -103.46];
+  mymap.setZoom(zoomlevel);
+  mymap.addLayer(illfiltered);
+}
+
+mymap.on('overlayadd', function(layer){
+  let slide = document.getElementById('slider');
+  if (layer.name === "Illiad") {
+     document.getElementById('funbox').innerHTML = `<span class="ill">Use the slider or click anywhere on the map to view distance => turnaround time</span>`;
+    slide.style.visibility = 'visible';
+    if (mymap.hasLayer(illfiltered)) {
+      mymap.removeLayer(illfiltered);
+    }
+   } else if (layer.name === "Titanic") {
+   //log(mymap);
+     mymap.setView([41.726931, -49.948253]).setZoom(4);
+  } else {
+    slide.style.visibility = 'hidden';
+  } 
+});
+
+//mymap.on('zoom', function(){
+//  log(mymap.getZoom());
+//});
+
+mymap.on('click', function(ev) {
+    let distance = Math.round(mymap.distance(ev.latlng, [42.817222, -73.9279])/1609.34, 4);
+    distance = distance > 2500 ? 2500 : distance;
+  
+    if (mymap.hasLayer(illfiltered) || mymap.hasLayer(ill_schools)) {
+        filterIll(distance);
+    } else {
+        document.getElementById('funbox').innerHTML = `<span class="ill">${distance} mi from Union</span>`;
+    }
+    
+});
+
+document.getElementById('slider').addEventListener('change', function(e){
+  filterIll(this.value);
+});
+
+var ug = document.getElementById('ug');
+var fc = document.getElementById('fac');
+[ug, fc].forEach(function(linegraph){
+    linegraph.onload = function() {
+        let undergrad = linegraph.contentDocument; 
+        let svgpaths = undergrad.querySelectorAll('g');
+          
+        svgpaths.forEach(function(g) {
+            if (g.hasAttribute("clip-path")) {
+              let clip = g.getAttribute('clip-path');
+              let num = Number(clip.match(/\d+/)[0]);
+              if (num > 60 && num < 109) {
+                  let p = g.querySelector('path'); 
+                  p.style.strokeWidth = 2;
+                  if (num !== 72 || num !== 84 || num!==96 || num !== 108) {  
+                   p.onmouseover = function() { p.style.stroke = 'rgba(10%, 10%, 10%, 0.5)';}
+                   p.onmouseout = function() { p.style.stroke = 'rgba(100%, 100%, 100%, 1)';}
+                  }
+              }
+            }
+          });
+    }
+});
+
+
+
+////begin d3 script
+
+var sectContain = document.getElementById("wrapper");
+let height = sectContain.offsetHeight - 80;
+let width = sectContain.offsetWidth - 80;
+log(width,height);
+
+var wrapper = d3.select("div#d3canvas")
+    //.attr("style", "padding-bottom: " + Math.ceil(height * 100 /width) + "%")
+    .append("svg").attr("viewBox", "0 0 " + width + " " + height);
+var canvas = wrapper.append("g").attr("width", "90%").attr("height", "90%")
+var data_canvas = canvas.append("g").attr("class", "data_canvas");
+log(wrapper);
+var parseDate = d3.time.format("%Y-%m-%d").parse;
+var xScale = d3.time.scale().domain([parseDate("2013-08-01"), parseDate("2017-11-01")]).range([0, width]);
+var yScale = d3.scale.linear().domain([-4, 50]).range([height, 0]);
+var colorScale = d3.scale.ordinal(["Faculty", "Staff", "Student"]).range(["orange", "green", "purple"])
+
+ var yAxis = d3.svg.axis().tickSize(width).orient("right").scale(yScale);
+ var xAxis = d3.svg.axis().orient("bottom").scale(xScale);
+ 
+ data_canvas.append("g").attr("class", "x axis").attr("transform", "translate(0," + height + ")").call(xAxis).selectAll("text").attr("y", 10).attr("x", 0).style("opacity", "0.75").style("font-size", "10px").style("text-anchor", "bottom");
+ data_canvas.append("g").attr("class", "y axis").call(yAxis).selectAll("text").attr("y", 22).attr("x", 10).style("opacity", "0.75").style("font-size", "10px").style("text-anchor", "top");
+
+var tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
+
+d3.tsv("js/ill.tsv", function(error, data) {
+  let sites=0;
+  data.forEach(function(d){
+    d.turn = Number(d.turn);
+    let nm = d.name;
+    let name = nm.split(" ");
+    d.name = name.map(n => `${n[0]}${n.slice(1).toLowerCase()}`).join(" ");
+
+    d.distance = Number(d.distance);
+    if (d.distance===0) {
+      sites++;
+    }
+    d.status = d.status === "" ? "Student" : d.status;
+  });
+  
+  log(sites);
+  let turnmax = d3.max(data, function(d) { return d.turn; })
+  
+  var dot = data_canvas.selectAll(".dot")
+    .data(data)
+    .enter().append("circle")
+    .attr("class", "dot")
+    .style("fill", function(d) {
+      return colorScale(d.status);
+    })
+    .style("stroke", "black")
+    .attr("cx", function(d) {
+      return xScale(parseDate(d.date));
+    })
+    .attr("cy", function(d) {
+      return yScale(d.turn);
+    })
+    .attr("r", "4")
+    .on("mouseover", function(d) {
+      let tip = `${d.name}, ${d.state}<br>distance: ${d.distance} miles`;
+      tooltip.transition()
+        .duration(200)
+        .style("opacity", .9);
+      tooltip.html(tip)
+        .style("left", (d3.event.pageX + 15) + "px")
+        .style("top", (d3.event.pageY - 45) + "px");
+    })
+    .on("mouseout", function(d) {
+      tooltip.transition()
+        .duration(1000)
+        .style("opacity", 0);
+    });
+
+
+});
+
+//log(Math.round(mymap.distance([43.078263,-87.881969], [42.817222, -73.9279])/1609.34, 4));
+//37.87, -122.259 berkeley
+//34.072222, -118.444097 ucla
+//42.335083, -71.170361 boston college
+//42.786944, -86.102222 hope college
+//38.648789, -90.310796 wash university,mo  
+// 39.978529-101.158561 univ of northern colorado
+// 42.053641,-87.678747 northwestern university
+// 43.078263,-87.881969 univ of wisconsin, milw
+/*
+
+/*
+AERDC 1
+AGL 1
+AKD 1
+AL5CW 1
+ALQ 1
+APK 1
+ASU 1
+AZS 3
+BCN 1
+  BKL 7
+BNT 1
+BOS 1
+BRL 2
+CBU 3
+CCJ 1
+CDF 2
+CDS 2
+CFI 4
+CIN 1
+CKM 5
+CLU 4
+COA 1
+COC 2
+COD 1
+  COF 8
+COR 1
+CPD 1
+CPL 2
+CQU 2
+CRL 3
+CRU 2
+CS1 3
+CSA 4
+CSB 3
+CSC 1
+CSF 4
+CTB 1
+CTW 4
+CUS 2
+CWC 2
+DAD 1
+DEH 1
+DKB 4
+DLC 2
+DLH 1
+  DNU 7
+DPL 1
+DRB 4
+  DRU 8
+DVP 2
+EAS 1
+EEM 1
+EGA 2
+EMI 1
+EMU 5
+ERH 1
+ETS 1
+EUL 1
+EV5 1
+EXA 2
+EXW 1
+EYE 1
+EZC 2
+FBA 1
+FEC 3
+FER 1
+FGM 5
+FHC 1
+FHM 5
+FLA 1
+FNN 2
+FNO 1
+FNP 2
+FQG 1
+FUG 3
+FWA 2
+FWR 2
+FXG 2
+FXN 1
+GCO 1
+GEBAY 2
+GKJ 1
+GRC 2
+GSE 1
+GSU 1
+GUA 1
+GXR 1
+GYD 1
+GZM 3
+GZN 1
+GZT 1
+H4N 1
+HCD 1
+HCO 1
+HLQ 1
+HMY 2
+HQC 1
+HS2 1
+HUH 1
+IAD 1
+IAF 1
+IAK 3
+IAO 1
+IAT 1
+IAU 2
+IAX 1
+IAY 1
+IBK 4
+IBS 1
+IC8 1
+ICY 2
+IEC 5
+IF9 1
+  ILU 7
+IMF 2
+IND 2
+  IOG 6
+IOJ 1
+ION 2
+IPL 2
+ISU 2
+ITU 1
+IV7 1
+IVD 1
+IVU 2
+IWC 3
+IWU 1
+  IYU 6
+JCD 1
+JHE 1
+JNA 2
+KBE 1
+KFH 1
+KFP 1
+KKC 2
+KKU 3
+KKW 2
+KNJ 2
+KPL 1
+KSB 1
+KUK 1
+KZS 1
+LAD 1
+  LAF 7
+LCE 1
+LHA 1
+LIQ 1
+LM1 1
+LNU 2
+LVQ 1
+MAN 1
+MAS 1
+MBB 2
+MEA 1
+MFM 2
+MHA 1
+MIA 1
+MIQ 3
+MJC 1
+MJP 2
+MKN 1
+MLA 1
+MND 1
+MNF 1
+MNG 3
+MNI 2
+  MNJ 6
+MNU 1
+MOR 4
+MOS 2
+MQY 1
+MR3 1
+MTC 1
+MTG 4
+MUM 5
+MUQ 1
+MVA 2
+MZF 1
+NAB 1
+NAX 1
+NDD 2
+NDJ 1
+NDU 1
+NED 2
+  NFP 6
+NGA 1
+NGU 1
+NHI 1
+NHM 1
+NJI 1
+NLY 1
+NMP 1
+NOC 3
+NOS 1
+NRU 1
+NTE 2
+NTG 1
+NUI 3
+NYP 1
+OHDNW 1
+OKD 2
+OLA 1
+ONU 1
+OPU 2
+OQP 1
+ORU 1
+ORZ 1
+OSO 1
+OSS 1
+OSU 1
+OTZ 2
+OUC 1
+  OWS 10
+OWU 3
+PAU 3
+PLT 1
+  PMD 7
+PTP 3
+  PVU 6
+QT5 1
+QUE 2
+RBN 1
+REC 1
+RES 4
+RRR 5
+RVE 2
+SAP 1
+SCL 2
+SDE 1
+SF8 1
+SFB 1
+SFP 1
+SLU 1
+SLY 1
+SPI 1
+SUF 1
+SYB 1
+TEU 1
+TIE 1
+TJC 1
+TMA 4
+TME 2
+TRB 1
+TS4 1
+TUC 2
+TWS 2
+TXA 2
+TXH 1
+UAB 4
+UAF 1
+UAU 1
+UB# 1
+UBC 2
+  UIU 9
+UMV 1
+UNA 1
+UOJ 1
+UOK 1
+UPM 1
+UWW 1
+UZ0 1
+VA@ 2
+VDB 1
+VFL 2
+VGK 1
+VHB 2
+  VJK 7
+VJM 5
+VKC 2
+VNF 1
+VOC 1
+VQT 1
+  VTU 6
+VUE 3
+VVB 1
+VVJ 2
+VVN 1
+VVP 4
+VVS 3
+VWB 1
+VXE 1
+VXL 1
+  VXN 9
+VXT 1
+VXV 5
+VXZ 1
+VYD 3
+  VYF 7
+VYG 4
+VYL 1
+VYR 1
+VZH 1
+VZJ 1
+VZV 1
+WAU 2
+WHE 2
+  WIB 8
+WIH 2
+WII 5
+WIS 1
+WKG 3
+WKM 5
+WOO 4
+WY6 1
+WZJ 1
+XBM 3
+XCA 1
+XFM 3
+XIM 1
+XJM 4
+XLM 2
+XMC 2
+XMM 2
+XQM 2
+YAM 1
+YBM 4
+YCM 4
+YEQ 1
+YFM 1
+YGM 1
+  YHM 7
+YJL 2
+YJM 2
+YLC 2
+YOM 5
+YPM 2
+  YSM 7
+YSY 1
+YTM 1
+YUM 2
+YVO 3
+  YZA 6
+Z5A 1
+ZAE 2
+ZAP 1
+ZBM 1
+ZCM 1
+ZCZ 1
+ZEM 1
+ZFM 2
+ZGM 1
+ZIH 3
+ZLM 2
+ZMC 4
+ZQM 4
+  ZRS 7
+ZTM 4
+ZVM 2
+ZWC 1
+ZXC 1
+ZXW 1
+*/
+</script>
+
+
+</body>
+</html>

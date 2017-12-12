@@ -1,0 +1,42 @@
+.legend text,
+    .axis text {
+      font-size: 13px;
+      fill: #333;
+    }
+
+    .axis path,
+    .axis line{
+      fill: none;
+      stroke-width: 1px;
+      stroke: #777;
+       shape-rendering: crispEdges;
+    }
+
+
+.dot {
+  fill-opacity: .5;
+}
+
+.tooltip {
+  position:absolute;
+  border-radius: 4px;
+  border: 1px solid #222;
+  height:auto;
+  width:auto;
+  padding: 6px;
+
+  background: #e9eaeb;
+  /* background-color: hsla(200, 30%, 55%, 0.8); */
+  line-height: 0.9;
+  color: #444;
+  font: 99% sans-serif;
+  font-weight: 600;
+  font-size: 1em;
+ 
+  text-shadow: 1px 1px 10px #888;
+  box-shadow: 0 0 3px 0px #888;
+  -moz-box-shadow: 0 0 2px 0px #333;
+}
+
+
+ 
