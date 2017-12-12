@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/scatter.css" charset="utf-8" />
+  <!--link rel="stylesheet" href="leaflet/leaflet.css" charset="utf-8" /-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
+  <!--script src="leaflet/leaflet.js"></script-->
+  <script src="js/mapdata.js"></script>
+  <!--script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script-->
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<style>
+
+@media (max-width: 1150px) {
+  #header {
+    font-size: 1.2rem;
+  }
+  .infocard-header {
+    font-size: 1rem;
+  }
+}
+@media (max-width: 875px) {
+  #header {
+    font-size: 1.1rem;
+  }
+  .infocard-header {
+    font-size:.9rem;
+  }
+}
+@media (max-width: 785px) {
+  #header {
+    font-size: 1rem;
+  }
+  .infocard-header {
+    font-size:.8rem;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#header {
+  top: 0px;
+  padding: 4px;
+  font-size: 1.35em;
+  font-family: Roboto-slab;
+  line-height: 1.2;
+  position: fixed;
+  height: 36px;
+  z-index: 1500;
+  width: 99%;
+  text-align: center;
+  background-color: #fff;
+  color: #333;
+  -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+  -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+}
+
+section {
+  display:grid;
+  grid-template-columns:5% 90% 5%;
+  grid-column-gap:1px;
+  margin-top: 38px;
+  font-family: segoe-ui-semilight;
+  border-top: 1px solid #333;
+  width:100vw;
+  height:100vh;
+}
+
+.infocard {
+  position: relative; 
+}
+
+.infocard-header {
+  background-color: hsla(200,30%, 55%, 0.3);
+  color: #222;
+  text-align: left;
+  font-weight: 600;
+  font-border: ;
+  padding: 8px 16px;
+  font-kerning: auto;
+  letter-spacing: .06em;
+}
+.infocard-footer {
+  margin:auto;
+  padding-top:8px;   
+}
+
+#map {
+  background:#eee;
+}
+
+#mapid { 
+  height: 72%; 
+  width: 80%;
+  margin:auto;
+}
+#map .infocard-footer {
+   width:80%;
+   display:grid;
+   grid-template-columns: 1fr 20%;
+   grid-column-gap:16px;
+}
+#funbox {
+    border: 2px solid rgba(198,198,198,0.9);
+    font-size:0.9rem;
+    padding: 8px;
+    background: #fcfcfc;
+    opacity: 0.9;
+    height: 3em;
+    -webkit-box-shadow:inset 1px 1px 1px 1px #d9d9d9;
+    box-shadow:inset 1px 1px 1px 1px #d9d9d9;
+}
+
+input#slider {
+  margin-top:8px;
+  visibility:hidden;
+  color:red;
+}
+
+#linegraph {
+  background:#ffffff;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 0;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+#linegraph .infocard {
+    background-color: #fff;
+    color: #333;
+    height:auto;
+}
+
+.faculty, .student {
+  font-size: .8em;
+  padding-left: 8%; 
+  white-space:pre;
+  font-kerning:auto;
+}
+.btn {
+    background-color: #fff;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;  
+}
+
+.requests {
+  padding-left: 8%;
+}
+#summary {
+  background:#efefef;
+}
+#
+#d3 {
+  background:#fff;
+  width:98%;
+  margin-top:0;
+}
+
+#summary {
+ grid-template-columns: repeat(3, 1fr);
+ grid-column-gap: 1em;
+}
+
+#summary .infocard {
+    border-radius:8px;
+    font-size:.9em;
+    height:auto;
+}
+
+#summary .infocard-footer {
+   width:80%;
+}
+
+#summary p {
+    padding: 8px;
+    margin: auto;
+    font-weight: 300;
+    text-align: left;
+    width:90%;
+}
+
+.center {
+   text-align: center;
+}
+.cny {
+  color: blue;
+}
+.ill {
+  color: red;
+}
+.leftcol {
+  position:relative;
+  left:0;
+  top:40%;
+  font-size:3em;
+}
+.rightcol {
+  position:relative;
+  left:0;
+  top:40%;
+  font-size:3em;
+}
+/*.description {
+  margin:auto;
+}*/
+</style>
+</head>
+
+
+<body>
+<div id="header">
+A comparison of returnables borrowed via <span class="ill center">Illiad</span> and <span class="cny">ConnectNY</span>from Fall 2013 through Summer 2017
+</div>
+
+<section id="illsent">
+<div class="leftcol"></div>
+<a class="infocard">
+  <div class="infocard-header">Comparison of our overall resource sharing gainst other Obie group libraries
+    This is a density plot.  The blue are represents all of the lending activity (all items, books, articles, etc.) for Obie group libraries in 2015.  We lent 8793 items in 2015 which was more than about 2/3 of our Obie peers.  This is evidence of the quality of our collections as well as the diligence of our staff.  I learned that Union has earned the title "trusted lender", something we can all be proud of, but especially our Resource Sharing staff whose work it reflects. (source: IPEDS)
+  </div>
+  <div class="description svg">
+    
+     <object id="obie" type="image/svg+xml" data="illsent_density.svg"></object>
+  </div>
+  <div class="infocard-footer">
+
+  </div>
+</a>
+<div class="rightcol"><i class="fa fa-chevron-right"></i></div>
+</section>
+
+
+<section id="map">
+<div class="leftcol"><i class="fa fa-chevron-left"></i></div>
+<a class="infocard">
+  <div class="infocard-header">
+   Total volume of requests with distance and avg turn around time (Illiad only) from each lender
+  </div>
+  <div class="description" id="mapid">
+  </div>
+  <div class="infocard-footer">
+  <div id="goals">
+    As we prepare tomove to a new library system it seems worthwhile to have a better understanding of our users, their rhythms and expectations.  Understanding the volume of requests in ConnectNY or by ILL, by whom (faculty or student), when, in what subject areas, and the "turn around tme" for filling those requests are the goals of this report.
+    </div>
+  <div id="fundiv">
+      <div id="funbox"></div>
+      <input type="range" min="0" max="2500" value="0" step="100" id="slider">
+  </div>
+  </div>
+</a>
+<div class="rightcol"><i class="fa fa-chevron-right"></i></div>
+</section>
+
+<section id="linegraph">
+  <div class="leftcol"><i class="fa fa-chevron-left"></i></div>
+<a class="infocard">
+  <div class="infocard-header">Student</div>
+  <div class="description svg">
+      <object id="ug" type="image/svg+xml" data="undergraduate.svg"></object>
+      <span class="requests">Most requested:</span>
+      <button class="btn ill" onclick='fillPopular(null, illstudent, "div.student");'>ILL</button>
+      <button class="btn cny" onclick='fillPopular(cnystudent, null, "div.student");'>ConnectNY</button>
+  </div>
+  <div class="infocard-footer student"><i class="fa fa-chevron-left"></i></div>
+</a>
+
+<a class="infocard">
+  <div class="infocard-header">Faculty</div>
+  <div class="description svg">
+      <object id="fac" type="image/svg+xml" data="faculty.svg"></object>
+      <span class="requests">Most requested:</span>
+      <button class="btn ill" onclick='fillPopular(null, illfaculty, "div.faculty");'>ILL</button>
+      <button class="btn cny" onclick='fillPopular(cnyfaculty, null, "div.faculty");'>ConnectNY</button>
+  </div>
+  <div class="infocard-footer faculty"></div>
+</a>
+<div class="rightcol"><i class="fa fa-chevron-right"></i></div>
+</section>
+
+<section id="turn">
+<div class="leftcol"></div>
+<a class="infocard">
+  <div class="infocard-header">ILL turnaround time, Fall 2013 through Summer 2017</div>
+  <div class="description svg">
+      <object type="image/svg+xml" data="turnaround.svg"></object>
+  </div>
+  <div class="infocard-footer">
+  
+ <ul style="list-style-type:none; line-height:1.4em">
+  <li>
+  Turn around time here refers to the lender's receipt of our request and our receipt of the returnable item
+  </li>
+  <li>
+  A boxplot shows a range of values according to quartiles, or 4 equal groups. 
+  </li><li>
+  The band across the middle is the <b>median</b> and it is pretty steady across 4 years, <b>about 7 days</b>.
+  </li><li>
+  Extreme outliers (greater than 21 days) were excluded from the graph.
+  </li>
+  </ul>
+  </div>
+</a>
+<div class="rightcol"></div>
+</section> 
+
+<section id="d3">
+  <div class="leftcol"></div>
+  <div class="description" id="wrapper"></div>
+  <div class="rightcol"></div>
+</section> 
+
+
+<section id="summary">
+  <div class="leftcol"></div>
+<a class="infocard">
+  <div class="infocard-header">ConnectNY vs ILL</div>
+  <div class="description">
+    <p> 
+     <span class="cny">ConnectNY (6428)</span> has been used more than <span class="ill">ILL (2082)</span> over this 4 year period.  Students (<span class="cny">4310</span>/<span class="ill">969</span>) more than Faculty (<span class="cny">2118</span>/<span class="ill">1113</span>).
+    </p>
+    <p>
+      There are more than 10x as many students as faculty.
+    </p>
+    <p>
+     We typically say that ConnectNY takes about a week.  That is roughly the median turnaround for ILL.  So while ILL may take longer at least half of the requests are filled with the same timeliness.  Within NY State the median turn around time for ILL is only 5 days which compares favorably to ConnectNY.
+</p><p>
+     Turnaround varies more by library than any other factor.  Average time to receive an item from SUNY Albany is 4.48 days, the New York State Library is 4.88,  while Skidmore is 2.63.  We receive items faster from Davidson College in North Carolina (4.62) than from Albany.  
+    </p>
+<p>
+While we borrow items from all over the world international requests take longer and are probably outliers for this analysis.
+</p>
+  </div>
+  <div class="infocard-footer"></div>
+</a>
+
+<a class="infocard">
+  <div class="infocard-header">IDS notes</div>
+  <div class="description">
+    <p>
+     We've been using IDS for about a year.  IDS automates the more routine tasks, searching our catalog and remote catalogs to determine availability and routing requests more intelligently (than bare OCLC).
+    </p>
+    <p>
+     From January through September 2017 Union borrowed 573 returnables via Illiad, with 184 requests being filled within New York State and 136 of those were filled by IDS libraries. That is roughly 1/3 filled within New York State and roughly 3/4 were IDS.
+    </p>
+    <p>
+      IDS returnables had a slightly longer turn-around than non-IDS within New York State.  That can be explained by Skidmore, a nearby non-IDS library that filled many of our requests very quickly while SUNY Albany and the New York State Library (bothh IDS) were comparatively slow.  While IDS speeds up the placing of requests it doesn't speed up the lending institution or delivery mechanisms.  This are more of an issue for returnable items.
+    </p>
+  </div>
+  <div class="infocard-footer"></div>
+</a>
+
+
+<a class="infocard">
+  <div class="infocard-header">Migration to Alma</div>
+  <div class="description">
+    
+    <p>
+   We will need to bring down ConnectNY around April 15th for about two months.  This is required by III because of our transition to Alma.
+   All of our transactions need to be cleared before we can use Inn-Reach with our new system.
+    </p>
+    <p>
+ March is typically a busy month for resource sharing and it gradually tapers until June.  Faculty requests increase over the Summer, especially August but don't exceed about 50 for ConnectNY.
+    </p>
+    <p>
+    
+    </p>
+  </div>
+  <div class="infocard-footer"></div>
+</a>
+<div class="rightcol"></div>
+</section>
+
+<!--end of html-->
+
+
+<script>
+let {log} = console;
+
+const mymap = L.map('mapid', {zoom:'animate', maxZoom:10, zoomDelta:0.1, scrollWheelZoom: 'center', doubleClickZoom: 'center'}).setView([42.502222,-75.911667], 7);
+
+const waterColor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  subdomains: 'abcd',
+  minZoom: 3,
+  maxZoom: 16,
+  ext: 'png'
+});
+
+const tonerLite = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
+  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  subdomains: 'abcd',
+  minZoom: 3,
+  maxZoom: 20,
+  ext: 'png'
+}).addTo(mymap);
+
+const hyddaFull = L.tileLayer('https://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png', {
+  minZoom: 3,
+  maxZoom: 18,
+  attribution: 'Tiles courtesy of <a href="http://openstreetmap.se/" target="_blank">OpenStreetMap Sweden</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+});
+
+const openStreetMap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+});
+
+var EsriOceanBasemap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean_Basemap/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
+  minZoom: 2,
+  maxZoom: 13
+});
+
+var myStyle = {"color": "#000", "weight": 1.5, "opacity": 0.65, "fillOpacity": 0, "weight": 2};
+let ills = [], cnys = [], hist = [];
+
+illiads.forEach(function(school, i){
+  let {latlong, symbol, name, borrowed, turn, IDS} = school;
+  let total = borrowed * 100;  // 
+  let color = IDS ? 'purple' : 'firebrick';
+  let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
+
+  symbol = L.circle(latlong, {color: color, strokeWidth: 1, fillColor: color, fillOpacity: 0.25, radius: total});
+  symbol.bindTooltip(`<span class="ill">IDS: ${IDS}<br> ${name} <br>distance:${distance} mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`);
+  ills.push(symbol);
+  
+});
+
+connectnys.forEach(function(school, i){
+  let {latlong, symbol, name, borrowed} = school;
+  let total = borrowed * 25;
+  let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
+ 
+  symbol = L.circle(latlong, {color: 'blue', strokeWidth: 1, fillColor: 'skyblue', fillOpacity: 0.25, radius: total});
+  symbol.bindTooltip(`<span class="cny">${name} <br>distance:${distance}mi<br>borrowed:${borrowed}</span>`);
+  cnys.push(symbol);
+});
+
+historical.forEach(function(h, i){
+  let myIcon = L.icon({iconUrl: 'images/titanic.png', iconSize: [50, 50]});
+  symbol = L.marker([41.726931, -49.948253], {icon: myIcon});
+  hist.push(symbol);
+});
+
+const empire = L.geoJSON(empireDelivery, {"style":myStyle});
+//L.geoJSON(cnycoll,{"style":myStyle}).addData(mymap);
+
+const ill_schools = L.layerGroup(ills);
+const cny_schools = L.layerGroup(cnys);
+const historic = L.layerGroup(hist);
+var illfiltered = L.layerGroup([]);
+
+const overlayMaps = {"Empire Delivery Network": empire, "Connect NY": cny_schools, "Illiad": ill_schools, "Titanic": historic};
+const baseMaps = {"Toner-Lite": tonerLite, "Open Street Map": openStreetMap, "Hydda Full": hyddaFull, "ESRI Ocean Base Map": EsriOceanBasemap};
+
+L.control.layers(baseMaps, overlayMaps).addTo(mymap);
+
+const filterIll = function(val) {
+  let illfiler = null;  
+  illfilter = illiads.filter(ill => ill.distance > val);
+  let sumitems = illfilter.reduce(function(a,b){return a + b.borrowed;}, 0);
+  let sumturn = illfilter.reduce(function(a,b){return a + b.turn;}, 0);
+  sumturn = Math.round(sumturn/illfilter.length, 2);
+  document.getElementById('funbox').innerHTML = `<span class="ill">${val} mi from Union<br># of items: ${sumitems}<br>Avg time: ${sumturn} days</span>`;
+  let schools = [];
+  illfilter.forEach(function(school, i){
+      let {latlong, symbol, name, borrowed, turn, IDS} = school;
+      let radius = borrowed * 100;  
+      let color = IDS ? 'purple' : 'firebrick';
+      let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 2);
+      symbol = L.circle(latlong, {color: color, strokeWidth: 1, fillColor: color, fillOpacity: 0.25, radius: radius});
+      let tiptext = `<span class="ill">IDS: ${IDS}<br> ${name} <br>distance:${distance}mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`;
+      symbol.bindTooltip(tiptext);
+      schools.push(symbol);
+  });
+  illfiltered = L.layerGroup(schools);
+  if (mymap.hasLayer(ill_schools)) {
+    mymap.removeLayer(ill_schools);
+  }
+  let zoomlevel = val > 750 ? 4 : val > 400 ? 5 : 6;
+  zoomlevel = val < 250 ? 7 : zoomlevel;
+  let view = zoomlevel > 5 ? [42.817222, -73.9279] : [44.58, -103.46];
+  mymap.setZoom(zoomlevel);
+  mymap.addLayer(illfiltered);
+}
+
+mymap.on('overlayadd', function(layer){
+  let slide = document.getElementById('slider');
+  if (layer.name === "Illiad") {
+     document.getElementById('funbox').innerHTML = `<span class="ill">Use the slider or click anywhere on the map to view distance => turnaround time</span>`;
+    slide.style.visibility = 'visible';
+    if (mymap.hasLayer(illfiltered)) {
+      mymap.removeLayer(illfiltered);
+    }
+   } else if (layer.name === "Titanic") {
+      mymap.setView([41.726931, -49.948253]).setZoom(4);
+  } else {
+    slide.style.visibility = 'hidden';
+  } 
+});
+
+//mymap.on('zoom', function(){
+//  log(mymap.getZoom());
+//});
+
+mymap.on('click', function(ev) {
+    let distance = Math.round(mymap.distance(ev.latlng, [42.817222, -73.9279])/1609.34, 4);
+    distance = distance > 2500 ? 2500 : distance;
+  
+    if (mymap.hasLayer(illfiltered) || mymap.hasLayer(ill_schools)) {
+        filterIll(distance);
+    } else {
+        document.getElementById('funbox').innerHTML = `<span class="ill">${distance} mi from Union</span>`;
+    }
+    
+});
+
+document.getElementById('slider').addEventListener('change', function(e){
+  filterIll(this.value);
+});
+
+var ug = document.getElementById('ug');
+var fc = document.getElementById('fac');
+[ug, fc].forEach(function(linegraph){
+    linegraph.onload = function() {
+        let graphdoc = linegraph.contentDocument; 
+        let svgpaths = graphdoc.querySelectorAll('g');
+          log(graphdoc);
+        svgpaths.forEach(function(g) {
+            if (g.hasAttribute("clip-path")) {
+              let clip = g.getAttribute('clip-path');
+              let num = Number(clip.match(/\d+/)[0]);
+              if (num > 60 && num < 109) {
+                  let p = g.querySelector('path'); 
+                  p.style.strokeWidth = 2;
+                  
+                  if (num !== 72 && num !== 84 && num!==96 && num !== 108) {  
+                    log(typeof num);
+                   p.onmouseover = function() { p.style.stroke = 'rgba(10%, 10%, 10%, 0.5)';}
+                   p.onmouseout = function() { p.style.stroke = 'rgba(100%, 100%, 100%, 1)';}
+                  }
+              }
+            }
+          });
+    }
+});
+
+////begin d3 script
+
+var sectContain = document.getElementById("wrapper");
+let height = sectContain.offsetHeight - 300;
+let width = sectContain.offsetWidth - 100;
+
+
+let subj = ["A","B","BD","BF","BJ","BL","BX","C","D","DA","DG","DL","DR","DS","DT","E","F","G","GC","GE","GN","GR","GT","GV","H","HA","HB","HC","HD","HF","HG","HM","HN","HQ","HT","HV","J","JF","JG","JH","JJ","JV","JZ","K","KG","L","LB","LC","M","ML","N","ND","P","PA","PB","PC","PD","PF","PG","PH","PL","PN","PQ","PR","PS","PT","RC","Q","QA","QC","QD","QE","QH","R","RA","S","T","U","V","Z","ZA"];
+
+var wrapper = d3.select("#wrapper")
+   // .attr("style", "padding-bottom: " + Math.ceil(height * 100 /width) + "%")
+    .append("svg").attr("viewBox", "-50 -100 " + (width+100) + " " + (height+300));
+var chart = wrapper.append("g").attr("transform", "translate(0, 50)");
+//var data_canvas = canvas.append("g").attr("class", "data_canvas");
+
+const parseTime = d3.timeParse("%Y-%m-%d");
+var x = d3.scaleTime().range([0, width]).domain([parseTime('2013-09-15'),parseTime('2017-10-31')]).nice();
+var y = d3.scaleLinear().range([height, 0]).domain([-1, 50]).nice();
+
+const colorScale = d3.scaleOrdinal(["Student","Faculty", "Staff", "NA"]).range([ "#666", "forestgreen", "#660000", "#006600"])
+const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
+
+d3.tsv("js/ill.tsv", function(error, data) {
+  data.forEach(function(d){
+    d.turn = Number(d.turn);
+    d.date = parseTime(d.date);
+    let nm = d.name;
+    let name = nm.split(" ");
+    d.name = name.map(n => `${n[0]}${n.slice(1).toLowerCase()}`).join(" ");
+    d.distance = Number(d.distance);
+  });
+  var maxDist = Math.max(data.distance);
+  chart.selectAll(".dot")
+    .data(data)
+    .enter().append("circle")
+    .attr("class", "dot")
+    .style("fill", function(d) {
+      return colorScale(d.status);
+    })
+    .attr("cx", function(d) { return x(d.date);})
+    .attr("cy", function(d) { return y(d.turn);})
+    .attr("r", "4")
+    .on("mouseover", function(d) {
+      let tip = `${d.name}, ${d.state}<br>distance: ${d.distance} miles<br>${d.status}`;
+      tooltip.transition()
+        .duration(200)
+        .style("opacity", .9);
+      tooltip.html(tip)
+        .style("left", (d3.event.pageX + 15) + "px")
+        .style("top", (d3.event.pageY - 25) + "px");
+    })
+    .on("mouseout", function(d) {
+      tooltip.transition()
+        .duration(500)
+        .style("opacity", 0);
+    });
+
+
+//var y = d3.scaleLinear().range([height, 0]).domain([-0, 3000]).nice();
+    var yAxisCall = d3.axisLeft(y);
+    var xAxisCall = d3.axisBottom(x);
+
+    function initAxis() {
+        chart.append("g").attr("transform", "translate(0," + height + ")").call(xAxisCall)
+          .selectAll("text").attr("y", 0).attr("x",-10).style("opacity", "0.75").style("font-size", "10px")
+          .style("text-anchor", "end").style("transform", "rotate(270deg)");
+        chart.append("g").call(yAxisCall)
+          .style("opacity", "0.75").style("font-size", "10px").style("text-anchor", "top");;
+    }
+
+     function updateAxis() {
+      var t = d3.transition().duration(500);
+      chart.select(".x").transition(t).call(xAxisCall);
+      chart.select(".y").transition(t).call(yAxisCall);
+    }
+
+    function setScale(d) {
+      x.domain(d3.extent(data, function(d) { return d.date; })).range([0, width - 100]);
+      //y = d3.scaleLinear().range([height, 0]).domain([0, 3000]).nice();
+      y.domain(d3.extent(data, function(d) { return d.distance; })).range([height - 100, 0]);
+      xAxisCall;
+      yAxisCall;
+    }
+
+   initAxis();
+
+   d3.select("#d3")
+    .on('click', function(){
+      setScale();
+      updateAxis();
+      log('huh');
+   })
+    
+});
+
+
+let newschools = [
+{"symbol":"AZS", "name":"Arizona State University", "borrowed":"3", "latlng":[33.4211311,-111.928932]},
+{"symbol":"CBU", "name":"US Bureau of the Census", "borrowed":"3", "latlng":[38.8754, -76.995]}, 
+{"symbol":"CRL", "borrowed":"3"}, 
+{"symbol":"CS1", "borrowed":"3"}, 
+{"symbol":"CSB", "borrowed":"3"}, 
+{"symbol":"FEC", "borrowed":"3"}, 
+{"symbol":"FUG", "borrowed":"3"}, 
+{"symbol":"GZM", "borrowed":"3"}, 
+{"symbol":"IAK", "borrowed":"3"}, 
+{"symbol":"IWC", "borrowed":"3"}, 
+{"symbol":"KKU", "borrowed":"3"}, 
+{"symbol":"MIQ", "borrowed":"3"}, 
+{"symbol":"MNG", "borrowed":"3"}, 
+{"symbol":"NOC", "borrowed":"3"}, 
+{"symbol":"NUI", "borrowed":"3"}, 
+{"symbol":"PTP", "borrowed":"3"}, 
+{"symbol":"OWU", "borrowed":"3"}, 
+{"symbol":"PAU", "borrowed":"3"}, 
+{"symbol":"VUE", "borrowed":"3"}, 
+{"symbol":"VVS", "borrowed":"3"}, 
+{"symbol":"VYD", "borrowed":"3"}, 
+{"symbol":"WKG", "borrowed":"3"}, 
+{"symbol":"XBM", "borrowed":"3"}, 
+{"symbol":"XFM", "borrowed":"3"}, 
+{"symbol":"YVO", "borrowed":"3"}, 
+{"symbol":"ZIH", "borrowed":"3"}, 
+];
+
+
+for ( i in newschools) {
+  let n = newschools[i];
+  //n["distance"] = Math.round(mymap.distance(n.latlng, [42.817222, -73.9279])/1609.34, 4);
+  //log(JSON.stringify(n));
+  let urlstr = `http://www.worldcat.org/webservices/registry/lookup/Institutions/oclcSymbol/${n.symbol}?serviceLabel=content`;
+  var myHeaders = new Headers();
+  var myInit = { method: 'GET', headers: myHeaders, mode: 'cors', cache: 'default' };
+  var myRequest = new Request(urlstr, myInit);
+  fetch(myRequest).then(function(response) {
+     log(response.text);
+  });
+}
+
+// fetch(myRequest).then(function(response) {
+//   return response.text;
+// }).then(function(myTxt) {
+//   log(myTxt);
+// });
+/*
+
+ 
+
+{"symbol":"BRL", "borrowed":"2"}, 
+{"symbol":"CDF", "borrowed":"2"}, 
+{"symbol":"CDS", "borrowed":"2"}, 
+{"symbol":"COC", "borrowed":"2"}, 
+{"symbol":"CPL", "borrowed":"2"}, 
+{"symbol":"CQU", "borrowed":"2"}, 
+{"symbol":"CRU", "borrowed":"2"}, 
+{"symbol":"CUS", "borrowed":"2"}, 
+{"symbol":"CWC", "borrowed":"2"}, 
+{"symbol":"DLC", "borrowed":"2"}, 
+{"symbol":"DVP", "borrowed":"2"}, 
+{"symbol":"EGA", "borrowed":"2"}, 
+{"symbol":"EXA", "borrowed":"2"}, 
+{"symbol":"EZC", "borrowed":"2"}, 
+{"symbol":"FNN", "borrowed":"2"}, 
+{"symbol":"FNP", "borrowed":"2"}, 
+{"symbol":"FWA", "borrowed":"2"}, 
+{"symbol":"FWR", "borrowed":"2"}, 
+{"symbol":"FXG", "borrowed":"2"}, 
+{"symbol":"GEBAY", "borrowed":"2"}, 
+{"symbol":"GRC", "borrowed":"2"}, 
+{"symbol":"HMY", "borrowed":"2"}, 
+{"symbol":"IAU", "borrowed":"2"}, 
+{"symbol":"ICY", "borrowed":"2"}, 
+{"symbol":"ION", "borrowed":"2"}, 
+{"symbol":"IPL", "borrowed":"2"}, 
+{"symbol":"ISU", "borrowed":"2"}, 
+{"symbol":"IVU", "borrowed":"2"}, 
+{"symbol":"IMF", "borrowed":"2"}, 
+{"symbol":"IND", "borrowed":"2"}, 
+{"symbol":"JNA", "borrowed":"2"}, 
+{"symbol":"KKC", "borrowed":"2"}, 
+{"symbol":"KKW", "borrowed":"2"}, 
+{"symbol":"KNJ", "borrowed":"2"}, 
+{"symbol":"LNU", "borrowed":"2"}, 
+{"symbol":"MBB", "borrowed":"2"}, 
+{"symbol":"MFM", "borrowed":"2"}, 
+{"symbol":"MJP", "borrowed":"2"}, 
+{"symbol":"MNI", "borrowed":"2"}, 
+{"symbol":"MOS", "borrowed":"2"}, 
+{"symbol":"MVA", "borrowed":"2"}, 
+{"symbol":"NDD", "borrowed":"2"}, 
+{"symbol":"NED", "borrowed":"2"}, 
+{"symbol":"NTE", "borrowed":"2"}, 
+{"symbol":"OKD", "borrowed":"2"}, 
+{"symbol":"OPU", "borrowed":"2"}, 
+{"symbol":"OTZ", "borrowed":"2"}, 
+{"symbol":"QUE", "borrowed":"2"}, 
+{"symbol":"RVE", "borrowed":"2"}, 
+{"symbol":"SCL", "borrowed":"2"}, 
+{"symbol":"TME", "borrowed":"2"}, 
+{"symbol":"TUC", "borrowed":"2"}, 
+{"symbol":"TWS", "borrowed":"2"}, 
+{"symbol":"TXA", "borrowed":"2"}, 
+{"symbol":"UBC", "borrowed":"2"}, 
+{"symbol":"VA@", "borrowed":"2"}, 
+{"symbol":"VFL", "borrowed":"2"}, 
+{"symbol":"VHB", "borrowed":"2"}, 
+{"symbol":"VKC", "borrowed":"2"}, 
+{"symbol":"VVJ", "borrowed":"2"}, 
+{"symbol":"WAU", "borrowed":"2"}, 
+{"symbol":"WHE", "borrowed":"2"}, 
+{"symbol":"WIH", "borrowed":"2"}, 
+{"symbol":"XLM", "borrowed":"2"}, 
+{"symbol":"XMC", "borrowed":"2"}, 
+{"symbol":"XMM", "borrowed":"2"}, 
+{"symbol":"XQM", "borrowed":"2"}, 
+{"symbol":"YJL", "borrowed":"2"}, 
+{"symbol":"YJM", "borrowed":"2"}, 
+{"symbol":"YLC", "borrowed":"2"}, 
+{"symbol":"YPM", "borrowed":"2"}, 
+{"symbol":"YUM", "borrowed":"2"}, 
+{"symbol":"ZAE", "borrowed":"2"}, 
+{"symbol":"ZFM", "borrowed":"2"}, 
+{"symbol":"ZLM", "borrowed":"2"}, 
+{"symbol":"ZVM", "borrowed":"2"}, 
+{"symbol":"AERDC", "borrowed":"1"}, 
+{"symbol":"AGL", "borrowed":"1"}, 
+{"symbol":"AKD", "borrowed":"1"}, 
+{"symbol":"AL5CW", "borrowed":"1"}, 
+{"symbol":"ALQ", "borrowed":"1"}, 
+{"symbol":"APK", "borrowed":"1"}, 
+{"symbol":"ASU", "borrowed":"1"}, 
+{"symbol":"BCN", "borrowed":"1"}, 
+{"symbol":"BNT", "borrowed":"1"}, 
+{"symbol":"BOS", "borrowed":"1"}, 
+{"symbol":"CCJ", "borrowed":"1"}, 
+{"symbol":"CIN", "borrowed":"1"}, 
+{"symbol":"COA", "borrowed":"1"}, 
+{"symbol":"COD", "borrowed":"1"}, 
+{"symbol":"COR", "borrowed":"1"}, 
+{"symbol":"CPD", "borrowed":"1"}, 
+{"symbol":"CSC", "borrowed":"1"}, 
+{"symbol":"CTB", "borrowed":"1"}, 
+{"symbol":"DAD", "borrowed":"1"}, 
+{"symbol":"DEH", "borrowed":"1"}, 
+{"symbol":"DLH", "borrowed":"1"}, 
+{"symbol":"DPL", "borrowed":"1"}, 
+{"symbol":"EAS", "borrowed":"1"}, 
+{"symbol":"EEM", "borrowed":"1"}, 
+{"symbol":"EMI", "borrowed":"1"}, 
+{"symbol":"ERH", "borrowed":"1"}, 
+{"symbol":"ETS", "borrowed":"1"}, 
+{"symbol":"EUL", "borrowed":"1"}, 
+{"symbol":"EV5", "borrowed":"1"}, 
+{"symbol":"EXW", "borrowed":"1"}, 
+{"symbol":"EYE", "borrowed":"1"}, 
+{"symbol":"FBA", "borrowed":"1"}, 
+{"symbol":"FER", "borrowed":"1"}, 
+{"symbol":"FHC", "borrowed":"1"}, 
+{"symbol":"FLA", "borrowed":"1"}, 
+{"symbol":"FNO", "borrowed":"1"}, 
+{"symbol":"FQG", "borrowed":"1"}, 
+{"symbol":"FXN", "borrowed":"1"}, 
+{"symbol":"GCO", "borrowed":"1"}, 
+{"symbol":"GKJ", "borrowed":"1"}, 
+{"symbol":"GSE", "borrowed":"1"}, 
+{"symbol":"GSU", "borrowed":"1"}, 
+{"symbol":"GUA", "borrowed":"1"}, 
+{"symbol":"GXR", "borrowed":"1"}, 
+{"symbol":"GYD", "borrowed":"1"}, 
+{"symbol":"GZN", "borrowed":"1"}, 
+{"symbol":"GZT", "borrowed":"1"}, 
+{"symbol":"H4N", "borrowed":"1"}, 
+{"symbol":"HCD", "borrowed":"1"}, 
+{"symbol":"HCO", "borrowed":"1"}, 
+{"symbol":"HLQ", "borrowed":"1"}, 
+{"symbol":"HQC", "borrowed":"1"}, 
+{"symbol":"HS2", "borrowed":"1"}, 
+{"symbol":"HUH", "borrowed":"1"}, 
+{"symbol":"IAD", "borrowed":"1"}, 
+{"symbol":"IAF", "borrowed":"1"}, 
+{"symbol":"IAO", "borrowed":"1"}, 
+{"symbol":"IAT", "borrowed":"1"}, 
+{"symbol":"IAX", "borrowed":"1"}, 
+{"symbol":"IAY", "borrowed":"1"}, 
+{"symbol":"IBS", "borrowed":"1"}, 
+{"symbol":"IC8", "borrowed":"1"}, 
+{"symbol":"IF9", "borrowed":"1"}, 
+{"symbol":"IOJ", "borrowed":"1"}, 
+{"symbol":"ITU", "borrowed":"1"}, 
+{"symbol":"IV7", "borrowed":"1"}, 
+{"symbol":"IVD", "borrowed":"1"}, 
+{"symbol":"IWU", "borrowed":"1"}, 
+{"symbol":"JCD", "borrowed":"1"}, 
+{"symbol":"JHE", "borrowed":"1"}, 
+{"symbol":"KBE", "borrowed":"1"}, 
+{"symbol":"KFH", "borrowed":"1"}, 
+{"symbol":"KFP", "borrowed":"1"}, 
+{"symbol":"KPL", "borrowed":"1"}, 
+{"symbol":"KSB", "borrowed":"1"}, 
+{"symbol":"KUK", "borrowed":"1"}, 
+{"symbol":"KZS", "borrowed":"1"}, 
+{"symbol":"LAD", "borrowed":"1"}, 
+{"symbol":"LCE", "borrowed":"1"}, 
+{"symbol":"LHA", "borrowed":"1"}, 
+{"symbol":"LIQ", "borrowed":"1"}, 
+{"symbol":"LM1", "borrowed":"1"}, 
+{"symbol":"LVQ", "borrowed":"1"}, 
+{"symbol":"MAN", "borrowed":"1"}, 
+{"symbol":"MAS", "borrowed":"1"}, 
+{"symbol":"MEA", "borrowed":"1"}, 
+{"symbol":"MHA", "borrowed":"1"}, 
+{"symbol":"MIA", "borrowed":"1"}, 
+{"symbol":"MJC", "borrowed":"1"}, 
+{"symbol":"MKN", "borrowed":"1"}, 
+{"symbol":"MLA", "borrowed":"1"}, 
+{"symbol":"MND", "borrowed":"1"}, 
+{"symbol":"MNF", "borrowed":"1"}, 
+{"symbol":"MNU", "borrowed":"1"}, 
+{"symbol":"MQY", "borrowed":"1"}, 
+{"symbol":"MR3", "borrowed":"1"}, 
+{"symbol":"MTC", "borrowed":"1"}, 
+{"symbol":"MUQ", "borrowed":"1"}, 
+{"symbol":"MZF", "borrowed":"1"}, 
+{"symbol":"NAB", "borrowed":"1"}, 
+{"symbol":"NAX", "borrowed":"1"}, 
+{"symbol":"NDJ", "borrowed":"1"}, 
+{"symbol":"NDU", "borrowed":"1"}, 
+{"symbol":"NGA", "borrowed":"1"}, 
+{"symbol":"NGU", "borrowed":"1"}, 
+{"symbol":"NHI", "borrowed":"1"}, 
+{"symbol":"NHM", "borrowed":"1"}, 
+{"symbol":"NJI", "borrowed":"1"}, 
+{"symbol":"NLY", "borrowed":"1"}, 
+{"symbol":"NMP", "borrowed":"1"}, 
+{"symbol":"NOS", "borrowed":"1"}, 
+{"symbol":"NRU", "borrowed":"1"}, 
+{"symbol":"NTG", "borrowed":"1"}, 
+{"symbol":"NYP", "borrowed":"1"}, 
+{"symbol":"OHDNW", "borrowed":"1"}, 
+{"symbol":"OLA", "borrowed":"1"}, 
+{"symbol":"ONU", "borrowed":"1"}, 
+{"symbol":"OQP", "borrowed":"1"}, 
+{"symbol":"ORU", "borrowed":"1"}, 
+{"symbol":"ORZ", "borrowed":"1"}, 
+{"symbol":"OSO", "borrowed":"1"}, 
+{"symbol":"OSS", "borrowed":"1"}, 
+{"symbol":"OSU", "borrowed":"1"}, 
+{"symbol":"OUC", "borrowed":"1"}, 
+{"symbol":"PLT", "borrowed":"1"}, 
+{"symbol":"QT5", "borrowed":"1"}, 
+{"symbol":"RBN", "borrowed":"1"}, 
+{"symbol":"REC", "borrowed":"1"}, 
+{"symbol":"SAP", "borrowed":"1"}, 
+{"symbol":"SDE", "borrowed":"1"}, 
+{"symbol":"SF8", "borrowed":"1"}, 
+{"symbol":"SFB", "borrowed":"1"}, 
+{"symbol":"SFP", "borrowed":"1"}, 
+{"symbol":"SLU", "borrowed":"1"}, 
+{"symbol":"SLY", "borrowed":"1"}, 
+{"symbol":"SPI", "borrowed":"1"}, 
+{"symbol":"SUF", "borrowed":"1"}, 
+{"symbol":"SYB", "borrowed":"1"}, 
+{"symbol":"TEU", "borrowed":"1"}, 
+{"symbol":"TIE", "borrowed":"1"}, 
+{"symbol":"TJC", "borrowed":"1"}, 
+{"symbol":"TRB", "borrowed":"1"}, 
+{"symbol":"TS4", "borrowed":"1"}, 
+{"symbol":"TXH", "borrowed":"1"}, 
+{"symbol":"UAF", "borrowed":"1"}, 
+{"symbol":"UAU", "borrowed":"1"}, 
+{"symbol":"UB#", "borrowed":"1"}, 
+{"symbol":"UMV", "borrowed":"1"}, 
+{"symbol":"UNA", "borrowed":"1"}, 
+{"symbol":"UOJ", "borrowed":"1"}, 
+{"symbol":"UOK", "borrowed":"1"}, 
+{"symbol":"UPM", "borrowed":"1"}, 
+{"symbol":"UWW", "borrowed":"1"}, 
+{"symbol":"UZ0", "borrowed":"1"}, 
+{"symbol":"VDB", "borrowed":"1"}, 
+{"symbol":"VGK", "borrowed":"1"}, 
+{"symbol":"VNF", "borrowed":"1"}, 
+{"symbol":"VOC", "borrowed":"1"}, 
+{"symbol":"VQT", "borrowed":"1"}, 
+{"symbol":"VVB", "borrowed":"1"}, 
+{"symbol":"VVN", "borrowed":"1"}, 
+{"symbol":"VWB", "borrowed":"1"}, 
+{"symbol":"VXE", "borrowed":"1"}, 
+{"symbol":"VXL", "borrowed":"1"}, 
+{"symbol":"VXT", "borrowed":"1"}, 
+{"symbol":"VXZ", "borrowed":"1"}, 
+{"symbol":"VYL", "borrowed":"1"}, 
+{"symbol":"VYR", "borrowed":"1"}, 
+{"symbol":"VZH", "borrowed":"1"}, 
+{"symbol":"VZJ", "borrowed":"1"}, 
+{"symbol":"VZV", "borrowed":"1"}, 
+{"symbol":"WIS", "borrowed":"1"}, 
+{"symbol":"WY6", "borrowed":"1"}, 
+{"symbol":"WZJ", "borrowed":"1"}, 
+{"symbol":"XCA", "borrowed":"1"}, 
+{"symbol":"XIM", "borrowed":"1"}, 
+{"symbol":"YAM", "borrowed":"1"}, 
+{"symbol":"YEQ", "borrowed":"1"}, 
+{"symbol":"YFM", "borrowed":"1"}, 
+{"symbol":"YGM", "borrowed":"1"}, 
+{"symbol":"YSY", "borrowed":"1"}, 
+{"symbol":"YTM", "borrowed":"1"}, 
+{"symbol":"Z5A", "borrowed":"1"}, 
+{"symbol":"ZAP", "borrowed":"1"}, 
+{"symbol":"ZBM", "borrowed":"1"}, 
+{"symbol":"ZCM", "borrowed":"1"}, 
+{"symbol":"ZCZ", "borrowed":"1"}, 
+{"symbol":"ZEM", "borrowed":"1"}, 
+{"symbol":"ZGM", "borrowed":"1"}, 
+{"symbol":"ZWC", "borrowed":"1"}, 
+{"symbol":"ZXC", "borrowed":"1"}, 
+{"symbol":"ZXW", "borrowed":"1"}, 
+ 
+*/
+</script>
+
+
+</body>
+</html>
