@@ -328,8 +328,6 @@ const illfaculty = [
 ];
 
 
-
-
 const fillPopular = function(cny, ill, div) {
     let txtbox = document.querySelector(div);
     txtbox.innerHTML='';
@@ -343,6 +341,8 @@ const fillPopular = function(cny, ill, div) {
       txtbox.innerHTML += `${lc} <span class=${cls}>${subj} (${count})</span><br>`;  
     }
 }
+
+
 
 
 

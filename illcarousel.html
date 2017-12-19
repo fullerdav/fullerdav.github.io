@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/scatter.css" charset="utf-8" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
+  
+  <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
+  <!--script src="leaflet/leaflet.js"></script-->
+  <script src="js/mapdata.js"></script>
+  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+body {
+   background-color: rgba(90%, 90%, 90%, 0.5);
+}
+
+.btn {
+    background-color: #fff;
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.2;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+    --webkit-transition: all .2s ease-in-out;
+    --o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;  
+}
+
+
+#header {
+  top: 0px;
+  padding: 4px;
+  font-size: 1.35em;
+  font-family: Roboto-slab;
+  line-height: 1.2;
+  position: fixed;
+  height: 36px;
+  z-index: 1500;
+  width: 100%;
+  text-align: center;
+  background-color: #fff;
+  color: #333;
+  --webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+  --moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+}
+
+#container {
+  margin: 30px auto;
+  position:relative;
+  perspective:1800px;
+  perspective-origin:80% 10%;
+  width:calc(100% - 60px);
+  height:calc(100vh - 60px);
+}
+#carousel {
+  width:inherit;
+  height:inherit;
+  position:absolute;
+  top:0;
+  left:0;
+  margin:0 auto;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+}
+
+figure {  
+  font-family: segoe-ui-semilight;
+  position:absolute;
+  top:0;
+  left:0; 
+  width:calc(100% - 60px);
+  height:calc(100vh - 60px);
+  backface-visibility:hidden;
+}
+
+.infocard-header {
+  background-color: hsla(200, 30%, 55%, 0.3);
+  color: #222;
+  text-align: left;
+  font-weight: 600;
+  padding: 8px 16px;
+  font-kerning: auto;
+  letter-spacing: .05em;
+}
+
+.center {
+   text-align: center;
+}
+.cny {
+  color: blue;
+}
+.ill {
+  color: red;
+}
+
+.infocard {
+  position:relative;
+}
+
+#summary {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+}
+
+#summary .infocard {
+    height:33%;
+    border-radius:8px;
+    font-size:.9em;
+    height:auto;
+}
+
+#summary p {
+    padding: 8px;
+    margin: auto;
+    font-weight: 300;
+    text-align: left;
+    width:90%;
+}
+
+#linegraph {
+  background:#fff;
+  display:grid;
+  grid-template-columns:49% 49%;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+#linegraph .infocard {
+    background-color: #fff;
+    color: #333;
+    height:auto;
+}
+
+.faculty, .student {
+  padding-left: 8%;
+  font-size: .8em;
+  padding-left: 8%; 
+  white-space:pre;
+  font-kerning:auto;
+}
+
+#mapid { 
+  height: 85%; 
+  width: 100%;
+  margin:auto;
+}
+
+#map .infocard-footer {
+   width:80%;
+   display:grid;
+   grid-template-columns: 1fr 25%;
+}
+
+#funbox {
+    border: 2px solid rgba(198,198,198,0.9);
+    font-size:0.9rem;
+    padding: 8px;
+    background: #fcfcfc;
+    opacity: 0.9;
+    height: auto;
+    --webkit-box-shadow:inset 1px 1px 1px 1px #d9d9d9;
+    box-shadow:inset 1px 1px 1px 1px #d9d9d9;
+}
+
+input#slider {
+  margin-top:8px;
+  visibility:hidden;
+  color:red;
+  width:100%;
+}
+
+.fa-angle-left {
+  margin-right: 36px;
+}
+.fa-angle-left {
+  margin-left: 36px;
+}
+.fa path {
+   fill: #666;
+}
+</style>
+</head>
+<body>
+
+<div id="header">
+<i data-direction="left" class="fas fa-angle-left"></i>
+A comparison of returnables borrowed via <span class="ill center">Illiad</span> and <span class="cny">ConnectNY</span>from Fall 2013 through Summer 2017
+<i data-direction="right" class="fas fa-angle-right"></i>
+</div>
+
+<div id="container">
+<div id="carousel">
+
+
+
+
+<figure id="summary">
+<a class="infocard">
+    <div class="infocard-header">ConnectNY vs ILL</div>
+    <div class="description">
+        <p> 
+         <span class="cny">ConnectNY (6428)</span> has been used more than <span class="ill">ILL (2082)</span> over this 4 year period.  Students (<span class="cny">4310</span>/<span class="ill">969</span>) more than Faculty (<span class="cny">2118</span>/<span class="ill">1113</span>).
+        </p>
+        <p>
+          There are more than 10x as many students as faculty.
+        </p>
+        <p>
+         We typically say that ConnectNY takes about a week.  That is roughly the median turnaround for ILL.  So while ILL may take longer at least half of the requests are filled with the same timeliness.  Within NY State the median turn around time for ILL is only 5 days which compares favorably to ConnectNY.
+        </p><p>
+         Turnaround varies more by library than any other factor.  Average time to receive an item from SUNY Albany is 4.48 days, the New York State Library is 4.88,  while Skidmore is 2.63.  We receive items faster from Davidson College in North Carolina (4.62) than from Albany.  
+        </p>
+        <p>
+        While we borrow items from all over the world international requests take longer and are probably outliers for this analysis.
+        </p>
+    </div> 
+</a>
+
+<a class="infocard">
+    <div class="infocard-header">IDS notes</div>
+    <div class="description">
+    <p>
+    We've been using IDS for about a year.  IDS automates the more routine tasks, searching our catalog and remote catalogs to determine availability and routing requests more intelligently (than bare OCLC).
+    </p>
+    <p>
+    From January through September 2017 Union borrowed 573 returnables via Illiad, with 184 requests being filled within New York State and 136 of those were filled by IDS libraries. That is roughly 1/3 filled within New York State and roughly 3/4 were IDS.
+    </p>
+    <p>
+    IDS returnables had a slightly longer turn-around than non-IDS within New York State.  That can be explained by Skidmore, a nearby non-IDS library that filled many of our requests very quickly while SUNY Albany and the New York State Library (bothh IDS) were comparatively slow.  While IDS speeds up the placing of requests it doesn't speed up the lending institution or delivery mechanisms.  This are more of an issue for returnable items.
+    </p>
+    </div>
+</a>
+
+<a class="infocard">
+    <div class="infocard-header">Migration to Alma</div>
+    <div class="description">
+        <p>
+        We will need to bring down ConnectNY around April 15th for about two months.  This is required by III because of our transition to Alma.
+        All of our transactions need to be cleared before we can use Inn-Reach with our new system.
+        </p>
+        <p>
+        March is typically a busy month for resource sharing and it gradually tapers until June.  Faculty requests increase over the Summer, especially August but don't exceed about 50 for ConnectNY.
+        </p>
+    </div>
+</a>
+</figure>
+
+
+<figure id="linegraph">
+    <a class="infocard">
+      <div class="infocard-header">Student</div>
+      <div class="description svg">
+          <object id="ug" type="image/svg+xml" data="undergraduate.svg"></object>
+          <span class="requests">Most requested:</span>
+          <button class="btn ill" onclick='fillPopular(null, illstudent, ".student");'>ILL</button>
+          <button class="btn cny" onclick='fillPopular(cnystudent, null, ".student");'>ConnectNY</button>
+      </div>
+       <div class="infocard-footer student"></div>
+    </a>
+
+    <a class="infocard">
+      <div class="infocard-header">Faculty</div>
+      <div class="description svg">
+          <object id="fac" type="image/svg+xml" data="faculty.svg"></object>
+          <span class="requests">Most requested:</span>
+          <button class="btn ill" onclick='fillPopular(null, illfaculty, ".faculty");'>ILL</button>
+          <button class="btn cny" onclick='fillPopular(cnyfaculty, null, ".faculty");'>ConnectNY</button>
+      </div>
+       <div class="infocard-footer faculty"></div>
+   </a>
+</figure>
+
+<figure id="turn">
+    <a class="infocard">
+      <div class="infocard-header">ILL turnaround time, Fall 2013 through Summer 2017</div>
+      <div class="description svg">
+          <object type="image/svg+xml" data="turnaround.svg"></object>
+      </div>
+    </a>
+         <ul style="list-style-type:none; line-height:1.4em">
+          <li>
+          Turn around time here refers to the lender's receipt of our request and our receipt of the returnable item
+          </li>
+          <li>
+          A boxplot shows a range of values according to quartiles, or 4 equal groups. 
+          </li><li>
+          The band across the middle is the <b>median</b> and it is pretty steady across 4 years, <b>about 7 days</b>.
+          </li><li>
+          Extreme outliers (greater than 21 days) were excluded from the graph.
+          </li>
+          </ul>
+</figure>
+
+<figure>
+  <div id="d3">
+    <div id="wrapper"></div>
+  </div>
+</figure>
+
+
+<figure>
+  <a class="infocard">
+  <div class="infocard-header">
+   Total volume of requests with distance and avg turn around time (Illiad only) from each lender
+  </div>
+  <div class="description" id="mapid">
+  </div>
+  <div class="infocard-footer">
+  <div id="goals">
+   
+    </div>
+  <div id="fundiv">
+      <div id="funbox"></div>
+      <input type="range" min="0" max="2500" value="0" step="100" id="slider">
+  </div>
+  </div>
+</a> 
+</figure>
+
+</div>
+</div>
+<!--end of html-->
+
+<script>
+let {log} = console;
+
+const dims = function() {
+   return {"height": window.innerHeight, "width":window.innerWidth};
+}
+
+let tz = Math.round((dims().width / 2) / Math.tan(Math.PI / 5));
+
+let header = document.getElementById("header");
+let carousel = document.getElementById('carousel');
+let container = document.getElementById('container');
+let rotate = 0;
+
+let figures = [...document.querySelectorAll("figure")];
+
+for (f in figures) {
+  let figstyle = figures[f].style;
+  let rota = f * 72;
+  figstyle['transform'] = `rotateY(${rota}deg) translateZ(${tz}px)`;
+}
+
+
+header.addEventListener('wheel', function(e){
+      rotate += e.deltaY < 0 ? -72 : 72;
+      carousel.style["transform"] = `translateZ(-${tz}px) rotateY(${rotate}deg)`;
+      e.preventDefault();
+}, {passive:false});
+
+header.addEventListener('click', function(e){
+      let dir = e.target.dataset;
+      if (dir.direction === 'left') {
+        rotate += +72;
+      } else {
+        rotate += -72;
+      }
+      carousel.style["transform"] = `translateZ(-${tz}px) rotateY(${rotate}deg)`;
+      e.preventDefault();
+}, {passive:false});
+
+carousel.style["transform"] = `translateZ(-${tz}px) rotateY(0deg)`;
+
+var ug = document.getElementById('ug');
+var fc = document.getElementById('fac');
+[ug, fc].forEach(function(linegraph){
+    linegraph.onload = function() {
+        let graphdoc = linegraph.contentDocument; 
+        let svgpaths = graphdoc.querySelectorAll('g');
+        svgpaths.forEach(function(g) {
+            if (g.hasAttribute("clip-path")) {
+              let clip = g.getAttribute('clip-path');
+              let num = Number(clip.match(/\d+/)[0]);
+              if (num > 60 && num < 109) {
+                  let p = g.querySelector('path'); 
+                  p.style.strokeWidth = 2;
+                  
+                  if (num !== 72 && num !== 84 && num!==96 && num !== 108) {  
+                   p.onmouseover = function() { p.style.stroke = 'rgba(10%, 10%, 10%, 0.5)';}
+                   p.onmouseout = function() { p.style.stroke = 'rgba(100%, 100%, 100%, 1)';}
+                  }
+              }
+            }
+          });
+    }
+});
+
+</script>
+
+<script src="js/leaflet-ill.js"></script>
+<script src="js/d3ill.js"></script>
+
+</body>
+</html>

@@ -2125,37 +2125,3 @@
 "zoua"	"2016-11-14"	"CDF"	"FORT LEWIS COLLEGE"	"CO"	false	"12"	"Student"	"0"
 "zoua"	"2017-03-20"	"CSA"	"CALIFORNIA STATE UNIV, SACRAMENTO"	"CA"	false	"14"	"Student"	"0"
 "zwickerw"	"2015-10-16"	"WYU"	"UNIVERSITY of WYOMING LIBRARY"	"WY"	false	"7"	"Faculty"	"1617"
-
-/*
-Identifiers
-WorldCat Registry ID:	2062
-OCLC Symbol:	ZWU
-OCLC Account Name:	UNION COL
-International Standard Identifier for Libraries (ISIL):	OCLC-ZWU
-MARC Organization Code:	NSchU
-
-{"symbol":"MUM","name":"UNIVERSITY OF MISSISSIPPI","borrowed":"5","latlng":[37.056736,-87.297896],"distance":811}
-{"symbol":"RRR","name":"UNIVERSITY OF ROCHESTER","borrowed":"5","latlng":[38.725518,-83.794701],"distance":588}
-{"symbol":"WKM","name":"SUNY COBLESKILL","borrowed":"5","latlng":[42.842821,-75.662029],"distance":88}
-{"symbol":"CFI","name":"CALIFORNIA STATE UNIVERSITY FULLERTON","borrowed":"4","latlng":[33.882927,-117.886884],"distance":2431}
-{"symbol":"CLU","name":"UNIVERSITY OF CALIFORNIA, LOS ANGELES","borrowed":"4","latlng":[33.963781,-118.129464],"distance":2441}
-{"symbol":"CSA","name":"CALIFORNIA STATE UNIVERSITY-SACRAMENTO LIBRARY","borrowed":"4","latlng":[35.941648,-119.666399],"distance":2458}
-{"symbol":"CSF","name":"SAN FRANCISCO STATE UNIVERSITY","borrowed":"4","latlng":[38.487272,-112.763689],"distance":2039}
-{"symbol":"CTW","name":"EASTERN CONNECTICUT STATE UNIVERSITY","borrowed":"4","latlng":[40.10319,-97.673078],"distance":1240}
-{"symbol":"DKB","name":"ROYAL DANISH LIBRARY - COPENHAGEN","borrowed":"4","latlng":[55.673386,12.58252],"distance":3737}
-{"symbol":"DRB","name":"DARTMOUTH COLLEGE","borrowed":"4","latlng":[43.704441,-72.288694],"distance":103}
-{"symbol":"IBK","name":"KNOX COLLEGE","borrowed":"4","latlng":[42.42127,-76.832372],"distance":150}
-{"symbol":"MOR","name":"MORAVIAN COLLEGE","borrowed":"4","latlng":[42.532819,-86.881494],"distance":658}
-{"symbol":"MTG","name":"UNIVERSITY OF MONTANA","borrowed":"4","latlng":[43.595383,-105.947312],"distance":1603}
-{"symbol":"RES","name":"EASTMAN SCHOOL OF MUSIC","borrowed":"4","latlng":[42.012171,-79.719342],"distance":301}
-{"symbol":"TMA","name":"UNIVERSITY OF MEMPHIS","borrowed":"4","latlng":[38.95558,-84.223426],"distance":600}
-{"symbol":"UAB","name":"UNIVERSITY OF ALBERTA","borrowed":"4","latlng":[38.229045,-93.534058],"distance":1075}
-{"symbol":"VVP","name":"BARD COLLEGE","borrowed":"4","latlng":[40.387944,-82.500681],"distance":473}
-{"symbol":"VYG","name":"FINGER LAKES LIBRARY SYSTEM","borrowed":"4","latlng":[42.323027,-75.688335],"distance":96}
-{"symbol":"WOO","name":"THE COLLEGE OF WOOSTER","borrowed":"4","latlng":[40.082105,-91.643003],"distance":935}
-{"symbol":"XJM","name":"SCHENECTADY COUNTY COMMUNITY COLLEGE","borrowed":"4","latlng":[42.646088,-75.119506],"distance":62}
-{"symbol":"YBM","name":"SUNY BUFFALO STATE COLLEGE","borrowed":"4","latlng":[42.853608,-75.573075],"distance":83}
-{"symbol":"YCM","name":"SUNY COLLEGE AT CORTLAND","borrowed":"4","latlng":[42.603692,-76.225534],"distance":118}
-{"symbol":"ZMC","name":"MANHATTAN COLLEGE","borrowed":"4","latlng":[41.306521,-74.452916],"distance":108}
-{"symbol":"ZQM","name":"SUNY COLLEGE AT POTSDAM","borrowed":"4","latlng":[42.429263,-74.331667],"distance":34}
-{"symbol":"ZTM","name":"MID-YORK LIBRARY SYSTEM","borrowed":"4","latlng":[43.911443,-75.111433],"distance":96} */
