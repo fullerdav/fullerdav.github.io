@@ -15,11 +15,11 @@
       font-size:1.25em;
     }
     #container {
-      width:1728px;
+      width:1800px;
       height:780px;
     }
     figure {
-      width:1728px;
+      width:1800px;
       height:780px;
     }
 }
@@ -28,11 +28,11 @@
       font-size:1.1em;
     }
     #container {
-      width:1512px;
+      width:1540px;
       height:680px;
     }
     figure {
-      width:1512px;
+      width:1540px;
       height:680px;
     }
 }
@@ -41,21 +41,21 @@
       font-size:1em;
     }
     #container {
-      width:1230px;
+      width:1260px;
       height:560px;
     }
     figure {
-      width:1230px;
+      width:1260px;
       height:560px;
     }
 }
 @media (max-width:1024px) {
   #container {
-      width:920px;
+      width:900px;
       height:410px;
     }
     figure {
-      width:920px;
+      width:900px;
       height:410px;
     }
 }
@@ -89,10 +89,10 @@
 body {
    transition-property:background-color;
    transition: linear 1.5s;
-   width:98%;
-   margin:auto;
-   border-left: 1px solid #aaa;
+   width:100%;
    color:000;
+   width:96%;
+   margin:auto;
 }
 
 #header {
@@ -128,14 +128,15 @@ a.right {
 
 #container {
   position:relative;
-  perspective-origin:25% 50%;
+ /* perspective-origin:25% 50%;*/
   --webkit-perspective: 2px 2px 2px 0px rgba(0,0,0,0.3);
   --moz-box-perspective: 2px 2px 2px 0px rgba(0,0,0,0.3);
-  perspective: 800px;
+  perspective: 600px;
   display:grid;
   grid-template-columns:  52px 1fr / 1fr; 
   justify-content:center;
   align-content:start;
+
  /* border:1px dashed red;*/
 }
 
@@ -153,17 +154,19 @@ a.right {
 
 figure {
   font-family: segoe-ui-semilight;
-  border-right:1px solid #aaa;
+ /* border-right:1px solid #aaa;*/
   position:absolute;
   top:52px;
   left:0; 
   backface-visibility:hidden;
   margin: 0;
-  background-color:hsla(150, 25%, 50% 0.5);
-
  /* border:1px dashed black;*/
 }
-
+.infocard-footer {
+  width:80%;
+  margin:auto;
+  padding:8px;
+}
 #summary {
   display:grid;
   grid-template-columns:repeat(3, 1fr);
@@ -204,10 +207,10 @@ figure {
   width: 100%;
 }
 
-#map .infocard-footer {
+/*#map .infocard-footer {
   display:grid;
    grid-template-columns: 1fr 25%;
-}
+}*/
 
 #funbox {
     border: 2px solid rgba(198,198,198,0.9);
@@ -232,7 +235,7 @@ input#slider {
    text-align: center;
 }
 .cny {
-  color: hsla(120,50%,25%,1);
+  color: hsla(240, 100%, 50%, 0.8);
 }
 .ill {
   color: red;
@@ -256,12 +259,29 @@ input#slider {
           <object id="ug" type="image/svg+xml" data="illsent_density.svg"></object>
       </div>
        <div class="infocard-footer">
-        Union loaned a lot of items in 2015
+        This is a density plot which illustrates the lending activity of Obie group libraries in 2015 (source: IPEDS).  The red line represents Union College which loaned a total of 8723 items...more than about 2/3 of our peer institutions.  The grey line is the average (total requests/schools).  This suggests not only a strong collection but also the hard work of our resource sharing department.
        </div>
   </a>
 
 </figure>
 
+<figure>
+  <a class="infocard" id="map">
+    <div class="description" id="mapid"></div>
+    <div class="infocard-footer">
+        <div id="goals">
+          The polygon in New York State is the Empire Delivery Network which delivers our ConnectNY requests along with requests from IDS libraries.  The size of the circle corresponds to the number of requests, hover over a circle to see total requests and other information.
+
+        </div>
+        <!--div id="fundiv">
+            <div id="funbox">
+             
+            </div>
+             <input type="range" min="0" max="2500" value="0" step="100" id="slider">
+        </div-->
+    </div>
+  </a> 
+</figure>
 
 <figure id="summary">
   <a class="infocard">
@@ -345,23 +365,7 @@ input#slider {
     <div id="wrapper"></div>
 </figure>
 
-<figure>
-  <a class="infocard" id="map">
-    <div class="description" id="mapid"></div>
-    <div class="infocard-footer">
-        <div id="goals">
-          The control box in the upper right allows you to add and remove data layers.  The empire Delivery Network and ConnectNY borrowing requests have already been added.
 
-        </div>
-        <div id="fundiv">
-            <div id="funbox">
-             
-            </div>
-             <input type="range" min="0" max="2500" value="0" step="100" id="slider">
-        </div>
-    </div>
-  </a> 
-</figure>
 
 </div>
 </div>
@@ -382,10 +386,11 @@ let container = document.querySelector('#container');
 let body = document.querySelector('body');
 let figures = [...document.querySelectorAll("figure")];
 
-let hue = () => Math.floor(Math.random() * (331 - 30) + 30);
+let hue = () => Math.floor(Math.random() * 360);
 let saturation = () => Math.floor(Math.random() * 90 + 10);
-let luminosity = () => Math.floor(Math.random() * 90 + 10);
-const opacity = 0.3;
+//let luminosity = () => Math.floor(Math.random() * 90 + 10);
+const luminosity = 25;
+const opacity = 0.2;
 let rotate = 0;
 let running = false;
 
@@ -408,7 +413,7 @@ setFigures = () => {
 
 bgTransition = () => {
     carousel.style["transform"] = `translateZ(-${tz()}px) rotateY(${rotate}deg)`;  
-    body.style['background-color'] = `hsla(${hue()}, ${saturation()}%, ${luminosity()}%, ${opacity})`
+    body.style['background-color'] = `hsla(${hue()}, ${saturation()}%, ${luminosity}%, ${opacity})`
 }
 
 

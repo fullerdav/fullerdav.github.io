@@ -1,5 +1,5 @@
 
-const mymap = L.map('mapid', {zoom:'animate', maxZoom:10, zoomDelta:0.1, scrollWheelZoom: 'center', doubleClickZoom: 'center'}).setView([42.502222,-75.911667], 7);
+const mymap = L.map('mapid', {zoom:'animate', maxZoom:10, zoomDelta:0.1, scrollWheelZoom: 'center', doubleClickZoom: 'center'}).setView([42.502222,-75.911667], 6);
 
 const waterColor = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
   attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
@@ -89,6 +89,7 @@ L.control.layers(baseMaps, overlayMaps).addTo(mymap);
 
 mymap.addLayer(empLayer);
 mymap.addLayer(cny_schools);
+mymap.addLayer(ill_schools);
 
 const filterIll = function(val) {
   let illfiler = null;  

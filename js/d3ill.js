@@ -5,8 +5,8 @@ var svg =  d3.select("#wrapper").append("svg").attr("viewBox", "-50 50 " + (dims
 var canvas = svg.append("g").attr("transform", "translate(0, 30)");
 const parseTime = d3.timeParse("%Y-%m-%d");
 //var x = d3.scaleTime().range([0, dims().width]).domain([parseTime('2013-09-15'),parseTime('2017-10-31')]).nice();
-var x = d3.scaleLinear().range([0, dims.width()]).domain([0, 3000]).nice();
-var y = d3.scaleLinear().range([dims.height(), 0]).domain([0, 55]).nice();
+var x = d3.scaleLinear().range([0, dims.width()]).domain([0, 2500]).nice();
+var y = d3.scaleLinear().range([dims.height(), 0]).domain([0, 40]).nice();
 const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
 const colorScale = d3.scaleOrdinal("NY", true, false).range(["hsla(240, 80%, 80%, 0.9)", "hsla(120, 80%, 80%, 0.9)", "hsla(0, 80%, 80%, 0.9)"]);
 
