@@ -91,38 +91,38 @@ mymap.addLayer(empLayer);
 mymap.addLayer(cny_schools);
 mymap.addLayer(ill_schools);
 
-const filterIll = function(val) {
-  let illfiler = null;  
-  illfilter = illiads.filter(ill => ill.distance > val);
-  let sumitems = illfilter.reduce(function(a,b){return a + b.borrowed;}, 0);
-  let sumturn = illfilter.reduce(function(a,b){return a + b.turn;}, 0);
-  sumturn = Math.round(sumturn/illfilter.length, 2);
-  document.getElementById('funbox').innerHTML = `<span class="ill">${val} mi from Union<br># of items: ${sumitems}<br>Avg time: ${sumturn} days</span>`;
-  let schools = [];
-  illfilter.forEach(function(school, i){
-      let {latlong, symbol, name, borrowed, turn, IDS} = school;
-      let radius = borrowed * 100;  
-      let color = IDS ? 'purple' : 'firebrick';
-      let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 2);
-      symbol = L.circle(latlong, {color: color, strokeWidth: 1, fillColor: color, fillOpacity: 0.25, radius: radius});
-      let tiptext = `<span class="ill">${name} <br>distance:${distance}mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`;
-      symbol.bindTooltip(tiptext);
-      schools.push(symbol);
-  });
-  illfiltered = L.layerGroup(schools);
-  if (mymap.hasLayer(ill_schools)) {
-    mymap.removeLayer(ill_schools);
-  }
-  let zoomlevel = val > 800 ? 4 : val > 400 ? 5 : 7;
-  let view = zoomlevel > 5 ? [42.502222,-75.911667] : [44.58, -100.46];
-  mymap.setZoom(zoomlevel).setView(view);
-  mymap.addLayer(illfiltered);
-}
+// const filterIll = function(val) {
+//   let illfiler = null;  
+//   illfilter = illiads.filter(ill => ill.distance > val);
+//   let sumitems = illfilter.reduce(function(a,b){return a + b.borrowed;}, 0);
+//   let sumturn = illfilter.reduce(function(a,b){return a + b.turn;}, 0);
+//   sumturn = Math.round(sumturn/illfilter.length, 2);
+//   document.getElementById('funbox').innerHTML = `<span class="ill">${val} mi from Union<br># of items: ${sumitems}<br>Avg time: ${sumturn} days</span>`;
+//   let schools = [];
+//   illfilter.forEach(function(school, i){
+//       let {latlong, symbol, name, borrowed, turn, IDS} = school;
+//       let radius = borrowed * 100;  
+//       let color = IDS ? 'purple' : 'firebrick';
+//       let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 2);
+//       symbol = L.circle(latlong, {color: color, strokeWidth: 1, fillColor: color, fillOpacity: 0.25, radius: radius});
+//       let tiptext = `<span class="ill">${name} <br>distance:${distance}mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`;
+//       symbol.bindTooltip(tiptext);
+//       schools.push(symbol);
+//   });
+//   illfiltered = L.layerGroup(schools);
+//   if (mymap.hasLayer(ill_schools)) {
+//     mymap.removeLayer(ill_schools);
+//   }
+//   let zoomlevel = val > 800 ? 4 : val > 400 ? 5 : 7;
+//   let view = zoomlevel > 5 ? [42.502222,-75.911667] : [44.58, -100.46];
+//   mymap.setZoom(zoomlevel).setView(view);
+//   mymap.addLayer(illfiltered);
+// }
 
 mymap.on('overlayadd', function(layer){
   let slide = document.querySelector('#slider');
   if (layer.name === "Illiad") {
-    document.getElementById('funbox').innerHTML = `<span class="ill">Use the slider or click anywhere on the map to view distance => turnaround time</span>`;
+    //document.getElementById('funbox').innerHTML = `<span class="ill">Use the slider or click anywhere on the map to view distance => turnaround time</span>`;
     slide.style['visibility'] = 'visible';
     if (mymap.hasLayer(illfiltered)) {
       mymap.removeLayer(illfiltered);
@@ -141,21 +141,28 @@ mymap.on('overlayadd', function(layer){
   } 
 });
 
+mymap.on('overlayremove', function(layer){
+  if (layer.name === "Titanic") {
+    mymap.removeLayer(EsriOceanBasemap);
+    mymap.setView([42.817222, -73.9279]).setZoom(7);
+  }
+});
+
 mymap.on('zoom', function(){
  log(mymap.getZoom());
 });
 
-mymap.on('click', function(ev) {
-    let distance = Math.round(mymap.distance(ev.latlng, [42.817222, -73.9279])/1609.34, 4);
-    distance = distance > 2500 ? 2500 : distance;
+// mymap.on('click', function(ev) {
+//     let distance = Math.round(mymap.distance(ev.latlng, [42.817222, -73.9279])/1609.34, 4);
+//     distance = distance > 2500 ? 2500 : distance;
   
-    if (mymap.hasLayer(illfiltered) || mymap.hasLayer(ill_schools)) {
-        filterIll(distance);
-    } else {
-        document.getElementById('funbox').innerHTML = `<span class="ill">${distance} mi from Union</span>`;
-    }
+//     if (mymap.hasLayer(illfiltered) || mymap.hasLayer(ill_schools)) {
+//         filterIll(distance);
+//     } else {
+//         document.getElementById('funbox').innerHTML = `<span class="ill">${distance} mi from Union</span>`;
+//     }
     
-});
+// });
 
 document.getElementById('slider').addEventListener('change', function(e){
   filterIll(this.value);
