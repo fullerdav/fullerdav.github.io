@@ -15,6 +15,9 @@
 
 .dot {
   fill-opacity: .5;
+  stroke: black;
+  stroke-width:1px;
+  stroke-opacity:.5;
 }
 
 .tooltip {

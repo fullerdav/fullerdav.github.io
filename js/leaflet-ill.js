@@ -33,24 +33,24 @@ var EsriOceanBasemap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/
   maxZoom: 13
 });
 
-var myStyle = {"color": "#000", "weight": 1.5, "opacity": 0.65, "fillOpacity": 0, "weight": 2};
+var myStyle = {"color": "hsla(160, 50%, 25%, 0.8)", "weight": 1.5, "opacity": 0.65, "fillOpacity": 0, "weight": 2};
 let ills = [], cnys = [], hist = [];
 
 illiads.forEach(function(school, i){
-  let {latlong, symbol, name, borrowed, turn, IDS} = school;
+  let {latlng, symbol, name, borrowed, turn} = school;
   let total = borrowed * 100;  // 
-  let color = IDS ? 'purple' : 'firebrick';
-  let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
+  let color = 'firebrick';
+  let distance = Math.round(mymap.distance(latlng, [42.817222, -73.9279])/1609.34, 4);
 
-  symbol = L.circle(latlong, {color: color, strokeWidth: 1, fillColor: color, fillOpacity: 0.25, radius: total});
-  symbol.bindTooltip(`<span class="ill">IDS: ${IDS}<br> ${name} <br>distance:${distance} mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`);
+  symbol = L.circle(latlng, {color: color, strokeWidth: 1, fillColor: color, fillOpacity: 0.25, radius: total});
+  symbol.bindTooltip(`<span class="ill">${name} <br>distance:${distance} mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`);
   ills.push(symbol);
   
 });
 
 connectnys.forEach(function(school, i){
   let {latlong, symbol, name, borrowed} = school;
-  let total = borrowed * 25;
+  let total = borrowed * 50;
   let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 4);
  
   symbol = L.circle(latlong, {color: 'blue', strokeWidth: 1, fillColor: 'skyblue', fillOpacity: 0.25, radius: total});
@@ -65,17 +65,30 @@ historical.forEach(function(h, i){
 });
 
 const empire = L.geoJSON(empireDelivery, {"style":myStyle});
-//L.geoJSON(cnycoll,{"style":myStyle}).addData(mymap);
+//L.geoJSON(empire,{"style":myStyle}).addData(mymap);
+var geojsonMarkerOptions = {
+    radius: 8,
+    fillColor: "#ff7800",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
 
 const ill_schools = L.layerGroup(ills);
 const cny_schools = L.layerGroup(cnys);
 const historic = L.layerGroup(hist);
 var illfiltered = L.layerGroup([]);
+var empLayer = L.layerGroup([empire]);
 
 const overlayMaps = {"Empire Delivery Network": empire, "Connect NY": cny_schools, "Illiad": ill_schools, "Titanic": historic};
 const baseMaps = {"Toner-Lite": tonerLite, "Open Street Map": openStreetMap, "Hydda Full": hyddaFull, "ESRI Ocean Base Map": EsriOceanBasemap};
 
 L.control.layers(baseMaps, overlayMaps).addTo(mymap);
+
+mymap.addLayer(empLayer);
+mymap.addLayer(cny_schools);
 
 const filterIll = function(val) {
   let illfiler = null;  
@@ -91,7 +104,7 @@ const filterIll = function(val) {
       let color = IDS ? 'purple' : 'firebrick';
       let distance = Math.round(mymap.distance(latlong, [42.817222, -73.9279])/1609.34, 2);
       symbol = L.circle(latlong, {color: color, strokeWidth: 1, fillColor: color, fillOpacity: 0.25, radius: radius});
-      let tiptext = `<span class="ill">IDS: ${IDS}<br> ${name} <br>distance:${distance}mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`;
+      let tiptext = `<span class="ill">${name} <br>distance:${distance}mi<br>borrowed:${borrowed}<br>avg days:${turn}</span>`;
       symbol.bindTooltip(tiptext);
       schools.push(symbol);
   });
@@ -99,31 +112,37 @@ const filterIll = function(val) {
   if (mymap.hasLayer(ill_schools)) {
     mymap.removeLayer(ill_schools);
   }
-  let zoomlevel = val > 1200 ? 4 : val > 900 ? 5 : 6;
-  zoomlevel = val < 250 ? 7 : zoomlevel;
-  let view = zoomlevel > 5 ? [42.817222, -73.9279] : [44.58, -103.46];
+  let zoomlevel = val > 800 ? 4 : val > 400 ? 5 : 7;
+  let view = zoomlevel > 5 ? [42.502222,-75.911667] : [44.58, -100.46];
   mymap.setZoom(zoomlevel).setView(view);
   mymap.addLayer(illfiltered);
 }
 
 mymap.on('overlayadd', function(layer){
-  let slide = document.getElementById('slider');
+  let slide = document.querySelector('#slider');
   if (layer.name === "Illiad") {
-     document.getElementById('funbox').innerHTML = `<span class="ill">Use the slider or click anywhere on the map to view distance => turnaround time</span>`;
-    slide.style.visibility = 'visible';
+    document.getElementById('funbox').innerHTML = `<span class="ill">Use the slider or click anywhere on the map to view distance => turnaround time</span>`;
+    slide.style['visibility'] = 'visible';
     if (mymap.hasLayer(illfiltered)) {
       mymap.removeLayer(illfiltered);
     }
+    mymap.setView([42.817222, -73.9279]).setZoom(7);
    } else if (layer.name === "Titanic") {
-      mymap.setZoom(13).setView([41.726931, -49.948253]).setZoom(4);
+      [tonerLite, openStreetMap, hyddaFull, EsriOceanBasemap].forEach(function(layr){
+        if (mymap.hasLayer(layr)) {
+          layr.removeFrom(mymap);
+        }
+      });
+      mymap.addLayer(EsriOceanBasemap);
+      mymap.setView([41.726931, -49.948253]).setZoom(4);
   } else {
-    slide.style.visibility = 'hidden';
+      slide.style.visibility = 'hidden';
   } 
 });
 
-//mymap.on('zoom', function(){
-//  log(mymap.getZoom());
-//});
+mymap.on('zoom', function(){
+ log(mymap.getZoom());
+});
 
 mymap.on('click', function(ev) {
     let distance = Math.round(mymap.distance(ev.latlng, [42.817222, -73.9279])/1609.34, 4);
@@ -142,3 +161,33 @@ document.getElementById('slider').addEventListener('change', function(e){
 });
 
 
+// let newschools = [];
+
+// for ( i in newschools) {
+//   let n = newschools[i];
+//   let nn = {};
+//   nn["symbol"] = n.symbol;
+//   nn["name"] = n["name"] ? n.name : "";
+//   // if (nn["name"]) {
+//   //   let nm = nn.name.split(" ");
+//   //   nn.name = nm.map(n => `${n[0]}${n.slice(1).toLowerCase()}`).join(" ");
+//   // }
+//   if (n.hasOwnProperty("latlng")) {
+//     nn["latlng"] = n.latlng;  
+//     // if (n.hasOwnProperty("distance")) {
+//     //   nn["distance"] = n.distance;
+//     // }
+//   } 
+//  if (n.latlng) {
+//     nn["distance"] = Math.round(mymap.distance(n.latlng, [42.817222, -73.9279])/1609.34, 4);  
+//  } 
+//   if(n.hasOwnProperty("turn")) {
+//     nn["turn"] = n.turn;
+//   }
+//   if(n.hasOwnProperty("borrowed")) {
+//     nn["borrowed"] = n.borrowed;
+//   }
+  
+ // log(JSON.stringify(nn));
+ 
+//}
