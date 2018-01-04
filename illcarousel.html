@@ -41,11 +41,11 @@
       font-size:1em;
     }
     #container {
-      width:1260px;
+      width:1200px;
       height:560px;
     }
     figure {
-      width:1260px;
+      width:1200px;
       height:560px;
     }
 }
@@ -79,7 +79,7 @@
     font-size: 1rem;
     font-weight: 600;
     line-height: 0.9;
-  color: #444;
+    color: #444;
     border-radius: .25rem;
     --webkit-transition: all .2s ease-in-out;
     --o-transition: all .2s ease-in-out;
@@ -133,7 +133,7 @@ a.right {
   --moz-box-perspective: 2px 2px 2px 0px rgba(0,0,0,0.3);
   perspective: 600px;
   display:grid;
-  grid-template-columns:  52px 1fr / 1fr; 
+  grid-template-columns:  52px 1fr 20%/ 1fr; 
   justify-content:center;
   align-content:start;
 
@@ -163,8 +163,8 @@ figure {
  /* border:1px dashed black;*/
 }
 .infocard-footer {
-  width:80%;
-  margin:auto;
+  width: 85%;
+  margin: 0 8px;
   padding:8px;
 }
 #summary {
@@ -182,7 +182,7 @@ figure {
     vertical-align: baseline;
     border-radius:2px;
     color:#fff;
-    background:#444;
+    background:#777;
 }
 
 #linegraph {
@@ -235,10 +235,37 @@ input#slider {
    text-align: center;
 }
 .cny {
-  color: hsla(240, 100%, 50%, 0.8);
+  color: hsla(200, 100%, 50%, 0.8);
 }
 .ill {
   color: red;
+}
+
+.infocard-footer.d3map {
+  display: grid;
+  grid-template-columns: 20% 80%;
+}
+
+.legend {
+  width: 100px;
+  display: inline-block;
+  text-align: end;
+}
+.mapkey {
+  width:  12px;
+  height:  12px;
+  display: inline-block;
+  border:  1px solid black;
+  margin-left: 8px;
+}
+.insideny {
+  background: hsla(240, 80%, 80%, 0.9);
+}
+.outsideny {
+  background: hsla(120, 80%, 80%, 0.9);
+}
+.ids {
+  background: hsla(0, 80%, 80%, 0.9);
 }
 </style>
 </head>
@@ -259,7 +286,7 @@ input#slider {
           <object id="ug" type="image/svg+xml" data="illsent_density.svg"></object>
       </div>
        <div class="infocard-footer">
-        This is a density plot which illustrates the lending activity of Obie group libraries in 2015 (source: IPEDS).  The red line represents Union College which loaned a total of 8723 items...more than about 2/3 of our peer institutions.  The grey line is the average (total requests/schools).  This suggests not only a strong collection but also the hard work of our resource sharing department.
+        This is a <i>density plot</i>. The blue area represents the volume of lending activity for all Oberlin Group libraries in 2015 (source: IPEDS).  The red line is Union College which loaned a total of 8723 items...more than about 2/3 of our peer institutions.  The grey line is the average (total requests/schools).  This suggests not only a strong collection but also the hard work of our resource sharing department. 
        </div>
   </a>
 
@@ -283,11 +310,60 @@ input#slider {
   </a> 
 </figure>
 
+<figure>
+   <a class="infocard" id="d3map">
+    <div class="description"  id="wrapper"></div>
+    <div class="infocard-footer d3map">
+      <div>
+          <div class="legend">Outside NY</div><div class = "mapkey outsideny"></div><br>
+          <div class="legend">Inside NY</div><div class = "mapkey insideny"></div><br>
+          <div class="legend">IDS</div><div class = "mapkey ids"></div>
+      </div>
+      <div>
+        This graph plots the distance of the library with the turnaround time, from the placing of the request to its receipt by the requesting institution. For obvious reaosns libraries within NY state are received more quickly.  But there isn't much difference between IDS libraries and others.
+      </div>
+    </div>
+  </a>
+</figure>
+
+<figure id="linegraph">
+    <a class="infocard">
+      <div class="description svg">
+          <object id="ug" type="image/svg+xml" data="undergraduate.svg"></object>
+          <span class="requests"><b>Student</b><br>Most requested subjects:</span>
+          <button class="btn ill" onclick='fillPopular(null, illstudent, ".student");'>ILL</button>
+          <button class="btn cny" onclick='fillPopular(cnystudent, null, ".student");'>ConnectNY</button>
+      </div>
+       <div class="infocard-footer student">Student</div>
+    </a>
+
+    <a class="infocard">
+      <div class="description svg">
+          <object id="fac" type="image/svg+xml" data="faculty.svg"></object>
+          <span class="requests"><b>Faculty</b><br>Most requested subjects:</span>
+          <button class="btn ill" onclick='fillPopular(null, illfaculty, ".faculty");'>ILL</button>
+          <button class="btn cny" onclick='fillPopular(cnyfaculty, null, ".faculty");'>ConnectNY</button>
+      </div>
+       <div class="infocard-footer faculty">Faculty</div>
+   </a>
+</figure>
+
+<figure id="turn">
+    <a class="infocard">
+      <div class="description svg">
+          <object type="image/svg+xml" data="turnaround.svg"></object>
+      </div>
+      <div class="infocard-footer">This boxplot shows the <i>distribution</i> of turnaround times for ILL requests.  It is almost rock-steady at about seven days.  Half our requests are received within seven and half take longer.  Many of our ILL requests are for difficult to find items and come from far away.
+      </div>
+    </a>
+</figure>
+
+
 <figure id="summary">
   <a class="infocard">
       <div class="description">
           <p> 
-           <span class="cny">ConnectNY (6428)</span> has been used more than <span class="ill">ILL (2082)</span> over this 4 year period.  Students (<span class="cny">4310</span>/<span class="ill">969</span>) more than Faculty (<span class="cny">2118</span>/<span class="ill">1113</span>).
+           <span>ConnectNY (6428)</span> has been used more than <span>ILL (2082)</span> over this 4 year period.  Students (<span>4310</span>/<span>969</span>) more than Faculty (<span>2118</span>/<span>1113</span>).
           </p>
           <p>
             There are more than 10x as many students as faculty.
@@ -309,10 +385,10 @@ input#slider {
     We've been using IDS for about a year.  IDS automates the more routine tasks, searching our catalog and remote catalogs to determine availability and routing requests more intelligently (than bare OCLC).
     </p>
     <p>
-    From January through September 2017 Union borrowed 573 returnables via Illiad, with 184 requests being filled within New York State and 136 of those were filled by IDS libraries. That is roughly 1/3 filled within New York State and roughly 3/4 were IDS.
+    From January through September 2017 Union borrowed 573 returnables via Illiad, with 184 requests being filled within New York State and 136 of those were filled by IDS libraries. That is roughly 1/3 filled within New York State and roughly 3/4 of those were IDS.
     </p>
     <p>
-    IDS returnables had a slightly longer turn-around than non-IDS within New York State.  That can be explained by Skidmore, a nearby non-IDS library that filled many of our requests very quickly while SUNY Albany and the New York State Library (bothh IDS) were comparatively slow.  While IDS speeds up the placing of requests it doesn't speed up the lending institution or delivery mechanisms.  This are more of an issue for returnable items.
+    IDS returnables had a slightly longer turn-around than non-IDS within New York State.  That can be explained by Skidmore, a nearby non-IDS library that filled many of our requests very quickly while SUNY Albany and the New York State Library (both IDS) were comparatively slow.  While IDS speeds up the placing of requests it isn't able to speed up the workflow at the lending institution or the delivery mechanisms.  This is more of an issue for returnable items.
     </p>
     </div>
 </a>
@@ -320,51 +396,13 @@ input#slider {
 <a class="infocard">
     <div class="description">
         <p>
-        We will need to bring down ConnectNY around April 15th for about two months.  This is required by III because of our transition to Alma.
-        All of our transactions need to be cleared before we can use Inn-Reach with our new system.
-        </p>
+        The median
         <p>
         March is typically a busy month for resource sharing and it gradually tapers until June.  Faculty requests increase over the Summer, especially August but don't exceed about 50 for ConnectNY.
         </p>
     </div>
 </a>
 </figure>
-
-
-<figure id="linegraph">
-    <a class="infocard">
-      <div class="description svg">
-          <object id="ug" type="image/svg+xml" data="undergraduate.svg"></object>
-          <span class="requests">Most requested:</span>
-          <button class="btn ill" onclick='fillPopular(null, illstudent, ".student");'>ILL</button>
-          <button class="btn cny" onclick='fillPopular(cnystudent, null, ".student");'>ConnectNY</button>
-      </div>
-       <div class="infocard-footer student"></div>
-    </a>
-
-    <a class="infocard">
-      <div class="description svg">
-          <object id="fac" type="image/svg+xml" data="faculty.svg"></object>
-          <span class="requests">Most requested:</span>
-          <button class="btn ill" onclick='fillPopular(null, illfaculty, ".faculty");'>ILL</button>
-          <button class="btn cny" onclick='fillPopular(cnyfaculty, null, ".faculty");'>ConnectNY</button>
-      </div>
-       <div class="infocard-footer faculty"></div>
-   </a>
-</figure>
-
-<figure id="turn">
-    <a class="infocard">
-      <div class="description svg">
-          <object type="image/svg+xml" data="turnaround.svg"></object>
-      </div>
-    </a>
-</figure>
-
-<figure>
-    <div id="wrapper"></div>
-</figure>
-
 
 
 </div>
@@ -386,10 +424,9 @@ let container = document.querySelector('#container');
 let body = document.querySelector('body');
 let figures = [...document.querySelectorAll("figure")];
 
-let hue = () => Math.floor(Math.random() * 360);
-let saturation = () => Math.floor(Math.random() * 90 + 10);
-//let luminosity = () => Math.floor(Math.random() * 90 + 10);
-const luminosity = 25;
+let colorpicker = () => Math.floor(Math.random() * 7);
+
+let hsl = [[240, 100, 25], [180, 100, 50], [300, 100, 50], [300, 100, 25], [0, 100, 25], [180, 100, 25], [0, 100, 50]];
 const opacity = 0.2;
 let rotate = 0;
 let running = false;
@@ -407,15 +444,14 @@ setFigures = () => {
       figstyle['transform'] = `rotateY(${rota}deg) translateZ(${tz()}px)`;
    }
     carousel.style["transform"] = `translateZ(-${tz()}px) rotateY(${rotate}deg)`;
-
-    //let active = document.querySelector(figure[])
 }
 
 bgTransition = () => {
-    carousel.style["transform"] = `translateZ(-${tz()}px) rotateY(${rotate}deg)`;  
-    body.style['background-color'] = `hsla(${hue()}, ${saturation()}%, ${luminosity}%, ${opacity})`
+    carousel.style["transform"] = `translateZ(-${tz()}px) rotateY(${rotate}deg)`;
+    let col = colorpicker();
+    let [hue, saturation, luminosity] = hsl[col];  
+    body.style['background-color'] = `hsla(${hue}, ${saturation}%, ${luminosity}%, ${opacity})`
 }
-
 
 header.addEventListener('wheel', function(e){
       rotate += e.deltaY < 0 ? -60 : 60;

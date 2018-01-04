@@ -164,9 +164,9 @@ mymap.on('zoom', function(){
     
 // });
 
-document.getElementById('slider').addEventListener('change', function(e){
-  filterIll(this.value);
-});
+// document.getElementById('slider').addEventListener('change', function(e){
+//   filterIll(this.value);
+// });
 
 
 // let newschools = [];
