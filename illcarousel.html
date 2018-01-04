@@ -7,8 +7,6 @@
   <link rel="stylesheet" href="css/scatter.css" charset="utf-8" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
   
- 
-
 <style>
 @media (max-width:1920px) {
     #header {
@@ -133,7 +131,7 @@ a.right {
   --moz-box-perspective: 2px 2px 2px 0px rgba(0,0,0,0.3);
   perspective: 600px;
   display:grid;
-  grid-template-columns:  52px 1fr 20%/ 1fr; 
+  grid-template-columns:  52px 1fr/ 1fr; 
   justify-content:center;
   align-content:start;
 
@@ -162,18 +160,21 @@ figure {
   margin: 0;
  /* border:1px dashed black;*/
 }
+
 .infocard-footer {
   width: 85%;
-  margin: 0 8px;
+  margin: 4px;
   padding:8px;
+  background:#fff;
 }
+
 #summary {
   display:grid;
   grid-template-columns:repeat(3, 1fr);
   font-family:Garuda, sans-serif;
 }
 
-#summary p {
+#summary p, #summary dl {
     padding: 8px;
     margin: auto;
     font-weight: 300;
@@ -183,6 +184,9 @@ figure {
     border-radius:2px;
     color:#fff;
     background:#777;
+}
+dt {
+  line-height: 1em;
 }
 
 #linegraph {
@@ -207,6 +211,10 @@ figure {
   width: 100%;
 }
 
+#d3map {
+  display:grid;
+  grid-template-rows: 85% 15%;
+}
 /*#map .infocard-footer {
   display:grid;
    grid-template-columns: 1fr 25%;
@@ -298,14 +306,7 @@ input#slider {
     <div class="infocard-footer">
         <div id="goals">
           The polygon in New York State is the Empire Delivery Network which delivers our ConnectNY requests along with requests from IDS libraries.  The size of the circle corresponds to the number of requests, hover over a circle to see total requests and other information.
-
         </div>
-        <!--div id="fundiv">
-            <div id="funbox">
-             
-            </div>
-             <input type="range" min="0" max="2500" value="0" step="100" id="slider">
-        </div-->
     </div>
   </a> 
 </figure>
@@ -320,7 +321,7 @@ input#slider {
           <div class="legend">IDS</div><div class = "mapkey ids"></div>
       </div>
       <div>
-        This graph plots the distance of the library with the turnaround time, from the placing of the request to its receipt by the requesting institution. For obvious reaosns libraries within NY state are received more quickly.  But there isn't much difference between IDS libraries and others.
+        This graph plots the distance of the library from Union College with the turnaround time (the time between placing the request and its receipt). For obvious reaosns libraries within NY state are received more quickly.  But there isn't much difference between IDS libraries and other libraries in the state.
       </div>
     </div>
   </a>
@@ -334,7 +335,7 @@ input#slider {
           <button class="btn ill" onclick='fillPopular(null, illstudent, ".student");'>ILL</button>
           <button class="btn cny" onclick='fillPopular(cnystudent, null, ".student");'>ConnectNY</button>
       </div>
-       <div class="infocard-footer student">Student</div>
+       <div class="infocard-footer student"></div>
     </a>
 
     <a class="infocard">
@@ -344,7 +345,7 @@ input#slider {
           <button class="btn ill" onclick='fillPopular(null, illfaculty, ".faculty");'>ILL</button>
           <button class="btn cny" onclick='fillPopular(cnyfaculty, null, ".faculty");'>ConnectNY</button>
       </div>
-       <div class="infocard-footer faculty">Faculty</div>
+       <div class="infocard-footer faculty"></div>
    </a>
 </figure>
 
@@ -353,7 +354,7 @@ input#slider {
       <div class="description svg">
           <object type="image/svg+xml" data="turnaround.svg"></object>
       </div>
-      <div class="infocard-footer">This boxplot shows the <i>distribution</i> of turnaround times for ILL requests.  It is almost rock-steady at about seven days.  Half our requests are received within seven and half take longer.  Many of our ILL requests are for difficult to find items and come from far away.
+      <div class="infocard-footer">This boxplot shows the <i>distribution</i> of turnaround times for ILL requests.  It is almost rock-steady at about seven days.  Half our requests are received within seven and half take longer.  Many IIL requests are filled far away, like the south island of New Zealand.
       </div>
     </a>
 </figure>
@@ -369,9 +370,9 @@ input#slider {
             There are more than 10x as many students as faculty.
           </p>
           <p>
-           We typically say that ConnectNY takes about a week.  That is roughly the median turnaround for ILL.  So while ILL may take longer at least half of the requests are filled with the same timeliness.  Within NY State the median turn around time for ILL is only 5 days which compares favorably to ConnectNY.
+           We typically say that ConnectNY takes from 2 days to a week.  A week is roughly the median turnaround for ILL.  So while ILL may take longer at least half of the requests are filled with the same timeliness.  Within NY State the median turn around time for ILL is only 5 days which compares favorably to ConnectNY.
           </p><p>
-           Turnaround varies more by library than any other factor.  Average time to receive an item from SUNY Albany is 4.48 days, the New York State Library is 4.88,  while Skidmore is 2.63.  We receive items faster from Davidson College in North Carolina (4.62) than from Albany.  
+           Turnaround varies more by library than any other factor.  Average time to receive an item from SUNY Albany is 4.48 days, the New York State Library is 4.88,  while Skidmore is 2.63.  We have receive items faster from Davidson College in North Carolina (4.62), on average, than from SUNY Albany.  
           </p>
           <p>
           While we borrow items from all over the world international requests take longer and are probably outliers for this analysis.
@@ -388,7 +389,7 @@ input#slider {
     From January through September 2017 Union borrowed 573 returnables via Illiad, with 184 requests being filled within New York State and 136 of those were filled by IDS libraries. That is roughly 1/3 filled within New York State and roughly 3/4 of those were IDS.
     </p>
     <p>
-    IDS returnables had a slightly longer turn-around than non-IDS within New York State.  That can be explained by Skidmore, a nearby non-IDS library that filled many of our requests very quickly while SUNY Albany and the New York State Library (both IDS) were comparatively slow.  While IDS speeds up the placing of requests it isn't able to speed up the workflow at the lending institution or the delivery mechanisms.  This is more of an issue for returnable items.
+    IDS automates speeds up the placing of some requests but it isn't able to speed up the workflow at the lending institution or the delivery mechanisms (this is more of an issue for returnable items).
     </p>
     </div>
 </a>
@@ -396,7 +397,20 @@ input#slider {
 <a class="infocard">
     <div class="description">
         <p>
-        The median
+        The median IDS returnables had a slightly faster turn-around than non-IDS within New York State. 
+        
+        <dl>
+        <dt>ids:</dt>
+        <dd>turn - 6.25</dd>
+        <dd>dist - 186.5</dd>
+        <dt>new york state:</dt>
+        <dd>turn - 6.5</dd>
+        <dd>dist - 104.15</dd>
+        <dt>out of state, non-ids:<dt>
+        <dd>turn - 8.5</dd>
+        <dd>dist - 856</dd>
+        </dl>
+
         <p>
         March is typically a busy month for resource sharing and it gradually tapers until June.  Faculty requests increase over the Summer, especially August but don't exceed about 50 for ConnectNY.
         </p>
@@ -423,13 +437,20 @@ let carousel = document.querySelector('#carousel');
 let container = document.querySelector('#container');
 let body = document.querySelector('body');
 let figures = [...document.querySelectorAll("figure")];
+//let colorpicker = () => Math.floor(Math.random() * 7);
 
-let colorpicker = () => Math.floor(Math.random() * 7);
-
-let hsl = [[240, 100, 25], [180, 100, 50], [300, 100, 50], [300, 100, 25], [0, 100, 25], [180, 100, 25], [0, 100, 50]];
-const opacity = 0.2;
+let hsl = [[29,83,61], [180, 25, 25], [180, 25, 80], [116, 16, 48], [205, 55, 75], [3, 49, 56]];
+const opacity = 0.75;
 let rotate = 0;
+let cursor = 0;
 let running = false;
+
+bgTransition = () => {
+    carousel.style["transform"] = `translateZ(-${tz()}px) rotateY(${rotate}deg)`;
+    let col = Math.abs(rotate/60) % 6;
+    let [hue, saturation, luminosity] = hsl[col];  
+    body.style['background-color'] = `hsla(${hue}, ${saturation}%, ${luminosity}%, ${opacity})`;
+}
 
 setFigures = () => {
    container.style["width"] = dims.width();
@@ -443,14 +464,8 @@ setFigures = () => {
       figstyle["height"] = dims.height();
       figstyle['transform'] = `rotateY(${rota}deg) translateZ(${tz()}px)`;
    }
-    carousel.style["transform"] = `translateZ(-${tz()}px) rotateY(${rotate}deg)`;
-}
-
-bgTransition = () => {
-    carousel.style["transform"] = `translateZ(-${tz()}px) rotateY(${rotate}deg)`;
-    let col = colorpicker();
-    let [hue, saturation, luminosity] = hsl[col];  
-    body.style['background-color'] = `hsla(${hue}, ${saturation}%, ${luminosity}%, ${opacity})`
+    bgTransition();
+    //carousel.style["transform"] = `translateZ(-${tz()}px) rotateY(${rotate}deg)`;
 }
 
 header.addEventListener('wheel', function(e){
@@ -516,7 +531,7 @@ var fc = document.getElementById('fac');
  
   <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
 
- <script src="js/mapdata.js"></script>
+<script src="js/mapdata.js"></script>
 <script src="js/leaflet-ill.js"></script>
 
 <script src="https://d3js.org/d3.v4.min.js"></script>
