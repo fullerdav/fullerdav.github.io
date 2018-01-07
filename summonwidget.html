@@ -1,0 +1,238 @@
+<html>
+	<head>
+		<title>Summon Widget</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Lato">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Meriwether">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Raleway">
+    
+    <style>
+
+
+	fieldset {
+      border: 2px #af3333 solid;
+      border-radius: 10px;
+
+      display: block;
+      position: relative;
+      vertical-align: middle;
+      overflow: visible;
+      padding: 8px;
+      margin: 8px;
+    /*  border: none;*/
+}
+
+fieldset label {
+  width: 100%;
+ 
+  font-style:bold;
+}
+
+.container {
+  display:grid;
+  grid-template-columns:30% 1fr 30%;
+  justify-items:center;
+  align-content:center;
+}
+
+.widget {
+  border: 2px solid #aaa;
+  border-radius:8px;
+  padding:16px;
+  margin-top:10%;
+  font-weight:500;
+  font-family:Lato;
+}
+
+.remarks {
+  width:auto;
+  font-size:.9em;
+  font-style:italic;
+}
+.heading {
+  font-family:Raleway;
+  font-size: 16px;
+  font-weight:600;
+  margin:8px 0;
+}
+</style>
+	</head>
+<body>
+
+<script type="text/javascript" src="//union.summon.serialssolutions.com/widgets/box.js"></script>
+
+
+
+<script type="text/javascript">
+let {log} = console;
+
+
+const summonoptions = {
+  "summon": {"type":"category", "label":"Summon Options","value":""},
+  "contenttype": {"type":"category", "label":"Content Type","value":""},
+  "discipline": {"type":"category", "label":"Discipline","value":""},
+  "subjectterms": {"type":"category", "label":"Subject Terms","value":"IsFullText,true,f"},
+  "primary":{"type":"category","label":"Primary Sources","value":["archives","manuscript","narrative"]},
+  "refine": {"type":"category", "label":"Refine","value":"IsFullText,true,f"},
+  "fulltext": {"type":"filter", "label":"Full Text","value":"IsFullText,true,f"},
+  "peerreview": {"type":"filter", "label":"Peer Review","value":"IsPeerReviewed,true,f"},
+  "catalog": {"type":"filter", "label":"Library Catalog","value":"SourceType,Library Catalog,f"},
+  "book":{"type":"contenttype","label":"Book/eBook","value":"ContentType,Book / eBook,f"},
+  "jnlarticle":{"type":"contenttype","label":"Journal Articles","value":"ContentType,Journal Article,f"},
+  "bookreview":{"type":"contenttype","label":"Book Reviews","value":"ContentType,Book Review,f"},
+  "magarticle":{"type":"contenttype","label":"Magazine Articles","value":"ContentType,Magazine Article,f"},
+  "reference":{"type":"contenttype","label":"Reference","value":"ContentType,Reference,f"},
+  "archives":{"type":"contenttype","label":"Archival Materials","value":"ContentType,Archival Material,f"},
+  "conference":{"type":"contenttype","label":"Conference Proceedings","value":"ContentType,Conference Proceeding,f"},
+  "narrative":{"type":"contenttype","label":"Personal Narratives","value":"ContentType,Personal Narrative,f"},
+  "videostream":{"type":"contenttype","label":"Video Stream","value":"ContentType,Streaming Video,f"},
+  "videorecording":{"type":"contenttype","label":"Video Recordings","value":"ContentType,Video Recording,f"},
+  "tradepublication":{"type":"contenttype","label":"Trade Publications","value":"ContentType,Trade Publication Article,f"},
+  "play":{"type":"contenttype","label":"Plays","value":"ContentType,Play,f"},
+  "poem":{"type":"contenttype","label":"Poems","value":"ContentType,Poem,f"},
+  "newspaper":{"type":"contenttype","label":"Newspapers","value":"ContentType,Newspaper,f"},
+  "newsarticle":{"type":"contenttype","label":"Newspaper Articles","value":"ContentType,Newspaper Article,f"},
+  "marketresearch":{"type":"contenttype","label":"Market Research","value":"ContentType,Market Research,f"},
+  "transcript":{"type":"contenttype","label":"Transcripts","value":"ContentType,Transcript,f"},
+  "manuscript":{"type":"contenttype","label":"Manuscripts","value":"ContentType,Manuscript,f"},
+  "musicscore":{"type":"contenttype","label":"Musical Scores","value":"ContentType,Music Score,f"},
+  "govdoc":{"type":"contenttype","label":"Government Documents","value":"ContentType,Government Document,f"},
+  "audiorecording":{"type":"contenttype","label":"Audio Recording","value":"ContentType,Audio Recording,f"},
+  "dissertation":{"type":"contenttype","label":"Dissertations","value":"ContentType,Dissertation/Thesis,f"},
+  "newsreel":{"type":"subject","label":"newsreel","value":"SubjectTerms,newsreel,f"},
+  "interviews":{"type":"subject","label":"interviews","value":"SubjectTerms,interviews,f"},
+  "acqmergers":{"type":"subject","label":"acquisitions & mergers","value":"SubjectTerms,acquisitions & mergers,f"},
+  "awardshonors":{"type":"subject","label":"awards & honors","value":"SubjectTerms,awards & honors,f"},
+  "cities":{"type":"subject","label":"cities","value":"SubjectTerms,cities,f"},
+  "councils":{"type":"subject","label":"councils","value":"SubjectTerms,councils,f"},
+  "forecasts":{"type":"subject","label":"forecasts and trends","value":"SubjectTerms,forecasts and trends,f"},
+  "healthaspects":{"type":"subject","label":"health aspects","value":"SubjectTerms,health aspects,f"},
+  "meetings":{"type":"subject","label":"meetings","value":"SubjectTerms,meetings,f"},
+  "methods":{"type":"subject","label":"methods","value":"SubjectTerms,methods,f"},
+  "motionpictures":{"type":"subject","label":"motion pictures","value":"SubjectTerms,motion pictures,f"},
+  "nonfiction":{"type":"subject","label":"nonfiction","value":"SubjectTerms,nonfiction,f"},
+  "reports":{"type":"subject","label":"reports","value":"SubjectTerms,reports,f"},
+  "research":{"type":"subject","label":"research","value":"SubjectTerms,research,f"},
+  "software":{"type":"subject","label":"software","value":"SubjectTerms,software,f"},
+  "statistics":{"type":"subject","label":"statistics","value":"SubjectTerms,statistics,f"}
+};
+
+const summonobj = {
+    "id":"s6ca7627273957fabd2786a37c05013e",
+    "endpoint":"//union.summon.serialssolutions.com",
+    "style":{"tagline":"#000","links":"#000"},
+    "params": {
+      "pn": 1,
+      "ho": true,
+      "fvf": [],
+      "jt":"",
+      "l": "en"},
+    "tagline_text": "",
+    "searchbutton_text": "Search all...",
+    "advanced_text": "More search options",
+    "placeholder_text": "",
+    "advanced": false,
+    "suggest": true,
+    "tagline": false,
+    "popup": true
+}; 
+
+</script>
+
+<div class="container">
+  <div class="leftcol"></div>
+
+    <div class="widget">
+      <div class="heading">Discover library resources...</div>
+      <script>
+        summonWidget.box(summonobj);
+      </script> 
+      <fieldset>
+      <legend>or limit search to:</legend>
+        <input type="radio" name="params" value="book">
+        <label>books / e-books</label>
+         <input type="radio" name="params" value="jnlarticle">
+        <label>articles</label>
+        <input type="radio" name="params" value="reference">
+        <label>reference sources</label>
+      </fieldset>
+
+      <fieldset>
+      <legend>Limit to:</legend>
+
+        <input type="radio" name="params" value="catalog">
+        <label>Library Catalog (books, e-books, and other physical items)</label>
+
+       <!--  <input type="radio" id="peerreview" name="params" value="peerreview">
+        <label for="contactChoice1">Peer reviewed articles</label> -->
+
+    </fieldset>
+     <fieldset>
+      <legend>Summon also contains:</legend>
+      
+        <input type="radio" name="params" value="bookreview">
+        <label>Book Reviews</label>
+         <input type="radio" name="params" value="conference">
+        <label>Conference Proceedings</label>
+        <input type="radio" name="params" value="tradepublication">
+        <label>Trade Publications</label>
+        
+      </fieldset>
+
+      <div class="remarks">
+         ...and many other types of material.  Use the facets in the left-hand column to narrow your search results by Content Type, Discipline, Subject Terms, etc..  
+       </div>
+    </div>
+</div>
+
+<div class="rightcol"></div>
+<script>
+  let iput = document.querySelectorAll("input");
+iput.forEach(function(i){
+    i.addEventListener("click", function() {
+      let val = this.value;
+      summonobj.params.fvf = [];
+      summonobj.params.fvf.push(summonoptions[val].value)
+      //log(this.checked);
+    }, false);
+});
+
+
+  // "anthropology":{"type":"discipline","label":"Anthropology","value":"Discipline,anthropology,f"},
+  // "astronomy":{"type":"discipline","label":"Astronomy","value":"Discipline,astronomy & astrophysics,f"},
+  // "biology":{"type":"discipline","label":"Biology","value":"Discipline,biology,f"},
+  // "business":{"type":"discipline","label":"Business","value":"Discipline,business,f"},
+  // "chemistry":{"type":"discipline","label":"Chemistry","value":"Discipline,chemistry,f"},
+  // "computer":{"type":"discipline","label":"Computer Science","value":"Discipline,computer science,f"},
+  // "dance":{"type":"discipline","label":"Dance","value":"Discipline,dance,f"},
+  // "drama":{"type":"discipline","label":"Drama","value":"Discipline,drama,f"},
+  // "ecology":{"type":"discipline","label":"Ecology","value":"Discipline,ecology,f"},
+  // "economics":{"type":"discipline","label":"Economics","value":"Discipline,economics,f"},
+  // "education":{"type":"discipline","label":"Education","value":"Discipline,education,f"},
+  // "engineering":{"type":"discipline","label":"Engineering","value":"Discipline,engineering,f"},
+  // "environment":{"type":"discipline","label":"Environment","value":"Discipline,environmental sciences,f"},
+  // "film":{"type":"discipline","label":"Film","value":"Discipline,film,f"},
+  // "geography":{"type":"discipline","label":"Geography","value":"Discipline,geography,f"},
+  // "geology":{"type":"discipline","label":"Geology","value":"Discipline,geology,f"},
+  // "history":{"type":"discipline","label":"History","value":"Discipline,history & archaeology,f"},
+  // "languages":{"type":"discipline","label":"Literatures","value":"Discipline,languages & literatures,f"},
+  // "law":{"type":"discipline","label":"Law","value":"Discipline,law,f"},
+  // "mathematics":{"type":"discipline","label":"Mathematics","value":"Discipline,mathematics,f"},
+  // "medicine":{"type":"discipline","label":"Medicine","value":"Discipline,medicine,f"},
+  // "music":{"type":"discipline","label":"Music","value":"Discipline,music,f"},
+  // "philosophy":{"type":"discipline","label":"Philosophy","value":"Discipline,philosophy,f"},
+  // "physics":{"type":"discipline","label":"Physics","value":"Discipline,physics,f"},
+  // "polisci":{"type":"discipline","label":"Political Science","value":"Discipline,political science,f"},
+  // "psychology":{"type":"discipline","label":"Psychology","value":"Discipline,psychology,f"},
+  // "publichealth":{"type":"discipline","label":"Public Health","value":"Discipline,public health,f"},
+  // "religion":{"type":"discipline","label":"Religion","value":"Discipline,religion,f"},
+  // "sociology":{"type":"discipline","label":"Sociology","value":"Discipline,sociology & social history,f"},
+  // "visualarts":{"type":"discipline","label":"Visual Arts","value":"Discipline,visual arts,f"},
+  // "women":{"type":"discipline","label":"Women's Studies","value":"Discipline,women's studies,f"}
+</script>
+</body>
+</html>
+
+
