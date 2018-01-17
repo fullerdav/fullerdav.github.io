@@ -1,4 +1,4 @@
-var mysites = {
+{
 "aadnc-aandc.gc.ca":{"name":"Indigenous and Northern Affairs","wplink":"https://en.wikipedia.org/wiki/Indigenous_and_Northern_Affairs_Canada"}, 
 "aao.gov.au": { "name": "Australian Astronomical Observatory", "wplink": "https://en.wikipedia.org/wiki/Australian_Astronomical_Observatory" },
 "aarp.org": { "name": "American Association of Retired Persons", "wplink": "https://en.wikipedia.org/wiki/AARP" },
@@ -921,4 +921,4 @@ var mysites = {
 "wwu.edu": { "name": "Western Washington University", "wplink": "http://en.wikipedia.org/wiki/Western_Washington_University" },
 "www1.nyc.gov": { "name": "City of New York", "wplink": "https://en.wikipedia.org/wiki/New_York_City" },
 "wy.us":{"name":"State of Wyoming","wplink":"https://en.wikipedia.org/wiki/Wyoming"}
-};
+}
