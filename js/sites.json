@@ -1,4 +1,4 @@
-{
+var mysites = {
 "aadnc-aandc.gc.ca":{"name":"Indigenous and Northern Affairs","wplink":"https://en.wikipedia.org/wiki/Indigenous_and_Northern_Affairs_Canada"}, 
 "aao.gov.au": { "name": "Australian Astronomical Observatory", "wplink": "https://en.wikipedia.org/wiki/Australian_Astronomical_Observatory" },
 "aarp.org": { "name": "American Association of Retired Persons", "wplink": "https://en.wikipedia.org/wiki/AARP" },
@@ -314,6 +314,7 @@
 "eventdata.parusanalytics.com": {"name":"Penn State Event Data Project", "wplink":"http://eventdata.parusanalytics.com/index.html"},
 "exeter.gov.uk": { "name": "Exeter City Council", "wplink": "https://en.wikipedia.org/wiki/Exeter_City_Council" },
 "explorer.usaid.gov": { "name": "USAID Foreign AID Explorer", "wplink": "https://en.wikipedia.org/wiki/United_States_foreign_aid" },
+"factcheck.org":{"name":"FactCheck.org", "wplink": "https://en.wikipedia.org/wiki/FactCheck.org"},
 "fairvote.org": { "name": "FairVote", "wplink": "https://en.wikipedia.org/wiki/FairVote" },
 "fbi.gov": { "name": "Federal Bureau of Investigation", "wplink": "https://en.wikipedia.org/wiki/Federal_Bureau_of_Investigation" },
 "fbratlanta.org":{"name":"Federal Reserve Bank of Atlanta","wplink":"https://en.wikipedia.org/wiki/Federal_Reserve_Bank_of_Atlanta"},
@@ -471,7 +472,8 @@
 "jhu.edu": { "name": "Johns Hopkins University", "wplink": "http://en.wikipedia.org/wiki/Johns_Hopkins_University" },
 "jisc.ac.uk": { "name": "Jisc", "wplink": "https://en.wikipedia.org/wiki/Jisc" },
 "jncc.defra.gov.uk": { "name": "Joint Nature Conservation Committee", "wplink": "https://en.wikipedia.org/wiki/Joint_Nature_Conservation_Committee" },
-"jorvik-viking-centre.co.uk": { "name": "Jorvik Viking Centre", "wplink": "https://en.wikipedia.org/wiki/Jorvik_Viking_Centre" },    
+"jorvik-viking-centre.co.uk": { "name": "Jorvik Viking Centre", "wplink": "https://en.wikipedia.org/wiki/Jorvik_Viking_Centre" }, 
+"journalistsresource.org":{"name":"Journalist's Resource","wplink":"https://en.wikipedia.org/wiki/Journalist%27s_Resource"},   
 "jpl.nasa.gov": { "name": "Jet Propulsion Lab (NASA)", "wplink": "http://en.wikipedia.org/wiki/Jet_Propulsion_Laboratory" },
 "jsi.astro.umd.edu": { "name": "Joint Space Science Institute", "wplink": "https://jsi.astro.umd.edu/about" },
 "justice.gov": { "name": "United States Department of Justice", "wplink": "https://en.wikipedia.org/wiki/United_States_Department_of_Justice" },
@@ -612,6 +614,7 @@
 "nidcr.nih.gov": { "name": "National Institute of Dental and Craniofacial Research", "wplink": "https://en.wikipedia.org/wiki/National_Institute_of_Dental_and_Craniofacial_Research" },
 "niddk.nih.gov": { "name": "National Institute of Diabetes and Digestive and Kidney Diseases", "wplink": "https://en.wikipedia.org/wiki/National_Institute_of_Diabetes_and_Digestive_and_Kidney_Diseases" },
 "niehs.nih.gov": { "name": "National Institute of Environmental Health Sciences", "wplink": "http://en.wikipedia.org/wiki/National_Institute_of_Environmental_Health_Sciences" },
+"niemanreports.org":{"name":"Nieman Reports","wplink":"https://en.wikipedia.org/wiki/Nieman_Foundation_for_Journalism"},
 "nielsen.com":{"name":"Nielsen Holdings","wplink":"https://en.wikipedia.org/wiki/Nielsen_Holdings"},
 "niesr.ac.uk": { "name": "National Institute of Economic and Social Research", "wplink": "https://en.wikipedia.org/wiki/National_Institute_of_Economic_and_Social_Research" },
 "nigms.nih.gov": { "name": "National Institute of General Medical Sciences", "wplink": "https://en.wikipedia.org/wiki/National_Institute_of_General_Medical_Sciences" },
@@ -918,4 +921,4 @@
 "wwu.edu": { "name": "Western Washington University", "wplink": "http://en.wikipedia.org/wiki/Western_Washington_University" },
 "www1.nyc.gov": { "name": "City of New York", "wplink": "https://en.wikipedia.org/wiki/New_York_City" },
 "wy.us":{"name":"State of Wyoming","wplink":"https://en.wikipedia.org/wiki/Wyoming"}
-}
+};
