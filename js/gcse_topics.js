@@ -11,7 +11,7 @@
  }
  function getMeta(metadata) {
     var resource = {};
-    let columns = { "col1":0, "col2":0, "col3":0, "col4":0 };
+    let columns = { "col1":0, "col2":0, "col3":0 };
     resource.citation = {};
     for (key in metadata) {
       if (/type/.test(key) | /author/.test(key) | /creator/.test(key) | /title/.test(key)  | /publisher/.test(key) | /subj/.test(key) | /desc/.test(key) | /date/.test(key)) {
@@ -29,7 +29,7 @@ function dispSites(s) {
   $("#results").css("display", "grid");
   $("#results").show();
   let countries = ["au","ca","de","eu","fi","fr","ie","il","jp","nz","se","uk","us"];
-  let columns = {"col1":0, "col2":0, "col3":0, "col4":0};
+  let columns = {"col1":0, "col2":0, "col3":0};
   if (Object.keys(s).length > 0) {
     var skey = Object.keys(s);
     sortedkeys = skey.sort(function(a,b){
@@ -43,7 +43,7 @@ function dispSites(s) {
     });
     sortedkeys.map(function(n) {
       let site = s[n];
-    console.log(n + ": " + site.rank);
+    //console.log(n + ": " + site.rank);
       var alink = site.wplink !== "" ? $("<a></a>").attr("target", "_blank").attr("href", site.wplink).text(n) : n;  
       let img = $("<img></img>").addClass("flag");
       if (countries.indexOf(site.domain) !== -1) {
@@ -58,7 +58,7 @@ function dispSites(s) {
           $("<dt></dt>").addClass("title").append(link).appendTo(dl);
           $("<p></p>").addClass("desc").text(v.desc).appendTo(dl);
       }); 
-      let column = ["col4", "col3", "col2", "col1"].reduce(function(a,b){
+      let column = ["col3", "col2", "col1"].reduce(function(a,b){
           return columns[a] < columns[b] ? a : b;
       });
       var div = $("<div></div>").addClass("outer");
@@ -95,8 +95,10 @@ function procResponse(res) {
           let domarr = item.displayLink.split(".");
           let dom = getDom(domarr);
           sites[dom.name] = sites[dom.name] === undefined ?  {domain: domarr[domarr.length - 1], urls: [], wplink: dom.wplink, rank: 0} :  sites[dom.name];
-          sites[dom.name].urls.push(curritem);
-          sites[dom.name].rank += drex.test(item["title"]) ? 2 : 0;
+          if (sites[dom.name].urls.length < 5) {
+              sites[dom.name].urls.push(curritem);
+          }
+          sites[dom.name].rank += drex.test(item["title"]) ? 2 : 0;            
           sites[dom.name].rank += drex.test(curritem["desc"]) ? curritem["desc"].match(drex).length : 0;
           for (let i = 0; i < trex.length; i++) {
             let rx = trex.pop();
@@ -116,7 +118,7 @@ function procResponse(res) {
 }
 function hndlr(response) {
     var proceed = response.queries === undefined || response.queries.request[0].totalResults === 0 ? false : true;
-    getnext = proceed && response.queries.hasOwnProperty("nextPage") && (response.queries.nextPage[0].startIndex < 100) ? true : false;
+    getnext = proceed && response.queries.hasOwnProperty("nextPage") && (response.queries.nextPage[0].startIndex < 180) ? true : false;
     if (getnext) {
       $("#message").append(" .");
        gscript(response.queries.nextPage[0]);    
@@ -148,8 +150,8 @@ $("#gdata").on('click', function () {
     $(".header").hide();
     $("#message").empty().append("Searching for <i>" + qterm + "</i>").show();
     $("#searching").show();
-    $(".spinner").show();
-    ["col1","col2","col3","col4"].forEach(function(v,index){
+    //$(".spinner").show();
+    ["col1","col2","col3"].forEach(function(v,index){
         $("#" + v + "").empty();
     });
     var qterms = qterm.split(" ");
