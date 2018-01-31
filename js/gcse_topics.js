@@ -166,6 +166,11 @@ $("#gdata").on('click', function () {
 });
 
 var gse = {"digitalarchives": "017097913603090994702:fjd8tlez-hc", "researchtopics": "017097913603090994702:ndcbo17bcge", "scholarlyarticles": "017097913603090994702:m6sjv7tu628", "blogs":"017097913603090994702:wsw4y_fvygo", "thinktanks": "017097913603090994702:rzhmodt523w", "datasets":"017097913603090994702:-xygo9gvyvw"};
-var gcsecx = gse["researchtopics"];
+
 var sites, qterm, getnext, drex, foundurls;
 var trex = [];
+var gcsecx = gse["researchtopics"];
+$("#searchtype").on("change", function(e){
+    let topic = e.target.value;
+    gcsecx = gse[topic];
+});
