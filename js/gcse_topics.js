@@ -114,11 +114,12 @@ function procResponse(res) {
   }
   if (!getnext) {
      dispSites(sites);
+     sites = null;
   } 
 }
 function hndlr(response) {
     var proceed = response.queries === undefined || response.queries.request[0].totalResults === 0 ? false : true;
-    getnext = proceed && response.queries.hasOwnProperty("nextPage") && (response.queries.nextPage[0].startIndex < 180) ? true : false;
+    getnext = proceed && response.queries.hasOwnProperty("nextPage") && (response.queries.nextPage[0].startIndex < 200) ? true : false;
     if (getnext) {
       $("#message").append(" .");
        gscript(response.queries.nextPage[0]);    
