@@ -1,0 +1,30 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+</head>
+<body>
+
+
+<script>
+
+//GET https://api-eu.hosted.exlibrisgroup.com/almaws/v1/acq/po-lines/POL-129
+
+
+var xhr = new XMLHttpRequest();
+var url = 'https://api-eu.hosted.exlibrisgroup.com/almaws/v1/acq/po-lines/POL-129';
+var queryParams = '?' +  encodeURIComponent('apikey') + '=' + encodeURIComponent('l7xxb2465a1a50934f0e94eed8e57d086eac');
+xhr.open('GET', url + queryParams);
+xhr.onreadystatechange = function () {
+    if (this.readyState == 4) {
+    	console.log(this);
+        alert('Status: '+this.status+'\nHeaders: '+JSON.stringify(this.getAllResponseHeaders())+'\nBody: '+this.responseText);
+    }
+};
+ 
+xhr.send('');
+</script>
+
+ </body>
+</html>User deletion validation failed{JOB_ID=1300012420004651, ERROR_MESSAGE=User is l...	
