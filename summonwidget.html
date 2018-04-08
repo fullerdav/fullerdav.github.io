@@ -74,12 +74,8 @@ fieldset label {
 <body>
 
 <script type="text/javascript" src="//soaunion.summon.serialssolutions.com/widgets/box.js"></script>
-
-
-
 <script type="text/javascript">
 let {log} = console;
-
 
 const summonoptions = {
   "summon": {"type":"category", "label":"Summon Options","value":""},
@@ -164,21 +160,23 @@ const summonobj = {
       <fieldset>
       <legend>or limit search to:</legend>
         <input type="radio" name="params" value="book">
-        <label>books / e-books</label>
+        <label>books/e-books</label>
          <input type="radio" name="params" value="jnlarticle">
         <label>articles</label>
         <input type="radio" name="params" value="reference">
-        <label>reference sources</label>
+        <label>reference</label>
+         <input type="radio" name="params" value="catalog">
+        <label>Library Catalog</label>
       </fieldset>
 
-      <fieldset>
+      <!--fieldset>
       <legend>Limit to:</legend>
 
         <input type="radio" name="params" value="catalog">
         <label>Library Catalog (books, e-books, and other physical items)</label>
 
-       <!--  <input type="radio" id="peerreview" name="params" value="peerreview">
-        <label for="contactChoice1">Peer reviewed articles</label> -->
+        <input type="radio" id="peerreview" name="params" value="peerreview">
+        <label for="contactChoice1">Peer reviewed articles</label>
 
     </fieldset>
      <fieldset>
@@ -195,7 +193,7 @@ const summonobj = {
 
       <div class="remarks">
          ...and many other types of material.  Use the facets in Summon (left-hand column) to narrow your search results by Content Type, Discipline, Subject Terms, etc..  
-       </div>
+       </div-->
     </div>
 </div>
 
