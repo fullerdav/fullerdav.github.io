@@ -1,0 +1,133 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Script that converts the query string into valid parameter -->
+<style>
+
+.container {
+  display:grid;
+  grid-template-columns:20% 1fr 20%;
+  /*justify-items: center;*/
+  align-content:center;
+  margin-top:5em;
+}
+
+#go {
+  background-color:#3333ff;
+}
+
+fieldset {
+      border: 1px #822433 solid;
+      border-radius: 8px;
+      display: block;
+      position: relative;
+      vertical-align: middle;
+      overflow: visible;
+      padding: 16px;
+      margin: 8px;
+    /*  border: none;*/
+}
+
+fieldset label {
+  width: 100%;
+  font-style:bold;
+}
+fieldset legend {
+  padding: .5em;
+}
+.button {
+  border: 1px solid #444;
+ /* width: 20%;*/
+  padding: .25em;
+  margin:.25em;
+  border-radius: 8px;
+}
+</style>
+</head>
+
+<script type="text/javascript">
+
+function searchPrimo() {
+ 
+  document.forms["searchForm"].tab.value = document.forms["searchForm"].search_scope.value;
+  if (document.forms["searchForm"].search_scope.value === "MyInstitution") {
+    document.forms["searchForm"].tab.value = "LibraryCatalog";
+  } 
+  if (document.forms["searchForm"].search_scope.value === "MyInst_and_CI") {
+    document.forms["searchForm"].tab.value = "Everything";
+  } 
+  let idx = document.forms["searchParams"].index.value;
+  let prc = document.forms["searchParams"].precision.value;
+  //document.forms["searchForm"].tab.value = document.forms["searchForm"].search_scope.value;
+  let srch = document.getElementById("primoQueryTemp").value.replace(/[,]/g, " ");
+  document.getElementById("primoQuery").value = [idx, prc, srch].join(",");
+  document.forms["searchForm"].submit();
+}
+</script>
+</head>
+
+<body>
+<div class="container">
+<div class="leftcol"></div>
+
+<div class="midcol">
+<form id="simple" name="searchForm" method="get" target="_self" action="https://union.primo.exlibrisgroup.com/discovery/search" enctype="application/x-www-form-urlencoded; charset=utf-8" onsubmit="searchPrimo()">
+<!-- Customizable Parameters -->
+<input type="hidden" name="vid" value="01UCNY_INST:01UCNY_INST">
+<input type="hidden" name="tab" value="">
+<!--input type="hidden" name="search_scope" value="<scope_name>"-->
+ 
+<input type="hidden" name="mode" value="basic">
+<!-- Fixed parameters -->
+<!--input type="hidden" name="displayMode" value="full"-->
+<input type="hidden" name="bulkSize" value="20">
+<input type="hidden" name="highlight" value="true">
+<!--input type="hidden" name="dum" value="true"-->
+<input type="hidden" name="query" id="primoQuery">
+<input type="text" id="primoQueryTemp" value="" size="35">
+<!-- Search Button -->
+<input id="go" title="Search" onclick="searchPrimo()" type="button" value="Search" alt="Search" style="height: 22px; font-size: 12px; font-weight: bold; background: #DE6E17; color: #ffffff; border: 1px solid;">
+
+
+<fieldset>
+    <legend>scope:</legend>
+     <span class="button"><label>Schaffer Library</label>
+    <input type="radio" name="search_scope" value="MyInstitution" checked></span>
+     <span class="button"><label>e-resources</label>
+    <input type="radio" name="search_scope" value="CentralIndex"></span>
+      <span class="button"><label>library catalog and e-resources</label>
+    <input type="radio" name="search_scope" value="MyInst_and_CI"></span>
+      <span class="button"><label>WorldCat</label>
+    <input type="radio" name="search_scope" value="oclc"></span>
+</fieldset>
+
+</form>
+
+<form id="params" name="searchParams">
+   <fieldset>
+      <legend>precision:</legend>
+      <span class="button"><label>contains</label>
+    <input type="radio" name="precision" value="contains"></span>
+    <span class="button"><label>exact</label>
+    <input type="radio" name="precision" value="exact" checked></span>
+</fieldset>
+
+ <fieldset>
+    <legend>index:</legend>
+     <span class="button"><label>all fields</label>
+      <input type="radio" name="index" value="any" checked></span>
+       <span class="button"><label>title</label>
+      <input type="radio" name="index" value="title"></span>
+      <span class="button"> <label>author</label>
+      <input type="radio" name="index" value="creator"></span>
+      <span class="button"> <label>isbn</label>
+      <input type="radio" name="index" value="isbn"></span>
+  </fieldset>
+</form>
+</div>
+ <div class="rightcol"></div>
+</div>
+</body>
+</html>
+
+
