@@ -7,127 +7,172 @@
 .container {
   display:grid;
   grid-template-columns:20% 1fr 20%;
-  /*justify-items: center;*/
-  align-content:center;
   margin-top:5em;
 }
 
-#go {
-  background-color:#3333ff;
+.midcol {
+  display: grid;
+  grid-template-areas: 
+            "box box button"
+            "scope index precision";
+  grid-template-rows: 60px auto;
+  grid-template-columns: 1fr 1fr 1fr;
+
+}
+div {
+  border:1px solid #888;
+}
+.box {
+  grid-area: box;
+  display:grid;
+  grid-template-columns: 1fr;
+}
+#primoQueryTemp {
+  width:100%;
+  height:100%;
+}
+div#go {
+  grid-area: button;
+  display:inline-block;
+  cursor:pointer;
 }
 
-fieldset {
-      border: 1px #822433 solid;
-      border-radius: 8px;
-      display: block;
-      position: relative;
-      vertical-align: middle;
-      overflow: visible;
-      padding: 16px;
-      margin: 8px;
-    /*  border: none;*/
+.scope {
+  grid-area: scope;
+     display: grid;
+   grid-template-rows: 50px 50px 50px 50px;
+   grid-template-columns: 30% 20px 1fr;
+   justify-items: end;
+   align-content: center;
+}
+.index {
+  grid-area: index;
+  display: grid;
+   grid-template-rows: 50px 50px 50px 50px;
+   grid-template-columns: 20% 20px 1fr;
+   justify-items: end;
+   align-content: center;
+
+}
+.precision {
+  grid-area: precision;
+   display: grid;
+   grid-template-rows: 50px 50px 50px;
+   grid-template-columns: 20% 20px 1fr;
+   justify-items: end;
+   align-content: center;
 }
 
-fieldset label {
-  width: 100%;
-  font-style:bold;
-}
-fieldset legend {
-  padding: .5em;
-}
-.button {
-  border: 1px solid #444;
- /* width: 20%;*/
-  padding: .25em;
-  margin:.25em;
-  border-radius: 8px;
-}
+
 </style>
 </head>
 
 <script type="text/javascript">
 
-function searchPrimo() {
- 
+function searchPrimo() { 
   document.forms["searchForm"].tab.value = document.forms["searchForm"].search_scope.value;
-  if (document.forms["searchForm"].search_scope.value === "MyInstitution") {
-    document.forms["searchForm"].tab.value = "LibraryCatalog";
-  } 
-  if (document.forms["searchForm"].search_scope.value === "MyInst_and_CI") {
-    document.forms["searchForm"].tab.value = "Everything";
-  } 
+  document.forms["searchForm"].tab.value = document.forms["searchForm"].search_scope.value === "MyInstitution" ?  "LibraryCatalog" : document.forms["searchForm"].tab.value;
+  document.forms["searchForm"].tab.value = document.forms["searchForm"].search_scope.value === "MyInst_and_CI" ? "Everything" : document.forms["searchForm"].tab.value;
+    
   let idx = document.forms["searchParams"].index.value;
   let prc = document.forms["searchParams"].precision.value;
-  //document.forms["searchForm"].tab.value = document.forms["searchForm"].search_scope.value;
   let srch = document.getElementById("primoQueryTemp").value.replace(/[,]/g, " ");
-  document.getElementById("primoQuery").value = [idx, prc, srch].join(",");
+  document.getElementById("primoQuery").value = [idx, prc, srch].join(",").trim();
   document.forms["searchForm"].submit();
 }
 </script>
 </head>
 
 <body>
+
 <div class="container">
-<div class="leftcol"></div>
+
+
+<div class="leftcol">left</div>
 
 <div class="midcol">
-<form id="simple" name="searchForm" method="get" target="_self" action="https://union.primo.exlibrisgroup.com/discovery/search" enctype="application/x-www-form-urlencoded; charset=utf-8" onsubmit="searchPrimo()">
-<!-- Customizable Parameters -->
-<input type="hidden" name="vid" value="01UCNY_INST:01UCNY_INST">
-<input type="hidden" name="tab" value="">
-<!--input type="hidden" name="search_scope" value="<scope_name>"-->
- 
-<input type="hidden" name="mode" value="basic">
-<!-- Fixed parameters -->
-<!--input type="hidden" name="displayMode" value="full"-->
-<input type="hidden" name="bulkSize" value="20">
-<input type="hidden" name="highlight" value="true">
-<!--input type="hidden" name="dum" value="true"-->
-<input type="hidden" name="query" id="primoQuery">
-<input type="text" id="primoQueryTemp" value="" size="35">
-<!-- Search Button -->
-<input id="go" title="Search" onclick="searchPrimo()" type="button" value="Search" alt="Search" style="height: 22px; font-size: 12px; font-weight: bold; background: #DE6E17; color: #ffffff; border: 1px solid;">
 
 
-<fieldset>
-    <legend>scope:</legend>
-     <span class="button"><label>Schaffer Library</label>
-    <input type="radio" name="search_scope" value="MyInstitution" checked></span>
-     <span class="button"><label>e-resources</label>
-    <input type="radio" name="search_scope" value="CentralIndex"></span>
-      <span class="button"><label>library catalog and e-resources</label>
-    <input type="radio" name="search_scope" value="MyInst_and_CI"></span>
-      <span class="button"><label>WorldCat</label>
-    <input type="radio" name="search_scope" value="oclc"></span>
-</fieldset>
+       <div class="box">
+        <form id="simple" name="searchForm" method="get" target="_blank" action="https://union.primo.exlibrisgroup.com/discovery/search" enctype="application/x-www-form-urlencoded; charset=utf-8" onsubmit="searchPrimo()">
+            <input type="hidden" name="vid" value="01UCNY_INST:01UCNY_INST">
+            <input type="hidden" name="tab" value="">
+            <input type="hidden" name="mode" value="basic">
+            <!--input type="hidden" name="displayMode" value="full"-->
+            <input type="hidden" name="bulkSize" value="20">
+            <input type="hidden" name="highlight" value="true">
+            <!--input type="hidden" name="dum" value="true"-->
+            <input type="hidden" name="query" id="primoQuery">
+           
+              <input type="text" id="primoQueryTemp" value="">  
+             
+          </form>   
+         
+        </div>
+        <div id="go" onclick="searchPrimo()">&#x1f50e;</div>
+            <div class="scope">
+            
+            <div class="label">Schaffer Library</div>
+            <input type="radio" name="search_scope" value="MyInstitution" checked>
+            <div class="desc"></div>
 
-</form>
+            <div class="label">e-resources</div>
+            <input type="radio" name="search_scope" value="CentralIndex">
+            <div class="desc"></div>
 
-<form id="params" name="searchParams">
-   <fieldset>
-      <legend>precision:</legend>
-      <span class="button"><label>contains</label>
-    <input type="radio" name="precision" value="contains"></span>
-    <span class="button"><label>exact</label>
-    <input type="radio" name="precision" value="exact" checked></span>
-</fieldset>
+            <div class="label">library catalog and e-resources</div>
+            <input type="radio" name="search_scope" value="MyInst_and_CI">
+            <div class="desc"></div>
 
- <fieldset>
-    <legend>index:</legend>
-     <span class="button"><label>all fields</label>
-      <input type="radio" name="index" value="any" checked></span>
-       <span class="button"><label>title</label>
-      <input type="radio" name="index" value="title"></span>
-      <span class="button"> <label>author</label>
-      <input type="radio" name="index" value="creator"></span>
-      <span class="button"> <label>isbn</label>
-      <input type="radio" name="index" value="isbn"></span>
-  </fieldset>
-</form>
+            <div class="label">WorldCat</div>
+            <input type="radio" name="search_scope" value="oclc">
+            <div class="desc"></div>
+        </div>
+
+
+          <div class="index"> 
+          <div class="label">all fields</div>
+          <input type="radio" name="index" value="any" checked>
+          <div class="desc"></div>
+          
+          <div class="label">title</div>
+          <input type="radio" name="index" value="title">
+          <div class="desc"></div>
+          
+          <div class="label">author</div>
+          <input type="radio" name="index" value="creator">
+          <div class="desc"></div>
+          
+          <div class="label">isbn</div>
+          <input type="radio" name="index" value="isbn">
+          <div class="desc">isbnxxxxxxxxxxxxxxxxxxxx</div>
+    </div>
+
+    <div class="precision">
+         
+      <div class="label"><label>contains</div>
+    <input type="radio" name="precision" value="contains">
+          <div class="desc"></div>
+
+     <div class="label"><label>starts with</div>
+    <input type="radio" name="precision" value="begins_with">
+              <div class="desc"></div>
+
+    <div class="label"><label>exact</div>
+    <input type="radio" name="precision" value="exact" checked>
+    <div class="desc"></div>
+
+    </div>
+        
 </div>
- <div class="rightcol"></div>
+   
+<div class="rightcol">right</div>
 </div>
+
+
+
+
+
+
 </body>
 </html>
-
-
