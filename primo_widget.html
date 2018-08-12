@@ -1,85 +1,198 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- Script that converts the query string into valid parameter -->
 <style>
 
 .container {
   display:grid;
-  grid-template-columns:20% 1fr 20%;
-  margin-top:5em;
+  grid-template-areas:
+    "leftcol midcol rightcol";
+  grid-template-columns:12% 1fr 12%;
+  margin-top: 8em;
+  font-size: 1em;
+  line-height: 1.2em;
+  font-family:"Amazon Ember",Lato,Arial,sans serif;
 }
 
 .midcol {
   display: grid;
   grid-template-areas: 
             "box box button"
-            "scope index precision";
-  grid-template-rows: 60px auto;
-  grid-template-columns: 1fr 1fr 1fr;
+            "option option explain"
+            "examples examples explain"
+            "lagniappe lagniappe explain";
+  grid-template-columns: 1fr 1fr 5%;
+}
 
-}
-div {
-  border:1px solid #888;
-}
 .box {
   grid-area: box;
-  display:grid;
-  grid-template-columns: 1fr;
 }
-#primoQueryTemp {
+
+#searchFrm {
+  display:flex;
+  position:relative;
   width:100%;
   height:100%;
+  border-radius:4px;
+  overflow:hidden;
+  margin:0;
 }
-div#go {
-  grid-area: button;
-  display:inline-block;
+
+#searchDropDownBox {
+    border-radius:4px;
+    padding: 8px 12px;
+    font-size: 1em;
+    cursor: pointer;
+    color: #fff;
+    background-color: rgb(130, 36, 51, 0.9);
+    text-align:center;
+    z-index:1;
+    border-right: 2px solid rgb(130, 36, 51, 0.9);
+}
+
+#searchDropdownBox option {
+  padding:6px 2px;
+  line-height:1em;
+  
+}
+
+input#primoQueryTemp {
+    width: 100%;
+    font-size: 16px;
+    font-style:italic;
+    padding: 8px 12px;
+    border-top: 2px solid #888;
+    border-left:none;
+    font-stretch:semi-expanded;
+}
+
+div#go { 
   cursor:pointer;
+  padding:16px;
+  font-size:2em;
+  color: #fff;
+  background-color: rgb(130, 36, 51, 0.9); 
+  height: 100%;
+  width: 100%;
+  border-radius:4px;
+  background-image: none;
+  border: none;
+  width: 45px;
+  z-index:1;
+  border-left: 2px solid rgb(130, 36, 51, 0.9);
+  
 }
-
-.scope {
-  grid-area: scope;
-     display: grid;
-   grid-template-rows: 50px 50px 50px 50px;
-   grid-template-columns: 30% 20px 1fr;
-   justify-items: end;
-   align-content: center;
+#searchParams {
+  display:inline;
 }
-.index {
-  grid-area: index;
+.options {
+  grid-area: option;
   display: grid;
-   grid-template-rows: 50px 50px 50px 50px;
-   grid-template-columns: 20% 20px 1fr;
-   justify-items: end;
-   align-content: center;
-
+  grid-template-areas: field precision
+                        examples examples;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: minmax(1.5em, 2.5em), 1.5em;
+  background-color:#ddd;
+  border: 1px inset #888;
+  padding:8px 4px;
+  border-radius:4px;
+  justify-self:center;
+  width:99%;
 }
-.precision {
-  grid-area: precision;
-   display: grid;
-   grid-template-rows: 50px 50px 50px;
-   grid-template-columns: 20% 20px 1fr;
-   justify-items: end;
-   align-content: center;
+.field, .precision {
+  margin-left: 2.5em;
+}
+input[type="radio"], .label {
+  display:inline-block;
+  padding:0 2px;
+  vertical-align:baseline;
+}
+.label {
+  margin-left:.5em;
+  border:none;
+  vertical-align:baseline;
+}
+.title {
+  font-weight:bold;
+  font-size: 1.1em;
+}
+.examples {
+  grid-area: examples;
+  display:flex;
+  flex-direction:row;
+}
+.examples > div {
+  border:1px solid #888;
+  padding:4px;
+  flex: 1;
+  background-color:#ddd;
+  border-radius:4px;
+  cursor:pointer;
+  text-align:center;
 }
 
-
+.lagniappe {
+  grid-template-area: lagniappe;
+  /*border:1px solid #888;*/
+  margin:1.25em auto;
+  width:68%;
+  padding:8px;
+  height:auto;
+}
+ul {
+  margin: 2px;
+}
+li {
+  margin: 2px;
+  line-height:1.5em;
+  list-style-type: none;
+  padding:8px;
+    background: radial-gradient(ellipse farthest-corner at center center, hsla(0,22%,91%,0.25) 85%, hsla(240,54%,72%,0.25) 100%);
+    background: -webkit-radial-gradient(ellipse farthest-corner at center center, hsla(0,22%,91%,0.25) 85%, hsla(240,54%,72%,0.25) 100%);
+    background: -moz-radial-gradient(ellipse farthest-corner at center center, hsla(0,22%,91%,0.25) 85%, hsla(240,54%,72%,0.25) 100%);
+}
+.header {
+  align:center;
+}
 </style>
 </head>
 
+<form name="gscholar" action="https://scholar.google.com/scholar" target="_blank" method="get" enctype="application/x-www-form-urlencoded; charset=utf-8">
+  
+  <input type="hidden" name="hl" value="en">
+  <input type="hidden" name="as_sdt" value="0,33">
+  <input type="hidden" name="q" value="">
+  <input type="hidden" name="btnG" value="">
+</form>
+
 <script type="text/javascript">
 
+
 function searchPrimo() { 
-  document.forms["searchForm"].tab.value = document.forms["searchForm"].search_scope.value;
-  document.forms["searchForm"].tab.value = document.forms["searchForm"].search_scope.value === "MyInstitution" ?  "LibraryCatalog" : document.forms["searchForm"].tab.value;
-  document.forms["searchForm"].tab.value = document.forms["searchForm"].search_scope.value === "MyInst_and_CI" ? "Everything" : document.forms["searchForm"].tab.value;
-    
-  let idx = document.forms["searchParams"].index.value;
+  let tabs = {
+    "MyInstitution":"LibraryCatalog",
+    "MyInst_and_CI":"Everything",
+    "CentralIndex":"CentralIndex",
+    "Journal":"jsearch_slot",
+    "oclc":"oclc"
+  }
+  let scope = document.forms["searchForm"].search_scope.value;
+  const srch = document.getElementById("primoQueryTemp").value.replace(/[,]/g, " ");
+  if (scope === "gscholar") {
+      document.forms["gscholar"].q.value = srch;
+      document.forms["gscholar"].submit();
+      return true;
+  }
+
+  document.forms["searchForm"].action = scope === "Journal" ? "https://union.primo.exlibrisgroup.com/discovery/jsearch" : "https://union.primo.exlibrisgroup.com/discovery/search";
+  document.forms["searchForm"].tab.value = tabs[scope];
   let prc = document.forms["searchParams"].precision.value;
-  let srch = document.getElementById("primoQueryTemp").value.replace(/[,]/g, " ");
+  let idx = document.forms["searchParams"].index.value;
   document.getElementById("primoQuery").value = [idx, prc, srch].join(",").trim();
   document.forms["searchForm"].submit();
 }
+
+
 </script>
 </head>
 
@@ -88,91 +201,138 @@ function searchPrimo() {
 <div class="container">
 
 
-<div class="leftcol">left</div>
+ 
+<div class="leftcol"></div>
 
 <div class="midcol">
-
-
        <div class="box">
-        <form id="simple" name="searchForm" method="get" target="_blank" action="https://union.primo.exlibrisgroup.com/discovery/search" enctype="application/x-www-form-urlencoded; charset=utf-8" onsubmit="searchPrimo()">
+        <form id="searchFrm" name="searchForm" method="get" target="_blank" action="https://union.primo.exlibrisgroup.com/discovery/search" enctype="application/x-www-form-urlencoded; charset=utf-8" onsubmit="searchPrimo()">
             <input type="hidden" name="vid" value="01UCNY_INST:01UCNY_INST">
-            <input type="hidden" name="tab" value="">
-            <input type="hidden" name="mode" value="basic">
-            <!--input type="hidden" name="displayMode" value="full"-->
-            <input type="hidden" name="bulkSize" value="20">
-            <input type="hidden" name="highlight" value="true">
-            <!--input type="hidden" name="dum" value="true"-->
             <input type="hidden" name="query" id="primoQuery">
-           
-              <input type="text" id="primoQueryTemp" value="">  
-             
-          </form>   
-         
-        </div>
-        <div id="go" onclick="searchPrimo()">&#x1f50e;</div>
-            <div class="scope">
+            <input type="hidden" name="facet" value="">
+            <input type="hidden" name="mfacet" value="">
+            <input type="hidden" name="pfilter" value="">
+
+            <input type="hidden" name="tab" value="">
+            <input type="hidden" name="mode" value="advanced">
+            <input type="hidden" name="highlight" value="true">
             
-            <div class="label">Schaffer Library</div>
-            <input type="radio" name="search_scope" value="MyInstitution" checked>
-            <div class="desc"></div>
 
-            <div class="label">e-resources</div>
-            <input type="radio" name="search_scope" value="CentralIndex">
-            <div class="desc"></div>
-
-            <div class="label">library catalog and e-resources</div>
-            <input type="radio" name="search_scope" value="MyInst_and_CI">
-            <div class="desc"></div>
-
-            <div class="label">WorldCat</div>
-            <input type="radio" name="search_scope" value="oclc">
-            <div class="desc"></div>
+            <select class="searchSelect" id="searchDropdownBox" name="search_scope" title="Select scope">
+                <option selected="selected" value="MyInstitution">Library Catalog</option>
+                <option value="CentralIndex">Electronic Resources</option>
+                <option value="MyInst_and_CI">Catalog + Eresources</option>
+                <option value="Journal">Journal Title</option>
+                <option value="oclc">WorldCat</option>
+                <option value="gscholar">Google Scholar</option>
+            </select>
+            <input type="text" id="primoQueryTemp" value="" placeholder="what am I searching for...will I ever find it?">
+            <div id="go" onclick="searchPrimo()">&#x1f50e;</div>    
+          </form>   
         </div>
+ 
+          <div class="options"> 
+            <div class="field">
+            <form id="searchParams" name="params">
+              <span class="title">Search:</span>
+              <div class="label">all fields</div>
+              <input type="radio" name="index" value="any" checked>
+              <div class="label">title</div>
+              <input type="radio" name="index" value="title">
+              <div class="label">author</div>
+              <input type="radio" name="index" value="creator">
+              <div class="label">subject</div>
+              <input type="radio" name="index" value="subject">
+            </div>
 
-
-          <div class="index"> 
-          <div class="label">all fields</div>
-          <input type="radio" name="index" value="any" checked>
-          <div class="desc"></div>
-          
-          <div class="label">title</div>
-          <input type="radio" name="index" value="title">
-          <div class="desc"></div>
-          
-          <div class="label">author</div>
-          <input type="radio" name="index" value="creator">
-          <div class="desc"></div>
-          
-          <div class="label">isbn</div>
-          <input type="radio" name="index" value="isbn">
-          <div class="desc">isbnxxxxxxxxxxxxxxxxxxxx</div>
-    </div>
-
-    <div class="precision">
-         
-      <div class="label"><label>contains</div>
-    <input type="radio" name="precision" value="contains">
-          <div class="desc"></div>
-
-     <div class="label"><label>starts with</div>
-    <input type="radio" name="precision" value="begins_with">
-              <div class="desc"></div>
-
-    <div class="label"><label>exact</div>
-    <input type="radio" name="precision" value="exact" checked>
-    <div class="desc"></div>
-
-    </div>
-        
+            <div class="precision">
+              <span class="title">Precision:</span>
+              <div class="label">contains</div>
+              <input type="radio" name="precision" value="contains" checked>
+              <div class="label">starts with</div>
+              <input type="radio" name="precision" value="begins_with">
+               <div class="label">exact</div>
+              <input type="radio" name="precision" value="exact">
+              </form>
+            </div>
+          </div>
+          <div class="examples">
+            <div id="owntitle">Does the library have this book?</div>
+            <div id="ownphys">Does the library own a physical copy?</div>
+            <div id="peerreview">Peer Reviwed Articles</div>
+            <div id="broadest">Broadest possible search</div>
+            
+          </div>        
+ 
 </div>
    
-<div class="rightcol">right</div>
+       
+<div class="rightcol"></div>
+
+</div>
+ <div class="lagniappe">
+  <span class="header">The Scholar's Portal</span>
+  <ul> 
+   <li>
+       The number of search results can feel overwhelming and trying to find a single known title or author may be frustrating
+  </li>
+   <li>
+   It's necessary to explore, use post-search facets such as "resource type", "subject", etc.
+    limit to specific <a href="#">scopes</a>, fields, and apply <a href="#">precision</a> to your search.
+  </li>
+  <!--li>
+        Google uses PageRank to move the most popular sites to the top.  But searching for scholarly content
+        is different.  You want to be more thorough, finding the best material, and becoming an expert on a topic means finding <i>all</i> the material
+  </li-->
+  <li>
+        If you search GoogleScholar make sure
+        you add Union College to your list of "library links" in Scholar settings.  You will then have your results linked to content that Union has licensed.
+  </li>
+  
+  
+  </ul>
 </div>
 
 
+<script>
+  function stopEventPropagation(event)
+{
+  event.stopPropagation();
+}
 
-
-
+    let ownphys = document.querySelector('#ownphys');
+    let owntitle = document.querySelector('#owntitle');
+    let peer = document.querySelector('#peerreview');
+    let broadest = document.querySelector('#broadest');
+    owntitle.addEventListener('click', function(){
+      document.params.index[1].checked = true;
+      document.params.precision[2].checked = true;
+      document.searchForm.search_scope[0].selected = true;
+      document.getElementById("primoQueryTemp").placeholder = "searches the library catalog for the exact title...if not found there you might try searching the worldcat scope";
+    },  stopEventPropagation, true);
+    ownphys.addEventListener('click', function(){
+      document.params.index[1].checked = true;
+      document.params.precision[2].checked = true;
+      document.searchForm.search_scope[0].selected = true;
+      document.getElementById("primoQueryTemp").placeholder = "searches the library catalog for the exact title, physical copy only";
+      document.forms["searchForm"].facet.value = 'tlevel,include,available_p';
+    },  stopEventPropagation, true);
+    peerreview.addEventListener('click', function(){
+      document.params.index[0].checked = true;
+      document.params.precision[0].checked = true;
+      document.searchForm.search_scope[1].selected = true;
+      document.getElementById("primoQueryTemp").placeholder = "searches a topic for peer reviewed articles in eletronic journals";
+      document.forms["searchForm"].mfacet.value = 'tlevel,include,peer_reviewed,1';
+    },  stopEventPropagation, true);
+    broadest.addEventListener('click', function(){
+      document.params.index[0].checked = true;
+      document.params.precision[0].checked = true;
+      document.searchForm.search_scope[2].selected = true;
+      document.getElementById("primoQueryTemp").placeholder = "searches all of our resources both physical and electronic";
+    },  stopEventPropagation, true);
+</script>
 
 </body>
 </html>
+
+  
