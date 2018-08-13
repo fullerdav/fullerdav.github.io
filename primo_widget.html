@@ -284,6 +284,14 @@ li {
         "Journal":"jsearch_slot",
         "oclc":"oclc"
     }
+    const scope_trans = {
+        "MyInstitution":"Library Catalog",
+        "MyInst_and_CI":"Catalog + Eresources",
+        "CentralIndex":"Electronic Resources",
+        "Journal":"Journal Title",
+        "oclc":"WorldCat",
+        "Google Scholar":"Google Scholar"
+    }
 
     function searchPrimo() { 
         let lscope = dropdown.value;
@@ -349,7 +357,7 @@ li {
     }); 
     
     dropdown.addEventListener('change', function(){
-      let placeholderText = `current settings - scope: ${this.value}, index: ${fields.value}, precision: ${precision.value}`;
+      let placeholderText = `current settings - scope: ${scope_trans[this.value]}, index: ${fields.value}, precision: ${precision.value}`;
       query.value = "";
       query.placeholder = placeholderText;
     });
