@@ -72,26 +72,18 @@ input#primoQueryTemp {
     color: #fff;
     background-color: rgb(130, 36, 51, 0.9);
     z-index:1;
-    border-right: 2px solid rgb(130, 36, 51, 0.9);
+    border-right: 4px solid rgb(130, 36, 51, 0.9);
     font-size:1em;
+    text-align:right;
 }
 
-option:hover, option:focus, option:active {
-   background: linear-gradient(#d6d6d6, #d6d6d6);
-   background-color: #d6d6d6 !important; /* for IE */
-   color: #888 !important;
-    box-shadow: inset 20px 20px #f00
-}
-option::selected {
-background: linear-gradient(#d6d6d6, #d6d6d6);
-}
 .options {
   grid-area: option;
   display: grid;
   grid-template-areas: field precision;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: 2em;
-  background-color:#ddd;
+  grid-template-rows: 2.2em;
+  background-color:#fff;
   border: 1px solid #888;
   border-radius:4px;
   width:100%;
@@ -108,6 +100,7 @@ background: linear-gradient(#d6d6d6, #d6d6d6);
   display:inline-block;
   padding: 0 .2em;
 }
+
 input[type='radio'] {
   margin: 4px 0;
 }
@@ -128,27 +121,20 @@ input[type='radio'] {
   text-align:center;
 }
 
-.outline {
-  border-left:1px solid #bbb;
-  background-color:1px solid #bbb;
+::placeholder { 
+    color: #822433;
+    opacity: .9;
+    font-size:.9em;
 }
 
-.lagniappe {
-  grid-template-area: lagniappe;
-  margin:auto;
-  width:100%;
-  padding:8px;
-  height:auto;
+.erase {
+   font-size: 2em;
+   margin: 4px;
+   visibility:hidden;
+   text-align:center;
 }
-
-li {
-  margin: 2px;
-  line-height:1.4em;
-  list-style-type: none;
-  padding:8px;
-    background: radial-gradient(ellipse farthest-corner at center center, hsla(0,22%,91%,0.25) 85%, hsla(240,54%,72%,0.25) 100%);
-    background: -webkit-radial-gradient(ellipse farthest-corner at center center, hsla(0,22%,91%,0.25) 85%, hsla(240,54%,72%,0.25) 100%);
-    background: -moz-radial-gradient(ellipse farthest-corner at center center, hsla(0,22%,91%,0.25) 85%, hsla(240,54%,72%,0.25) 100%);
+.tooltip {
+  visibility: hidden;
 }
 </style>
 </head>
@@ -185,12 +171,12 @@ li {
             <select class="searchSelect" id="searchDropdownBox" name="search_scope" title="scope: a subset of records to search">
                 <option selected="selected" value="MyInstitution">Library Catalog</option>
                 <option value="CentralIndex">Electronic Resources</option>
-                <option value="MyInst_and_CI">Catalog + Eresources</option>
+                <option value="MyInst_and_CI">Everything</option>
                 <option value="Journal">Journal Title</option>
                 <option value="oclc">WorldCat</option>
                 <option value="Google Scholar">Google Scholar</option>
             </select>
-            <input type="text" id="primoQueryTemp" value="" placeholder="default - scope: Library Catalog, index: all, precision: contains">
+            <input type="text" id="primoQueryTemp" value="" placeholder="scope: Library Catalog, index: all, precision: contains">
             <div id="go" onclick="searchPrimo()" title="go!">&#x1f50e;</div>    
           </form>   
         </div>
@@ -198,23 +184,22 @@ li {
           <div class="options"> 
           
             <div class="field">
-              <form id="fieldParams" name="fields">
-                <span class="title">Index:</span>
+              <form id="fieldParams" name="fields" title="Field: specific data element to search">
+                <span class="titlelab">Index:</span>
                 <div class="label outline">all</div>
                 <input type="radio" name="index" value="any" checked>
-          
                  <div class="label">title</div>
                 <input type="radio" name="index" value="title">
                 <div class="label">author</div>
                 <input type="radio" name="index" value="creator">
                 <div class="label">subject</div>
-                <input type="radio" name="index" value="subject">
+                <input type="radio" name="index" value="sub">
               </form>
             </div>
 
             <div class="precision">
-              <form id="precParams" name="precis">
-                <span class="title">Precision:</span>
+              <form id="precParams" name="precis" title="precision: matching method">
+                <span class="titlelab">Precision:</span>
                 <div class="label outline">contains</div>
                 <input type="radio" name="precision" value="contains" checked>
                 <div class="label">starts with</div>
@@ -227,36 +212,36 @@ li {
 
           <div class="examples">
             <div id="owntitle">does the library own this book?...</div>
-            <div id="ownphys">...own a physical copy? not electronic?</div>
+            <div id="physelect">specific title, physical or electronic?</div>
             <div id="peerreview">peer reviwed articles?</div>
             <div id="broadest">show me everything...</div>
           </div>        
-
-           <div class="lagniappe">
-                <ul> 
-                    <li>
-                    the number of results Primo delivers can be overwhelming and finding a single title may be frustrating
-                    </li>
-                    <!--li>
-                    It's necessary to explore, use post-search facets such as "resource type", "subject", etc.
-                    limit to specific <a href="#">scopes</a>, fields, and apply <a href="#">precision</a> to your search.
-                    </li-->
-                    <li>
-                      it's like a conversation, you pose a query and receive a response.  The more specific the query the better the response.
-                    </li>
-                    <li>
-                    searching for scholarly content is different from searching the internet...you want to be more thorough and find the best material; becoming an expert on a topic means finding <i>all</i> the material
-                    </li>
-                    <li>
-                    if searching GoogleScholar be sure to add Union College to your "library links" in Scholar settings; then links to our licensed content will appear.
-                    </li>
-                </ul>
-          </div>
  
 </div>
    
        
 <div class="rightcol"></div>
+
+<div id="exact title" class="tooltip owntitle">
+The scope "library catalog" refers to a set of records that we maintain locally.  They represent mainly the physical we keep in the building,
+but also includes some e-books or other electronic resources that we have selected.
+
+The best way to search for a particular book that you might carry home is to search the library catalog for an exact title.
+
+</div>
+<div class="tooltip physelect">
+If you don't mind an e-book search for the exact title with the filter Resource Type = Book
+
+</div>
+<div id="exact title" class="tooltip peerreview">
+
+
+</div>
+<div id="exact title" class="tooltip broadest">
+
+
+</div>
+
 
 </div>
 
@@ -266,17 +251,8 @@ li {
     }
 
     const { log } = console;
-    const ownphys = document.querySelector('#ownphys');
-    const owntitle = document.querySelector('#owntitle');
-    const peer = document.querySelector('#peerreview');
-    const broadest = document.querySelector('#broadest');
-    const labels = document.querySelectorAll('div.label');
-    const dropdown = document.querySelector('#searchDropdownBox');
+    let searchflag=null;
 
-    const fields = document.forms["fieldParams"].index;
-    const precision = document.forms["precParams"].precision;
-   // const scope = document.forms["searchForm"].search_scope;
-    const query = document.getElementById("primoQueryTemp");
     const tabs = {
         "MyInstitution":"LibraryCatalog",
         "MyInst_and_CI":"Everything",
@@ -286,84 +262,106 @@ li {
     }
     const scope_trans = {
         "MyInstitution":"Library Catalog",
-        "MyInst_and_CI":"Catalog + Eresources",
+        "MyInst_and_CI":"Everything",
         "CentralIndex":"Electronic Resources",
         "Journal":"Journal Title",
         "oclc":"WorldCat",
         "Google Scholar":"Google Scholar"
     }
+    const fieldNumber = {"all": 0, "title": 1, "author": 2, "subject": 3, "contains": 0, "starts with": 1, "exact": 2};
 
     function searchPrimo() { 
-        let lscope = dropdown.value;
+        let scope = dropdown.value;
         let srch = query.value.replace(/[,]/g, " ");
-
-        if (lscope === "Google Scholar") {
+        if (searchflag==="physelect") {
+           document.forms["searchForm"].pfilter.value = `rtype,exact,books`;
+        } else {
+          document.forms["searchForm"].pfilter.value = null;
+        }
+        if (searchflag==="peerreview") {
+            document.forms["searchForm"].facet.value = `tlevel,include,peer_reviewed`;
+        } else {
+            document.forms["searchForm"].facet.value = null;
+        }
+        
+        
+        if (scope === "Google Scholar") {
           document.forms["gscholar"].q.value = srch;
           document.forms["gscholar"].submit();
           return true;
         }
 
-        document.forms["searchForm"].action = lscope === "Journal" ? "https://union.primo.exlibrisgroup.com/discovery/jsearch" : "https://union.primo.exlibrisgroup.com/discovery/search";
-        document.forms["searchForm"].tab.value = tabs[lscope];
-        let prc = precision.value;
-        let idx = fields.value;
-        document.getElementById("primoQuery").value = [idx, prc, srch].join(",").trim();
+        document.forms["searchForm"].action = scope === "Journal" ? "https://union.primo.exlibrisgroup.com/discovery/jsearch" : "https://union.primo.exlibrisgroup.com/discovery/search";
+        document.forms["searchForm"].tab.value = tabs[scope];
+        document.getElementById("primoQuery").value = [fields.value, precision.value, srch].join(",").trim();
         document.forms["searchForm"].submit();
     }
 
+    const examples = document.querySelectorAll('.examples div');
+    const labels = document.querySelectorAll('.field .label, .precision .label');
+    const precision = document.forms["precParams"].precision;
+    const fields = document.forms["fieldParams"].index;
+    const dropdown = document.querySelector('#searchDropdownBox');
+    const radio = document.querySelectorAll('#searchDropdownBox, [type="radio"]');
+    const query = document.getElementById("primoQueryTemp");
 
-    owntitle.addEventListener('click', function(){
-      fields[1].checked = true;
-      precision[2].checked = true;
-      dropdown[0].selected = true;
-      query.placeholder = "searches the library catalog title field for an exact match...if not found try the WorldCat scope";
-    },  stopEventPropagation, true);
-    ownphys.addEventListener('click', function(){
-      fields[1].checked = true;
-      precision[2].checked = true;
-      dropdown[0].selected = true;
-      query.placeholder = 'searches the library catalog for the exact title, physical copy only (filter: "Held by Library")';
-      document.forms["searchForm"].facet.value = 'tlevel,include,available_p';
-    },  stopEventPropagation, true);
-    peerreview.addEventListener('click', function(){
-      fields[0].checked = true;
-      precision[0].checked = true;
-      dropdown[1].selected = true;
-      query.placeholder = 'searches "electronic resources" and apllies a filter for peer review publications';
-      document.forms["searchForm"].mfacet.value = 'tlevel,include,peer_reviewed,1';
-    },  stopEventPropagation, true);
-    broadest.addEventListener('click', function(){
-     fields[0].checked = true;
-      precision[0].checked = true;
-      dropdown[2].selected = true;
-      query.placeholder = "searches everything (both catalog and e-resources), all fields";
-    },  stopEventPropagation, true);
+    function placeHolder(val) {
+      let f = fields.value; let p = precision.value;
+      f = f === "creator" ? "author" : f;
+      f = f === "sub" ? "subject" : f;
+      p = p === "begins_with" ? "starts with" : p;
+      let placeholder = `scope: "${scope_trans[dropdown.value]}",  index: "${f}",  precision: "${p}"  ${val}`;
+      if (dropdown.value === "oclc" || dropdown.value === "Google Scholar") {
+          placeholder = `scope: "${scope_trans[dropdown.value]}"`;
+      } 
+      query.placeholder = placeholder;
+    }
 
-    labels.forEach(function(lbl){
-      lbl.addEventListener('click', function(e){
-          labels.forEach(function(lbl){
-              lbl.classList.remove('outline');
-          });
-          e.target.classList.add('outline');
-          precision[0].checked = e.target.innerText === 'contains' ? true : null;
-          precision[1].checked = e.target.innerText === 'starts with' ? true : null;
-          precision[2].checked = e.target.innerText === 'exact' ? true : null;
-
-         fields[0].checked = e.target.innerText === 'all' ? true : null;
-         fields[1].checked = e.target.innerText === 'title' ? true : null;
-         fields[2].checked = e.target.innerText === 'author' ? true : null;
-         fields[3].checked = e.target.innerText === 'subject' ? true : null;
-      }, stopEventPropagation, true);
-    }); 
-    
-    dropdown.addEventListener('change', function(){
-      let placeholderText = `current settings - scope: ${scope_trans[this.value]}, index: ${fields.value}, precision: ${precision.value}`;
-      query.value = "";
-      query.placeholder = placeholderText;
+    examples.forEach(function(ex){
+        ex.addEventListener('click', function(e){
+          if (e.target.id === "owntitle") {
+            fields[1].checked = true; precision[2].checked = true; dropdown[0].selected = true;
+            searchflag=null;
+            placeHolder("");
+          }
+          if (e.target.id === "physelect") {
+            fields[1].checked = true; precision[2].checked = true; dropdown[2].selected = true;
+            searchflag = 'physelect';
+            placeHolder('  filter: all monographs physical or electronic');
+          }
+          if (e.target.id === "peerreview") {
+            fields[3].checked = true; precision[0].checked = true; dropdown[1].selected = true;
+            searchflag = 'peerreview';
+            placeHolder(' & (filter: "peer review")');
+          }
+          if (e.target.id === "broadest") {
+            fields[0].checked = true; precision[0].checked = true; dropdown[2].selected = true;
+             placeHolder("");
+          }
+         
+        }, stopEventPropagation, true);
     });
+
+    labels.forEach(function(lab){
+        lab.addEventListener('click', function(e){
+            let val = fieldNumber[lab.innerText];
+            if (["all", "title", "author", "subject"].indexOf(lab.innerText) !== -1) {
+                fields[val].checked = true;
+            } else {
+                precis[val].checked = true;
+            }
+            placeHolder("");
+        }, stopEventPropagation, true);
+    });
+    
+    radio.forEach(function(r){
+      r.addEventListener('change', function(e){
+        placeHolder("");
+        searchflag=null;
+      }, stopEventPropagation, true);
+    });
+    
 </script>
 
 </body>
 </html>
-
-  
