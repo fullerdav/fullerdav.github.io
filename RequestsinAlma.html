@@ -1,0 +1,121 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<style>
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="sierra">
+In Sierra we had 20 or 30 statuses that might help to understand the location of an item that was not on Avaible or checked out.
+</div>
+
+<div class="sierra">
+In Sierra request was understood to be one thing, a patron hold request.
+</div>
+
+<div class="alma">
+In Alma there are two base statuses, either In Place and Not In Place which means that is "In Process" of some kind
+There are also several out-of-the-box statuses such as Missing, Lost, Claims Returned, etc.
+</div>
+
+<div class="alma">
+There are a variety of requests but the term request more specifically is a patron initiated request to hold an item
+Work orders are sare a type of request (for work), but are staff initiated, not patrons
+Work orders help faciltate the movement and location of items that are "In Process"
+</div>
+
+Request/Procress Type
+Binding, General Hold Request, Move Permanently, Move Temporarily, 
+Patron Physical Item Request, Patron Digitization Request, 
+Restore Item, and Transit for Reshelving
+A work order type is a "process" with one or more statuses that are usually defined by the staff/work that needs to be done
+Work order processes are Acquisitions, Preservation, Digitization
+
+
+
+A work order department can be thought of as internal location (or function) in Alma.
+A work order department in Alma is really the staff authorized to handle the work of that department.
+
+Alma has two out-of the-box "locations" to handle basic workflows:
+
+The Acquisitions Department is where new materials are received.  
+You must have the Receiving Operator role to receive items, change their status, or mark them as Done
+After being Received, and the Keep in Dept. box is checked, The item remains in CATS for further processing
+it has a request attached to it, the assumption that being kept in the dept. for a purpose
+
+The Circulation Desk is a "desk" with services  such as shelving, checkin checkout
+It also has a hold shelf, currently we do not enable "hold shelf processing" which would enable the desk to function more as a work order dept, i.e., items scanned in that
+have requests would not immediately go to the hold shelf, rather another process
+Circulation desks also can have work order types added to them
+
+
+
+
+
+Monitor Requests and In Process Items, you will see all requests for your department
+if you have the Receiving Operator role this list is identical to the Post-Receiving Processing list
+
+Work order types can span departments, even libraries
+So two depts can share the same type, or "Process"
+
+Request types: In Process (staff initiated, work order), Request (typically patron intiated)
+Request operators are attached to a circulation desk
+Work order operators to work order depts
+Receiving operators to acquisitions depts
+
+
+
+Workflow Steps: Await Approval, Deposit Item, Document Delivery, Requested, 
+On Hold Shelf, Transit Item, Work Order, and Pickup From Shelf
+
+
+
+
+
+Why bother?
+
+Having defined processes enable our patrons and other staff to understand when a item is not on the shelf
+It helps staff within a dept see where an item is and to know when the item needs their attention
+
+A simple example:
+A staff person notices a spine label falling off a book on the shelf.  They decide to bring the book to technical services
+hopefuly for a quick repair.  Do we need a work order type with a department and a status?  Maybe.  It seems we might get by without 
+one.  But Carol may be on vacation.  Or it might be decided the book needs more repair.  
+
+A work order department for preservation
+
+
+[Quick way]
+Select the Department in Alma "Schaffer Library - Preservation Dept"  (serves all three libraries)
+Ctrl + Alt + S – Open the Scanning interface, enter barcode
+Choose Status - there is currently just one status for this Dept, "In Repair"
+
+[this generates a request for the preservation/repair department]
+in Alma where there is a list of item records click the row actions list (...) and select "Work Order"
+a physical items search will generate a list of items, another type of search, such as titles will have "Items" in the row actions list, select that to get to the item list
+once at an item choose row actions -> Work order
+then choose "Preservation' as the "Process Type" and the mamaging dept. autofills "Preservation/Repair"
+assuming the item is in hand check the "do not pick from shelf" to avoid that workflow step
+if it is on the shelf leaving the box unchecked will create a request
+
+
+Select the Department in Alma "Schaffer Library - Preeservation Dept"  (serves all three libraries)
+Go to Fulfillment -> Manage In-Process Items
+Change the status from none to "In Repair"
+
+Primo shows:
+In process of Preservation until 08/24/2018
+Currently defaulting to 7 days....I'll ask India what shethinks
+
+Alt + P – Open the Pick From Shelf interface
+Ctrl+Alt+S – Open the Scanning interface
+Alt+R – Open the Returns interface
+</div>
+
+</body>
+</html>
