@@ -108,7 +108,7 @@ input[type='radio'] {
 .examples {
   grid-template-area: examples;
   display:grid;
-  grid-template-columns: 30% 30% 20% 20%;
+  grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows:1.8em;
 }
 
@@ -138,6 +138,8 @@ input[type='radio'] {
 }
 </style>
 </head>
+<body>
+
 
 <form name="gscholar" action="https://scholar.google.com/scholar" target="_blank" method="get" enctype="application/x-www-form-urlencoded; charset=utf-8">
   <input type="hidden" name="hl" value="en">
@@ -145,10 +147,6 @@ input[type='radio'] {
   <input type="hidden" name="q" value="">
   <input type="hidden" name="btnG" value="">
 </form>
-
-</head>
-
-<body>
 
 <div class="container">
  
@@ -162,10 +160,8 @@ input[type='radio'] {
             <input type="hidden" name="facet" value="">
             <input type="hidden" name="mfacet" value="">
             <input type="hidden" name="pfilter" value="">
-
             <input type="hidden" name="tab" value="">
             <input type="hidden" name="mode" value="advanced">
-            <input type="hidden" name="highlight" value="true">
             
 
             <select class="searchSelect" id="searchDropdownBox" name="search_scope" title="scope: a subset of records to search">
@@ -176,8 +172,8 @@ input[type='radio'] {
                 <option value="oclc">WorldCat</option>
                 <option value="Google Scholar">Google Scholar</option>
             </select>
-            <input type="text" id="primoQueryTemp" value="" placeholder="scope: Library Catalog, index: all, precision: contains">
-            <div id="go" onclick="searchPrimo()" title="go!">&#x1f50e;</div>    
+            <input type="text" name="pQuery" id="primoQueryTemp" value="" placeholder="scope: Library Catalog, index: all, precision: contains">
+            <div id="go" onclick="cf();" title="go!">&#x1f50e;</div>    
           </form>   
         </div>
  
@@ -211,14 +207,12 @@ input[type='radio'] {
           </div>
 
           <div class="examples">
-            <div id="owntitle">does the library own this book?...</div>
-            <div id="physelect">specific title, physical or electronic?</div>
-            <div id="peerreview">peer reviwed articles?</div>
+            <div id="owntitle">does the library have this title?...</div>
+            <div id="physelect">a title, either physical or electronic?</div>
+            <div id="peerreview">peer reviwed articles on a topic?</div>
             <div id="broadest">show me everything...</div>
           </div>        
- 
 </div>
-   
        
 <div class="rightcol"></div>
 
@@ -235,14 +229,14 @@ If you don't mind an e-book search for the exact title with the filter Resource 
 </div>
 <div id="exact title" class="tooltip peerreview">
 
-
 </div>
 <div id="exact title" class="tooltip broadest">
 
+<a href="http://union.alma.exlibrisgroup.com/rep/getFile?institution_code=01UCNY_INST&file=newacquisitions&type=RSS">
+Subscribe to new items rss feed  
+</a>
 
 </div>
-
-
 </div>
 
 <script>
@@ -251,8 +245,7 @@ If you don't mind an e-book search for the exact title with the filter Resource 
     }
 
     const { log } = console;
-    let searchflag=null;
-
+   
     const tabs = {
         "MyInstitution":"LibraryCatalog",
         "MyInst_and_CI":"Everything",
@@ -270,33 +263,6 @@ If you don't mind an e-book search for the exact title with the filter Resource 
     }
     const fieldNumber = {"all": 0, "title": 1, "author": 2, "subject": 3, "contains": 0, "starts with": 1, "exact": 2};
 
-    function searchPrimo() { 
-        let scope = dropdown.value;
-        let srch = query.value.replace(/[,]/g, " ");
-        if (searchflag==="physelect") {
-           document.forms["searchForm"].pfilter.value = `rtype,exact,books`;
-        } else {
-          document.forms["searchForm"].pfilter.value = null;
-        }
-        if (searchflag==="peerreview") {
-            document.forms["searchForm"].facet.value = `tlevel,include,peer_reviewed`;
-        } else {
-            document.forms["searchForm"].facet.value = null;
-        }
-        
-        
-        if (scope === "Google Scholar") {
-          document.forms["gscholar"].q.value = srch;
-          document.forms["gscholar"].submit();
-          return true;
-        }
-
-        document.forms["searchForm"].action = scope === "Journal" ? "https://union.primo.exlibrisgroup.com/discovery/jsearch" : "https://union.primo.exlibrisgroup.com/discovery/search";
-        document.forms["searchForm"].tab.value = tabs[scope];
-        document.getElementById("primoQuery").value = [fields.value, precision.value, srch].join(",").trim();
-        document.forms["searchForm"].submit();
-    }
-
     const examples = document.querySelectorAll('.examples div');
     const labels = document.querySelectorAll('.field .label, .precision .label');
     const precision = document.forms["precParams"].precision;
@@ -305,41 +271,57 @@ If you don't mind an e-book search for the exact title with the filter Resource 
     const radio = document.querySelectorAll('#searchDropdownBox, [type="radio"]');
     const query = document.getElementById("primoQueryTemp");
 
-    function placeHolder(val) {
-      let f = fields.value; let p = precision.value;
-      f = f === "creator" ? "author" : f;
-      f = f === "sub" ? "subject" : f;
-      p = p === "begins_with" ? "starts with" : p;
-      let placeholder = `scope: "${scope_trans[dropdown.value]}",  index: "${f}",  precision: "${p}"  ${val}`;
-      if (dropdown.value === "oclc" || dropdown.value === "Google Scholar") {
-          placeholder = `scope: "${scope_trans[dropdown.value]}"`;
-      } 
-      query.placeholder = placeholder;
-    }
+    // function searchPrimo() { 
+    //     let scope = dropdown.value;
+    //     let srch = query.value.replace(/[,]/g, " ");
+    //     if (searchflag==="physelect") {
+    //        document.forms["searchForm"].pfilter.value = `rtype,exact,books`;
+    //     } else {
+    //       document.forms["searchForm"].pfilter.value = null;
+    //     }
+    //     if (searchflag==="peerreview") {
+    //         document.forms["searchForm"].facet.value = `tlevel,include,peer_reviewed`;
+    //     } else {
+    //         document.forms["searchForm"].facet.value = null;
+    //     }
+        
+    //     document.forms["searchForm"].action = scope === "Journal" ? "https://union.primo.exlibrisgroup.com/discovery/jsearch" : "https://union.primo.exlibrisgroup.com/discovery/search";
+    //     document.forms["searchForm"].tab.value = tabs[scope];
+    //     document.getElementById("primoQuery").value = [fields.value, precision.value, srch].join(",").trim();
+    //     document.forms["searchForm"].submit();
+    // }
+
+    //function placeHolder(val) {
+    //   let f = fields.value; let p = precision.value;
+    //   f = f === "creator" ? "author" : f;
+    //   f = f === "sub" ? "subject" : f;
+    //   p = p === "begins_with" ? "starts with" : p;
+    //   let placeholder = `scope: "${scope_trans[dropdown.value]}",  index: "${f}",  precision: "${p}"  ${val}`;
+    //   if (dropdown.value === "oclc" || dropdown.value === "Google Scholar") {
+    //       placeholder = `scope: "${scope_trans[dropdown.value]}"`;
+    //   } 
+    //   query.placeholder = placeholder;
+    // }
 
     examples.forEach(function(ex){
         ex.addEventListener('click', function(e){
           if (e.target.id === "owntitle") {
             fields[1].checked = true; precision[2].checked = true; dropdown[0].selected = true;
-            searchflag=null;
-            placeHolder("");
           }
           if (e.target.id === "physelect") {
             fields[1].checked = true; precision[2].checked = true; dropdown[2].selected = true;
-            searchflag = 'physelect';
-            placeHolder('  filter: all monographs physical or electronic');
           }
           if (e.target.id === "peerreview") {
             fields[3].checked = true; precision[0].checked = true; dropdown[1].selected = true;
-            searchflag = 'peerreview';
-            placeHolder(' & (filter: "peer review")');
           }
           if (e.target.id === "broadest") {
             fields[0].checked = true; precision[0].checked = true; dropdown[2].selected = true;
-             placeHolder("");
           }
-         
+          //placeHolder("");
         }, stopEventPropagation, true);
+        ex.addEventListener('mouseover', function(){
+
+        });
     });
 
     labels.forEach(function(lab){
@@ -354,13 +336,52 @@ If you don't mind an e-book search for the exact title with the filter Resource 
         }, stopEventPropagation, true);
     });
     
-    radio.forEach(function(r){
-      r.addEventListener('change', function(e){
-        placeHolder("");
-        searchflag=null;
-      }, stopEventPropagation, true);
-    });
-    
+   // radio.forEach(function(r){
+   //    r.addEventListener('change', function(e){
+   //      placeHolder("");
+   //    }, stopEventPropagation, true);
+   //  });
+
+
+ function createForm(s) {
+    let frm = document.forms["searchForm"];
+
+    const closureFrm = function() {
+      frm.tab.value = tabs[dropdown.value];
+      let srch = query.value.replace(/[,]/g, " ");
+      frm.mode.value = 'basic';
+      frm.query.value = [fields.value, precision.value, srch].join(",").trim();
+
+      frm.facet.value = null;
+      frm.mfacet.value = null;
+      frm.pfilter.value = null;
+      frm.submit();
+    }
+
+    return closureFrm;
+}
+
+function createGoogleForm(s) {
+    let frm = document.forms["gscholar"];
+
+    const googleFrm = function() {
+      let srch = query.value.replace(/[,]/g, " ");
+      frm.q.value = srch;
+      frm.submit();
+    }
+    return googleFrm;
+}
+
+let cf = function() {
+  let f = null;
+    if (dropdown.value === "Google Scholar") {
+       f = createGoogleForm(query.value);
+    } else {
+      f = createForm(query.value);
+    }
+    f();
+}
+
 </script>
 
 </body>
