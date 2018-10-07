@@ -1,0 +1,306 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+* {
+    margin: 0; 
+    padding: 0; 
+    border: none; 
+    outline: 0;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;  
+}
+
+
+input::selection {
+    background: #a7b7d7;
+}
+
+
+.container {
+  display:grid;
+  grid-template-areas:
+    "leftcol midcol rightcol";
+  grid-template-columns:12% 1fr 12%;
+  margin-top: 8em;
+  font-size: 1em;
+  line-height: 1.2em;
+}
+#searchFrm {
+  display:flex;
+  overflow:hidden;
+}
+
+div#go { 
+  cursor:pointer;
+  padding:16px;
+  font-size:2em;
+  color: #fff;
+  background-color: rgb(130, 36, 51, 0.9); 
+  border-radius:4px;
+  z-index:1;
+  border-left: 2px solid rgb(130, 36, 51, 0.9);
+}
+
+input#primoQueryTemp {
+    width: 100%;
+    font-size: 16px;
+    font-style: italic;
+    padding: 8px 16px;
+    border-left: none;
+
+    background-color: #fff !important;
+    background-image: none !important;
+    color: rgb(0, 0, 0);
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: inset 0 0 0px 9999px white;
+}
+
+.tabrow {
+        text-align: center;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        line-height: 24px;
+        height: 26px;
+        overflow: hidden;
+        font-size: 12px;
+        font-family: verdana;
+        position: relative;
+    }
+    .tabrow li {
+        border: 1px solid #AAA;
+        background: #D1D1D1;
+        float:left;
+        position: relative;
+        z-index: 0;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 #FFF;
+        text-shadow: 0 1px #FFF;
+        padding: 0 20px;
+        cursor:pointer;
+    }
+    .tabrow a {
+        color: #555;
+        text-decoration: none;
+    }
+    .tabrow li.selected {
+        background: #FFF;
+        color: #333;
+        z-index: 2;
+        border-bottom-color: #fff;
+    }
+    .tabrow:before {
+        position: absolute;
+        content: " ";
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        border-bottom: 1px solid #AAA;
+        z-index: 1;
+    }
+    .tabrow li:before,
+    .tabrow li:after {
+        border: 1px solid #AAA;
+        position: absolute;
+        bottom: -1px;
+        width: 5px;
+        height: 5px;
+        content: " ";
+    }
+    .tabrow li:before {
+        left: -6px;
+        border-bottom-right-radius: 6px;
+        border-width: 0 1px 1px 0;
+    }
+    .tabrow li:after {
+        right: -6px;
+        border-bottom-left-radius: 6px;
+        border-width: 0 0 1px 1px;
+        box-shadow: -2px 2px 0 #D1D1D1;
+    }
+    .tabrow li.selected:after {
+        box-shadow: -2px 2px 0 #FFF;
+    }
+.tabcontent {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+ 
+<div class="leftcol"></div>
+
+<div class="midcol">
+
+<ul class="tabrow">
+  <li class="tablinks selected" id="everything">search everything...</li>
+  <li class="tablinks" id="book" onclick="makeForm('book')">...a specific book in the library</li>
+  <li class="tablinks" id="peerreview" onclick="makeForm('peereview')">...peer reviewed articles</li>
+  <li class="tablinks" id="audiovisual" onclick="makeForm('audiovisual')">...audio-visual</li>
+  <li class="tablinks" id="thesis" onclick="makeForm('thesis')">...union college thesis</li>
+</ul>
+
+<div id="divform" class="tabcontent">
+  <form id="searchFrm" name="searchForm" method="get" target="_blank" action="https://union.primo.exlibrisgroup.com/discovery/search" enctype="application/x-www-form-urlencoded; charset=utf-8">
+    <input type="hidden" name="vid" value="01UCNY_INST:01UCNY_INST"> 
+    <input type="hidden" name="search_scope">   
+    <input type="hidden" name="tab">
+     <input type="hidden" name="facet">
+     <input type="hidden" name="facet">
+    <input type="hidden" name="query"> 
+  
+    <input type="text" width="200" name="pQuery" id="primoQueryTemp">
+    <div id="go" onclick="searchPrimo(event);" title="go!">&#x1f50e;</div>  
+  </form>
+</div>
+
+</div>
+<div class="leftcol"></div>
+</div>
+
+<script>
+
+
+let selected;
+let query = [];
+
+let frm = document.getElementById("searchFrm");
+
+
+function makeForm(searchType) {
+  selected = searchType;
+  formdetect();
+
+  if (selected === "everything") {
+    frm.search_scope.value = 'MyInst_and_CI';
+    frm.tab.value = 'Everything';
+    query = ["any", "contains"];  
+  }
+  if (selected === "book") {
+    frm.search_scope.value = 'MyInstitution';
+    frm.tab.value = 'LibraryCatalog';
+    query = ["title", "exact"];  
+  }
+  if (selected === "peerreview") {
+    frm.search_scope.value = 'CentralIndex';
+    frm.tab.value = 'CentralIndex';
+    let newel = addFormElement('mfacet', 'tlevel,include,peer_reviewed,1');
+    frm.appendChild(newel); 
+    query = ["any", "contains"];  
+  }
+  if (selected === "audiovisual") {
+    frm.search_scope.value = 'MyInst_and_CI';
+    frm.tab.value = 'Everything';
+    let newel = addFormElement('facet', 'rtype,include,media');
+    frm.appendChild(newel); 
+    query = ["any", "contains"];  
+  }
+  if (selected === "thesis") {
+    frm.search_scope.value = 'MyInstitution';
+    frm.tab.value = 'LibraryCatalog';
+    let newel = addFormElement('facet', 'topic,include,Academic Dissertations');
+    frm.appendChild(newel); 
+    query = ["any", "contains"]; 
+  }
+}
+
+function searchPrimo(evt) {
+    evt.preventDefault();
+    tmpQuery = document.getElementById("primoQueryTemp");
+    let frm = document.getElementById("searchFrm");
+    while (query.length > 2) {
+        query.pop();
+    }
+    if (frm.pQuery.value) {
+      query.push(tmpQuery.value.trim());  
+      frm.query.value = query.join(",");
+      frm.submit();
+    }
+   
+}
+   
+makeForm("everything");
+
+lis = document.querySelectorAll('li');
+lis.forEach(function(li) {
+  li.addEventListener('click', function(e) {
+    lis.forEach(function(li) {
+      if (e.target.id === li.id) {
+        li.classList.add('selected');
+         makeForm(e.target.id);
+      } else {
+        if (li.classList.contains('selected')) {
+          li.classList.remove('selected');
+        }
+      }
+    });
+  });
+});
+
+function addFormElement(name, value) {
+    let input = document.createElement("input");
+    input.type = "hidden";
+    input.name = name;
+    input.value = value;
+    return input;
+}
+
+function formdetect() {
+  let c = frm.childNodes;
+  c.forEach(function(children) {
+    console.log(children.name);
+  }); 
+  c.forEach(function(children) {
+    if (children.name === "facet" || children.name === "mfacet") {
+      children.parentNode.removeChild(children);
+    }
+  });
+  c.forEach(function(children) {
+    console.log(children.name);
+  });  
+}             
+
+
+             
+
+
+// function elementSupportsAttribute(element,attribute) { 
+//   var test = document.createElement(element);         
+//   if (attribute in test) {          
+//     return true;        
+//   } else {          
+//     return false;         
+//   }       
+// }
+
+// console.log(elementSupportsAttribute("input", "autofocus"));
+
+
+</script>
+</body>
+</html>
+
+
+<!-- 
+search term expansion
+
+using Boolean operators nullifies search term expansion
+"search for a phrase"
+AND OR NOT
+? single wildcard
+* multiple characters
+
+scopes
+search beyond scopes
+ -->
+
+
