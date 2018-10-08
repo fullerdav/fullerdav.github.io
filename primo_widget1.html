@@ -11,11 +11,9 @@
     box-sizing: content-box;  
 }
 
-
 input::selection {
     background: #a7b7d7;
 }
-
 
 .container {
   display:grid;
@@ -40,6 +38,7 @@ div#go {
   border-radius:4px;
   z-index:1;
   border-left: 2px solid rgb(130, 36, 51, 0.9);
+  float:right;
 }
 
 input#primoQueryTemp {
@@ -48,10 +47,6 @@ input#primoQueryTemp {
     font-style: italic;
     padding: 8px 16px;
     border-left: none;
-
-    background-color: #fff !important;
-    background-image: none !important;
-    color: rgb(0, 0, 0);
 }
 
 input:-webkit-autofill {
@@ -92,39 +87,39 @@ input:-webkit-autofill {
         color: #333;
         z-index: 2;
         border-bottom-color: #fff;
-    }
-    .tabrow:before {
-        position: absolute;
-        content: " ";
-        width: 100%;
-        bottom: 0;
-        left: 0;
-        border-bottom: 1px solid #AAA;
-        z-index: 1;
-    }
-    .tabrow li:before,
-    .tabrow li:after {
-        border: 1px solid #AAA;
-        position: absolute;
-        bottom: -1px;
-        width: 5px;
-        height: 5px;
-        content: " ";
-    }
-    .tabrow li:before {
-        left: -6px;
-        border-bottom-right-radius: 6px;
-        border-width: 0 1px 1px 0;
-    }
-    .tabrow li:after {
-        right: -6px;
-        border-bottom-left-radius: 6px;
-        border-width: 0 0 1px 1px;
-        box-shadow: -2px 2px 0 #D1D1D1;
-    }
-    .tabrow li.selected:after {
-        box-shadow: -2px 2px 0 #FFF;
-    }
+}
+.tabrow:before {
+    position: absolute;
+    content: " ";
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    border-bottom: 1px solid #AAA;
+    z-index: 1;
+}
+.tabrow li:before,
+.tabrow li:after {
+    border: 1px solid #AAA;
+    position: absolute;
+    bottom: -1px;
+    width: 5px;
+    height: 5px;
+    content: " ";
+}
+.tabrow li:before {
+    left: -6px;
+    border-bottom-right-radius: 6px;
+    border-width: 0 1px 1px 0;
+}
+.tabrow li:after {
+    right: -6px;
+    border-bottom-left-radius: 6px;
+    border-width: 0 0 1px 1px;
+    box-shadow: -2px 2px 0 #D1D1D1;
+}
+.tabrow li.selected:after {
+    box-shadow: -2px 2px 0 #FFF;
+}
 .tabcontent {
     padding: 6px 12px;
     border: 1px solid #ccc;
@@ -139,28 +134,20 @@ input:-webkit-autofill {
  
 <div class="leftcol"></div>
 
-<div class="midcol">
+<div class="midcol" id="hanger">
 
 <ul class="tabrow">
   <li class="tablinks selected" id="everything">search everything...</li>
-  <li class="tablinks" id="book" onclick="makeForm('book')">...a specific book in the library</li>
-  <li class="tablinks" id="peerreview" onclick="makeForm('peereview')">...peer reviewed articles</li>
-  <li class="tablinks" id="audiovisual" onclick="makeForm('audiovisual')">...audio-visual</li>
-  <li class="tablinks" id="thesis" onclick="makeForm('thesis')">...union college thesis</li>
+  <li class="tablinks" id="book">...a book title in the library</li>
+  <li class="tablinks" id="bookany">...a book or e-book</li>
+  <li class="tablinks" id="peerreview">...peer reviewed articles</li>
+  <li class="tablinks" id="audiovisual">...audio-visual</li>
+  <li class="tablinks" id="thesis">...union college theses</li>
 </ul>
 
-<div id="divform" class="tabcontent">
-  <form id="searchFrm" name="searchForm" method="get" target="_blank" action="https://union.primo.exlibrisgroup.com/discovery/search" enctype="application/x-www-form-urlencoded; charset=utf-8">
-    <input type="hidden" name="vid" value="01UCNY_INST:01UCNY_INST"> 
-    <input type="hidden" name="search_scope">   
-    <input type="hidden" name="tab">
-     <input type="hidden" name="facet">
-     <input type="hidden" name="facet">
-    <input type="hidden" name="query"> 
+<div class="tabcontent" id="divform">
   
-    <input type="text" width="200" name="pQuery" id="primoQueryTemp">
-    <div id="go" onclick="searchPrimo(event);" title="go!">&#x1f50e;</div>  
-  </form>
+
 </div>
 
 </div>
@@ -169,74 +156,117 @@ input:-webkit-autofill {
 
 <script>
 
+let docfrag = document.createDocumentFragment();
 
-let selected;
-let query = [];
+let frm = document.createElement('form');
+frm.setAttribute('id', 'searchFrm');
+frm.setAttribute('method', 'get');
+frm.setAttribute('target', '_blank');
+frm.setAttribute('action', 'https://union.primo.exlibrisgroup.com/discovery/search');
+frm.setAttribute('enctype', 'application/x-www-form-urlencoded; charset=utf-8');
+let els = {
+  "vid":"01UCNY_INST:01UCNY_INST",
+  "search_scope":"MyInst_and_CI",
+  "tab":"Everything",
+  "query":"any,contains"
+}
 
-let frm = document.getElementById("searchFrm");
+for (el in els) {
+  let newel = addFormElement(el, els[el]);
+  frm.appendChild(newel);
+}
 
+let q = document.createElement('input');
+q.setAttribute('name', 'pQuery');
+q.setAttribute('type', 'text');
+q.setAttribute('id', 'primoQueryTemp');
+q.setAttribute('placeholder', '...includes the Library Catalog, articles, and other electronic content;');
 
-function makeForm(searchType) {
-  selected = searchType;
-  formdetect();
+let go = document.createElement('div');
+go.setAttribute("id", "go");
+go.setAttribute("onclick", "searchPrimo(event);");
+go.innerHTML = "&#x1f50e;";
 
-  if (selected === "everything") {
-    frm.search_scope.value = 'MyInst_and_CI';
-    frm.tab.value = 'Everything';
-    query = ["any", "contains"];  
+frm.appendChild(q);
+frm.appendChild(go);
+docfrag.appendChild(frm);
+
+let divform = document.querySelector('#divform');
+divform.appendChild(docfrag.cloneNode(true));
+   
+let tmpQuery = divform.querySelector("#primoQueryTemp");
+ tmpQuery.addEventListener('click', function(){
+      this.placeholder = '';
+      this.value = '';
+  });
+let liveform = divform.querySelector("#searchFrm");
+
+function makeForm(selected) {
+  switchForm(liveform);
+  tmpQuery.addEventListener('click', function(){
+      this.placeholder = '';
+      this.value = '';
+  });
+  
+  if (selected === "everything") { 
+    tmpQuery.placeholder = "...includes the Library Catalog, articles, and other electronic content";
   }
   if (selected === "book") {
-    frm.search_scope.value = 'MyInstitution';
-    frm.tab.value = 'LibraryCatalog';
-    query = ["title", "exact"];  
+    liveform.search_scope.value = 'MyInstitution';
+    liveform.tab.value = 'LibraryCatalog';
+    liveform.query.value = ["title", "exact"];
+    tmpQuery.placeholder = "search for an exact title in the Library Catalog";
+  }
+  if (selected === "bookany") {
+    let newel = addFormElement('facet', 'rtype,include,books');
+    liveform.appendChild(newel);
+    tmpQuery.placeholder = "search any field for books or e-books";
   }
   if (selected === "peerreview") {
-    frm.search_scope.value = 'CentralIndex';
-    frm.tab.value = 'CentralIndex';
     let newel = addFormElement('mfacet', 'tlevel,include,peer_reviewed,1');
-    frm.appendChild(newel); 
-    query = ["any", "contains"];  
+    liveform.appendChild(newel); 
+    tmpQuery.placeholder = "search for articles published in a peer review journal";
   }
   if (selected === "audiovisual") {
-    frm.search_scope.value = 'MyInst_and_CI';
-    frm.tab.value = 'Everything';
     let newel = addFormElement('facet', 'rtype,include,media');
-    frm.appendChild(newel); 
-    query = ["any", "contains"];  
+    liveform.appendChild(newel); 
+    tmpQuery.placeholder = "search all fields for audio-visual items"; 
   }
   if (selected === "thesis") {
-    frm.search_scope.value = 'MyInstitution';
-    frm.tab.value = 'LibraryCatalog';
+    liveform.search_scope.value = 'MyInstitution';
+    liveform.tab.value = 'LibraryCatalog';
     let newel = addFormElement('facet', 'topic,include,Academic Dissertations');
-    frm.appendChild(newel); 
-    query = ["any", "contains"]; 
+    liveform.appendChild(newel); 
+    let newel1 = addFormElement('facet', 'rtype,include,manuscripts');
+    liveform.appendChild(newel1); 
+    tmpQuery.placeholder = "search all fields for Union College Honors theses";
   }
 }
 
 function searchPrimo(evt) {
     evt.preventDefault();
-    tmpQuery = document.getElementById("primoQueryTemp");
-    let frm = document.getElementById("searchFrm");
-    while (query.length > 2) {
-        query.pop();
+    if (liveform.pQuery.value) {
+      let srch = liveform.pQuery.value.replace(/[,]/g, " ");
+      liveform.query.value = liveform.query.value + "," + srch.trim();
+      liveform.submit();
     }
-    if (frm.pQuery.value) {
-      query.push(tmpQuery.value.trim());  
-      frm.query.value = query.join(",");
-      frm.submit();
-    }
-   
 }
-   
-makeForm("everything");
+
+function switchForm(lform) {
+    lform.parentNode.replaceChild(docfrag.cloneNode(true), lform);
+    liveform = divform.querySelector('#searchFrm');
+    tmpQuery = divform.querySelector("#primoQueryTemp");
+    
+}
 
 lis = document.querySelectorAll('li');
 lis.forEach(function(li) {
   li.addEventListener('click', function(e) {
     lis.forEach(function(li) {
       if (e.target.id === li.id) {
+        selected = e.target.id;
         li.classList.add('selected');
-         makeForm(e.target.id);
+         makeForm(selected);
       } else {
         if (li.classList.contains('selected')) {
           li.classList.remove('selected');
@@ -254,24 +284,21 @@ function addFormElement(name, value) {
     return input;
 }
 
-function formdetect() {
-  let c = frm.childNodes;
-  c.forEach(function(children) {
-    console.log(children.name);
-  }); 
-  c.forEach(function(children) {
-    if (children.name === "facet" || children.name === "mfacet") {
-      children.parentNode.removeChild(children);
-    }
-  });
-  c.forEach(function(children) {
-    console.log(children.name);
-  });  
-}             
+// function removeFacets() {
+//   let c = liveform.childNodes;
+//   c.forEach(function(child) {
+//     if (child.name === "facet" || child.name === "mfacet") {
+//       console.log(child.name);
+//       child.parentNode.removeChild(child);
+//     }
+//   });
+// }             
 
-
-             
-
+// function cleanQuery() {
+//     while (query.length > 2) {
+//         query.pop();
+//     }
+// }
 
 // function elementSupportsAttribute(element,attribute) { 
 //   var test = document.createElement(element);         
@@ -288,19 +315,3 @@ function formdetect() {
 </script>
 </body>
 </html>
-
-
-<!-- 
-search term expansion
-
-using Boolean operators nullifies search term expansion
-"search for a phrase"
-AND OR NOT
-? single wildcard
-* multiple characters
-
-scopes
-search beyond scopes
- -->
-
-
