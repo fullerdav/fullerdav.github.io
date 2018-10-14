@@ -1,0 +1,172 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style>
+* {
+    margin: 0; 
+    padding: 0; 
+    border: none; 
+    outline: 0;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;-box;
+    -webkit-user-select: none; /* Safari 3.1+ */
+    -moz-user-select: none; /* Firefox 2+ */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Standard syntax */  
+}
+::selection {
+    background: #a6b0b0;
+}
+.container {
+  display:grid;
+  grid: inherit;
+  grid: initial;
+  grid: unset;
+  grid-template-areas:
+    "head head"
+    "searchlist inputbox"
+    "searchlist explain";
+  grid-template-rows: 24px  minmax(64px, max-content) 1fr;
+  grid-template-columns:20% 1fr;
+  margin: 4em auto;
+  font-size: 1em;
+  line-height: 1.2em;
+  width:75%;
+  height:auto;
+}
+#divform {
+  display:flex;
+  overflow:hidden;
+}
+button#go { 
+  cursor:pointer;
+  padding:16px;
+  font-size:1.25em;
+  color: #fff;
+  background-color: rgb(130, 36, 51, 0.9); 
+  border-radius:4px;
+  z-index:1;
+  border-left: 2px solid rgb(130, 36, 51, 0.9);
+  float:right;
+}
+input#primoQueryTemp {
+    width: 100%;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 450;
+    padding: 4px 16px;
+    margin-left:8px;
+    border-top: 1px solid #ddd;
+    -webkit-user-select: auto; 
+    -moz-user-select: auto; 
+    -ms-user-select: auto;
+    user-select: auto;
+}
+input:-webkit-autofill {
+    -webkit-box-shadow: inset 0 0 0px 9999px white;
+}
+.head {
+  grid-area:head;
+}
+.searchlist {
+  grid-area: searchlist;
+  background-color: transparent;
+}
+ul.tabrow {
+    list-style-type: none;
+    margin: 0;
+    font-size: .75em;
+}
+li {
+    padding: 4px 6px;
+    margin: auto;
+    margin-bottom:1px;
+    border:1px solid #ccc;
+    border-radius: 2px;
+    overflow: auto;
+    user-select:none;
+    color:#333;
+    -webkit-box-shadow:  1px 4px 6px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow:  1px 4px 6px rgba(0, 0, 0, 0.2);
+    -ms-box-shadow:  1px 4px 6px rgba(0, 0, 0, 0.2);
+    -o-box-shadow:  1px 4px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 4px 6px rgba(0, 0, 0, 0.2);
+    border-collapse: separate;
+}
+li.selected {
+    background:#777;
+    color: #e6e6e6;
+    box-shadow: inset 2px 2px 72px 4px rgba(220, 220, 220, 0.5);
+    transition-property: box-shadow color background;
+    transition-duration: 0.4s;
+} 
+.inputbox {
+  grid-area: inputbox; 
+}
+#explain {
+  grid-area:explain;
+  padding:16px;
+  border-top:1px solid black;
+  margin-left:4px;
+  font-size:.8em;
+}
+.tooltip {
+  position: relative;
+  display: inline;
+  font-weight:600;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 20em;
+    background-color: white;
+    color: #666;
+    text-align: center;
+    padding: 4px;
+    border-radius: 6px;
+    border:1px black solid;
+    position: absolute;
+    z-index: 1;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+#explain div {
+  width:100%;
+  margin: 2px 0;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="head">
+    Search Primo for....
+  </div>
+ 
+    <div class="searchlist">
+      <ul class="tabrow">
+        <li class="tablinks selected" id="everything">everything</li>
+        <li class="tablinks" id="exactitle">a specific title held by the library</ii>
+        <li class="tablinks" id="allbooks">books & e-books</li>
+        <li class="tablinks" id="peerreview">articles in peer-reviewed journals</li>
+        <li class="tablinks" id="newspapers">newspaper articles</li>
+        <li class="tablinks" id="databases">databases</li>
+        <li class="tablinks" id="journaltitles">journal titles</li>
+        <li class="tablinks" id="filmvideo">film / video</li>
+        <li class="tablinks" id="reference">reference</li>
+        <li class="tablinks" id="unionthesis">Union College honors theses</li>
+      </ul>
+    </div>
+
+    <div id="divform">
+        <input type="text" id="primoQueryTemp" length="200"></input>
+        <button id="go" onclick="searchPrimo(event);">&#x1f50e;</button>
+    </div>
+    <div id="explain"></div>
+</div>
+
+<script src="primo_widget.js" async></script>
+</body>
+</html>
+
