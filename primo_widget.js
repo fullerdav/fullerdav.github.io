@@ -8,7 +8,7 @@ const everything = `<div><i>everything</i>, combines the <div class="tooltip">sc
 const exactitle = `<div>search the scope <i>library catalog</i> with the qualifiers <i>title</i>,<i>exact</i>.</div>
               <div>if you misspell you won't get any results.  But it is the best way to determine if we own a copy or not.</div>
               <div>If you did spell correctly and still found no items then you may <div class="tooltip">change the scope to worldcat<span class="tooltiptext"><img src="worldcat_scope.png"></span></div>, search and request the title there.</div>
-              <div>Try searching for <a onmouseover="searchTerm(this);" onclick="clickTerm();" class="primotitle">The Craft of Research</a> or <a onmouseover="searchTerm(this);" class="primotitle">The History of Reading in the West</a></div>`;
+              <div>Try searching for <a onmouseover="searchTerm(this);" onclick="clickTerm();" class="primotitle">The Craft of Research</a> or <a onmouseover="searchTerm(this);" class="primotitle">A History of Reading in the West</a></div>`;
 const allbooks = `searches all the fields in both the library catalog and the Primo Central Index for books (both physical and electronic).</div>`;
 const peerreview = `searches the Primo Central Index for articles and limits  the results to articles in peer review journals`;
 const newspapers = `newspapers searches the Library Catalog for the exact title`;
@@ -180,7 +180,9 @@ tmpQuery.addEventListener("keyup", function(event) {
         go.click();
       }
 });
-
+tmpQuery.addEventListener("click", function(event) {
+      this.value = "";
+});
 makeForm('everything');
 
 
