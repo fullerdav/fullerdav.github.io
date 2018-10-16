@@ -1,13 +1,14 @@
 const {log} = console;
-const everything = `<i>everything</i>, combines the <div class="tooltip">scope<span class="tooltiptext">a subset of records.</span></div> for 
-              <div class="tooltip">library catalog<span class="tooltiptext">...is everything that we maintain a local record for (books, mainly) along with government documents, DVDs, musical scores, and...more.</span></div> 
-              and Primo's <div class="tooltip">Central Index<span class="tooltiptext">an index of our electronic databases (articles, mainly), including selected open source content</span></div> into one comprehensive search.</div>
-              <div><i>everything</i> results will be gargantuan so it is essential to use the <div class="tooltip">facets/filters<span class="tooltiptext"><img src="facets.png"></span></div> to limit your results.
-          </div>`;
-const exactitle = `<div>search the scope <i>library catalog</i> for an exact title. </div>
-              <div>This is unforgiving, if you misspell you won't get any results.</div>
-              <div>If you did spell correctly then you may <div class="tooltip">change the scope to worldcat<span class="tooltiptext"><img src="worldcat_scope.png"></span></div>, search and request the title there.</div>
-          </div>`;
+const everything = `<div><i>everything</i>, combines the <div class="tooltip">scope<span class="tooltiptext">a subset of records.</span></div> for 
+              <div class="tooltip">library catalog<span class="tooltiptext">a scope comprised of our own collections including books (mainly), along with government documents, DVDs, musical scores, and...more.</span></div> 
+              and <div class="tooltip">e-resources<span class="tooltiptext">Primo's Central Index which includes articles (mainly), other kinds of media and selected open source content</span></div> into one comprehensive search.</div>
+              <div>...uses the qualifiers <i>any,contains</i> with your search term(s).  <i>any</i> field in the record <i>contains</i> your term(s)</div>
+              <div>...produces gargantuan results so it is essential to use the <div class="tooltip">facets/filters<span class="tooltiptext"><img src="facets.png"></span></div> to limit your results.</div>
+              `;
+const exactitle = `<div>search the scope <i>library catalog</i> with the qualifiers <i>title</i>,<i>exact</i>.</div>
+              <div>if you misspell you won't get any results.  But it is the best way to determine if we own a copy or not.</div>
+              <div>If you did spell correctly and still found no items then you may <div class="tooltip">change the scope to worldcat<span class="tooltiptext"><img src="worldcat_scope.png"></span></div>, search and request the title there.</div>
+              <div>Try searching for <a onmouseover="searchTerm(this);" onclick="clickTerm();" class="primotitle">The Craft of Research</a> or <a onmouseover="searchTerm(this);" class="primotitle">The History of Reading in the West</a></div>`;
 const allbooks = `searches all the fields in both the library catalog and the Primo Central Index for books (both physical and electronic).</div>`;
 const peerreview = `searches the Primo Central Index for articles and limits  the results to articles in peer review journals`;
 const newspapers = `newspapers searches the Library Catalog for the exact title`;
@@ -77,7 +78,7 @@ makeForm = function(select) {
         case "peerreview":
             let newel3 = addFormElement('mfacet', 'tlevel,include,peer_reviewed,1');
             liveform.appendChild(newel3); 
-            explain.innerHTML = peereview;
+            explain.innerHTML = peerreview;
             break;
         case "newspapers":
             liveform.search_scope.value = 'all';
@@ -146,6 +147,12 @@ switchForm = function(lform) {
     liveform = divform.querySelector('#searchFrm');
 }
 
+function searchTerm(i) {
+    tmpQuery.value = i.text;
+}
+function clickTerm() {
+    searchPrimo();
+}
 let lis = document.querySelectorAll('li');
 lis.forEach(function(li) {
   li.addEventListener('click', function(e) {
@@ -160,6 +167,12 @@ lis.forEach(function(li) {
         }
     });
   });
+
+  li.addEventListener('mouseover', function(e) {
+      this.styleMozBoxShadow = '1px 4px 6px rgba(0, 0, 0, 0.2)';       
+      this.style.webkitBoxShadow = '1px 4px 6px rgba(0, 0, 0, 0.2)';
+      this.style.boxShadow = '1px 4px 6px rgba(0, 0, 0, 0.2)';
+   });
 });
 
 tmpQuery.addEventListener("keyup", function(event) {
@@ -169,3 +182,34 @@ tmpQuery.addEventListener("keyup", function(event) {
 });
 
 makeForm('everything');
+
+
+// app.controller("FullViewAfter", ["$scope", function($scope){
+
+//       var vm = this;
+
+//       //Virtual Browse Suppression
+
+//       var criteria = /^[0-9a-zA-Z]+$/;//search criteria for alphanum call numbers
+
+//       if (vm.parentCtrl.item.enrichment && vm.parentCtrl.item.enrichment.virtualBrowseObject && (vm.parentCtrl.item.enrichment.virtualBrowseObject.callNumber.toUpperCase() == "SHELVED BY TITLE" || criteria.test(vm.parentCtrl.item.enrichment.virtualBrowseObject.callNumber))) {
+
+//             vm.parentCtrl.item.enrichment.virtualBrowseObject.isVirtualBrowseEnabled = false;
+
+//             console.log("Hiding virtual browse based on callNumber value: " + vm.parentCtrl.item.enrichment.virtualBrowseObject.callNumber);
+
+//       }
+
+// }]);
+
+ 
+
+// app.component('prmFullViewAfter', {
+
+//       bindings: {parentCtrl: '<'},
+
+//       controller: 'FullViewAfter',
+
+//       template: ''
+
+// });
