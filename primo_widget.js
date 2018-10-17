@@ -48,6 +48,7 @@ const tmpQuery = document.querySelector("#primoQueryTemp");
 const go = document.querySelector("#go");
 const explain = document.getElementById("explain");
 const divform = document.querySelector('#divform');
+//const params = document.querySelector('#searchparams');
 
 docfrag = document.createDocumentFragment();
 docfrag.appendChild(form);
@@ -67,7 +68,9 @@ makeForm = function(select) {
         case "exactitle":
             liveform.search_scope.value = 'MyInstitution';
             liveform.tab.value = 'LibraryCatalog';
-            liveform.query.value = ["title", "exact"];
+            liveform.query.value = 'title,exact';
+            let newelx = addFormElement('facet', 'tlevel,include,available_p');
+            liveform.appendChild(newelx);
             explain.innerHTML = exactitle;
             break;
         case "allbooks":
@@ -97,7 +100,7 @@ makeForm = function(select) {
             break;
          case "journaltitles":
             liveform.setAttribute('action','https://union.primo.exlibrisgroup.com/discovery/jsearch');        
-            liveform.tab.value = 'jsearch_slot';
+            liveform.tab.value = 'jsearch_slot';     
             explain.innerHTML = journaltitles; 
             break;
         case "reference":
@@ -124,19 +127,18 @@ makeForm = function(select) {
             let tipstyle = this.querySelectorAll('.tooltiptext')[0]; 
             let top = tipstyle.offsetHeight + 8;
             tipstyle.setAttribute('style', 'top:-' + top);
-          
         });
       });
 }
 
 searchPrimo = function(evt) {
     if (tmpQuery.value) {
-        srch = tmpQuery.value.replace(/[,]/g, " ");
+        let srch = tmpQuery.value.replace(/[,]/g, " ").trim();
         if (selected !== "databases") {
-          query = Array.from(liveform.query.value.split(","));
-          liveform.query.value = query.join() + "," + srch.trim();
+          //let s = 
+          liveform.query.value += `, ${srch}`;
         } else {
-          liveform.q.value = srch;
+          liveform.q.value = srch.trim();
         }   
         liveform.submit();             
     }

@@ -28,12 +28,12 @@
     "head head"
     "searchlist inputbox"
     "searchlist explain";
-  grid-template-rows: 24px  minmax(64px, max-content) 1fr;
-  grid-template-columns:25% 1fr;
+  grid-template-rows: 28px minmax(64px, max-content) 1fr;
+  grid-template-columns: 22% 1fr;
   margin: 4em auto;
   font-size: 1em;
   line-height: 1.2em;
-  width:75%;
+  width:80%;
   height:auto;
 }
 #divform {
@@ -71,6 +71,10 @@ input:-webkit-autofill {
 .head {
   grid-area:head;
 }
+.head > div {
+  display: inline;
+  float:left;
+}
 .searchlist {
   grid-area: searchlist;
   background-color: transparent;
@@ -78,7 +82,6 @@ input:-webkit-autofill {
 ul.tabrow {
     list-style-type: none;
     margin: 0;
-    font-size: .9em;
 }
 
 ul:hover > li:not(:hover) {
@@ -86,7 +89,7 @@ ul:hover > li:not(:hover) {
 }
 
 li {
-    padding: 4px 6px;
+    padding: 3px 6px;
     margin: auto;
     margin-bottom:1px;
     border:1px solid #ccc;
@@ -94,6 +97,7 @@ li {
     overflow: auto;
     user-select:none;
     color:#333;
+     font-size: .85em;
     -webkit-box-shadow:  1px 4px 6px rgba(0, 0, 0, 0.2);
     -moz-box-shadow:  1px 4px 6px rgba(0, 0, 0, 0.2);
     -ms-box-shadow:  1px 4px 6px rgba(0, 0, 0, 0.2);
@@ -108,6 +112,9 @@ li.selected {
     transition-property: box-shadow color background;
     transition-duration: 0.4s;
 } 
+li.selected > .icon {
+  color:#fff;
+}
 .inputbox {
   grid-area: inputbox; 
 }
@@ -146,17 +153,54 @@ li.selected {
 }
 .icon {
   padding: 0 6px 0 2px;
+  color:rgb(30, 149, 221);
+}
+
+#reference::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f12e";
+  color:rgb(30, 149, 221);
+  padding: 0 6px 0 2px;
+}
+
+#newspapers::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f1ea";
+  color:rgb(30, 149, 221);
+  padding: 0 6px 0 2px;
+}
+#databases::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f1c0";
+  color:rgb(30, 149, 221);
+  padding: 0 6px 0 2px;
 }
 .primotitle {
   color: rgb(0, 119, 191, 0.9); 
   font-size: .9em;
   font-weight:450;
 }
-#reference::before {
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  content: "\f12e";
-  padding: 0 6px 0 2px;
+
+select {
+  background-color: #fff;
+  color: #666;
+  cursor: pointer;
+  margin-right: 1em;
+}
+select > option {
+   text-align:right;
+}
+.col1 {
+  width:22%;
+}
+.label {
+  opacity:0.8;
+  font-size:.85em;
+  font-weight:400;
+  font-style:italic;
 }
 </style>
 </head>
@@ -164,17 +208,41 @@ li.selected {
 
 <div class="container">
   <div class="head">
-    Search Primo for....
+    <div class="col1">
+        Search Primo for....
+    </div>
+    <div>
+      <!--form id="searchparams">
+      <span class="label">field:</span>
+      <select name="field">
+        <option value="any" default>any</option>
+        <option value="title">title</option>
+        <option value="author">author</option>
+        <option value="subject">subject</option>
+      </select>
+      <span class="label">precison:</span>
+      <select name="precision">
+        <option value="contains" default>contains</option>
+        <option value="exact">exact</option>
+        <option value="startswith">starts with</option>
+      </select>
+      <span class="label">scope:</span>
+      <select name="scope">
+        <option value="MyInst_and_CI" default>books, articles and more...</option>
+        <option value="MyInstitution">library catalog</option>
+      </select>
+      </form-->
+    </div>
   </div>
- 
+
     <div class="searchlist">
       <ul class="tabrow">
         <li class="tablinks selected" id="everything"><span class="icon">&#x1F310</span>everything</li>
-        <li class="tablinks" id="exactitle"><span class="icon">&#x1F56E</span>a specific title in the library</ii>
+        <li class="tablinks" id="exactitle"><span class="icon">&#x1F56E</span>a book in the library</ii>
         <li class="tablinks" id="allbooks"><span class="icon">&#x1F4DA</span>books & e-books</li>
         <li class="tablinks" id="peerreview"><span class="icon">&#x1F5BA</span>peer-reviewed articles</li>
-        <li class="tablinks" id="newspapers"><span class="icon">&#x1F5DE</span>newspaper articles</li>
-        <li class="tablinks" id="databases"><span class="icon">&#x1F4BB</span>databases</li>
+        <li class="tablinks" id="newspapers">newspaper articles</li>
+        <li class="tablinks" id="databases">databases</li>
         <li class="tablinks" id="journaltitles">journal titles</li>
         <li class="tablinks" id="filmvideo"><span class="icon">&#x1F39E</span>film / video</li>
         <li class="tablinks" id="reference">reference</li>
