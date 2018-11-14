@@ -46,7 +46,7 @@ section {
   line-height:1.8;
 
   transition-property: font-size;
-  transition-duration: 0.4s;
+  transition-duration: 0.75s;
   transition-timing-function: ease-out;
 }
 .item a {
@@ -73,7 +73,7 @@ section {
 
     font-size: 12px;
     transition-property: font-size;
-    transition-duration: 0.4s;
+    transition-duration: 0.75s;
     transition-timing-function: ease-out;
     
     -webkit-box-shadow: 0px 3px 10px rgba(34, 25, 25, 0.4);
@@ -87,7 +87,7 @@ section {
   visibility: visible !important;
   opacity: 1 !important;
   transition-property: opacity;
-  transition-duration: 0.5s;
+  transition-duration: 0.75s;
   transition-timing-function: ease-out;
 }
 
@@ -187,9 +187,9 @@ hr {
 <div class="container"  id="inprocess">
     <div class="item">
     In Sierra we had statuses for missing, withdrawn, lost, etc.  These are now processes.<br>
-    A physical item is described as, "Item in place", "Item not in place"<br>
+    There are onky two stauses in Alma, "Item in place", "Item not in place"<br>
     <span class="emph">Item in place</span> means on the shelf waiting to be borrowed<br>
-    <span class="emph">Item not in place</span> means that an item is "In Process", which might be "Loan", "Transit", "Hold Shelf", "Missing", etc.
+    <span class="emph">Item not in place</span> means that an item is <span class="emph">In Process</span>, which might be "Loan", "Transit", "Missing", etc.
     <hr width="100%" />
     A process is more dynamic than a status and cannot always be easily updated, it might require running a "job"<br>
     jobs are an automated process that often involve checking various settings, tables, etc.
@@ -232,7 +232,9 @@ hr {
     <hr width="100%" />
       They are either logical or itemized, logical sets are saved queries which are dynamic, they search the repository each time you access them.
     <hr width="100%" />
-      Itemized sets are fixed sets of records.  They can be created from a logical aset, imported from a file or from Alma Analytics 
+      Itemized sets are fixed sets of records.  They can be created from a logical set, imported from a file or from Alma Analytics, or stitched together manually 
+   <hr width="100%" />
+      Sets are typically of the same record type, titles, holdings, po-lines, etc., in order to run jobs
     </div>
 </div>
 </section>
