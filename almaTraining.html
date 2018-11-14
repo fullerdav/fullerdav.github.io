@@ -1,0 +1,326 @@
+<html>
+  <head>
+   <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+<style type="text/css">
+
+ * {
+  margin: 0; 
+  padding: 0;
+ /* font-size: 18px;
+  line-height: 1.2;
+  font-weight: 350;*/
+  text-rendering: optimizeLegibility;
+  box-sizing: border-box;
+} 
+
+header h1 {           
+  color:  #02348e;
+  font-size: 48px;
+  text-align: center;
+  padding: 1em;
+  height: 20vh;
+}
+
+section {
+  height: 90vh;
+  width: 80%;
+  margin:auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  height: inherit;
+  text-align: center;
+}
+
+.item  { 
+  background: #02348e;
+  color: #eee;
+  text-align: center;
+  padding: 12px;
+  border-bottom: 8px solid #ffcd42;
+  border-top: 8px solid #ffcd42;
+  line-height:1.8;
+
+  transition-property: font-size;
+  transition-duration: 0.4s;
+  transition-timing-function: ease-out;
+}
+.item a {
+  color:white;
+}
+.emph {
+  font-style:italic;
+  font-weight: 600;
+  font-weight: 2em;
+}
+#jumpout {
+    padding: 1em;
+    position: absolute;
+    z-index: 100;
+    left: 10vw;
+    height: inherit;
+    width: 80%;
+    margin: auto;
+    overflow: auto;
+    border:none;
+    background: #fff;
+    opacity: 0;
+    visibility: hidden;
+
+    font-size: 12px;
+    transition-property: font-size;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-out;
+    
+    -webkit-box-shadow: 0px 3px 10px rgba(34, 25, 25, 0.4);
+    -moz-box-shadow: 0px 3px 10px rgba(34, 25, 25, 0.4);
+    -ms-box-shadow: 0px 3px 10px rgba(34, 25, 25, 0.4);
+    -o-box-shadow: 0px 3px 10px rgba(34, 25, 25, 0.4);
+    box-shadow: 0px 3px 10px rgba(34, 25, 25, 0.4);
+}
+
+.jump-visible {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transition-property: opacity;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-out;
+}
+
+.fa-close {
+  position: absolute;
+  top: 1%;
+  left: 98%;
+  float: right;
+  font-size: 20px;
+  color: #666;
+}
+hr {
+  margin: 18px auto;
+}
+</style>
+</head>
+
+
+<body>
+<header><h1>Why Alma?</h1></header>
+<section>
+<div class="container" id="cloud">
+    <div class="item">
+    ...previous systems were electronic representations of the card catalog
+    <hr width="100%" />
+    the electronic record looked like a card from the card catalog
+    <hr width="100%" />
+    it was much faster and easier to search
+    </div>
+
+    <div  class="item">
+    ...this approach is ill-suited to electronic resources that lack a physical presence and change frequently
+    <hr width="100%" />
+    these resources now account for about 90% of our budget (or most of it anyway) and we need a better system to manage them
+    </div>
+    <div class="item">
+    ...the whole point of migration is to implement a system that serves our needs better than the old one
+    <hr width="100%" />
+    ...migrations change everyone's jobs as well as every procedure related to the old system...  
+    <hr width="100%" />
+    a migration is an opportunity to think about what we do and how we might do it better.
+    </div>
+</div>
+</section>
+
+<header><h1>Alma is "inventory driven", what does that mean?</h1></header>
+<section>
+<div class="container" id="almainventory">
+    <div class="item">
+    what we used to call the item record is most important
+    <hr width="100%" />
+    Alma inventory is distinguished by types, in our system there is physical (P) and electronic (E) inventory
+    </div>
+    <div class="item">
+    actions that can be performed on a record are determined by it's type, for example:<br>
+    <span class="emph">[P]hysical inventory</span> can be "received" and moved to a location<br>
+    <span class="emph">[E]lectronic inventory</span> can be ordered and "activated", i.e., made available in discovery
+    <hr width="100%" />
+    inventory is grouped under holdings records, which also play a role in determining the inventory's availability for fulfillment
+    <hr width="100%" />
+    fulfillment, the act of delivering a resource to a patron, is also inventory driven, patrons want "their stuff"
+    </div>
+</div>
+</section>
+
+<header><h1>A brief excursion into Primo</h1></header>
+<section>
+<div class="container"  id="primo">
+    <div class="item">
+      Articles are not in our IZ but their metadata is in the Primo Central Index, and the articles themselves are all over the internet
+    <hr width="100%" />
+      Primo is also aware of inventory type 
+      <a target="_blank" href="https://union.primo.exlibrisgroup.com/discovery/search?query=any,contains,crime%20and%20delinquency&tab=Everything&search_scope=MyInst_and_CI&vid=01UCNY_INST:01UCNY_INST&offset=0">Crime and Delinquency</a>
+      (&showPnx=true)
+    <hr width="100%" />
+      Primo is a topic for another day, not for today. 
+    </div>
+</div>
+</section>
+
+<header><h1>Alma is inventory-driven and inventory is driven by requests</h1></header>
+<section>
+<div class="container"  id="requests">
+    <div class="item">
+    There are several request types ...we currently use "patron physical inventory" (aka pick from shelf), move (temporary or permanent) and work order requests
+    <br>there are also purchase, booking, digitization, delivery none of which we currently use
+    <hr width="100%" />
+    requests are attached to inventory and action is required by staff with assigned roles, i.e., "pick from shelf" requires the request operator role
+    <hr width="100%" />
+    we currently use one type of work order request...does anyone know (or guess) what it is?
+    </div>
+</div>
+</section>
+
+<header><h1>Processes in Alma</h1></header>
+<section>
+<div class="container"  id="inprocess">
+    <div class="item">
+    In Sierra we had statuses for missing, withdrawn, lost, etc.  These are now processes.<br>
+    A physical item is described as, "Item in place", "Item not in place"<br>
+    <span class="emph">Item in place</span> means on the shelf waiting to be borrowed<br>
+    <span class="emph">Item not in place</span> means that an item is "In Process", which might be "Loan", "Transit", "Hold Shelf", "Missing", etc.
+    <hr width="100%" />
+    A process is more dynamic than a status and cannot always be easily updated, it might require running a "job"<br>
+    jobs are an automated process that often involve checking various settings, tables, etc.
+    </div>
+</div>
+</section>
+
+<header><h1><a target="_blank" href="https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/010Getting_Started/050Alma_User_Interface_%E2%80%93_General_Information/The_Alma_User_Interface#The_Persistent_Menu">Navigating and the Alma UI</a></h1></header>
+<section>
+<div class="container"  id="navigating">
+    <div class="item">
+      menu - quick links
+    <hr width="100%" />
+      internal locations - are especially important when managing physical inventory <br>
+      for example when you scan in items your internal location will become the location of the item
+     <hr width="100%" />
+      task lists - identify tasks you may perform based on your roles     
+    </div>
+</div>
+</section>
+
+<header><h1><a target="_blank" href="https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/010Getting_Started/050Alma_User_Interface_%E2%80%93_General_Information/Searching_in_Alma#Call_Number_Search_with_Exact_Phrase">Searching the Alma Repository</a></h1></header>
+<section>
+<div class="container"  id="searching">
+    <div class="item">
+      basic vs advanced
+    <hr width="100%" />
+      menu driven searches
+    <hr width="100%" />
+      facets
+    </div>
+</div>
+</section>
+
+<header><h1>Creating Sets (logical or itemized)</h1></header>
+<section>
+<div class="container"  id="sets">
+    <div class="item">
+      sets of records can be saved and used for batch processing, updating, or simply exporting data
+    <hr width="100%" />
+      They are either logical or itemized, logical sets are saved queries which are dynamic, they search the repository each time you access them.
+    <hr width="100%" />
+      Itemized sets are fixed sets of records.  They can be created from a logical aset, imported from a file or from Alma Analytics 
+    </div>
+</div>
+</section>
+
+<header><h1>Tools, when to use what?</h1></header>
+<section>
+<div class="container"  id="tools">
+    <div class="item">
+      Analytics is the easiest, most flexible <span class="emph">reporting</span> tool, but the data is always one day old.  Also it does include every MARC field
+      or allow us to combine data from disparate records easily.
+    <hr width="100%" />
+      Creating sets uses live data but it's output options are not very flexible. Best for running <i>batch jobs</i>.
+    <hr width="100%" />
+      Finally, exporting sets of MARC records in XML or MARC binary format can be done via as job.  The output can then be processed in MARCedit or Excel.
+    </div>
+</div>
+</section>
+
+<header><h1>Running Jobs</h1></header>
+<section>
+<div class="container"  id="jobs">
+    <div class="item">
+      Alma id designed for efficiency, that includes batch processing, or jobs.  jobs can be scheduled or run on demand.  Some jobs are triggered automatically,
+      after specific events, such as updating the calendar.
+    <hr width="100%" />
+      jobs depend on configured profiles, normalization rules and various tables and settings
+     <hr width="100%" />
+      jobs update records, processes, import and export records; they facilitate every major function, acqusitions, user management, etc.
+    <hr width="100%" />
+      naturally, the jobs you can run depend on your Alma roles
+    </div>
+</div>
+</section>
+
+<div id="jumpout"></div>
+<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+
+<script>
+const {log} = console;
+
+  $(".item")
+  .on("click", function(){
+   
+      var html = $(this).html();
+      $("div#jumpout").html("<i class='fa fa-close fa-window-close-o'></i>").append(html);
+      
+      if ($(this).parent().attr("id") === "cloud") {
+         $("#jumpout").css("top", "10vh");
+      } else if ($(this).parent().attr("id") === "almainventory") {
+         $("#jumpout").css("top", "110vh");
+      } else if ($(this).parent().attr("id") === "primo") {
+         $("#jumpout").css("top", "210vh");
+      } else if ($(this).parent().attr("id") === "requests") {
+         $("#jumpout").css("top", "310vh");
+      } else if ($(this).parent().attr("id") === "inprocess") {
+         $("#jumpout").css("top", "410vh");
+      } else if ($(this).parent().attr("id") === "navigating") {
+         $("#jumpout").css("top", "510vh");
+      } else if ($(this).parent().attr("id") === "searching") {
+         $("#jumpout").css("top", "610vh");
+      } else if ($(this).parent().attr("id") === "sets") {
+         $("#jumpout").css("top", "710vh");
+      } else if ($(this).parent().attr("id") === "tools") {
+         $("#jumpout").css("top", "810vh");
+      } else if ($(this).parent().attr("id") === "jobs") {
+         $("#jumpout").css("top", "910vh");
+      } 
+      
+      $("#jumpout").addClass("jump-visible");
+      $("#jumpout").css("font-size", "36px");
+
+      $("i.fa").on("click", function(){
+          $("div#jumpout").html("");
+          $("div#jumpout").css("width", "80%");
+          $("div#jumpout").css("height", "80%");
+          $("#jumpout").css("font-size", "18px");
+          $("#jumpout").removeClass("jump-visible");
+      });
+  });
+ 
+  
+
+  // $(".fa-close").on("click", function(){
+  //    $("#jumpout").removeClass("jump-visible");
+  // }); 
+ 
+
+</script>
+</body>
+</html>
+
