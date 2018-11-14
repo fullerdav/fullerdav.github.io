@@ -20,11 +20,11 @@ header h1 {          
   font-size: 48px;
   text-align: center;
   padding: 1em;
-  height: 20vh;
+  height: 25vh;
 }
 
 section {
-  height: 90vh;
+  height: 95vh;
   width: 80%;
   margin:auto;
   display: flex;
@@ -109,7 +109,7 @@ hr {
 <body>
 <header><h1>Why Alma?</h1></header>
 <section>
-<div class="container" id="cloud">
+<div class="container" id="whyalma">
     <div class="item">
     ...previous systems were electronic representations of the card catalog
     <hr width="100%" />
@@ -168,34 +168,7 @@ hr {
 </div>
 </section>
 
-<header><h1>Alma is inventory-driven and inventory is driven by requests</h1></header>
-<section>
-<div class="container"  id="requests">
-    <div class="item">
-    There are several request types ...we currently use "patron physical inventory" (aka pick from shelf), move (temporary or permanent) and work order requests
-    <br>there are also purchase, booking, digitization, delivery none of which we currently use
-    <hr width="100%" />
-    requests are attached to inventory and action is required by staff with assigned roles, i.e., "pick from shelf" requires the request operator role
-    <hr width="100%" />
-    we currently use one type of work order request...does anyone know (or guess) what it is?
-    </div>
-</div>
-</section>
 
-<header><h1>Processes in Alma</h1></header>
-<section>
-<div class="container"  id="inprocess">
-    <div class="item">
-    In Sierra we had statuses for missing, withdrawn, lost, etc.  These are now processes.<br>
-    There are onky two stauses in Alma, "Item in place", "Item not in place"<br>
-    <span class="emph">Item in place</span> means on the shelf waiting to be borrowed<br>
-    <span class="emph">Item not in place</span> means that an item is <span class="emph">In Process</span>, which might be "Loan", "Transit", "Missing", etc.
-    <hr width="100%" />
-    A process is more dynamic than a status and cannot always be easily updated, it might require running a "job"<br>
-    jobs are an automated process that often involve checking various settings, tables, etc.
-    </div>
-</div>
-</section>
 
 <header><h1><a target="_blank" href="https://knowledge.exlibrisgroup.com/Alma/Product_Documentation/010Alma_Online_Help_(English)/010Getting_Started/050Alma_User_Interface_%E2%80%93_General_Information/The_Alma_User_Interface#The_Persistent_Menu">Navigating and the Alma UI</a></h1></header>
 <section>
@@ -239,19 +212,35 @@ hr {
 </div>
 </section>
 
-<header><h1>Tools, when to use what?</h1></header>
+<header><h1>Processes in Alma</h1></header>
 <section>
-<div class="container"  id="tools">
+<div class="container"  id="inprocess">
     <div class="item">
-      Analytics is the easiest, most flexible <span class="emph">reporting</span> tool, but the data is always one day old.  Also it does include every MARC field
-      or allow us to combine data from disparate records easily.
+    In Sierra we had statuses for missing, withdrawn, lost, etc.  These are now processes.<br>
+    There are onky two stauses in Alma, "Item in place", "Item not in place"<br>
+    <span class="emph">Item in place</span> means on the shelf waiting to be borrowed<br>
+    <span class="emph">Item not in place</span> means that an item is <span class="emph">In Process</span>, which might be "Loan", "Transit", "Missing", etc.
     <hr width="100%" />
-      Creating sets uses live data but it's output options are not very flexible. Best for running <i>batch jobs</i>.
-    <hr width="100%" />
-      Finally, exporting sets of MARC records in XML or MARC binary format can be done via as job.  The output can then be processed in MARCedit or Excel.
+    A process is more dynamic than a status and cannot always be easily updated, it might require running a "job"<br>
+    jobs are an automated process that often involve checking various settings, tables, etc.
     </div>
 </div>
 </section>
+
+<header><h1>Alma is inventory-driven and inventory is driven by requests</h1></header>
+<section>
+<div class="container"  id="requests">
+    <div class="item">
+    There are several request types ...we currently use "patron physical inventory" (aka pick from shelf), move (temporary or permanent) and work order requests
+    <br>there are also purchase, booking, digitization, delivery none of which we currently use
+    <hr width="100%" />
+    requests are attached to inventory and action is required by staff with assigned roles, i.e., "pick from shelf" requires the request operator role
+    <hr width="100%" />
+    we currently use one type of work order request...does anyone know (or guess) what it is?
+    </div>
+</div>
+</section>
+
 
 <header><h1>Running Jobs</h1></header>
 <section>
@@ -268,6 +257,19 @@ hr {
     </div>
 </div>
 </section>
+<header><h1>Tools, when to use what?</h1></header>
+<section>
+<div class="container"  id="tools">
+    <div class="item">
+      Analytics is the easiest, most flexible <span class="emph">reporting</span> tool, but the data is always one day old.  Also it does include every MARC field
+      or allow us to combine data from disparate records easily.
+    <hr width="100%" />
+      Creating sets uses live data but it's output options are not very flexible. Best for running <i>batch jobs</i>.
+    <hr width="100%" />
+      Finally, exporting sets of MARC records in XML or MARC binary format can be done via as job.  The output can then be processed in MARCedit or Excel.
+    </div>
+</div>
+</section>
 
 <div id="jumpout"></div>
 <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
@@ -281,26 +283,26 @@ const {log} = console;
       var html = $(this).html();
       $("div#jumpout").html("<i class='fa fa-close fa-window-close-o'></i>").append(html);
       
-      if ($(this).parent().attr("id") === "cloud") {
-         $("#jumpout").css("top", "10vh");
+      if ($(this).parent().attr("id") === "whyalma") {
+         $("#jumpout").css("top", "25vh");
       } else if ($(this).parent().attr("id") === "almainventory") {
-         $("#jumpout").css("top", "110vh");
+         $("#jumpout").css("top", "125vh");
       } else if ($(this).parent().attr("id") === "primo") {
-         $("#jumpout").css("top", "210vh");
+         $("#jumpout").css("top", "225vh");
       } else if ($(this).parent().attr("id") === "requests") {
-         $("#jumpout").css("top", "310vh");
-      } else if ($(this).parent().attr("id") === "inprocess") {
-         $("#jumpout").css("top", "410vh");
+         $("#jumpout").css("top", "325vh");
       } else if ($(this).parent().attr("id") === "navigating") {
-         $("#jumpout").css("top", "510vh");
+         $("#jumpout").css("top", "425vh");
       } else if ($(this).parent().attr("id") === "searching") {
-         $("#jumpout").css("top", "610vh");
+         $("#jumpout").css("top", "525vh");
       } else if ($(this).parent().attr("id") === "sets") {
-         $("#jumpout").css("top", "710vh");
-      } else if ($(this).parent().attr("id") === "tools") {
-         $("#jumpout").css("top", "810vh");
+         $("#jumpout").css("top", "625vh");
+      } else if ($(this).parent().attr("id") === "requests") {
+         $("#jumpout").css("top", "725vh");
       } else if ($(this).parent().attr("id") === "jobs") {
-         $("#jumpout").css("top", "910vh");
+         $("#jumpout").css("top", "825vh");
+      } else if ($(this).parent().attr("id") === "tools") {
+         $("#jumpout").css("top", "925vh");
       } 
       
       $("#jumpout").addClass("jump-visible");
