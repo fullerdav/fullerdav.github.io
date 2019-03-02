@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+
+<div id="test"></div>
+<button onclick="remove();">remove</button>
+
+<script>
+  
+
+const {log, time, timeEnd} = console;
+
+let test = document.getElementById('test');
+
+const synscript = document.createElement("script");
+synscript.src = "https://unbound.syndetics.com/syndeticsunbound/connector/initiator.php?a_id=196";
+synscript.setAttribute('id', 'synscript');
+
+const syndiv = document.createElement("div");
+syndiv.classList.add("ltfl_bookdisplay_widget");
+syndiv.setAttribute('id', 'ltfl_widget_ult_3045244705');
+
+const docfrag = document.createDocumentFragment();
+docfrag.appendChild(synscript);
+docfrag.appendChild(syndiv);
+
+test.appendChild(docfrag.cloneNode(true));
+
+
+// function remove() {
+//   let a = test.querySelector('#synscript');
+//   let b = test.querySelector('#ltfl_widget_ult_3045244705');
+//   a.parentNode.removeChild(a);
+//   b.parentNode.removeChild(b);
+// }
+
+time("IDget");
+  //let bw1 = document.getElementById('test');
+  let wl1 = document.getElementById('widgetlink');
+  let ltfl1 = document.getElementById('ltfl_widget_ult_3045244705');
+
+log(timeEnd("IDget"));
+
+
+time("querySelect");
+//let bookwidget = document.querySelector('#test');
+
+  let wl2 = test.querySelector('#widgetlink');
+  let ltfl2 = test.querySelector('#ltfl_widget_ult_3045244705');
+log(timeEnd("querySelect"));
+
+time("IDget");
+  //let bw3 = document.getElementById('test');
+  let wl3 = document.getElementById('widgetlink');
+  let ltfl3 = document.getElementById('ltfl_widget_ult_3045244705');
+
+  // let wl = bw.querySelector('#widgetlink');
+  // let ltfl2 = bw.querySelector('#ltfl_widget_ult_3045244705');
+log(timeEnd("IDget"));
+
+fetch('https://sandbox02-na.alma.exlibrisgroup.com/view/sru/01UCNY_INST?version=1.2&operation=searchRetrieve&recordSchema=marcxml&query=alma.isbn=9780387245447&maximumRecords=3&startRecord=0', {
+      headers: { "Content-Type": "application/xml; charset=utf-8"},
+      mode: "no-cors",
+      method: 'GET'
+   })
+.then(response => response.json())
+.then(data => console.log(JSON.stringify(data)));
+//US-nschu
+</script>
+
+
+</body>
+</html>
+
+
