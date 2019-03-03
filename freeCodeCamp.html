@@ -61,7 +61,7 @@ time("IDget");
   // let ltfl2 = bw.querySelector('#ltfl_widget_ult_3045244705');
 log(timeEnd("IDget"));
 
-fetch('https://sandbox02-na.alma.exlibrisgroup.com/view/sru/01UCNY_INST?version=1.2&operation=searchRetrieve&recordSchema=marcxml&query=alma.isbn=9780387245447&maximumRecords=3&startRecord=0')
+fetch('https://union.alma.exlibrisgroup.com/view/sru/01UCNY_INST?version=1.2&operation=searchRetrieve&recordSchema=marcxml&query=alma.isbn=9780387245447&maximumRecords=3&startRecord=0')
 .then(response => response.json())
 .then(data => console.log(JSON.stringify(data)));
 //US-nschu
