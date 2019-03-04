@@ -61,11 +61,32 @@ time("IDget");
   // let ltfl2 = bw.querySelector('#ltfl_widget_ult_3045244705');
 log(timeEnd("IDget"));
 
-let obj = {method: 'GET', mode : 'no-cors', headers: {'Content-Type': 'application/text'}};
+let obj = {
+  mode : 'no-cors', 
+  headers:{
+    'Content-Type': 'text/xml'
+  }
+
+};
+
 fetch('https://union.alma.exlibrisgroup.com/view/sru/01UCNY_INST?version=1.2&operation=searchRetrieve&recordSchema=marcxml&query=alma.isbn=9780387245447&maximumRecords=3&startRecord=0', obj)
-.then(response => response.json())
-.then(data => console.log(JSON.stringify(data)));
+  //.then(response => response.json())
+  .then(data => console.log(data));
 //US-nschu
+
+var xhr = new XMLHttpRequest();
+xhr.responseType = 'document';
+xhr.overrideMimeType('text/xml');
+
+xhr.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseXML);
+    } else {
+      console.log(this.status);
+    }
+  };
+xhr.open("GET", "https://union.alma.exlibrisgroup.com/view/sru/01UCNY_INST?version=1.2&operation=searchRetrieve&recordSchema=marcxml&alma.mms_material_type=Book&query=alma.isbn=9780387245447", true);
+xhr.send();
 </script>
 
 

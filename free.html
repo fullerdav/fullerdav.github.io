@@ -62,9 +62,11 @@ time("IDget");
 log(timeEnd("IDget"));
 
 
-let obj = {method: 'GET', mode : 'no-cors', headers: {'Content-Type': 'application/text'}, custom:"custom"};
+let obj = {method: 'GET', mode : 'no-cors', headers: {'Content-Type': 'application/text'}, custom:'custom'};
 
-fetch('https://union.alma.exlibrisgroup.com/view/sru/01UCNY_INST?version=1.2&operation=searchRetrieve&recordSchema=marcxml&query=alma.isbn=9780387245447&maximumRecords=3&startRecord=0', obj).then(response => response.json()).then(data => console.log(JSON.stringify(data)));
+fetch('https://union.alma.exlibrisgroup.com/view/sru/01UCNY_INST?version=1.2&operation=searchRetrieve&recordSchema=marcxml&query=alma.isbn=9780387245447&maximumRecords=3&startRecord=0', obj)
+.then(response => response.json())
+.then(data => console.log(JSON.stringify(data)));
 
 //US-nschu
 </script>
