@@ -75,17 +75,28 @@ fetch('https://union.alma.exlibrisgroup.com/view/sru/01UCNY_INST?version=1.2&ope
 //US-nschu
 
 var xhr = new XMLHttpRequest();
-xhr.responseType = 'document';
-xhr.overrideMimeType('text/xml');
+//xhr.responseType = 'document';
+
+
 
 xhr.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       console.log(this.responseXML);
+      var hsts = response.headers.get("strict-transport-security"),
+      csp = response.headers.get("content-security-policy");
+      console.log(hsts, csp);
     } else {
       console.log(this.status);
     }
   };
 xhr.open("GET", "https://union.alma.exlibrisgroup.com/view/sru/01UCNY_INST?version=1.2&operation=searchRetrieve&recordSchema=marcxml&alma.mms_material_type=Book&query=alma.isbn=9780387245447", true);
+xhr.setRequestHeader('Content-Type', 'text/plain');
+if (xhr.overrideMimeType) {
+  xhr.overrideMimeType('text/xml');  
+}
+
+// xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+
 xhr.send();
 </script>
 
