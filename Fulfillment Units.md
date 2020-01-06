@@ -6,8 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fulfillment Units</title>
   <link rel="stylesheet" href="https://stackedit.io/style.css" />
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/united/bootstrap.min.css  " />
-  <link rel="stylesheet" type="text/css" media="all" href="markdown_styles.css" />
 </head>
 
 <body class="stackedit">
