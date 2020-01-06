@@ -1,44 +1,13 @@
-<!DOCTYPE html>
-<html>
+---
+title: Fulfillment Units and Item Policies.html
+author: David Fuller
+categories: alma
+status: pending
+date: '2019-12-27'
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackedit.io/style.css" />
-</head>
+---
 
-<body class="stackedit">
-  <div class="stackedit__left">
-    <div class="stackedit__toc">
-      
-<ul>
-<li><a href="#fulfillment-units-item-policies-etc.">Fulfillment Units, Item Policies, etc.</a>
-<ul>
-<li><a href="#purpose-of-this-document">Purpose of this document</a></li>
-<li><a href="#background">Background</a>
-<ul>
-<li><a href="#fulfillment-units">Fulfillment Units</a></li>
-<li><a href="#material-types">Material Types</a></li>
-<li><a href="#item-policies">Item Policies</a></li>
-<li><a href="#resource-types">Resource Types</a></li>
-</ul>
-</li>
-<li><a href="#solutions">Solutions?</a>
-<ul>
-<li><a href="#locations">Locations</a></li>
-<li><a href="#material-types-1">Material Types</a></li>
-<li><a href="#resource-types-1">Resource Types</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-    </div>
-  </div>
-  <div class="stackedit__right">
-    <div class="stackedit__html">
-      <p><a href="https://drive.google.com/drive/u/0/folders/0AMX3gScOWNv6Uk9PVA"><img src="https://www.gstatic.com/images/branding/product/2x/drive_24dp.png" alt="gdrive" width="24" height="24"></a></p>
+<p><a href="https://drive.google.com/drive/u/0/folders/0AMX3gScOWNv6Uk9PVA"><img src="https://www.gstatic.com/images/branding/product/2x/drive_24dp.png" alt="gdrive" width="24" height="24"></a></p>
 <h1 id="fulfillment-units-item-policies-etc.">Fulfillment Units, Item Policies, etc.</h1>
 <p><img src="https://ensia.com/wp-content/uploads/2015/10/feature_food_messaging_main-760x378.jpg" alt="Fulfillment"></p>
 <h2 id="purpose-of-this-document">Purpose of this document</h2>
@@ -101,12 +70,4 @@ Item Policy is preferred over Material Type</p>
 <blockquote>
 <p>Use Alma’s Local Resource Types when appropriate for better identification in Primo VE.  The Resource Type for broad categories and the Material Type in the full record for a more specific descriptor.</p>
 </blockquote>
-
-    </div>
-  </div>
-</body>
-
-</html>
-
-
 
