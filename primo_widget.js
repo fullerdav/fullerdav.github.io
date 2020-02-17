@@ -109,7 +109,7 @@ makeForm = function(select) {
             explain.innerHTML = reference; 
             break;
         case "filmvideo":
-            let newel5 = addFormElement('facet', 'rtype,include,video');
+            let newel5 = addFormElement('facet', 'rtype,include,videos');
             liveform.appendChild(newel5); 
             explain.innerHTML = "searches 'everything' and applies the facet 'Resource Type = Video'"; 
             break;
