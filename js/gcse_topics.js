@@ -43,7 +43,7 @@ function dispSites(s) {
     });
     sortedkeys.map(function(n) {
       let site = s[n];
-    //console.log(n + ": " + site.rank);
+    console.log(site);
       var alink = site.wplink !== "" ? $("<a></a>").attr("target", "_blank").attr("href", site.wplink).text(n) : n;  
       let img = $("<img></img>").addClass("flag");
       if (countries.indexOf(site.domain) !== -1) {
@@ -86,6 +86,7 @@ function procResponse(res) {
    if (res.items !== undefined) {
    for (var i = 0; i < res.items.length; i++) {
       let item = res.items[i];
+      console.log(item);
       if (!foundurls[item.link]) {
           foundurls[item.link] = true;
           let curritem = {link: item.link, title: item.title, desc: item.snippet};
