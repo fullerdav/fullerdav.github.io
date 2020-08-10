@@ -1,0 +1,251 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      const {log} = console;
+      document.addEventListener('touchstart', null, {default: true});
+     
+      google.charts.load('current', {'packages':['sankey']});
+      google.charts.setOnLoadCallback(loadXMLDoc('sankey'));
+
+      function loadXMLDoc(viz) {
+            var url, divid;
+            if (viz === 'sankey') {
+                  url = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?path=/shared/Union%20College%20NY%2001UCNY_INST/Reports/David%20Reports/StudentsNew&limit=500&col_names=false&apikey=l7xxec32312a35ac43e3ba59dbcc4bdf7864';
+                  divid = 'sankey_basic';
+            } else if (viz === 'tree') {
+                  url = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?path=/shared/Union%20College%20NY%2001UCNY_INST/Reports/David%20Reports/GenderClass&limit=500&col_names=false&apikey=l7xxec32312a35ac43e3ba59dbcc4bdf7864';
+                  divid = 'tree_map';
+            }
+
+         let xmlhttp = new XMLHttpRequest();
+         xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            let r = parseData(this.responseXML);
+            viz === 'sankey' ? drawChart(r) : drawTree(r);
+          } 
+        };
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+      }
+
+      function parseData(xml) {
+            let rows = Array.from(xml.getElementsByTagName("Row"));
+
+            let datarows = [];
+            rows.forEach(row => {
+                  if (row.getElementsByTagName("Column1")[0]) {
+                        let col1 = row.getElementsByTagName("Column1")[0].childNodes[0].nodeValue;
+                        let col2 = row.getElementsByTagName("Column2")[0].childNodes[0].nodeValue;
+                        let column3 = row.getElementsByTagName("Column3")[0].childNodes[0].nodeValue;
+                        let col3 = parseInt(column3);
+                        datarows.push([col1, col2, col3]);  
+                  }
+            });
+            return datarows;        
+      }
+
+      function drawChart(rows) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'From');
+            data.addColumn('string', 'To');
+            data.addColumn('number', 'Weight');
+
+            data.addRows(rows);
+
+            let options = {
+                  width: 800,
+                  height: 600,
+                  sankey: { link: { colorMode: 'target' }, node:{ interactivity: true, labelPadding: 20, width:16 }},
+            };
+
+            var chart = new google.visualization.Sankey(document.getElementById('sankey_basic')); 
+            chart.draw(data, options);
+      }
+     
+
+/*
+Start Treemap
+*/
+
+      google.charts.load('current', {'packages':['treemap']});
+      google.charts.setOnLoadCallback(loadXMLDoc('tree'));
+        
+      function drawTree(rows) {
+            let names = google.visualization.arrayToDataTable([]);
+            names.addColumn('string', 'Name');
+            names.addColumn('string', 'Parent');
+            names.addColumn('number', 'Count');
+            names.addColumn('number', 'Gender');
+
+            names.addRow(["Name", null, 0, 0]);
+            let newrows = [];
+            rows.forEach(row => {
+                  newrows.push([row[0], 'Name', row[2], parseInt(row[1])]);
+            });
+            names.addRows(newrows);
+
+            tree = new google.visualization.TreeMap(document.getElementById('tree_div'));   
+              function showFullTooltip(row, size, value) {
+                 return '<div style="background:#fd9; padding:10px; border-style:solid"><span style="font-family:Courier"><b>' + 
+                 names.getValue(row, 0) + ':' + size + '</b><br></div>';
+               }
+
+        let options = {
+              highlightOnMouseOver: true,
+              maxDepth: 1,
+              maxPostDepth: 2,
+              minHighlightColor: '#edf8fb',
+              midHighlightColor: '#9ebcda',
+              maxHighlightColor: '#edf8fb',
+              minColor: 'teal',
+              midColor: '#f7f7f7',
+              maxColor: '#8c6bb1',
+              headerHeight: 25,
+              showScale: false,
+              height: 600,
+              useWeightedAverageForAggregation: true,
+              generateTooltip: showFullTooltip
+        };
+
+        tree.draw(names, options);
+      }
+
+    </script>
+
+    <style>
+
+    h2 {
+      text-align:center;
+      color: #333;
+    }
+    
+    ul {
+      margin-left: 10%;  
+    }
+    
+    .header {
+      overflow-y: auto; 
+      height: 120px;
+      width:100%;
+      position:fixed;
+      top: 0; 
+      z-index:100;
+      background-color: white;
+    }
+
+    li {
+      display: inline;
+      margin:100px;
+     }
+
+    #sankey_basic, #tree_div { padding:20px;}
+    span.hide {visibility:hidden;}
+    .topness {
+      margin-top:120px;
+    }
+
+    .embed-container {
+      position: relative; 
+      padding-bottom: 80%; 
+      height: 0; 
+      max-width: 100%;
+     } 
+    
+    .embed-container iframe, .embed-container object, .embed-container iframe {
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%;
+     } 
+      
+    .grid-container {
+        display: grid;
+        grid-template-columns: 0.25fr 2.3fr 0.25fr;
+        grid-template-rows: 0.5fr 0.5fr 0.5fr 1fr;
+        grid-gap: 4px 4px;
+        grid-template-areas: ". Name ." ". Where ." ". StoryMaps ." ". What .";
+        position:absolute;
+        top:0;
+        left:0;
+        margin-top:120px;
+      }
+
+      .Name { grid-area: Name; }
+      .Where { grid-area: Where; }
+
+      .StoryMaps {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 0.1fr;
+        grid-gap: 4px 4px;
+        grid-template-areas: "NZ ME NE" ". . .";
+        grid-area: StoryMaps;
+      }
+
+      .NZ { grid-area: NZ; }
+      .ME { grid-area: ME; }
+      .NE { grid-area: NE; }
+      .What { grid-area: What; }
+    </style>
+  
+  </head>
+  <body>
+           
+     <div class="header">
+           <h2>the Class of 2024</h2>
+            <ul>
+                  <li><a href="#name">What is your name</a>
+                  </li><li><a href="#where">Where are you from?</a>
+                  </li><li><a href="#study">What will you be studying?</a></li>
+            </ul>      
+      </div>
+
+      <div class="grid-container">
+
+            <div class="box Name" id="name">
+                  <h2 class="topness">What's your name?</h2>
+                  <div class="frame tree" id="tree_div"></div>
+            </div>
+            
+            <div class="box Where" id="where">
+               <h2 class="topness">Where are you from?</h2>
+                 <iframe width="100%" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="US Heat-Copy" src="//www.arcgis.com/apps/Embed/index.html?webmap=722df06cd3014dc2b74b4eff965fffaf&extent=-121.311,24.647,-75.0366,49.6392&zoom=true&previewImage=false&scale=true&disable_scroll=true&theme=light"></iframe>
+            </div>
+            
+            <div class="box StoryMaps">
+                  <div class="NZ">
+                        <span>the North Island of New Zealand?....</span>
+                        <style>.embed-container {position: relative; padding-bottom: 80%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}</style><div class="embed-container"><iframe width="500" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="Class of 2024" src="//www.arcgis.com/apps/Embed/index.html?webmap=f3430435c6d348fa96e3229d18e67fdd&extent=113.4009,-61.3119,180,-14.0928&zoom=true&previewImage=false&scale=true&disable_scroll=true&theme=dark"></iframe></div>
+                  <span class="hide">bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</span>
+                  </div>
+                  <div class="ME">
+                        <span>or the cradle of civilization?...</span>
+                       <style>.embed-container {position: relative; padding-bottom: 80%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}</style><div class="embed-container"><iframe width="500" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="Cradle" src="//www.arcgis.com/apps/Embed/index.html?webmap=6b20c535ee8f41e9a5ef6002ca8d00ec&extent=11.1271,21.5229,59.5988,47.4194&zoom=true&previewImage=false&scale=true&disable_scroll=true&theme=light"></iframe></div>
+                        <span class="hide">bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</span>
+                  </div>
+                  <div class="NE">
+                        <span>is that the Belt of Orion or I-495 outside of Boston?</span>
+                        <div class="embed-container">
+                              <iframe width="500" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="The Northeast" src="//www.arcgis.com/apps/Embed/index.html?webmap=4dc4624e603a44ddbb84726fd4939a3a&extent=-75.5632,40.3703,-69.5043,43.3438&zoom=true&previewImage=false&scale=true&disable_scroll=true&theme=light"></iframe>
+                        </div>
+                         <span class="hide">bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</span>
+                    </div>
+            </div>
+             
+            <div class="box What" id="study">
+                  <h2 class="topness">What are you studying?</h2>
+                  <div class="frame sankey" id="sankey_basic"></div>
+            </div>
+      </div>
+
+<script>
+      document.addEventListener('load', (event) => {
+            log(event.target);
+            //event.target.style.visibilty = 'visible';            
+      });
+</script>
+
+  </body>
+</html>
