@@ -1,0 +1,186 @@
+<html>
+  <head>
+
+  <style>
+
+
+html {
+  box-sizing: border-box;
+}
+
+.hex-container {
+  width:85%;
+  height: auto;
+  margin: auto;
+  perspective: 1000px;
+}
+
+.ibws-fix {
+  /* inline-block whitespace fix */
+  font-size: 0;
+}
+
+.hexy,
+.hexy:before, 
+.hexy:after { 
+  height: 175px;
+  width: 100px; 
+}
+
+.hexy:before {
+  position: absolute;
+  content:"";
+  background-color: inherit;
+  transform: rotate(60deg);
+  overflow: hidden;
+}
+
+.hexy:after {
+  position: absolute;
+  content:"";
+  background-color: inherit;
+  transform: rotate(-60deg);
+  /*overflow: hidden;*/
+}
+
+.hexy:nth-child(odd) {
+  top: 88px;
+}
+
+.hexy:hover {
+ /* background-color: white;*/
+  cursor: pointer;
+}  
+
+.hexynone {
+  position: relative;
+  display: inline-block;
+  height: 175px;
+  width: 100px;
+  margin: 1px 26px;
+}
+
+.hexynone:nth-child(odd) {
+  top: 88px;
+}
+
+.hexy {
+  position: relative;
+  margin: 1px 27px;
+  background-color: #CBE1E7;
+  display: inline-block;
+  transition: transform 1.5s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.hex-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140px;
+  font-size: 1rem;
+  text-align: center;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  z-index: 100; 
+
+  margin:auto;
+}
+
+.back {
+  transform: rotateY(180deg);
+  top: 25%;
+  left: -25%;
+}
+
+.is-flipped {
+  transform: rotateY(180deg);
+}
+
+
+</style>
+
+
+</head>
+
+<body>
+<div class="hex-container">
+  <div class="ibws-fix">
+    
+    <div class="hexy"> 
+      <div class="hex-content front">
+        <p>Searching as Strategic Exploration</p>
+      </div>
+      <div class="hex-content back">
+        <p>Inclusion of OA repositories in your search strategy</p>
+      </div>    
+    </div>
+    <div class="hexy"> 
+      <div class="hex-content front">
+        <p>Authority Is Constructed and Contextual</p>
+      </div>
+      <div class="hex-content back">
+        <p>Authority is at least partly based on the type of publication.</p>
+      </div>    
+    </div>
+    <div class="hexy"> 
+      <div class="hex-content">
+        <p>Information Creation as a Process</p>
+      
+      </div>  
+    </div>
+  </div>
+
+
+  <div class="ibws-fix">
+    <div class="hexy"> 
+      <div class="hex-content hex-img">
+        <p>Scholarship as Conversation</p>
+       
+      </div>  
+    </div>
+    <div class="hexy"> 
+      <!-- <div class="hex-content">
+        <p>Framework for Information Literacy for Higher Education</p>
+     
+      </div>   -->
+    </div>
+    <div class="hexy"> 
+      <div class="hex-content">
+        <p>Information Has Value</p>
+       
+      </div>  
+    </div>
+  </div>
+  <div class="ibws-fix">
+      <div class="hexynone"></div>
+    <div class="hexy"> 
+      <div class="hex-content">
+        <p>Research as Inquiry</p>
+      </div>  
+    </div>
+    <div class="hexynone"></div>
+  </div>
+ 
+ 
+</div>
+
+<script>
+  var honeycomb = document.querySelectorAll('.hexy');
+    honeycomb.forEach(hex => {
+      hex.addEventListener('click', function(e) {
+        this.classList.contains('is-flipped') ? this.classList.remove('is-flipped') : this.classList.add('is-flipped');
+      });
+    });
+
+    
+      
+      
+  
+</script>
+</body>
+</html>
+
+
