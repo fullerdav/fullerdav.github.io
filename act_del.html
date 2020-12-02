@@ -1,0 +1,139 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+    <script type="text/javascript">      
+      const {log} = console;
+      document.addEventListener('touchstart', null, {default: true});
+      
+      google.charts.load('current', {'packages':['corechart','table']});
+      google.charts.setOnLoadCallback(loadXMLDoc);
+      let records = [];
+      let active = 0;
+      let deleted = 0;
+      let token = "";
+      let url = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?path=/shared/Union%20College%20NY%2001UCNY_INST%2FReports%2FDavid%20Reports/circ_incl_deleted&limit=1000&col_names=false&apikey=l7xxec32312a35ac43e3ba59dbcc4bdf7864';
+      const baseurl = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?';
+        
+      function loadXMLDoc() {
+          let xmlhttp = new XMLHttpRequest();
+          xmlhttp.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                  let xmldoc = this.responseXML;
+                  let finished = xmldoc.getElementsByTagName("IsFinished")[0].childNodes[0].nodeValue; 
+                  finished = finished === "false" ? false : true;
+                  parseData(xmldoc);
+
+                  if (finished) { 
+                    drawPieChart([active, deleted]);
+                    drawTable();
+                  } else {
+                    if (token === "") { token = xmldoc.getElementsByTagName("ResumptionToken")[0].childNodes[0].nodeValue }; 
+                    url = `${baseurl}token=${token}&apikey=l7xxec32312a35ac43e3ba59dbcc4bdf7864`;
+                    loadXMLDoc();
+                  }
+              } 
+          };
+          xmlhttp.open("GET", url);
+          xmlhttp.send();
+      };
+
+        function parseData(xml) {
+          let rows = Array.from(xml.getElementsByTagName("Row"));
+       
+          rows.forEach(row => {
+              if (row.getElementsByTagName("Column4")[0]) {
+                    let col1 = row.getElementsByTagName("Column1")[0].childNodes[0].nodeValue;
+                    let col2 = row.getElementsByTagName("Column2")[0].childNodes[0].nodeValue;
+                    let col3 = row.getElementsByTagName("Column3")[0].childNodes[0].nodeValue;
+                    let col4 = row.getElementsByTagName("Column4")[0] ? row.getElementsByTagName("Column4")[0].childNodes[0].nodeValue : 0;
+                    col4 = parseInt(col4);
+                    if (col3 === "Active") {
+                       active += col4;
+                    } else {
+                       deleted += col4;
+                    }
+                    records.push([col1, col2, col3, col4]);  
+              }
+          });
+          rows = null;
+        }
+
+      function drawPieChart(rows) {
+            let circs = google.visualization.arrayToDataTable([
+              ['Status', 'Loans'],
+              ['Active', rows[0]],
+              ['Deleted', rows[1]]
+            ]);
+
+            var options = {
+              title: 'Loans (replacement + withdrawn items)',
+              pieHole: 0.4,
+              height: '100%',
+              width:'100%',
+              is3D: true,
+              fontSize:16,
+              textStyle: {color: '#FF0000'}, 
+              showColorCode: true
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(circs, options);
+    };
+
+    function drawTable() {
+       let tbl = new google.visualization.DataTable({
+            cols: [{id: 'oclc', label:'035a', type:'string'}, {id: 'title', label: 'Title', type: 'string'}, {id: 'status', label: 'Status', type: 'string'}, {id: 'loans', label: 'Loans', type: 'number'}]
+        });
+        let options = {showRowNumber: true, alternatingRowStyle: true, allowHtml: true, sort:'enable', sortAscending:true, sortColumn:1, page:'enable', pageSize:100}
+        tbl.addRows(records);
+        let table = new google.visualization.Table(document.getElementById('manifest'));
+        table.draw(tbl, options);
+    }
+    </script>
+
+    <style>
+        h4 {
+       /*   text-align:center; */
+          color: #333;
+          margin: 90px 0 36px 102px;
+          font-weight:8`00;
+        }
+
+        #piechart { 
+          margin:20px auto 0;
+          height:580px;
+          width:580px;
+        }
+
+        #manifest {
+          width: 90%;
+          margin: 0 auto;
+        }
+
+        .loader {
+          border: 16px solid #f3f3f3; /* Light grey */
+          border-top: 16px solid #3498db; /* Blue */
+          border-radius: 50%;
+          width: 45%;
+          height: 45%;
+          animation: spin 2s linear infinite;
+          opacity: 0.65;
+          margin:auto;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+    </style>
+  </head>
+
+  <body>          
+  <div id="piechart">
+     <h4>Loans (replacement + withdrawn items)</h4>
+     <div class="loader"></div>
+  </div> 
+
+    <div id="manifest"></div> 
+  </body>
+</html>
