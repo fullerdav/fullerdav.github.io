@@ -2,7 +2,27 @@
   <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     
+    <style>
+      .bigAndBoldClass {
+         font-weight: 700;
+         font-size:  18px;
+
+      }
+
+      .highlightClass {
+        color: #000;
+        background-color: aquamarine;
+        font-weight: 700;
+      }
+  </style>
+ 
+  </head>
+
+  <body>          
+    <div id="manifest"></div> 
+
     <script type="text/javascript">      
+    
       const {log} = console; 
       document.addEventListener('touchstart', null, {default: true});
       
@@ -72,31 +92,13 @@
           tbl.addColumn('datetime', 'Item Recv');
           tbl.addColumn('string', 'Item Mod by');
           tbl.addColumn('string', 'Title');
-          let options = {showRowNumber:true, allowHtml:true, height:'auto', alternatingRowStyle:false, page:'disable', frozenColumns:1, sort:'enable', sortColumn:7};
+          let options = {showRowNumber:true, height:'auto', page:'disable', sort:'enable', sortColumn:7};
           tbl.addRows(records);
           let table = new google.visualization.Table(document.getElementById('manifest'));
           table.draw(tbl, options);
       }
-    
+
     </script>
 
-    <style>
-      .bigAndBoldClass {
-         font-weight: 700;
-         font-size:  18px;
-
-      }
-
-      .highlightClass {
-        color: #000;
-        background-color: aquamarine;
-        font-weight: 700;
-      }
-  </style>
- 
-  </head>
-
-  <body>          
-    <div id="manifest"></div> 
   </body>
 </html>
