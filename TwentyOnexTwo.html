@@ -24,7 +24,7 @@
     <script type="text/javascript">      
     
       const {log} = console; 
-      document.addEventListener('touchstart', null, {default: true});
+      //document.addEventListener('touchstart', null, {default: true});
       
       google.charts.load('current', {'packages':['table']});
       google.charts.setOnLoadCallback(loadXMLDoc);
@@ -102,9 +102,9 @@
           tbl.addColumn('datetime', 'Item Recv');
           tbl.addColumn('string', 'Item Mod by');
           tbl.addColumn('string', 'Title');
-          let options = {showRowNumber:true, height:'auto', page:'disable', sort:'enable', sortColumn:7};
+          let options = {showRowNumber:true, height:'auto', page:'disable', sort:'enable'};
           tbl.addRows(records);
-          let manif = document.getElementById('manifest')
+          let manif = document.getElementById('manifest');
           log(manif);
           let table = new google.visualization.Table(manif);
           table.draw(tbl, options);
