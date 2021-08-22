@@ -72,7 +72,7 @@
           tbl.addColumn('datetime', 'Item Recv');
           tbl.addColumn('string', 'Item Mod by');
           tbl.addColumn('string', 'Title');
-          let options = {showRowNumber:true, allowHtml:true, height:'auto', alternatingRowStyle: true, page:'disable', frozenColumns:1, sort:'enable', sortColumn:7, cssClassNames:{headerRow: 'bigAndBoldClass', hoverTableRow:'highlightClass'};}
+          let options = {showRowNumber:true, allowHtml:true, height:'auto', alternatingRowStyle:false, page:'disable', frozenColumns:1, sort:'enable', sortColumn:7};
           tbl.addRows(records);
           let table = new google.visualization.Table(document.getElementById('manifest'));
           table.draw(tbl, options);
