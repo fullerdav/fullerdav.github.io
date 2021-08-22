@@ -72,13 +72,27 @@
           tbl.addColumn('datetime', 'Item Recv');
           tbl.addColumn('string', 'Item Mod by');
           tbl.addColumn('string', 'Title');
-          let options = {showRowNumber:true, allowHtml: true, page:'enable', pageSize:50}
+          let options = {showRowNumber:true, allowHtml:true, height:'auto', alternatingRowStyle: true, page:'disable', frozenColumns:1, sort:'enable', sortColumn:7, cssClassNames:{headerRow: 'bigAndBoldClass', hoverTableRow:'highlightClass'};}
           tbl.addRows(records);
           let table = new google.visualization.Table(document.getElementById('manifest'));
           table.draw(tbl, options);
       }
     
     </script>
+
+    <style>
+      .bigAndBoldClass {
+         font-weight: 700;
+         font-size:  18px;
+
+      }
+
+      .highlightClass {
+        color: #000;
+        background-color: aquamarine;
+        font-weight: 700;
+      }
+  </style>
  
   </head>
 
