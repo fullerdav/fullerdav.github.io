@@ -12,7 +12,8 @@
       // let active = 0;
       // let deleted = 0;
       let token = "";
-      let url = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?path=/shared/Union%20College%20NY%2001UCNY_INST/Reports/David%20Reports/TwentyOnexTwo&limit=50&col_names=true&apikey=l7xxec32312a35ac43e3ba59dbcc4bdf7864';
+      let url = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?';
+      path='/shared/Union College NY 01UCNY_INST/Reports/David Reports/TwentyOnexTwo&limit=50&col_names=true&apikey=l7xxec32312a35ac43e3ba59dbcc4bdf7864';
       const baseurl = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?';
         
       function loadXMLDoc() {
@@ -40,20 +41,19 @@
      
         rows.forEach(row => {
             if (row.getElementsByTagName("Column9")[0]) {
-                  let col1 = row.getElementsByTagName("Column1")[0].childNodes[0].nodeValue;
-                  let col2 = row.getElementsByTagName("Column2")[0].childNodes[0].nodeValue;
-                  let col3 = row.getElementsByTagName("Column3")[0].childNodes[0].nodeValue;
-                  let col4 = row.getElementsByTagName("Column4")[0].childNodes[0].nodeValue;
-                  let col5 = row.getElementsByTagName("Column5")[0].childNodes[0].nodeValue;
-                  let col6 = row.getElementsByTagName("Column6")[0].childNodes[0].nodeValue;
-                  let col7 = row.getElementsByTagName("Column7")[0].childNodes[0].nodeValue;
-                  let col8 = row.getElementsByTagName("Column8")[0].childNodes[0].nodeValue;
-                  let col9 = row.getElementsByTagName("Column9")[0].childNodes[0].nodeValue;
+                  let col1 = row.getElementsByTagName("POCreate")[0].childNodes[0].nodeValue;
+                  let col2 = row.getElementsByTagName("PORecv")[0].childNodes[0].nodeValue;
+                  let col3 = row.getElementsByTagName("RecvStatus")[0].childNodes[0].nodeValue;
+                  let col4 = row.getElementsByTagName("InvStatus")[0].childNodes[0].nodeValue;
+                  let col5 = row.getElementsByTagName("CreateItem")[0].childNodes[0].nodeValue;
+                  let col6 = row.getElementsByTagName("ModDate")[0].childNodes[0].nodeValue;
+                  let col7 = row.getElementsByTagName("RecvDate")[0].childNodes[0].nodeValue;
+                  let col8 = row.getElementsByTagName("ModItem")[0].childNodes[0].nodeValue;
+                  let col9 = row.getElementsByTagName("Title")[0].childNodes[0].nodeValue;
 
                // let col4 = row.getElementsByTagName("Column4")[0] ? row.getElementsByTagName("Column4")[0].childNodes[0].nodeValue : 0;
                   
-                
-                  records.push([col1, col2, col3, col4, col5, col6, col7, col8, col9]);  
+                 records.push([col1, col2, col3, col4, col5, col6, col7, col8, col9]);  
             }
         });
         rows = null;
@@ -61,9 +61,7 @@
 
       function drawTable() {
          let tbl = new google.visualization.DataTable({
-              cols: [{id: 'po1', label:'POCreate', type:'date'}, {id: 'po2', label: 'RecvPOL)', type: 'date'}, {id: 'po3', label: 'RecvStatus', type: 'string'}, 
-              {id: 'po4', label: 'InvStatus', type: 'string'},{id: 'item1', label:'CreateItem', type:'date'},{id: 'item2', label:'ModDate', type:'date'},
-              {id: 'item3', label: 'RecDate', type:'datetime'},{id: 'item4', label:'Modification', type:'date'},{id: 'title', label:'Title', type:'string'}]
+              cols: [{id: 'po1', label:'POCreate', type:'date'}, {id: 'po2', label: 'PORecv', type: 'date'}, {id: 'po3', label: 'PORecvStatus', type: 'string'},{id: 'po4', label: 'InvStatus', type: 'string'},{id: 'item1', label:'CreateItem', type:'date'},{id: 'item2', label:'ModDate', type:'date'},{id: 'item3', label: 'RecvDate', type:'datetime'},{id: 'item4', label:'ModItem', type:'date'},{id: 'title', label:'Title', type:'string'}]
           });
           let options = {showRowNumber: true, alternatingRowStyle: true, allowHtml: true, sort:'enable', sortAscending:true, sortColumn:7, page:'enable', pageSize:50}
           tbl.addRows(records);
