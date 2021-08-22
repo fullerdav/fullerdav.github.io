@@ -61,14 +61,24 @@
             if (row.getElementsByTagName("Column9")[0]) {
                   let col1 = row.getElementsByTagName("Column7")[0].childNodes[0].nodeValue;
                   col1 = new Date(col1);
+                  
                   let col2 = row.getElementsByTagName("Column8")[0].childNodes[0].nodeValue;
-                  col2 = new Date(col2);
+                  log(col2);
+                  let col2str = col2.replace(/-/g,",");
+                  log(col2str);
+                  col2 = new Date(col2str);
+                  
                   let col3 = row.getElementsByTagName("Column9")[0].childNodes[0].nodeValue;
                   let col4 = row.getElementsByTagName("Column6")[0].childNodes[0].nodeValue;
+                  
                   let col5 = row.getElementsByTagName("Column2")[0].childNodes[0].nodeValue;
-                  col5 = new Date(col5);
+                  let col5str = col5.replace(/-/g,","); 
+                  col5 = new Date(col5str);
+                  
                   let col6 = row.getElementsByTagName("Column3")[0].childNodes[0].nodeValue;                
-                  col6 = new Date(col6);
+                  let col6str = col6.replace(/-/g,",");
+                  col6 = new Date(col6str);
+
                   let col7 = row.getElementsByTagName("Column5")[0].childNodes[0].nodeValue;
                   col7 = new Date(col7);
                   let col8 = row.getElementsByTagName("Column4")[0].childNodes[0].nodeValue;
@@ -94,7 +104,9 @@
           tbl.addColumn('string', 'Title');
           let options = {showRowNumber:true, height:'auto', page:'disable', sort:'enable', sortColumn:7};
           tbl.addRows(records);
-          let table = new google.visualization.Table(document.getElementById('manifest'));
+          let manif = document.getElementById('manifest')
+          log(manif);
+          let table = new google.visualization.Table(manif);
           table.draw(tbl, options);
       }
 
