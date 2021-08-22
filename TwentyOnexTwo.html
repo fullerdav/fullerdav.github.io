@@ -9,8 +9,8 @@
       google.charts.load('current', {'packages':['corechart','table']});
       google.charts.setOnLoadCallback(loadXMLDoc);
       let records = [];
-      let active = 0;
-      let deleted = 0;
+      // let active = 0;
+      // let deleted = 0;
       let token = "";
       let url = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?path=/shared/Union%20College%20NY%2001UCNY_INST/Reports/David%20Reports/TwentyOnexTwo&limit=50&col_names=true&apikey=l7xxec32312a35ac43e3ba59dbcc4bdf7864';
       const baseurl = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?';
@@ -35,58 +35,43 @@
           xmlhttp.send();
       };
 
-        function parseData(xml) {
-          let rows = Array.from(xml.getElementsByTagName("Row"));
-       
-          rows.forEach(row => {
-              if (row.getElementsByTagName("Column4")[0]) {
-                    let col1 = row.getElementsByTagName("Column1")[0].childNodes[0].nodeValue;
-                    let col2 = row.getElementsByTagName("Column2")[0].childNodes[0].nodeValue;
-                    let col3 = row.getElementsByTagName("Column3")[0].childNodes[0].nodeValue;
-                    let col4 = row.getElementsByTagName("Column4")[0] ? row.getElementsByTagName("Column4")[0].childNodes[0].nodeValue : 0;
-                    col4 = parseInt(col4);
-                    if (col3 === "Active") {
-                       active += col4;
-                    } else {
-                       deleted += col4;
-                    }
-                    records.push([col1, col2, col3, col4]);  
-              }
-          });
-          rows = null;
-        }
+      function parseData(xml) {
+        let rows = Array.from(xml.getElementsByTagName("Row"));
+     
+        rows.forEach(row => {
+            if (row.getElementsByTagName("Column4")[0]) {
+                  let col1 = row.getElementsByTagName("Column1")[0].childNodes[0].nodeValue;
+                  let col2 = row.getElementsByTagName("Column2")[0].childNodes[0].nodeValue;
+                  let col3 = row.getElementsByTagName("Column3")[0].childNodes[0].nodeValue;
+                  let col4 = row.getElementsByTagName("Column4")[0].childNodes[0].nodeValue;
+                  let col5 = row.getElementsByTagName("Column5")[0].childNodes[0].nodeValue;
+                  let col6 = row.getElementsByTagName("Column6")[0].childNodes[0].nodeValue;
+                  let col7 = row.getElementsByTagName("Column7")[0].childNodes[0].nodeValue;
+                  let col8 = row.getElementsByTagName("Column8")[0].childNodes[0].nodeValue;
+                  let col9 = row.getElementsByTagName("Column9")[0].childNodes[0].nodeValue;
 
-    //   function drawPieChart(rows) {
-    //         let circs = google.visualization.arrayToDataTable([
-    //           ['Status', 'Loans'],
-    //           ['Active', rows[0]],
-    //           ['Deleted', rows[1]]
-    //         ]);
-
-    //         var options = {
-    //           title: 'Loans (replacement + withdrawn items)',
-    //           pieHole: 0.4,
-    //           height: '100%',
-    //           width:'100%',
-    //           is3D: true,
-    //           fontSize:16,
-    //           textStyle: {color: '#FF0000'}, 
-    //           showColorCode: true
-    //         };
-    //         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-    //         chart.draw(circs, options);
-    // };
-   
-
-    function drawTable() {
-       let tbl = new google.visualization.DataTable({
-            cols: [{id: 'pocreadte', label:'PO Creation Date', type:'date'}, {id: 'porecdte', label: 'Receiving Date (Latest in POL)', type: 'date'}, {id: 'recsta', label: 'Rec Status', type: 'string'}, {id: 'invsta', label: 'Inv Status', type: 'string'},{id: 'creadte', label:'Creation Date', type:'date'},{id: 'moddte', label:'Modification Date', type:'date'},{id: 'recdte', label: 'Rec Date', type:'date'},{id: 'modby', label:'Modif By', type:'date'},{id: 'title', label:'Title', type:'string'}]
+               // let col4 = row.getElementsByTagName("Column4")[0] ? row.getElementsByTagName("Column4")[0].childNodes[0].nodeValue : 0;
+                  
+                  // if (col3 === "Active") {
+                  //    active += col4;
+                  // } else {
+                  //    deleted += col4;
+                  // }
+                  records.push([col1, col2, col3, col4, col5, col6, col7, col8, col9]);  
+            }
         });
-        let options = {showRowNumber: true, alternatingRowStyle: true, allowHtml: true, sort:'enable', sortAscending:true, sortColumn:1, page:'enable', pageSize:100}
-        tbl.addRows(records);
-        let table = new google.visualization.Table(document.getElementById('manifest'));
-        table.draw(tbl, options);
-    }
+        rows = null;
+      }
+
+      function drawTable() {
+         let tbl = new google.visualization.DataTable({
+              cols: [{id: 'pocreadte', label:'PO Creation Date', type:'date'}, {id: 'porecdte', label: 'Receiving Date (Latest in POL)', type: 'date'}, {id: 'recsta', label: 'Rec Status', type: 'string'}, {id: 'invsta', label: 'Inv Status', type: 'string'},{id: 'creadte', label:'Creation Date', type:'date'},{id: 'moddte', label:'Modification Date', type:'date'},{id: 'recdte', label: 'Rec Date', type:'datetime'},{id: 'modby', label:'Modif By', type:'date'},{id: 'title', label:'Title', type:'string'}]
+          });
+          let options = {showRowNumber: true, alternatingRowStyle: true, allowHtml: true, sort:'enable', sortAscending:true, sortColumn:1, page:'enable', pageSize:100}
+          tbl.addRows(records);
+          let table = new google.visualization.Table(document.getElementById('manifest'));
+          table.draw(tbl, options);
+      }
     </script>
 
     <style>
