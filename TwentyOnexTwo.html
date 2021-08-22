@@ -63,11 +63,11 @@
                   col1 = new Date(col1);
                   
                   let col2 = row.getElementsByTagName("Column8")[0].childNodes[0].nodeValue;
-                  log(col2);
+                  log("rawdate: ", col2);
                   let col2str = col2.replace(/-/g,",");
-                  log(col2str);
                   col2 = new Date(col2str);
-                  
+                  log("date: ", col2);
+
                   let col3 = row.getElementsByTagName("Column9")[0].childNodes[0].nodeValue;
                   let col4 = row.getElementsByTagName("Column6")[0].childNodes[0].nodeValue;
                   
