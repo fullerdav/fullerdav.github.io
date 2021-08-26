@@ -110,7 +110,15 @@
           table.draw(tbl, options);
       }
 
+
+
+    let u = "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&q=title,exact,28 days&qInclude=rtype,exact,videos&tab=Everything&scope=MyInst_and_CI&lang=eng&offset=0&limit=5&getMore=0&conVoc=false&skipDelivery=true&disableSplitFacets=true&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5";
+    fetch(u).then(function(response) { log(response.json()); });
+
+
     </script>
 
   </body>
 </html>
+
+
