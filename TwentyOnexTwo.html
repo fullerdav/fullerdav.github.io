@@ -562,8 +562,14 @@
       fetch(requestPrimo)
         .then(response => response.json())
         .then(titles => { 
-            log(titles.docs); 
-           
+            let titleArray = titles.docs;
+            let bestTitle = titles.docs.filter(title => Math.max(title.pnx.control.score));
+            if (bestTitle.length === 1) {
+                log(bestTitle[0]);
+            } else {
+                log(titleArray);
+            }
+            
       })
       .catch(console.error);
 
