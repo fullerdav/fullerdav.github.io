@@ -555,15 +555,18 @@
 
 
   
-   
-      let u = "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&q=title,exact,28 days&qInclude=rtype,exact,videos&tab=Everything&scope=MyInst_and_CI&lang=eng&offset=0&limit=5&getMore=0&conVoc=false&skipDelivery=true&disableSplitFacets=true&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5";
-      fetch(u).then(function(response) { 
-        let results = response.json();
-        log(results); 
-        log(results.docs);
-        log(results.docs[0]);
-      });
+      const prefix = 'https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&q=title,exact,';
+      const postfix = '&qInclude=rtype,exact,videos&tab=Everything&scope=MyInst_and_CI&lang=eng&offset=0&limit=5&getMore=0&conVoc=false&skipDelivery=true&disableSplitFacets=true&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5';
+      let requestPrimo = prefix + "28 days" + postfix;
       
+      fetch(requestPrimo)
+        .then(function(response => response.json())
+        .then(titles => { 
+            log(titles); 
+           
+      })
+      .catch(console.error);
+
     </script>
 
   </body>
