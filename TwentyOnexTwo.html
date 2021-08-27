@@ -560,7 +560,7 @@
       let requestPrimo = prefix + "28 days" + postfix;
       
       fetch(requestPrimo)
-        .then(function(response => response.json())
+        .then(response => response.json())
         .then(titles => { 
             log(titles); 
            
