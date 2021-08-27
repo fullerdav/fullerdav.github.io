@@ -562,7 +562,7 @@
       fetch(requestPrimo)
         .then(response => response.json())
         .then(titles => { 
-            log(titles); 
+            log(titles.docs); 
            
       })
       .catch(console.error);
