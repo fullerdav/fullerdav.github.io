@@ -509,14 +509,13 @@
       //     xmlhttp.send();
       // };
 
-      function parseData() {
+      // function parseData() {
        
-        let tbody = document.getElementById("tbody");
+      //   let tbody = document.getElementById("tbody");
 
-        records.forEach(row => {
-            let htmlrow = document.createElement('tr');
+      //   records.forEach(row => {
+      //       let htmlrow = document.createElement('tr');
 
-            log(row);
 
             // if (xmlrow.getElementsByTagName("Column9")[0]) {
               
@@ -550,18 +549,21 @@
               
             //   tbody.appendChild(htmlrow);
             // }
-        });
-        rows = null;
-      }
+      //   });
+      //   rows = null;
+      // }
 
 
-    // let u = "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&q=title,exact,28 days&qInclude=rtype,exact,videos&tab=Everything&scope=MyInst_and_CI&lang=eng&offset=0&limit=5&getMore=0&conVoc=false&skipDelivery=true&disableSplitFacets=true&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5";
-    // fetch(u).then(function(response) { 
-    //   let results = response.json();
-    //   log(results[0]); 
-    // });
-
-log(records);
+  
+   
+      let u = "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&q=title,exact,28 days&qInclude=rtype,exact,videos&tab=Everything&scope=MyInst_and_CI&lang=eng&offset=0&limit=5&getMore=0&conVoc=false&skipDelivery=true&disableSplitFacets=true&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5";
+      fetch(u).then(function(response) { 
+        let results = response.json();
+        log(results); 
+        log(results.docs);
+        log(results.docs[0]);
+      });
+      
     </script>
 
   </body>
