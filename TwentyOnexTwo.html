@@ -14,35 +14,48 @@
    
      <script type="text/javascript">      
 
-          const {log} = console; 
-
-          const prefix = 'https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&q=title,exact,';
-          const postfix = '&qInclude=rtype,exact,videos&tab=Everything&scope=MyInst_and_CI&lang=eng&offset=0&limit=5&getMore=0&conVoc=false&sort=rank&skipDelivery=true&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5';
-          let requestPrimo = prefix + "28 days" + postfix;
+        const {log} = console; 
+        const prefixPrimo = "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&q=title,exact,";
+        const postfixPrimo = "&qInclude=rtype,exact,videos&tab=Everything&scope=MyInst_and_CI&lang=eng&offset=0&limit=5&getMore=0&conVoc=false&sort=rank&skipDelivery=true&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5";
+        const prefixCLinker = "https://union.primo.exlibrisgroup.com/discovery/openurl?institution=01UCNY_INST&vid=01UCNY_INST:01UCNY_INST&ctx_ver=Z39.88-2004&ctx_enc=info:ofi%2Fenc:UTF-8&url_ver=Z39.88-2004&url_ctx_fmt=infofi%2Ffmt:kev:mtx:ctx&rfr_id=info:sid%2Fprimo.exlibrisgroup.com:primo4-book-cLinker&rft_val_fmt=info:ofi%2Ffmt:kev:mtx:book&isCitationLinker=Y";
           
-          fetch(requestPrimo)
-            .then(response => response.json())
-            .then(titles => { 
-                let titleArray = titles.docs;
-               // let bestTitle = titleArray.filter(title => Math.max(title.pnx.control.score[0]));
-                let {btitle, addtitle, date, publisher, isbn} = titles.docs[0].pnx.addata;
-                let ti = btitle ? btitle : addtitle;
-                
-                log(ti, date, publisher, isbn);
-          })
-          .catch(console.error);
+        function searchPrimo() { 
+              let ti = document.getElementById("title").value;
+              let requestPrimo = prefix + ti + postfix;
 
-         function searchAndRequest() { 
-            let ti = document.getElementById("title").value;
-            log(ti);
-            //https://union.primo.exlibrisgroup.com/discovery/openurl?institution=01UCNY_INST&vid=01UCNY_INST:01UCNY_INST&ctx_ver=Z39.88-2004&ctx_enc=info:ofi%2Fenc:UTF-8&url_ver=Z39.88-2004&url_ctx_fmt=infofi%2Ffmt:kev:mtx:ctx&rfr_id=info:sid%2Fprimo.exlibrisgroup.com:primo4-book-cLinker&rft_val_fmt=info:ofi%2Ffmt:kev:mtx:book&isCitationLinker=Y&rft.pubdate=2000&rft.btitle=28%20days&rft.isbn=0767851269&rft.publisher=Columbia%20Pictures
+              fetch(requestPrimo)
+                .then(response => response.json())
+                .then(titles => { 
+                    let titleArray = titles.docs;
+                //  let bestTitle = titleArray.filter(title => Math.max(title.pnx.control.score[0]));
+                    {isbn, btitle, addtitle, date, pub} = titles.docs[0].pnx.addata;
+                    title = btitle ? btitle : addtitle;
+                    if (isbn) {
+                        openCLinker([isbn, title, date, pub]);
+                    } 
+              })
+              .catch(console.error);
+        }
+         
+        function openCLinker(data) {
+            let isbnparam = data[0] ? '&rft.isbn=' + data[0] : "";           
+            let titlparam = data[1] ? '&rft.btitle=' + data[1] : "";
+            let dateparam = data[2] ? '&rft.pubdate=' + data[2] : "";
+            let publparam = data[3] ? '&rft.publisher=' + data[3] : "";
+
+            let clinker = prefixCLinker + isbnparam + titlparam + dateparam + publparam;
+            window.open(cLinker);  
+        }
+          
             
-         }
+
+         
+    
 
     </script>
 
     <div class="box">
-        <input type="text" id="title" name="dvdtitle" size="30" maxlength="80"><button type="button" onclick="searchAndRequest();">click me</button>
+        <input type="text" id="title" name="dvdtitle" size="30" maxlength="80" placeholder="enter title"><button type="button" onclick="searchPrimo();">Search for films</button>
     </div>
 
    
