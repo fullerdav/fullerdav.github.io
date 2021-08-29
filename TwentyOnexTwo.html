@@ -28,7 +28,7 @@
                 .then(titles => { 
                     let titleArray = titles.docs;
                 //  let bestTitle = titleArray.filter(title => Math.max(title.pnx.control.score[0]));
-                    {isbn, btitle, addtitle, date, pub} = titles.docs[0].pnx.addata;
+                    let {isbn, btitle, addtitle, date, pub} = titles.docs[0].pnx.addata;
                     title = btitle ? btitle : addtitle;
                     if (isbn) {
                         openCLinker([isbn, title, date, pub]);
