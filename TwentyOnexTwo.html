@@ -2,7 +2,10 @@
   <head>
     
     <style>
- 
+ .box {
+    width: 50%;
+    margin: auto;
+ }
   </style>
  
   </head>
@@ -554,28 +557,73 @@
       // }
 
 
-  
-      const prefix = 'https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&q=title,exact,';
-      const postfix = '&qInclude=rtype,exact,videos&tab=Everything&scope=MyInst_and_CI&lang=eng&offset=0&limit=5&getMore=0&conVoc=false&skipDelivery=true&disableSplitFacets=true&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5';
-      let requestPrimo = prefix + "28 days" + postfix;
       
-      fetch(requestPrimo)
-        .then(response => response.json())
-        .then(titles => { 
-            let titleArray = titles.docs;
-            let bestTitle = titles.docs.filter(title => Math.max(title.pnx.control.score));
-            if (bestTitle.length === 1) {
-                log(bestTitle[0]);
-            } else {
-                log(titleArray);
-            }
-            
-      })
-      .catch(console.error);
+
+              const prefix = 'https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&q=title,exact,';
+              const postfix = '&qInclude=rtype,exact,videos&tab=Everything&scope=MyInst_and_CI&lang=eng&offset=0&limit=5&getMore=0&conVoc=false&skipDelivery=true&disableSplitFacets=true&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5';
+              let requestPrimo = prefix + "28 days" + postfix;
+              
+              fetch(requestPrimo)
+                .then(response => response.json())
+                .then(titles => { 
+                    let titleArray = titles.docs;
+                    let bestTitle = titleArray.filter(title => Math.max(title.pnx.control.score[0]));
+                    if (bestTitle.length === 1) {
+                        log("one", bestTitle);
+                    } else {
+                        log("first", titleArray[0]);
+                    }
+                    
+              })
+              .catch(console.error);
+         
+             function searchAndRequest() { 
+                let ti = document.getElementById("title").value;
+                log(ti);
+             }
+
 
     </script>
+
+<div class="box">
+    <input type="text" id="title" name="dvdtitle" size="30" maxlength="80"><input type="button" onclick="searchAndRequest">
+</div>
 
   </body>
 </html>
 
 
+    "pnx": {
+        "display": {         
+            "language": [
+                "eng"
+            ],
+            "title": [
+                "28 days"
+            ],          
+            "creationdate": [
+                "2000"
+            ],
+            "publisher": [
+                "Culver City, CA : Columbia Pictures"
+            ],
+            "description": [
+                "A high-flying party girl gets herself a DUI and 28 days in rehab -- and ends up discovering that real happiness must come from within."
+            ],
+            "mms": [
+                "991000856269704651"
+            ], 
+            "addtitle": [
+                "Twenty eight days"
+            ],
+            "edition": [
+                "Special ed."
+            ]
+        
+        },
+        "control": {     
+            "score": [
+                1.8311457
+            ],
+            "isDedup": false
+        },
