@@ -44,7 +44,8 @@
             let publparam = data[3] ? '&rft.publisher=' + data[3] : "";
 
             let clinker = prefixCLinker + isbnparam + titlparam + dateparam + publparam;
-            window.open(cLinker);  
+            log(clinker);
+            window.open(clinker);  
         }
           
             
