@@ -21,7 +21,7 @@
           
         function searchPrimo() { 
               let ti = document.getElementById("title").value;
-              let requestPrimo = prefix + ti + postfix;
+              let requestPrimo = prefixPrimo + ti + postfixPrimo;
 
               fetch(requestPrimo)
                 .then(response => response.json())
