@@ -2,28 +2,124 @@
   <head>
     
     <style>
- .box {
-    width: 50%;
-    margin: auto;
- }
-  </style>
- 
+         .box {
+            width: 50%;
+            margin: auto;
+         }
+    </style>
+
   </head>
 
   <body>       
-    <div id="manifest">
-      <table>
-        <tbody id="tbody">
-          
-        </tbody>    
-      </table>
-    </div> 
-
-    <script type="text/javascript">      
-    
-      const {log} = console; 
    
-      let records = [
+     <script type="text/javascript">      
+
+          const {log} = console; 
+
+          const prefix = 'https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&q=title,exact,';
+          const postfix = '&qInclude=rtype,exact,videos&tab=Everything&scope=MyInst_and_CI&lang=eng&offset=0&limit=5&getMore=0&conVoc=false&sort=rank&skipDelivery=true&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5';
+          let requestPrimo = prefix + "28 days" + postfix;
+          
+          fetch(requestPrimo)
+            .then(response => response.json())
+            .then(titles => { 
+                let titleArray = titles.docs;
+               // let bestTitle = titleArray.filter(title => Math.max(title.pnx.control.score[0]));
+                let {btitle, addtitle, date, publisher, isbn} = titles.docs[0].pnx.addata;
+                let ti = btitle ? btitle : addtitle;
+                
+                log(ti, date, publisher, isbn);
+          })
+          .catch(console.error);
+
+         function searchAndRequest() { 
+            let ti = document.getElementById("title").value;
+            log(ti);
+            //https://union.primo.exlibrisgroup.com/discovery/openurl?institution=01UCNY_INST&vid=01UCNY_INST:01UCNY_INST&ctx_ver=Z39.88-2004&ctx_enc=info:ofi%2Fenc:UTF-8&url_ver=Z39.88-2004&url_ctx_fmt=infofi%2Ffmt:kev:mtx:ctx&rfr_id=info:sid%2Fprimo.exlibrisgroup.com:primo4-book-cLinker&rft_val_fmt=info:ofi%2Ffmt:kev:mtx:book&isCitationLinker=Y&rft.pubdate=2000&rft.btitle=28%20days&rft.isbn=0767851269&rft.publisher=Columbia%20Pictures
+            
+         }
+
+    </script>
+
+    <div class="box">
+        <input type="text" id="title" name="dvdtitle" size="30" maxlength="80"><button type="button" onclick="searchAndRequest();">click me</button>
+    </div>
+
+   
+        
+    <script> 
+
+      // let token = "";
+      // let url = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?path=/shared/Union College NY 01UCNY_INST/Reports/David Reports/TwentyOnexTwo&limit=50&col_names=true&apikey=l7xxec32312a35ac43e3ba59dbcc4bdf7864';
+      // const baseurl = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?';
+        
+      // function loadXMLDoc() {
+      //     let xmlhttp = new XMLHttpRequest();
+      //     xmlhttp.onreadystatechange = function() {
+      //         if (this.readyState == 4 && this.status == 200) {
+      //             let xmldoc = this.responseXML;
+      //             let finished = xmldoc.getElementsByTagName("IsFinished")[0].childNodes[0].nodeValue; 
+      //             finished = finished === "false" ? true : true;
+      //             parseData(xmldoc);
+
+      //             if (!finished) { 
+      //               if (token === "") { token = xmldoc.getElementsByTagName("ResumptionToken")[0].childNodes[0].nodeValue }; 
+      //               url = `${baseurl}token=${token}&apikey=l7xxec32312a35ac43e3ba59dbcc4bdf7864`;
+      //               loadXMLDoc();
+      //             }
+      //         } 
+      //     };
+      //     xmlhttp.open("GET", url);
+      //     xmlhttp.send();
+      // };
+
+      // function parseData() {
+       
+      //   let tbody = document.getElementById("tbody");
+
+      //   records.forEach(row => {
+      //       let htmlrow = document.createElement('tr');
+
+
+            // if (xmlrow.getElementsByTagName("Column9")[0]) {
+              
+            //   let cell1 = document.createElement('td');
+            //   let col1 = xmlrow.getElementsByTagName("Column7")[0].childNodes[0].nodeValue;
+            //   col1 = new Date(col1);
+            //   cell1.appendChild(document.createTextNode(col1));
+            //   htmlrow.appendChild(cell);
+
+
+                  
+            //   let col2 = xmlrow.getElementsByTagName("Column8")[0].childNodes[0].nodeValue;
+            //   let col2str = col2.replace(/-/g,",");
+            //   col2 = new Date(col2str);
+
+            //   let col3 = xmlrow.getElementsByTagName("Column9")[0].childNodes[0].nodeValue;
+            //   let col4 = xmlrow.getElementsByTagName("Column6")[0].childNodes[0].nodeValue;
+              
+            //   let col5 = xmlrow.getElementsByTagName("Column2")[0].childNodes[0].nodeValue;
+            //   let col5str = col5.replace(/-/g,","); 
+            //   col5 = new Date(col5str);
+              
+            //   let col6 = xmlrow.getElementsByTagName("Column3")[0].childNodes[0].nodeValue;                
+            //   let col6str = col6.replace(/-/g,",");
+            //   col6 = new Date(col6str);
+
+            //   let col7 = xmlrow.getElementsByTagName("Column5")[0].childNodes[0].nodeValue;
+            //   col7 = new Date(col7);
+            //   let col8 = xmlrow.getElementsByTagName("Column4")[0].childNodes[0].nodeValue;
+            //   let col9 = xmlrow.getElementsByTagName("Column1")[0].childNodes[0].nodeValue;
+              
+            //   tbody.appendChild(htmlrow);
+            // }
+      //   });
+      //   rows = null;
+      // }
+
+
+      
+        let records = [
         [
             "2020-07-16T21:01:57.000Z",
             "2021-07-27T04:00:00.000Z",
@@ -488,142 +584,18 @@
         ]
       ];
 
-      // let token = "";
-      // let url = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?path=/shared/Union College NY 01UCNY_INST/Reports/David Reports/TwentyOnexTwo&limit=50&col_names=true&apikey=l7xxec32312a35ac43e3ba59dbcc4bdf7864';
-      // const baseurl = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?';
-        
-      // function loadXMLDoc() {
-      //     let xmlhttp = new XMLHttpRequest();
-      //     xmlhttp.onreadystatechange = function() {
-      //         if (this.readyState == 4 && this.status == 200) {
-      //             let xmldoc = this.responseXML;
-      //             let finished = xmldoc.getElementsByTagName("IsFinished")[0].childNodes[0].nodeValue; 
-      //             finished = finished === "false" ? true : true;
-      //             parseData(xmldoc);
-
-      //             if (!finished) { 
-      //               if (token === "") { token = xmldoc.getElementsByTagName("ResumptionToken")[0].childNodes[0].nodeValue }; 
-      //               url = `${baseurl}token=${token}&apikey=l7xxec32312a35ac43e3ba59dbcc4bdf7864`;
-      //               loadXMLDoc();
-      //             }
-      //         } 
-      //     };
-      //     xmlhttp.open("GET", url);
-      //     xmlhttp.send();
-      // };
-
-      // function parseData() {
-       
-      //   let tbody = document.getElementById("tbody");
-
-      //   records.forEach(row => {
-      //       let htmlrow = document.createElement('tr');
-
-
-            // if (xmlrow.getElementsByTagName("Column9")[0]) {
-              
-            //   let cell1 = document.createElement('td');
-            //   let col1 = xmlrow.getElementsByTagName("Column7")[0].childNodes[0].nodeValue;
-            //   col1 = new Date(col1);
-            //   cell1.appendChild(document.createTextNode(col1));
-            //   htmlrow.appendChild(cell);
-
-
-                  
-            //   let col2 = xmlrow.getElementsByTagName("Column8")[0].childNodes[0].nodeValue;
-            //   let col2str = col2.replace(/-/g,",");
-            //   col2 = new Date(col2str);
-
-            //   let col3 = xmlrow.getElementsByTagName("Column9")[0].childNodes[0].nodeValue;
-            //   let col4 = xmlrow.getElementsByTagName("Column6")[0].childNodes[0].nodeValue;
-              
-            //   let col5 = xmlrow.getElementsByTagName("Column2")[0].childNodes[0].nodeValue;
-            //   let col5str = col5.replace(/-/g,","); 
-            //   col5 = new Date(col5str);
-              
-            //   let col6 = xmlrow.getElementsByTagName("Column3")[0].childNodes[0].nodeValue;                
-            //   let col6str = col6.replace(/-/g,",");
-            //   col6 = new Date(col6str);
-
-            //   let col7 = xmlrow.getElementsByTagName("Column5")[0].childNodes[0].nodeValue;
-            //   col7 = new Date(col7);
-            //   let col8 = xmlrow.getElementsByTagName("Column4")[0].childNodes[0].nodeValue;
-            //   let col9 = xmlrow.getElementsByTagName("Column1")[0].childNodes[0].nodeValue;
-              
-            //   tbody.appendChild(htmlrow);
-            // }
-      //   });
-      //   rows = null;
-      // }
-
-
-      
-
-              const prefix = 'https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&q=title,exact,';
-              const postfix = '&qInclude=rtype,exact,videos&tab=Everything&scope=MyInst_and_CI&lang=eng&offset=0&limit=5&getMore=0&conVoc=false&skipDelivery=true&disableSplitFacets=true&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5';
-              let requestPrimo = prefix + "28 days" + postfix;
-              
-              fetch(requestPrimo)
-                .then(response => response.json())
-                .then(titles => { 
-                    let titleArray = titles.docs;
-                    let bestTitle = titleArray.filter(title => Math.max(title.pnx.control.score[0]));
-                    if (bestTitle.length === 1) {
-                        log("one", bestTitle);
-                    } else {
-                        log("first", titleArray[0]);
-                    }
-                    
-              })
-              .catch(console.error);
-         
-             function searchAndRequest() { 
-                let ti = document.getElementById("title").value;
-                log(ti);
-             }
-
-
     </script>
 
-<div class="box">
-    <input type="text" id="title" name="dvdtitle" size="30" maxlength="80"><input type="button" onclick="searchAndRequest">
-</div>
+    <div id="manifest">
+        <table>
+            <tbody id="tbody">
+
+            </tbody>    
+        </table>
+    </div> 
 
   </body>
 </html>
 
 
-    "pnx": {
-        "display": {         
-            "language": [
-                "eng"
-            ],
-            "title": [
-                "28 days"
-            ],          
-            "creationdate": [
-                "2000"
-            ],
-            "publisher": [
-                "Culver City, CA : Columbia Pictures"
-            ],
-            "description": [
-                "A high-flying party girl gets herself a DUI and 28 days in rehab -- and ends up discovering that real happiness must come from within."
-            ],
-            "mms": [
-                "991000856269704651"
-            ], 
-            "addtitle": [
-                "Twenty eight days"
-            ],
-            "edition": [
-                "Special ed."
-            ]
-        
-        },
-        "control": {     
-            "score": [
-                1.8311457
-            ],
-            "isDedup": false
-        },
+   
