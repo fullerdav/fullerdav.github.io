@@ -25,7 +25,7 @@
 
               let searchterm = document.getElementById("searchterm").value;
               let requestPrimo = prefixPrimo + searchterm + postfixPrimo;
-              error.innerHTML = "";
+             // error.innerHTML = "";
 
               fetch(requestPrimo)
                 .then(response => response.json())
