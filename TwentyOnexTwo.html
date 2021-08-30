@@ -32,10 +32,14 @@
                 .then(titles => { 
                     let titleArray = titles.docs;
                 //  let bestTitle = titleArray.filter(title => Math.max(title.pnx.control.score[0]));
-               
-                    let {isbn, btitle, addtitle, date, pub} = titles.docs[0].pnx.addata;
-                    title = btitle ? btitle : addtitle;
-                    openCLinker([isbn, title, date, pub]); 
+                    if (titleArray.length > 0) {
+                        let {isbn, btitle, addtitle, date, pub} = titles.docs[0].pnx.addata;
+                        title = btitle ? btitle : addtitle;
+                        openCLinker([isbn, title, date, pub]); 
+                    } else {
+                        openCLinker([isbn, searchterm, date, pub]); 
+                    }
+                    
               })
               .catch(console.error);
         }
