@@ -53,7 +53,7 @@
             let titlparm = data[1] ? '&rft.btitle=' + data[1] : "";
             let dateparm = data[2] ? '&rft.pubdate=' + data[2] : "";
             let publparm = data[3] ? '&rft.publisher=' + data[3] : "";
-            let typeparm = data[3] ? "&rft.type=video";
+            let typeparm = "&rft.type=video";
 
             let clinker = prefixCLinker + isbnparm + titlparm + dateparm + publparm + typeparm;
             window.open(clinker);  
