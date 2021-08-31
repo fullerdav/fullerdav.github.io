@@ -7,13 +7,15 @@
             line-height: 24px;
             padding: 16px;
             background-color: ghostwhite;
-            border:  3px inset #abbbc6;
+            border: 1px ridge #abbbc6;
+            border-left: 3px inset #abbbc6;
 
          }
 
          #caption {
              line-height: 16px;
              font-size:  12px;
+             border-top:  none;
          }
 
          input, button {
@@ -28,22 +30,20 @@
         const {log} = console; 
         const prefixPrimo = "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&q=title,exact,";
         const postfixPrimo = "&qInclude=rtype,exact,videos&tab=Everything&scope=MyInst_and_CI&lang=eng&offset=0&limit=5&getMore=0&conVoc=false&sort=rank&skipDelivery=true&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5";
-        const prefixCLinker = "https://union.primo.exlibrisgroup.com/discovery/openurl?institution=01UCNY_INST&vid=01UCNY_INST:01UCNY_INST&ctx_ver=Z39.88-2004&ctx_enc=info:ofi%2Fenc:UTF-8&url_ver=Z39.88-2004&url_ctx_fmt=infofi%2Ffmt:kev:mtx:ctx&rfr_id=info:sid%2Fprimo.exlibrisgroup.com:primo4-book-cLinker&rft_val_fmt=info:ofi%2Ffmt:kev:mtx:book&isCitationLinker=Y";
-        const error = document.getElementById("error");
+        const prefixCLinker = "https://union.primo.exlibrisgroup.com/discovery/openurl?institution=01UCNY_INST&vid=01UCNY_INST:01UCNY_INST&ctx_ver=Z39.88-2004&ctx_enc=info:ofi%2Fenc:UTF-8&url_ver=Z39.88-2004&url_ctx_fmt=infofi/fmt:kev:mtx:ctx&rfr_id=info:sid/primo.exlibrisgroup.com:primo4-book-cLinker&rft_val_fmt=info:ofi/fmt:kev:mtx:book&isCitationLinker=Y";
 
         function searchPrimo() {
 
               let searchterm = document.getElementById("searchterm").value;
               let requestPrimo = prefixPrimo + searchterm + postfixPrimo;
-              //error.innerHTML = "";
 
               fetch(requestPrimo)
                 .then(response => response.json())
                 .then(titles => { 
                     let titleArray = titles.docs;
-                //  let bestTitle = titleArray.filter(title => Math.max(title.pnx.control.score[0]));
                 
                     if (titleArray.length > 0) {
+                        log(titles.docs[0].pnx.addata);
                         let {isbn, btitle, addtitle, date, pub} = titles.docs[0].pnx.addata;
                         title = btitle ? btitle : addtitle;
                         openCLinker([isbn, title, date, pub]); 
@@ -82,10 +82,18 @@
             <div>
                 This search is intended for faculty wanting to discover individual video titles owned licensed by Schaffer Library.  
                 If you want to search for a series, say "American Experience", better to 
-                <a href='javascript:window.open("https://union.primo.exlibrisgroup.com/primaws/suprimaExtLogin?institution=01UCNY_INST&lang=en&target-url=https://union.primo.exlibrisgroup.com/discovery/search?query=any,contains,*&tab=Everything&search_scope=MyInst_and_CI&vid=01UCNY_INST:01UCNY_INST&facet=rtype,include,videos,lk&offset=0&authenticationProfile=OKTA_PRIMO_SAML&idpCode=OKTA_PRIMO_SAML&view=01UCNY_INST:01UCNY_INST&auth=SAML&isSilent=false");'>search Primo</a> directly, with the video facet applied.
+                <a href='javascript:window.open("https://union.primo.exlibrisgroup.com/discovery/search?query=any,contains,*&tab=Everything&search_scope=MyInst_and_CI&sortby=rank&vid=01UCNY_INST:01UCNY_INST&facet=rtype,include,videos,lk&offset=0
+
+                https://union.primo.exlibrisgroup.com/primaws/suprimaExtLogin?institution=01UCNY_INST&lang=en&target-url=https://union.primo.exlibrisgroup.com/discovery/search?query=any,contains,*&tab=Everything&search_scope=MyInst_and_CI&vid=01UCNY_INST:01UCNY_INST&facet=rtype,include,videos,lk&offset=0&authenticationProfile=OKTA_PRIMO_SAML&idpCode=OKTA_PRIMO_SAML&view=01UCNY_INST:01UCNY_INST&auth=SAML&isSilent=false");'>search Primo</a> directly, with the video facet applied.
             </div>
         </div>
    </div>
    
   </body>
 </html>
+
+
+https%3A%2F%2Funion.primo.exlibrisgroup.com%2Fdiscovery%2Fsearch%3Fvid%3D01UCNY_INST%3A01UCNY_INST%26sortby%3Drank
+&authenticationProfile=OKTA_PRIMO_SAML&idpCode=OKTA_PRIMO_SAML&auth=SAML&view=01UCNY_INST%3A01UCNY_INST&isSilent=false
+
+https://union.primo.exlibrisgroup.com/primaws/suprimaExtLogin?institution=01UCNY_INST&lang=en&target-url=https://union.primo.exlibrisgroup.com/discovery/search?vid=01UCNY_INST:01UCNY_INST&query=any,contains,*&tab=Everything&search_scope=MyInst_and_CI&facet=rtype,include,videos,lk&offset=0&sortby=rank&authenticationProfile=OKTA_PRIMO_SAML&idpCode=OKTA_PRIMO_SAML&auth=SAML&view=01UCNY_INST:01UCNY_INST&isSilent=false
