@@ -7,6 +7,7 @@
             line-height: 24px;
             padding: 16px;
             background-color: whitesmoke;
+            border:  3px inset #abbbc6;
 
          }
 
@@ -71,20 +72,21 @@
   </head>
 
   <body>       
-   
-    <div class="box">
-        <input type="text" id="searchterm" name="dvd" size="30" maxlength="80" placeholder="enter title">
-        <button type="button" onclick="searchPrimo();">Search for films</button>
-    </div>
-
-    <div class="box" id="error">
-        <div>This search is intended for faculty wanting to discover individual video titles owned licensed by Schaffer Library.  
-            If you want to search for a series, say "American Experience", better to 
-            <a href='javascript:window.open("https://na04.primo.exlibrisgroup.com/primaws/suprimaExtLogin?institution=01UCNY_INST&lang=en&target-url=https://union.primo.exlibrisgroup.com/discovery/search?query=any,contains,*&tab=Everything&search_scope=MyInst_and_CI&vid=01UCNY_INST:01UCNY_INST&facet=rtype,include,videos,lk&offset=0&authenticationProfile=OKTA_PRIMO_SAML&idpCode=OKTA_PRIMO_SAML&view=01UCNY_INST:01UCNY_INST&auth=SAML&isSilent=false";)'>search Primo</a> directly, with the video facet applied.
+   <div class="container">
+        <div class="box">
+            <input type="text" id="searchterm" name="dvd" size="30" maxlength="80" placeholder="enter title">
+            <button type="button" onclick="searchPrimo();">Search for films</button>
         </div>
-    </div>
 
-    
+        <div class="box" id="error">
+            <div>
+                This search is intended for faculty wanting to discover individual video titles owned licensed by Schaffer Library.  
+                If you want to search for a series, say "American Experience", better to 
+                <a href='javascript:window.open("https://na04.primo.exlibrisgroup.com/primaws/suprimaExtLogin?institution=01UCNY_INST&lang=en&target-url=https://union.primo.exlibrisgroup.com/discovery/search?query=any,contains,*&tab=Everything&search_scope=MyInst_and_CI&vid=01UCNY_INST:01UCNY_INST&facet=rtype,include,videos,lk&offset=0&authenticationProfile=OKTA_PRIMO_SAML&idpCode=OKTA_PRIMO_SAML&view=01UCNY_INST:01UCNY_INST&auth=SAML&isSilent=false";)'>search Primo</a> directly, with the video facet applied.
+            </div>
+        </div>
+   </div>
+   
   </body>
 </html>
 
