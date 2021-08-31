@@ -19,13 +19,15 @@
         const prefixPrimo = "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&q=title,exact,";
         const postfixPrimo = "&qInclude=rtype,exact,videos&tab=Everything&scope=MyInst_and_CI&lang=eng&offset=0&limit=5&getMore=0&conVoc=false&sort=rank&skipDelivery=true&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5";
         const prefixCLinker = "https://union.primo.exlibrisgroup.com/discovery/openurl?institution=01UCNY_INST&vid=01UCNY_INST:01UCNY_INST&ctx_ver=Z39.88-2004&ctx_enc=info:ofi%2Fenc:UTF-8&url_ver=Z39.88-2004&url_ctx_fmt=infofi%2Ffmt:kev:mtx:ctx&rfr_id=info:sid%2Fprimo.exlibrisgroup.com:primo4-book-cLinker&rft_val_fmt=info:ofi%2Ffmt:kev:mtx:book&isCitationLinker=Y";
+        const sessionInit = "https://union.primo.exlibrisgroup.com/primaws/suprimaExtLogin?institution=01UCNY_INST&lang=en&target-url=";
+        const IdPstr = "&authenticationProfile=OKTA_PRIMO_SAML&idpCode=OKTA_PRIMO_SAML&view=01UCNY_INST:01UCNY_INST&auth=SAML&isSilent=false";
         const error = document.getElementById("error");
 
         function searchPrimo() {
 
               let searchterm = document.getElementById("searchterm").value;
               let requestPrimo = prefixPrimo + searchterm + postfixPrimo;
-             // error.innerHTML = "";
+              error.innerHTML = "";
 
               fetch(requestPrimo)
                 .then(response => response.json())
@@ -53,6 +55,7 @@
             let publparam = data[3] ? '&rft.publisher=' + data[3] : "";
 
             let clinker = prefixCLinker + isbnparam + titlparam + dateparam + publparam;
+            let url = sessionInit + clinker + IdPstr;
             log(clinker);
             window.open(clinker);  
         }
@@ -67,136 +70,9 @@
         <input type="text" id="searchterm" name="dvd" size="30" maxlength="80" placeholder="enter title">
         <button type="button" onclick="searchPrimo();">Search for films</button>
     </div>
-    <div class="box" id="error"></div>
+    <div class="box" id="error"><br></div>
 
-     
-    <script> 
-
-      // let token = "";
-      // let url = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?path=/shared/Union College NY 01UCNY_INST/Reports/David Reports/TwentyOnexTwo&limit=50&col_names=true&apikey=l7xxec32312a35ac43e3ba59dbcc4bdf7864';
-      // const baseurl = 'https://api-na.hosted.exlibrisgroup.com/almaws/v1/analytics/reports?';
-        
-      // function loadXMLDoc() {
-      //     let xmlhttp = new XMLHttpRequest();
-      //     xmlhttp.onreadystatechange = function() {
-      //         if (this.readyState == 4 && this.status == 200) {
-      //             let xmldoc = this.responseXML;
-      //             let finished = xmldoc.getElementsByTagName("IsFinished")[0].childNodes[0].nodeValue; 
-      //             finished = finished === "false" ? true : true;
-      //             parseData(xmldoc);
-
-      //             if (!finished) { 
-      //               if (token === "") { token = xmldoc.getElementsByTagName("ResumptionToken")[0].childNodes[0].nodeValue }; 
-      //               url = `${baseurl}token=${token}&apikey=l7xxec32312a35ac43e3ba59dbcc4bdf7864`;
-      //               loadXMLDoc();
-      //             }
-      //         } 
-      //     };
-      //     xmlhttp.open("GET", url);
-      //     xmlhttp.send();
-      // };
-
-      // function parseData() {
-       
-      //   let tbody = document.getElementById("tbody");
-
-      //   records.forEach(row => {
-      //       let htmlrow = document.createElement('tr');
-
-
-            // if (xmlrow.getElementsByTagName("Column9")[0]) {
-              
-            //   let cell1 = document.createElement('td');
-            //   let col1 = xmlrow.getElementsByTagName("Column7")[0].childNodes[0].nodeValue;
-            //   col1 = new Date(col1);
-            //   cell1.appendChild(document.createTextNode(col1));
-            //   htmlrow.appendChild(cell);
-
-
-                  
-            //   let col2 = xmlrow.getElementsByTagName("Column8")[0].childNodes[0].nodeValue;
-            //   let col2str = col2.replace(/-/g,",");
-            //   col2 = new Date(col2str);
-
-            //   let col3 = xmlrow.getElementsByTagName("Column9")[0].childNodes[0].nodeValue;
-            //   let col4 = xmlrow.getElementsByTagName("Column6")[0].childNodes[0].nodeValue;
-              
-            //   let col5 = xmlrow.getElementsByTagName("Column2")[0].childNodes[0].nodeValue;
-            //   let col5str = col5.replace(/-/g,","); 
-            //   col5 = new Date(col5str);
-              
-            //   let col6 = xmlrow.getElementsByTagName("Column3")[0].childNodes[0].nodeValue;                
-            //   let col6str = col6.replace(/-/g,",");
-            //   col6 = new Date(col6str);
-
-            //   let col7 = xmlrow.getElementsByTagName("Column5")[0].childNodes[0].nodeValue;
-            //   col7 = new Date(col7);
-            //   let col8 = xmlrow.getElementsByTagName("Column4")[0].childNodes[0].nodeValue;
-            //   let col9 = xmlrow.getElementsByTagName("Column1")[0].childNodes[0].nodeValue;
-              
-            //   tbody.appendChild(htmlrow);
-            // }
-      //   });
-      //   rows = null;
-      // }
-
-
-      
-    //     let records = [
-    //     ["2020-07-16T21:01:57.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2020-07-16T04:00:00.000Z", "2021-08-23T04:00:00.000Z", "2021-07-27T14:01:57.000Z", "1805275", "A history of the Jews and Judaism in the Second Temple Period /"],
-    //     ["2020-12-02T19:15:40.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2020-12-02T05:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T17:40:12.000Z", "System", "The mystery of capital : why capitalism triumphs in the West and fails everywhere else /"],
-    //     ["2020-12-15T22:01:30.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2020-12-15T05:00:00.000Z", "2021-08-10T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "techstudent", "Acoustic waves : properties and measurement /"],
-    //     ["2021-07-08T21:00:32.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-08T04:00:00.000Z", "2021-08-24T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "0990499", "The Cambridge companion to religious experience /"],
-    //      tc["2021-07-08T21:00:32.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-08T04:00:00.000Z", "2021-08-24T04:00:00.000Z", "2021-07-27T14:43:49.000Z", "0990499", "Portraying violence in the Hebrew Bible : a literary and cultural study /"
-    //     ],["2021-07-12T14:36:00.000Z", "2021-07-27T04:00:00.000Z", "Yes", "No invoice", "2021-07-08T04:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T17:40:12.000Z", "System", "PHENOMENOLOGY AND MYSTICISM: THE VERTICALITY OF RELIGIOUS EXPERIENCE."
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "System", "An Irish nature year /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "System", "As a woman : what I learned about power, sex, and the patriarchy after I transitioned /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "System", "Big med : megaproviders and the high cost of health care in America /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "System", "Decolonizing memory : Algeria and the politics of testimony /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "System", "Dream state : California in the movies /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "System", "Living wages and the welfare state : the Anglo-American social model in transition /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "System", "Madoff talks : uncovering the untold story behind the most notorious Ponzi scheme in history /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "System", "Operation Valhalla : writings on war, weapons, and media /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "System", "Palestine is throwing a party and the whole world is invited : capital and state building in the West Bank /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "System", "Paulo Freire : a philosophical biography /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "System", "The digital transformation of property in greater China : finance, 5G, AI, and blockchain /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-10T04:00:00.000Z", "2021-07-27T13:55:56.000Z", "techstudent", "Administering and managing the U.S. food system : revisiting food policy and politics /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-10T04:00:00.000Z", "2021-07-27T14:03:07.000Z", "techstudent", "Borders, culture, and globalization : a Canadian perspective /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-10T04:00:00.000Z", "2021-07-27T14:08:11.000Z", "techstudent", "Climate change and the future of Seattle /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-10T04:00:00.000Z", "2021-07-27T14:16:22.000Z", "techstudent", "American Revolution: the essential reference guide /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-10T04:00:00.000Z", "2021-07-27T14:21:57.000Z", "techstudent", "Disturbing spirits : mental illness, trauma, and treatment in modern Syria and Lebanon /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-10T04:00:00.000Z", "2021-07-27T14:28:24.000Z", "techstudent", "The future starts now : expert insights into the future of business, technology and society /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-17T04:00:00.000Z", "2021-07-27T12:12:30.000Z", "techstudent", "People power : why we need more migrants /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-24T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "0990499", "Figuring out the past : the 3,495 vital statistics that explain world history /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-24T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "0990499", "International handbook of threat assessment /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-24T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "0990499", "The Congress /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-24T04:00:00.000Z", "2021-07-27T14:00:39.000Z", "0990499", "Azerbaijan's geopolitical landscape : contemporary issues, 1991-2018 /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-24T04:00:00.000Z", "2021-07-27T14:13:07.000Z", "techstudent", "Content-based image classification : efficient machine learning using robust feature extraction techniques /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-24T04:00:00.000Z", "2021-07-27T14:23:42.000Z", "0990499", "The ethics of the stoic Epictetus : an English translation /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-24T04:00:00.000Z", "2021-07-27T14:38:35.000Z", "0990499", "The moral powers : a study of human nature /"
-    //     ],["2021-07-14T21:01:46.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-24T04:00:00.000Z", "2021-07-27T14:53:10.000Z", "0990499", "Visions of Beirut : the urban life of media infrastructure /"
-    //     ],["2021-07-15T15:52:47.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-24T04:00:00.000Z", "2021-07-27T14:32:26.000Z", "0990499", "A guide to course-based undergraduate research : developing and implementing CUREs in the natural sciences /"
-    //     ],["2021-07-15T15:54:03.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-10T04:00:00.000Z", "2021-07-27T14:36:41.000Z", "techstudent", "HANDBOOK OF SECURITY AND THE ENVIRONMENT."
-    //     ],["2021-07-15T15:55:10.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "System", "HEALTH INSURANCE SYSTEMS : an international comparison."
-    //     ],["2021-07-15T15:59:45.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-24T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "1805275", "Italians in America /"
-    //     ],["2021-07-15T17:29:18.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-24T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "techstudent", "Managing social responsibility in universities : organisational responses to sustainability /"],
-    //     ["2021-07-15T17:59:44.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "System", "The rise of digital repression : how technology is reshaping power, politics, and resistance /"],
-    //     ["2021-07-15T18:02:06.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-24T04:00:00.000Z", "2021-07-27T14:45:35.000Z", "techstudent", "Smart sensing for traffic monitoring /"],
-    //     ["2021-07-15T18:02:57.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-10T04:00:00.000Z", "2021-07-27T14:48:16.000Z", "techstudent", "Spatial & discursive violence in the US Southwest /"],
-    //     ["2021-07-15T18:03:56.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-08-10T04:00:00.000Z", "2021-07-27T14:49:35.000Z", "techstudent", "The sustainable city /"],
-    //     ["2021-07-15T18:05:59.000Z", "2021-07-27T04:00:00.000Z", "Yes", "Fully invoiced", "2021-07-14T04:00:00.000Z", "2021-07-27T04:00:00.000Z", "2021-07-27T13:50:26.000Z", "System", "Uncle Vanya /"
-    // ];
-
-    </script>
-
-    <div id="manifest">
-        <table>
-            <tbody id="tbody">
-
-            </tbody>    
-        </table>
-    </div> 
-
+    
   </body>
 </html>
 
