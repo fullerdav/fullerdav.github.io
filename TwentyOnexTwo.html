@@ -34,6 +34,7 @@
                 .then(titles => { 
                     let titleArray = titles.docs;
                 //  let bestTitle = titleArray.filter(title => Math.max(title.pnx.control.score[0]));
+                
                     if (titleArray.length > 0) {
                         let {isbn, btitle, addtitle, date, pub} = titles.docs[0].pnx.addata;
                         title = btitle ? btitle : addtitle;
@@ -47,16 +48,14 @@
         }
          
         function openCLinker(data) {
-            log(data);
+        
+            let isbnparm = data[0] ? '&rft.isbn=' + data[0] : "";           
+            let titlparm = data[1] ? '&rft.btitle=' + data[1] : "";
+            let dateparm = data[2] ? '&rft.pubdate=' + data[2] : "";
+            let publparm = data[3] ? '&rft.publisher=' + data[3] : "";
+            let typeparm = data[3] ? "&rft.type=video";
 
-            let isbnparam = data[0] ? '&rft.isbn=' + data[0] : "";           
-            let titlparam = data[1] ? '&rft.btitle=' + data[1] : "";
-            let dateparam = data[2] ? '&rft.pubdate=' + data[2] : "";
-            let publparam = data[3] ? '&rft.publisher=' + data[3] : "";
-
-            let clinker = prefixCLinker + isbnparam + titlparam + dateparam + publparam;
-            //let url = sessionInit + clinker + IdPstr;
-            log(clinker);
+            let clinker = prefixCLinker + isbnparm + titlparm + dateparm + publparm + typeparm;
             window.open(clinker);  
         }
     
