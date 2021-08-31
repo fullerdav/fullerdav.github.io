@@ -4,6 +4,7 @@
          .box {
             width: 50%;
             margin: auto;
+            line-height: 18px;
          }
 
          #error {
@@ -11,6 +12,11 @@
             color: whitesmoke;
             height: 0;
          }
+
+         input {
+            padding: 4px;
+         }
+
     </style>
 
      <script type="text/javascript">      
@@ -19,8 +25,6 @@
         const prefixPrimo = "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&q=title,exact,";
         const postfixPrimo = "&qInclude=rtype,exact,videos&tab=Everything&scope=MyInst_and_CI&lang=eng&offset=0&limit=5&getMore=0&conVoc=false&sort=rank&skipDelivery=true&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5";
         const prefixCLinker = "https://union.primo.exlibrisgroup.com/discovery/openurl?institution=01UCNY_INST&vid=01UCNY_INST:01UCNY_INST&ctx_ver=Z39.88-2004&ctx_enc=info:ofi%2Fenc:UTF-8&url_ver=Z39.88-2004&url_ctx_fmt=infofi%2Ffmt:kev:mtx:ctx&rfr_id=info:sid%2Fprimo.exlibrisgroup.com:primo4-book-cLinker&rft_val_fmt=info:ofi%2Ffmt:kev:mtx:book&isCitationLinker=Y";
-       // const sessionInit = "https://union.primo.exlibrisgroup.com/primaws/suprimaExtLogin?institution=01UCNY_INST&lang=en&target-url=";
-       // const IdPstr = "&authenticationProfile=OKTA_PRIMO_SAML&idpCode=OKTA_PRIMO_SAML&view=01UCNY_INST:01UCNY_INST&auth=SAML&isSilent=false";
         const error = document.getElementById("error");
 
         function searchPrimo() {
