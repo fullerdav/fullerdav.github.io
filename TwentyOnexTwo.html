@@ -27,7 +27,7 @@
 
               let searchterm = document.getElementById("searchterm").value;
               let requestPrimo = prefixPrimo + searchterm + postfixPrimo;
-              error.innerHTML = "";
+              //error.innerHTML = "";
 
               fetch(requestPrimo)
                 .then(response => response.json())
@@ -70,7 +70,7 @@
         <input type="text" id="searchterm" name="dvd" size="30" maxlength="80" placeholder="enter title">
         <button type="button" onclick="searchPrimo();">Search for films</button>
     </div>
-    
+
     <div class="box" id="error">
         <div></div>
     </div>
