@@ -1,19 +1,14 @@
 <html>  
   <head>
     <style>
-         .box {
+         .box, #error {
             width: 50%;
             margin: auto;
             line-height: 18px;
-         }
-
-         #error {
             background-color: #465966;
-            color: whitesmoke;
-            height: 0;
          }
 
-         input {
+         input, button {
             padding: 4px;
          }
 
@@ -44,7 +39,7 @@
                         title = btitle ? btitle : addtitle;
                         openCLinker([isbn, title, date, pub]); 
                     } else {
-                        openCLinker([undefined, searchterm, undefined, undefined]); 
+                        openCLinker([,searchterm,,]); 
                     }
                     
               })
