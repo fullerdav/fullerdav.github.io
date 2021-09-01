@@ -27,6 +27,29 @@
             color: #465966;
          }
 
+
+           .button {
+            background-color: orange;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            box-shadow: 0 5px #999;
+            display: inline-block;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            outline: none;
+         }
+         .button:hover {
+            background-color: blue;
+         }
+         .button:active {
+            background-color: orange;
+            box-shadow: 0 5px gray;
+            transform: translateY(2px);
+         }
+
     </style>
 
      <script type="text/javascript">      
@@ -84,8 +107,8 @@
 
         <div class="box" id="error">
             <div>
-                This search is intended for faculty wanting to discover individual video titles owned licensed by Schaffer Library.  
-                If you want to search for a series, say "American Experience", better to 
+                This search is intended for faculty discovery and request of "known" video titles.  
+                If you want to search for a <i>series</i> of videos, say "American Experience", better to 
                 <a href='javascript:window.open("https://union.primo.exlibrisgroup.com/discovery/search?vid=01UCNY_INST:01UCNY_INST&tab=Everything&search_scope=MyInst_and_CI&sortby=rank&facet=rtype,include,videos,lk&offset=0";)'>
                 search Primo</a> directly with the video facet applied.
             </div>
