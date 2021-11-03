@@ -1,0 +1,178 @@
+<html>
+<head>
+<title>The Return of the Awesome Form</title>
+
+<style>
+ div#gbcontainer {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    background: rgba(248,248,248,0.95);
+    font-weight: 500;
+    border: none;
+    border-radius:8px;
+    height: auto;
+    /*max-height: 320px;*/
+  }
+
+  div.note {
+    font-size: 0.9em;
+    font-style: italic;
+    display: inline-block;
+    margin: 0 2em;
+  }
+  ul.flexer {
+    margin: 0 auto;
+    list-style-type: none;
+    padding: 0;
+  }
+  ul.flexer > li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    margin: 0.25em 0;
+  }
+  ul.flexer > li > label {
+    padding: 0.25em;
+    letter-spacing: .09em;
+    flex: 1 0 8em;
+    max-width: 16em;
+  }
+  input {
+    padding: 0.25em;
+    border:1px inset #dedede;
+  }
+
+</style>
+
+
+</head>
+
+<body>
+  <div id="gbcontainer">
+    <form class="gbform" id="purchaseRequest" method="get" action="https://union.primo.exlibrisgroup.com/discovery/openurl?" target="_blank">
+    <ul class="flexer"><li>
+        <div id="errmsg"></div>
+      </li><li>
+        <label for="rft.isbn">ISBN</label>
+        <input type="text" name="rft.isbn" value="" id="isbnctl">
+      </li><li>
+        <label for="rft.btitle">Title</label>
+        <input type="text" name="rft.btitle" value="" id="titlectl">
+      </li><li>
+        <label for="rft.publisher">Publisher/Distributor</label>
+        <input type="hidden" name="rft.publisher" value="" id="pubctl">
+        <input type="hidden" name="rft.pubdate" value="" id="pubdatectl">
+      </li><li>
+        <label for="rft.aufirst">Author</label>
+        <input tye="text" name="rft.aufirst" value="" id="aufirstctl">
+        <input tye="text" name ="rft.aulast" value="" id="aulastctl">
+       </li></ul>
+
+        <input type="hidden" name="rft.genre" value="book">
+        <input type="hidden" name="institution" value="01UCNY_INST">
+        <input type="hidden" name="vid" value="01UCNY_INST:01UCNY_INST">
+        <input type="hidden" name="rfr_id" value="info:sid%2Fprimo.exlibrisgroup.com:primo4-book-cLinker">
+        <input name="url_ver" value=Z39.88-2004" type="hidden" />
+    </form>
+  </div>
+</body>
+ 
+
+<script>
+
+  const isbnCtrl = document.getElementById("isbnctl");
+  const errmsg = document.getElementById(errmsg");
+  const frm = document.getElementById("purchaseRequest");
+  
+
+  var enhanceForm - function(v) {
+
+
+        let authors = v.authors !== undefined ? v.authors[0] : "";
+        let publisher = v.publisher !== undefined ? v.publisher : undefined;
+        let publishedDate = v.publishedDate !== undefined ? v.publishedDate : undefined;
+        let pubyear
+        let language
+        let purl
+        let notes
+
+        
+        this.frm["rft.pubdate"].value =  pubdate;
+        this.frm["rft.publisher"].value = publisher;
+        this.frm["rft.pages"].value = pages;
+        this.frm["rft.au"].value = authors;
+        this.frm["rft.btitle"].value =  v.title !== undefined ? v.title : "";    
+        this.frm["rft.isbn"].value = isbn;
+  
+
+
+  }
+  
+  var getBooksMetadata = function(isn) {
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          const response = JSON.parse(xhr.responseText);
+      
+          if (response.totalItems > 0) {  
+              enhanceForm(response.items[0].volumeInfo);
+              console.log(response.items);  
+
+              if (searchRequest.totalItems > 1) {
+                  errmsg.innerHTML = 'multiple results.  see console';
+              }
+          } else {
+              errmsg.innerHTML = 'no metadata found';
+          }
+          
+      } else {
+        errmsg.innerHTML = 'request failed...';
+      }
+    };
+
+    xhr.open("GET", "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isn);
+    xhr.send();
+ } 
+
+  isbnCtrl.addEventListener("blur", function(evt){ 
+     let tmpISBN = isbnCtrl.value !== "" ? isbnCtrl.value : false;
+     tmpISBN.replace(/[^\dxX]/g, "");
+     let isbn = (tmpISBN.length===10 || tmpISBN.length===13) ? tmpISBN : false;  
+     console.log("input listener success:", evt, isbn, this);
+
+     if (isbn) {
+       getBooksMetadata(isbn)
+     }
+  
+  }, false);
+</script>
+
+//**
+
+const gburl = "https://www.googleapis.com/books/v1/volumes?q=" + searchkey + "&printType=books&maxResults=40");
+const apikey = 'AIzaSyDKGARjwC5bTLW-UpXL94ao_9c1G9BJuL0'
+'https://www.googleapis.com/books/v1/volumes?q=;
+const targeturl = https://union.primo.exlibrisgroup.com/discovery/openurl?institution=01UCNY_INST&vid=01UCNY_INST:01UCNY_INST&rft.pubdate=&rft.btitle=Smoke
+
+//9780387245447
+//781468312096   
+
+let isbn = v.industryIdentifiers[0] !== undefined ? v.industryIdentifiers[0].identifier : v.industryIdentifiers[1].identifier;
+        isbn = (isbn == undefined || /^[A-Z]+\:/.test(isbn)) ? "" : isbn;
+        let pages = v.pageCount !== undefined ? v.pageCount + "pp." : undefined;
+        let pubfilter = [publisher, pubdate, pages].filter(function(p){
+          return p != null;
+        });
+&ctx_ver=Z39.88-2004&rft.genre=book&ctx_enc=info:ofi%2Fenc:UTF-8
+&url_ver=Z39.88-2004&url_ctx_fmt=infofi%2Ffmt:kev:mtx:ctx&rfr_id=info:sid%2Fprimo.exlibrisgroup.com:primo4-book-cLinker
+&rft_val_fmt=info:ofi%2Ffmt:kev:mtx:book&isCitationLinker=Y
+&rft.date=&rft.btitle=Smoke
+
+**//
+
+</html>
+
+
+
+
