@@ -5,7 +5,7 @@
       const {log} = console;
       document.addEventListener('touchstart', null, {default: true});
      
-      google.charts.load('current', {'packages':['sankey']});
+      google.charts.load('current', {'packages':['sankey', 'treemap']});
       google.charts.setOnLoadCallback(loadXMLDoc('sankey'));
 
       function loadXMLDoc(viz) {
@@ -68,7 +68,7 @@
 Start Treemap
 */
 
-      google.charts.load('current', {'packages':['treemap']});
+     // google.charts.load('current', {'packages':['treemap']});
       google.charts.setOnLoadCallback(loadXMLDoc('tree'));
         
       function drawTree(rows) {
@@ -166,10 +166,6 @@ Start Treemap
         grid-template-rows: 0.5fr 0.5fr 0.5fr 1fr;
         grid-gap: 4px 4px;
         grid-template-areas: ". Name ." ". Where ." ". StoryMaps ." ". What .";
-        position:absolute;
-        top:0;
-        left:0;
-        margin-top:120px;
       }
 
       .Name { grid-area: Name; }
@@ -206,7 +202,7 @@ Start Treemap
 
             <div class="box Name" id="name">
                   <h2 class="topness">What's your name?</h2>
-                  <div class="frame tree" id="tree_div"></div>
+                  <div class="frame tree" id="tree_div"></div>                                                                                                                                                                                                                                                                   
             </div>
             
             <div class="box Where" id="where">

@@ -15,12 +15,6 @@
     /*max-height: 320px;*/
   }
 
-  div.note {
-    font-size: 0.9em;
-    font-style: italic;
-    display: inline-block;
-    margin: 0 2em;
-  }
   ul.flexer {
     margin: 0 auto;
     list-style-type: none;
@@ -64,16 +58,15 @@
         <input type="hidden" name="rft.publisher" value="" id="pubctl">
         <input type="hidden" name="rft.pubdate" value="" id="pubdatectl">
       </li><li>
-        <label for="rft.aufirst">Author</label>
-        <input tye="text" name="rft.aufirst" value="" id="aufirstctl">
-        <input tye="text" name ="rft.aulast" value="" id="aulastctl">
+        <label for="rft.au">Author</label>
+        <input tye="text" name="rft.au" value="" id="auctl">
        </li></ul>
 
         <input type="hidden" name="rft.genre" value="book">
         <input type="hidden" name="institution" value="01UCNY_INST">
         <input type="hidden" name="vid" value="01UCNY_INST:01UCNY_INST">
         <input type="hidden" name="rfr_id" value="info:sid%2Fprimo.exlibrisgroup.com:primo4-book-cLinker">
-        <input name="url_ver" value=Z39.88-2004" type="hidden" />
+        <input type="hidden" name="url_ver" value="Z39.88-2004"/>
     </form>
   </div>
 </body>
@@ -82,31 +75,21 @@
 <script>
 
   const isbnCtrl = document.getElementById("isbnctl");
-  const errmsg = document.getElementById(errmsg");
+  const errmsg = document.getElementById("errmsg");
   const frm = document.getElementById("purchaseRequest");
   
 
   var enhanceForm - function(v) {
 
-
-        let authors = v.authors !== undefined ? v.authors[0] : "";
-        let publisher = v.publisher !== undefined ? v.publisher : undefined;
-        let publishedDate = v.publishedDate !== undefined ? v.publishedDate : undefined;
-        let pubyear
+        frm["rft.pubdate"].value =  v.publishedDate;
+        frm["rft.publisher"].value = v.publisher;
+        frm["rft.pages"].value = pages;
+        frm["rft.au"].value = authors;
+        frm["rft.btitle"].value =  v.title;    
+        //frm["rft.isbn"].value = isbn;
         let language
         let purl
         let notes
-
-        
-        this.frm["rft.pubdate"].value =  pubdate;
-        this.frm["rft.publisher"].value = publisher;
-        this.frm["rft.pages"].value = pages;
-        this.frm["rft.au"].value = authors;
-        this.frm["rft.btitle"].value =  v.title !== undefined ? v.title : "";    
-        this.frm["rft.isbn"].value = isbn;
-  
-
-
   }
   
   var getBooksMetadata = function(isn) {
@@ -148,28 +131,7 @@
   }, false);
 </script>
 
-//**
 
-const gburl = "https://www.googleapis.com/books/v1/volumes?q=" + searchkey + "&printType=books&maxResults=40");
-const apikey = 'AIzaSyDKGARjwC5bTLW-UpXL94ao_9c1G9BJuL0'
-'https://www.googleapis.com/books/v1/volumes?q=;
-const targeturl = https://union.primo.exlibrisgroup.com/discovery/openurl?institution=01UCNY_INST&vid=01UCNY_INST:01UCNY_INST&rft.pubdate=&rft.btitle=Smoke
-
-//9780387245447
-//781468312096   
-
-let isbn = v.industryIdentifiers[0] !== undefined ? v.industryIdentifiers[0].identifier : v.industryIdentifiers[1].identifier;
-        isbn = (isbn == undefined || /^[A-Z]+\:/.test(isbn)) ? "" : isbn;
-        let pages = v.pageCount !== undefined ? v.pageCount + "pp." : undefined;
-        let pubfilter = [publisher, pubdate, pages].filter(function(p){
-          return p != null;
-        });
-&ctx_ver=Z39.88-2004&rft.genre=book&ctx_enc=info:ofi%2Fenc:UTF-8
-&url_ver=Z39.88-2004&url_ctx_fmt=infofi%2Ffmt:kev:mtx:ctx&rfr_id=info:sid%2Fprimo.exlibrisgroup.com:primo4-book-cLinker
-&rft_val_fmt=info:ofi%2Ffmt:kev:mtx:book&isCitationLinker=Y
-&rft.date=&rft.btitle=Smoke
-
-**//
 
 </html>
 
