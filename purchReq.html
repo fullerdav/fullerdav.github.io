@@ -2,64 +2,77 @@
 <head>
 <title>The Return of the Awesome Form</title>
 
-<style>
- div#gbcontainer {
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    background: rgba(248,248,248,0.95);
-    font-weight: 500;
-    border: none;
-    border-radius:8px;
-    height: auto;
-    /*max-height: 320px;*/
-  }
+  <style>
+   div#gbcontainer {
+      display: flex;
+      flex-direction: row;
+      position: relative;
+      background: rgba(248,248,248,0.95);
+      font-weight: 500;
+      border: none;
+      border-radius:8px;
+      height: auto;
+      /*max-height: 320px;*/
+    }
 
-  ul.flexer {
-    margin: 0 auto;
-    list-style-type: none;
-    padding: 0;
-  }
-  ul.flexer > li {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: start;
-    margin: 0.25em 0;
-  }
-  ul.flexer > li > label {
-    padding: 0.25em;
-    letter-spacing: .09em;
-    flex: 1 0 8em;
-    max-width: 16em;
-  }
-  input {
-    padding: 0.25em;
-    border:1px inset #dedede;
-  }
+    ul.flexer {
+      margin: 0 auto;
+      list-style-type: none;
+      padding: 0;
+    }
+    ul.flexer > li {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: start;
+      margin: 0.25em 0;
+    }
+    ul.flexer > li > label {
+      padding: 0.25em;
+      letter-spacing: .09em;
+      flex: 1 0 8em;
+      max-width: 16em;
+    }
+    input {
+      padding: 0.25em;
+      border:1px inset #dedede;
+    }
 
-</style>
+    .title {
+      font-size: 16px;
+      font-weight: 550;
+    }
 
+    #errmsg {
+      font-family: monospace;
+      margin: 8px;
+      color: indianred;
+    }
 
+  </style>
 </head>
 
 <body>
   <div id="gbcontainer">
     <form class="gbform" id="purchaseRequest" method="get" action="https://union.primo.exlibrisgroup.com/discovery/openurl?" target="_blank">
     <ul class="flexer"><li>
-        <div id="errmsg"></div>
+        <div class="title">Return of the awesome sugpurchreq form</div> 
+      </li><li>
+       <div id="errmsg">Enter an ISBN and press TAB</div>
       </li><li>
         <label for="rft.isbn">ISBN</label>
         <input type="text" name="rft.isbn" value="" id="isbnctl">
       </li><li>
         <label for="rft.btitle">Title</label>
-        <input type="text" name="rft.btitle" value="" id="titlectl">
-      </li><li>
-        <label for="rft.publisher">Publisher/Distributor</label>
-        <input type="hidden" name="rft.publisher" value="" id="pubctl">
-        <input type="hidden" name="rft.pubdate" value="" id="pubdatectl">
+        <input type="text" name="rft.btitle" value="" length="40" id="titlectl">
       </li><li>
         <label for="rft.au">Author</label>
         <input tye="text" name="rft.au" value="" id="auctl">
+      </li><li>
+        <label for="rft.publisher">Publisher/Distributor</label>
+        <input type="text" name="rft.publisher" value="" id="pubctl">
+      </li><li>  
+        <label for="rft.pubdate">Pub Date</label>
+        <input type="text" name="rft.pubdate" value="" id="pubdatectl">
        </li></ul>
 
         <input type="hidden" name="rft.genre" value="book">
@@ -70,7 +83,8 @@
     </form>
   </div>
 </body>
- 
+v.canonicalVolumeLink
+ https://books.google.com/books/about/The_Rise_and_Fall_of_Adam_and_Eve.html?hl=&id=JQE0MQAACAAJ
 
 <script>
 
@@ -78,39 +92,36 @@
   const errmsg = document.getElementById("errmsg");
   const frm = document.getElementById("purchaseRequest");
   
-
-  var enhanceForm - function(v) {
-
+  var enhanceForm = function(v) {
         frm["rft.pubdate"].value =  v.publishedDate;
         frm["rft.publisher"].value = v.publisher;
-        frm["rft.pages"].value = pages;
-        frm["rft.au"].value = authors;
+        frm["rft.au"].value = v.authors !== undefined ? v.authors[0] : "";;
         frm["rft.btitle"].value =  v.title;    
-        //frm["rft.isbn"].value = isbn;
-        let language
-        let purl
-        let notes
   }
   
   var getBooksMetadata = function(isn) {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
+        if (xhr.readyState === 4 && xhr.status === 200) {
           const response = JSON.parse(xhr.responseText);
       
           if (response.totalItems > 0) {  
               enhanceForm(response.items[0].volumeInfo);
+              errmsg.innerHTML = 'Enter an ISBN and press TAB';
               console.log(response.items);  
 
               if (searchRequest.totalItems > 1) {
+                  errmsg.style.color = 'red';
                   errmsg.innerHTML = 'multiple results.  see console';
               }
           } else {
-              errmsg.innerHTML = 'no metadata found';
+              errmsg.style.color = 'red';
+              errmsg.innerHTML = 'request failed || no metadata found';
           }
           
       } else {
-        errmsg.innerHTML = 'request failed...';
+         errmsg.style.color = 'black';
+         errmsg.innerHTML = 'getting metadata...';
       }
     };
 
@@ -122,7 +133,7 @@
      let tmpISBN = isbnCtrl.value !== "" ? isbnCtrl.value : false;
      tmpISBN.replace(/[^\dxX]/g, "");
      let isbn = (tmpISBN.length===10 || tmpISBN.length===13) ? tmpISBN : false;  
-     console.log("input listener success:", evt, isbn, this);
+     console.log("input listener success:", evt.target, isbn, this.value);
 
      if (isbn) {
        getBooksMetadata(isbn)
@@ -131,10 +142,6 @@
   }, false);
 </script>
 
-
-
 </html>
-
-
 
 
