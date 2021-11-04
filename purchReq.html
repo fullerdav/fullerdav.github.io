@@ -53,7 +53,7 @@
 
 <body>
   <div id="gbcontainer">
-    <form class="gbform" id="purchaseRequest" method="get" action="https://union.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:01UCNY_INST?" target="_blank">
+    <form class="gbform" id="purchaseRequest" method="get" action="https://union-psb.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:01UCNY_INST?" target="_blank">
     <ul class="flexer"><li>
         <div class="title">Return of the awesome sugpurchreq form</div> 
       </li><li>
@@ -76,6 +76,7 @@
        </li></ul>
 
         <input type="hidden" name="rft.genre" value="book">
+        <input type="hidden" name="rft.Language" value="en">
       <!--   <input type="hidden" name="institution" value="01UCNY_INST">
         <input type="hidden" name="vid" value="01UCNY_INST:01UCNY_INST"> -->
         <!-- <input type="hidden" name="rfr_id" value="info:sid%2Fprimo.exlibrisgroup.com:primo4-book-cLinker"> -->
@@ -83,7 +84,8 @@
         <input type="hidden" name="ctx_ver" value="Z39.88-2004"/>
         <input type="hidden" name="ctx_enc" value="info:ofi/enc:UTF-8"/>
 
-        <input type="submit">
+        <button onclick="frm.submit();">request in Primo</button>
+        
     </form>
   </div>
 </body>
@@ -96,10 +98,14 @@
   const frm = document.getElementById("purchaseRequest");
   
   var enhanceForm = function(v) {
+        errmsg.style.color = 'black';
+        errmsg.innerHTML = 'getting metadata...';
         frm["rft.pubdate"].value =  v.publishedDate;
         frm["rft.publisher"].value = v.publisher;
         frm["rft.au"].value = v.authors !== undefined ? v.authors[0] : "";;
-        frm["rft.btitle"].value =  v.title;    
+        frm["rft.btitle"].value =  v.title; 
+        frm["rft.genre"].value =  v.printType;  
+        frm["rft.Language"].value =  v.language;     
   }
   
   var getBooksMetadata = function(isn) {
