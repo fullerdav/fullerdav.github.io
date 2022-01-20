@@ -9,7 +9,7 @@
 <link rel="icon" type="image/png" href="icons/request.png" />
 <style>
     .container {
-      width: 50%;
+      max-width: 45%;
       height: 50%;
       max-height: 23em;
       display: grid;
@@ -42,6 +42,7 @@
       position: absolute;
       top: 0px;
       right: 0px;
+      transition:  opacity 1.5s ease-in;
     }
     .title {
       display: inline-block; 
@@ -95,22 +96,21 @@
       max-width: 4.25em; 
     }
     input {
-      padding: 0.35em;
+      padding: 0.25em;
       border: 2px inset #dedede;
       width: 18em;
-      line-height:1.4em; 
+      line-height:1.35em; 
       background-color: whitesmoke;
     }
     input[type="checkbox"] {
       width: 1em; 
-      height: 2em;
+      height: 1.5em;
     }
     input[data-name="mms"], input[data-name="oclcid"] {
-      line-height: 0.1;
+      line-height: 0.01;
     }
     button {  
-      max-height: 2em;
-      font-size: 1em;
+      max-height: 2.5em;
       margin: 0.5em;
       padding: 0.1em 0.35em;
       color: white;
@@ -143,10 +143,11 @@
       line-height: 1.25; 
       overflow-y: scroll;
       min-height: 1em;
-      max-height: 8em;
+      max-height: 7em;
       width: 20em;   
       border: 1px inset #007dba;
       background-color: whitesmoke;
+
     }
     .navbuttons {
       grid-area: navbuttons;
@@ -158,14 +159,15 @@
     }
     ul { 
       list-style-type: none; 
-      margin: 0 auto;
+      margin: auto;
       padding: 0.5em;
     }
     ul.flexright {
-      margin-top: 2.5em;
+      margin-top: 2.75em;
     }
     ul.flexright > li {
       flex-direction: column;
+      margin: 0.5em 0;
     }
   </style>
 </head>
@@ -179,7 +181,6 @@
         <div id="mainmeta">
            <span class="title littlebox">Requesting books and videos:   
             <ul>
-              <li>Requesting involves several micro-tasks</li>
               <li>Enter an ISBN&lt;TAB&gt; or enter other data</li> 
               <li>We'll check availability and populate a request form</li>
               <li>Remember to login to see all request options</li>
@@ -364,12 +365,14 @@
           status.innerHTML = e; 
         }
 
-        if (data && data.totalItems === 1) {
-          let item = data.items[0].volumeInfo;
-          if (item.imageLinks && item.imageLinks.smallThumbnail) {
-             thumb.style.opacity = 1;
-             thumb.src = item.imageLinks.smallThumbnail;
-          }
+        if (data && data.totalItems === 1 && data.items[0].volumeInfo.imageLinks) {
+          if (item.imageLinks.smallThumbnail) {
+            thumb.style.opacity = 1;
+            thumb.src = item.imageLinks.smallThumbnail;
+          } 
+        } else {
+            thumb.src = "";
+            thumb.style.opacity = 0;
         }
     }
 
