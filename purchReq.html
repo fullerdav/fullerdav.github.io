@@ -181,12 +181,12 @@
         <div id="mainmeta">
            <span class="title littlebox">Requesting books and videos:   
             <ul>
-              <li>Enter an ISBN&lt;TAB&gt; or enter other data</li> 
+              <li>Enter an ISBN&lt;TAB&gt; or other data</li> 
+              <li>distinctive keywords usually suffice...</li> 
               <li>We'll check availability and populate a request form</li>
               <li>Remember to login to see all request options</li>
             </ul>Best practices for locating videos:
             <ul>
-              <li>distinctive keywords usually suffice...</li>
               <li><b>Author</b> varies, best to omit</li>
               <li><b>Pub.</b> refers to studio or distributor</li>     
               <li><b>Year</b> refers to release, not production</li> 
@@ -364,13 +364,15 @@
         } catch(e) { 
           status.innerHTML = e; 
         }
-
+log(data)
         if (data && data.totalItems === 1 && data.items[0].volumeInfo.imageLinks) {
-          if (item.imageLinks.smallThumbnail) {
+          if (data.items[0].volumeInfo.imageLinks.smallThumbnail) {
+            log('yes')
             thumb.style.opacity = 1;
-            thumb.src = item.imageLinks.smallThumbnail;
+            thumb.src = data.items[0].volumeInfo.imageLinks.smallThumbnail;
           } 
         } else {
+          log('no')
             thumb.src = "";
             thumb.style.opacity = 0;
         }
@@ -436,13 +438,16 @@
       } 
 
       let time1 = performance.now();
-      status.innerHTML = `Search completed: ${((time1 - time0)/1000).toFixed(2)}s<br>`;
-
-      for (let key of Object.keys(recordset)) {
-        if (recordset[key].found() && recordset[key].totrecs() > 0) {
-          showRecords(key);
-        } 
-      }
+      if (!ISBN_SEARCH && !TITL_SEARCH) {
+        status.innerHTML = "Either ISBN or TITLE is required";
+      } else {
+        status.innerHTML = `Search completed: ${((time1 - time0)/1000).toFixed(2)}s<br>`; 
+        for (let key of Object.keys(recordset)) {
+          if (recordset[key].found() && recordset[key].totrecs() > 0) {
+            showRecords(key);
+          } 
+        }
+      } 
   } 
 
   function showRecords(source) {
