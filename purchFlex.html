@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en_US"> 
+<head>
+<title>Schaffer Library Find and Request</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="author: david fuller, title: purchase request">
+<meta name="keywords" content="schaffer library purchase request form">
+<link rel="icon" type="image/png" href="../icons/request.png" />
+<style>
+    .container {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      grid-template-rows: 0.5fr 2fr 1fr 0.5fr;
+      grid-auto-flow: row;
+      grid-template-areas: 
+      "requestform  panel"
+      "requestform  panel"
+      "requestform  panel"
+      "requestform  panel";
+      grid-gap: 0.25em; 
+      width: 40%;
+      height: auto;
+      min-height: 23em;
+      border-radius: 8px;
+      border: 1px inset #007dba;
+      border-left-width: 3px; 
+      border-top-width: 2px; 
+      box-shadow: 0 0 2px 0px #007dba;
+      font: 525 100%/1.2 Courier,sans-serif;
+      font-size: 15px;
+      background: radial-gradient(ellipse farthest-corner at center center, #fcf6e8 95%, rgba(171,157,157,0.1) 50%);
+      margin: 1em;
+    }
+    .requestform {
+      grid-area: requestform;
+      grid-template-rows: 1fr 5fr 1fr 1fr;
+      grid-template-areas:
+        "title"
+        "inputels"
+        "status"
+        "buttons";
+    }    
+    .title {
+      grid-area: title;
+    }
+    ul.flexer {
+      grid-area: inputels;
+    }   
+    .status {
+      grid-area: status;
+      color: red;
+      font-size: 0.9em;
+      letter-spacing: .08em;
+      height: 2em;
+    }
+    .buttons {
+       grid-area: buttons;
+    }
+
+    .panel {
+      display: grid;
+      grid-area: panel;
+      grid-template-rows: 1fr 7fr;
+      grid-template-areas:
+        "helpme"
+        "thumbnails";
+    } 
+    .help {
+      grid-area: helpme;
+    }
+    .thumbnails {
+      grid-area: thumbnails;
+      display: flex; 
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }  
+    .thumbnails > a {
+      display: inline-block;
+    }  
+   .littlebox {
+      margin: 8px 0;
+      height: auto;
+      width: auto;
+      font-size: 0.1em;
+      background-color: blue;
+      border-radius: 8px;
+      color: white;
+      z-index: 10;
+      position: absolute;
+      cursor: pointer;     
+      transition: font-size 1.2s cubic-bezier(0.15, 0.15, 0.15, 0.74);
+    }
+    .expandbox {
+      font-size: 0.9em;
+      max-width: 95%;
+      max-height: 96%;
+    }
+    .thumb {
+      flex: 1 0 6.5em;
+    }
+    .thumbnails > a {
+      max-width: 8.5em;
+      max-height: 12.5em;
+      background: #eee;
+    }
+    ul { 
+      list-style-type: none; 
+      margin: 0;
+      padding: 0.5em;
+    } 
+    ul.flexer > li {
+      display: flex;
+      flex-wrap: nowrap;
+      margin: 0.25em 0;
+    }
+    ul.flexer > li > label {
+      padding: 0.25em;
+      letter-spacing:.08em;
+      width: 4.25em; 
+    }
+    input {
+      padding: 0.25em;
+      border: 2px inset #dedede;
+      width: 18em;
+      line-height:1.35em; 
+      background-color: whitesmoke;
+    }
+    input[type="checkbox"] {
+      width: 1em; 
+      height: 1.5em;
+    }
+    input[data-name="mms"], input[data-name="oclcid"] {
+      line-height: 0.01;
+    }
+    button {  
+      max-height: 2.5em;
+      margin: 0.5em;
+      padding: 0.1em 0.35em;
+      color: white;
+      background: #3daaff;
+      border: 0.4em outset #2299ff;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+ 
+<body>
+    <div class="container"> 
+      <div class="panel">
+          <span class="help littlebox">
+          <ul>Requesting books and videos:   
+            <li>Enter an ISBN&lt;TAB&gt; or other data</li> 
+            <li>distinctive keywords usually suffice...</li> 
+            <li>We'll check availability and populate a request form</li>
+            <li>Remember to login to see all request options</li>
+            <li></li>
+            <ul>Best practices for locating videos:
+              <li><b>Author</b> varies, best to omit</li>
+              <li><b>Pub.</b> refers to studio or distributor</li>     
+              <li><b>Year</b> refers to release, not production</li> 
+              <li>remember to check the "video" box!</li>
+              <li></li>
+              <ul><b>[title, pub, year]</b> examples:
+                <li>The Way We Were, Columbia, 1999</li>
+                <li>Dersu Uzala, kino, 2000</li>
+                <li>dersu, Kino</li>
+              </ul>
+            </ul>
+          </ul>
+          </span>
+        <div class="thumbnails"></div>
+      </div>
+
+      <div class="requestform">     
+          <span class="title">Locate, then request</span>
+          <ul class="flexer">
+            <li>
+              <input type="hidden" name="rft.oclcnum" data-name="oclcid" value=""> 
+              <input type="hidden" name="rft.mms_id" data-name="mms" value="">
+              <input type="hidden" name="rft.edition" data-name="edition" value="">
+            </li><li>
+              <label for="rft.isbn">ISBN</label>
+              <input type="search" name="rft.isbn" data-name="isbn" data-gbname="industryIdentifiers" autocomplete="off"  placeholder="add then press <TAB>" value="" autofocus>
+            </li><li>
+              <label for="rft.btitle">Title</label>
+              <input type="search" name="rft.btitle" data-name="btitle" data-gbname="title" value="">
+            </li><li>
+              <label for="rft.au">Author</label>
+              <input type="search" name="rft.au" data-name="addau" data-gbname="authors" value="">
+            </li><li>
+              <label for="rft.publisher">Pub.</label>
+              <input type="search" name="rft.publisher" data-name="pub" data-gbname="publisher" value="">
+            </li><li>  
+              <label for="rft.pubdate">Year</label>
+              <input type="search" name="rft.pubdate" data-name="creationdate" data-gbname="publishedDate" pattern="\d{4}" value="" minlength="4" maxlength="4">
+            </li><li>
+              <label for="video">Video?</label> 
+              <input type="checkbox" name="videos">
+            </li> 
+          </ul>
+
+          <div class="status"></div>
+          <div class="buttons">
+            <button name="reset" onclick="startOver();">&circlearrowleft;</button> 
+            <button name="sub" onclick="searchController();">Locate data</button> 
+          </div>          
+      </div>
+  </div> 
+</body>
+
+<script>
+//// variables
+  "use strict";
+  let ISBN, ISBN_SEARCH, TITL_SEARCH, RS, CURSOR = 0, RISTYPE = "BOOK", searchkeys = {};
+  let recordset = {"primapi":{"records":[],"mapper":mapAPI}, "gobooks":{"records":[],"mapper":mapGoogle },"oclcapi":{"records":[],"mapper":mapAPI}};
+  const status = document.querySelector(".status");
+  const thumbs = document.querySelector(".thumbnails");
+  const datanames = document.querySelectorAll('[data-name]');
+  const {log}  = console;
+
+//// set targets
+  function setURI(targ, keys) {  
+      let terms = []; 
+      for (let key of Object.keys(searchkeys)) {
+        if (keys[key] && searchkeys[key]) {
+          terms.push(keys[key] + searchkeys[key]);
+        }
+      }   
+      let uri = (targ === "gobooks") ?  uri = terms.join(" ") : terms.join(",AND;");
+      return uri;
+  };
+
+  function setURL(target) {
+    let url = new URL(urls[target]);
+    if (target === "gobooks") {
+       url.searchParams.set("q", "isbn:" + ISBN);
+    } else {
+       url.searchParams.set("q", setURI(target, urikeys[target]));
+       if (RISTYPE === "VIDEO") { 
+        url.searchParams.set("qInclude", "facet_rtype,include,videos");
+       } else if (RISTYPE === "BOOK") {
+        url.searchParams.set("qInclude", "facet_rtype,include,books");
+       }
+    }
+    return url;
+  }   
+ 
+//// Normalize results
+  async function mapAPI(records) {
+    records.forEach(record => {
+      let item = {};
+      ['isbn', 'btitle', 'au', 'pub', 'creationdate', 'edition', 'ristype', 'oclcid'].forEach(el => {
+        item['rft.' + el] = (record[el] && Array.isArray(record[el])) ? record[el][0] : record[el];
+      });
+      [item['rft.pubdate'], item['rft.publisher'], item['rft.oclcnum']] = [item['rft.creationdate'], item['rft.pub'], item['rft.oclcid']];
+      ['rft.pub', 'rft.oclcid', 'rft.creationdate'].forEach(el => { delete item[el] });
+
+      let newitem = thumbFactory();
+      let anchor = newitem.querySelector("a");
+      fetchThumbnail(item['rft.isbn']).then(result => {
+        if (result) {
+          anchor.style.background = "url('" + result + "')";
+        } else {
+          let div = document.createElement('div');
+          ["rft.btitle", "rft.publisher", "rft.pubdate"].forEach(el => {
+            div.innerHTML += item[el] + "<br>";
+          });
+          anchor.appendChild(div);
+        }
+      });
+
+      let location = searchTarget(item);
+      anchor.href = "javascript:(window.open('" + location + "', '_blank'));";
+      thumbs.appendChild(newitem);
+
+    });
+  }
+
+  function mapGoogle(records) {
+    records.forEach(record => {
+      let item = {};
+      item['rft.isbn'] = (record.industryIdentifiers[1]) ? record.industryIdentifiers[1].identifier : record.industryIdentifiers[0].identifier;
+      item['rft.btitle'] = (record["title"] && Array.isArray(record['title'])) ? record["title"][0] : record["title"];
+      item['rft.au'] = (record["authors"] && Array.isArray(record['authors'])) ? record["authors"][0] : record["authors"];
+      item['rft.pubdate'] = (record["publishedDate"]) ? record["publishedDate"].match(/^\d{4}/)[0] : "";
+      item['rft.publisher'] = (record["publisher"] && Array.isArray(record['publisher'])) ? record["publisher"][0] : record["publisher"];
+      
+      let newitem = newthumb().cloneNode(true);
+      let anchor = newitem.querySelector("a");
+      if (record.imageLinks && record.imageLinks.smallThumbnail) {
+        anchor.style.background = "url('" + record.imageLinks.smallThumbnail + "')";
+      } else {
+        let div = document.createElement("div");
+        ["rft.btitle", "rft.publisher", "rft.pubdate"].forEach(el => {
+          div.innerHTML += item[el];
+        });
+        anchor.appendChild(div);
+      }
+
+      let location = searchTarget(item);
+      newitem.querySelector("a").href = "javascript:(window.open('" + location + "', '_blank'));";  
+      thumbs.appendChild(newitem);
+    });
+  }
+
+  function thumbFactory() {
+    let fragment = new DocumentFragment();
+    let anchor = document.createElement('a');
+    anchor.classList.add("thumb");
+    fragment.appendChild(anchor);
+    return fragment;
+  }
+
+  function filterAPI(recordset) {
+    let records = recordset.filter(record => {
+      let FILTER = true;
+      let recordate = (record.creationdate && Array.isArray(record.creationdate)) ? record.creationdate[0] : record.creationdate;
+      let recordpub = (record.pub && Array.isArray(record.pub)) ? record.pub[0] : record.pub;
+      let recordtitle = (record.btitle && Array.isArray(record.btitle)) ? record.btitle[0] : record.btitle;
+      
+      if (searchkeys['rft.btitle']) {  
+        let searchtitle = searchkeys['rft.btitle'].toLowerCase();
+        recordtitle = recordtitle.toLowerCase();
+        FILTER = FILTER && recordtitle.includes(searchtitle);
+      }      
+      if (searchkeys['rft.pubdate'] && recordate && FILTER) {
+        FILTER = FILTER && recordate.includes(searchkeys['rft.pubdate']);
+      }
+      if (searchkeys['rft.publisher'] && recordpub && FILTER) {  
+        recordpub = recordpub.toLowerCase();                    
+        let searchpub = searchkeys['rft.publisher'].toLowerCase();
+        FILTER = FILTER && recordpub.includes(searchpub);
+      }
+      return FILTER;      
+    });
+    return records;
+  }
+ 
+//// fetch data
+  async function fetchThumbnail(isbn) {
+      let bibkey = "isbn:" + isbn, data;
+      let url = new URL(urls.gobooks);
+      url.searchParams.set("q", bibkey);
+
+      try {
+        let response = await fetch(url.href);
+        data = await response.json();
+      } catch(e) { 
+        status.innerHTML = e; 
+      }
+
+      if (data && data.totalItems === 1 && data.items[0].volumeInfo.imageLinks) {
+        if (data.items[0].volumeInfo.imageLinks.smallThumbnail) {
+          return data.items[0].volumeInfo.imageLinks.smallThumbnail;
+        } 
+      } else {
+        return false;
+      }
+  }
+
+  async function fetchJSON(target) {
+      let data, url = setURL(target);
+      try {   
+        let response = await fetch(url.href);
+        data = await response.json();    
+      } catch(e) { 
+        status.innerHTML = e; 
+      } 
+      return data;
+  }
+    
+//// controller
+  async function searchController() {
+      document.querySelectorAll('[name^=rft]').forEach(el => {
+        if (el.value) { searchkeys[el.name] = el.value; }
+      });
+
+      ISBN_SEARCH = searchkeys["rft.isbn"] ? true : false ;    
+      TITL_SEARCH = (searchkeys["rft.btitle"] && !ISBN_SEARCH) ? true : false ;
+
+      ["primapi","gobooks","oclcapi"].forEach(source => {
+        recordset[source].records = [];
+        recordset[source].found = () => recordset[source].records.length > 0;
+        recordset[source].totrecs = () => recordset[source].records.length;
+      });
+
+      status.innerHTML = "Searching...";
+      let time0 = performance.now(); 
+
+      await fetchJSON("primapi").then(records => {
+          if (records) {
+            const results = records.docs.map(item => {
+              return { ...item.pnx.addata, ...item.pnx.display };
+            });
+            recordset["primapi"].records = filterAPI(results);
+          }
+      });  
+          
+      if (ISBN_SEARCH && !recordset["primapi"].found()) {
+        await fetchJSON("gobooks").then(gb_records => {
+          if (gb_records) {
+            recordset["gobooks"].records = gb_records.items.map(item => {
+              return { ...item.volumeInfo, ...item.saleInfo };
+            });
+          }
+        });         
+      }
+          
+      if (!recordset["gobooks"].found() && !recordset["primapi"].found()) {
+        await fetchJSON("oclcapi").then(oclc_records => {
+          if (oclc_records) {
+            const results = oclc_records.docs.map(item => {
+              return { ...item.pnx.addata, ...item.pnx.display };
+            });
+            recordset["oclcapi"].records = filterAPI(results);
+          }
+        });
+      } 
+
+      let time1 = performance.now();
+
+      if (!ISBN_SEARCH && !TITL_SEARCH) {
+        status.innerHTML = "Either ISBN or TITLE is required";
+      } else {
+        status.innerHTML = `Search completed: ${((time1 - time0)/1000).toFixed(2)}s<br>`; 
+        for (let key of Object.keys(recordset)) {
+          if (recordset[key].found() && recordset[key].totrecs() > 0) {
+            showRecords(key);
+          } 
+        }
+      } 
+  } 
+
+  function showRecords(source) {
+      let sources = {"primapi":"Primo", "oclcapi":"Worldcat", "gobooks":"Google"};
+      RS = recordset[source]; 
+      let count = recordset[source].totrecs();
+      status.innerHTML += `${count} record(s) found in ${sources[source]}`;
+      RS.mapper(RS.records);
+  }
+
+//// event listeners
+  document.querySelector('.littlebox').addEventListener("click", function(evt){    
+    this.classList.toggle("expandbox");
+  }, false); 
+
+  document.querySelector('input[name="rft.isbn"]').addEventListener("blur", function(evt){  
+    if (evt.target.value) {
+      ISBN = evt.target.value.replace(/[^\dxX]/g,"");
+      if (ISBN.length===10 || ISBN.length===13) {
+        searchController();
+      }
+    }
+  }, false); 
+
+  document.querySelector('input[name="videos"]').addEventListener("change", function(evt){  
+     RISTYPE = (evt.target.checked) ? "VIDEO" : "BOOK";
+  }, false); 
+
+//// data helpers
+  const urls = {
+    almasru: "https://na04.alma.exlibrisgroup.com/view/sru/01UCNY_INST?version=1.2&operation=searchRetrieve&recordSchema=marcxml",
+    primreq: "https://union-psb.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:01UCNY_INST?url_ver=Z39.88-2004&url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx&ctx_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-8&rft_val_fmt=info:ofi/fmt:kev:mtx:book&rfr_id=info:sid%2Fprimo.exlibrisgroup.com:primo4-book-cLinker&isCitationLinker=Y",
+    primapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&tab=Everything&scope=MyInst_and_CI&limit=8&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
+    oclcapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&tab=oclc&scope=oclc&limit=8&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
+    gobooks: "https://www.googleapis.com/books/v1/volumes?projection=full",
+  };
+
+  const urikeys = { 
+    "gobooks":{"rft.btitle":"intitle:", "rft.au":"inauthor:", "rft.publisher":"inpublisher:"},
+    "oclcapi":{"rft.btitle":"title,contains,", "rft.au":"creator,contains,", "rft.pubdate":"creationdate,contains,", "rft.isbn":"isbn,exact,"},
+    "primapi":{"rft.btitle":"title,contains,", "rft.au":"creator,contains,", "rft.pubdate":"cdate,contains,", "rft.isbn":"isbn,contains,"},
+    "almasru":{"rft.btitle":"alma.title==", "rft.au":"alma.creator=", "rft.pub":"alma.publisher=", "rft.year":"alma.main_pub_date=="}
+  };
+  
+  function searchTarget(record){
+    let url = new URL(urls.primreq); 
+    ['rft.isbn', 'rft.btitle', 'rft.au',  'rft.publisher', 'rft.pubdate', 'rft.oclcnum', 'rft.edition'].forEach(param => {
+      if (record[param]) {
+        url.searchParams.set(param, record[param]);
+      }
+    });
+    return url;
+  }
+
+  function startOver() {
+    datanames.forEach(el => { 
+        el.value = ""; 
+    });
+    document.querySelector('input[name="videos"]').checked = false; 
+    ["primapi","gobooks","oclcapi"].forEach(source => { recordset[source].records = []; });   
+    [searchkeys, ISBN_SEARCH, TITL_SEARCH, ISBN, RISTYPE, CURSOR] = [{}, undefined, undefined, undefined, "BOOK", 0]; 
+    status.innerHTML = "";
+    document.querySelector('input[name="rft.isbn"]').focus(); 
+  }  
+
+</script>
+</html>
+
