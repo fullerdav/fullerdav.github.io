@@ -286,7 +286,7 @@
       item['rft.pubdate'] = (record["publishedDate"]) ? record["publishedDate"].match(/^\d{4}/)[0] : "";
       item['rft.publisher'] = (record["publisher"] && Array.isArray(record['publisher'])) ? record["publisher"][0] : record["publisher"];
       
-      let newitem = newthumb().cloneNode(true);
+      let newitem = thumbFactory();
       let anchor = newitem.querySelector("a");
       if (record.imageLinks && record.imageLinks.smallThumbnail) {
         anchor.style.background = "url('" + record.imageLinks.smallThumbnail + "')";
