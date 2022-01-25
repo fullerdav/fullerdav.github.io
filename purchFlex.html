@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="author: david fuller, title: purchase request">
 <meta name="keywords" content="schaffer library purchase request form">
-<link rel="icon" type="image/png" href="../icons/request.png" />
 <style>
     .container {
       display: grid;
@@ -149,7 +148,7 @@
     <div class="container"> 
       <div class="panel">
           <span class="help littlebox">
-          <ul>Requesting books and videos:   
+  <!--         <ul>Requesting books and videos:   
             <li>Enter an ISBN&lt;TAB&gt; or other data</li> 
             <li>distinctive keywords usually suffice...</li> 
             <li>We'll check availability and populate a request form</li>
@@ -167,7 +166,7 @@
                 <li>dersu, Kino</li>
               </ul>
             </ul>
-          </ul>
+          </ul> -->
           </span>
         <div class="thumbnails"></div>
       </div>
@@ -462,7 +461,7 @@
 //// data helpers
   const urls = {
     almasru: "https://na04.alma.exlibrisgroup.com/view/sru/01UCNY_INST?version=1.2&operation=searchRetrieve&recordSchema=marcxml",
-    primreq: "https://union-psb.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:01UCNY_INST?url_ver=Z39.88-2004&url_ctx_fmt=info:ofi/fmt:kev:mtx:ctx&ctx_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-8&rft_val_fmt=info:ofi/fmt:kev:mtx:book&rfr_id=info:sid%2Fprimo.exlibrisgroup.com:primo4-book-cLinker&isCitationLinker=Y",
+    primreq: "https://union-psb.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:01UCNY_INST?url_ver=Z39.88-2004&ctx_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-8&rft_val_fmt=info:ofi/fmt:kev:mtx:book",
     primapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&tab=Everything&scope=MyInst_and_CI&limit=8&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
     oclcapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&tab=oclc&scope=oclc&limit=8&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
     gobooks: "https://www.googleapis.com/books/v1/volumes?projection=full",
