@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="author: david fuller, title: purchase request">
 <meta name="keywords" content="schaffer library purchase request form">
+<link rel="icon" href="icons/favicon.png" type="image/png" sizes="84x84"> 
 <style>
     .container {
       display: grid;
@@ -40,7 +41,7 @@
         "status"
         "buttons";
     }    
-    .title {
+    /*.title {
       grid-area: title;
     }
     ul.flexer {
@@ -117,6 +118,15 @@
       padding: 0.25em;
       letter-spacing:.08em;
       width: 4.25em; 
+    }    
+    button {  
+      max-height: 2.5em;
+      margin: 0.5em;
+      padding: 0.1em 0.35em;
+      color: white;
+      background: #3daaff;
+      border: 0.4em outset #2299ff;
+      border-radius: 6px;
     }
     input {
       padding: 0.25em;
@@ -132,15 +142,7 @@
     input[data-name="mms"], input[data-name="oclcid"] {
       line-height: 0.01;
     }
-    button {  
-      max-height: 2.5em;
-      margin: 0.5em;
-      padding: 0.1em 0.35em;
-      color: white;
-      background: #3daaff;
-      border: 0.4em outset #2299ff;
-      border-radius: 6px;
-    }
+*/
   </style>
 </head>
  
@@ -148,7 +150,7 @@
     <div class="container"> 
       <div class="panel">
           <span class="help littlebox">
-  <!--         <ul>Requesting books and videos:   
+          <ul>Requesting books and videos:   
             <li>Enter an ISBN&lt;TAB&gt; or other data</li> 
             <li>distinctive keywords usually suffice...</li> 
             <li>We'll check availability and populate a request form</li>
@@ -166,7 +168,7 @@
                 <li>dersu, Kino</li>
               </ul>
             </ul>
-          </ul> -->
+          </ul>
           </span>
         <div class="thumbnails"></div>
       </div>
@@ -249,54 +251,54 @@
   async function mapAPI(records) {
     records.forEach(record => {
       let item = {};
+      let newitem = thumbFactory();
+      let anchor = newitem.querySelector("a");
+      
       ['isbn', 'btitle', 'au', 'pub', 'creationdate', 'edition', 'ristype', 'oclcid'].forEach(el => {
         item['rft.' + el] = (record[el] && Array.isArray(record[el])) ? record[el][0] : record[el];
       });
       [item['rft.pubdate'], item['rft.publisher'], item['rft.oclcnum']] = [item['rft.creationdate'], item['rft.pub'], item['rft.oclcid']];
       ['rft.pub', 'rft.oclcid', 'rft.creationdate'].forEach(el => { delete item[el] });
 
-      let newitem = thumbFactory();
-      let anchor = newitem.querySelector("a");
-      fetchThumbnail(item['rft.isbn']).then(result => {
+      if (item['rft.isbn'] !== undefined) {
+        let result = fetchThumbnail(item['rft.isbn']);
         if (result) {
           anchor.style.background = "url('" + result + "')";
-        } else {
-          let div = document.createElement('div');
-          ["rft.btitle", "rft.publisher", "rft.pubdate"].forEach(el => {
-            div.innerHTML += item[el] + "<br>";
-          });
-          anchor.appendChild(div);
         }
+      }
+      
+      let div = document.createElement('div');
+      ["rft.btitle", "rft.publisher", "rft.pubdate"].forEach(el => {
+        div.innerHTML += item[el] + "<br>";
       });
-
+      anchor.appendChild(div);
       let location = searchTarget(item);
       anchor.href = "javascript:(window.open('" + location + "', '_blank'));";
       thumbs.appendChild(newitem);
-
     });
   }
 
   function mapGoogle(records) {
-    
     records.forEach(record => {
-      let item = {};
+      let item = {}; 
+      let newitem = thumbFactory();
+      let anchor = newitem.querySelector("a");
+      
       item['rft.isbn'] = (record.industryIdentifiers[1]) ? record.industryIdentifiers[1].identifier : record.industryIdentifiers[0].identifier;
       item['rft.btitle'] = (record["title"] && Array.isArray(record['title'])) ? record["title"][0] : record["title"];
       item['rft.au'] = (record["authors"] && Array.isArray(record['authors'])) ? record["authors"][0] : record["authors"];
       item['rft.pubdate'] = (record["publishedDate"]) ? record["publishedDate"].match(/^\d{4}/)[0] : "";
       item['rft.publisher'] = (record["publisher"] && Array.isArray(record['publisher'])) ? record["publisher"][0] : record["publisher"];
       
-      let newitem = thumbFactory();
-      let anchor = newitem.querySelector("a");
       if (record.imageLinks && record.imageLinks.smallThumbnail) {
         anchor.style.background = "url('" + record.imageLinks.smallThumbnail + "')";
-      } else {
-        let div = document.createElement("div");
-        ["rft.btitle", "rft.publisher", "rft.pubdate"].forEach(el => {
-          div.innerHTML += item[el];
-        });
-        anchor.appendChild(div);
       }
+
+      let div = document.createElement("div");
+      ["rft.btitle", "rft.publisher", "rft.pubdate"].forEach(el => {
+        div.innerHTML += item[el];
+      });
+      anchor.appendChild(div);
 
       let location = searchTarget(item);
       anchor.href = "javascript:(window.open('" + location + "', '_blank'));";  
