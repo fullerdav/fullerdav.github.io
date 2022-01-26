@@ -123,7 +123,7 @@
       height: 1.5em;
     }
     .littlebox {
-      margin: 8px 0;
+      margin: 4px 0;
       height: auto;
       width: auto;
       font-size: 0.1em;
@@ -135,22 +135,21 @@
       cursor: pointer;     
       transition: font-size 1.2s cubic-bezier(0.15, 0.15, 0.15, 0.74);
     }
-    /*
-    input[data-name="mms"], input[data-name="oclcid"] {
-      line-height: 0.01;
-    }
-*/
+   
     .expandbox {
       font-size: 0.9em;
       max-width: 95%;
       max-height: 96%;
+    } 
+    input[data-name="mms"], input[data-name="oclcid"] {
+      line-height: 0.01;
     }
   </style>
 </head>
  
 <body>
     <div class="container"> 
-      <div class="panel">
+      <div class="panel"><img src="icons/icons8-helping-50.png" onclick="logshit();">
           <span class="help littlebox">
           <ul>Requesting books and videos:   
             <li>Enter an ISBN&lt;TAB&gt; or other data</li> 
@@ -222,6 +221,9 @@
   const datanames = document.querySelectorAll('[data-name]');
   const {log}  = console;
 
+function logshit() {
+  log("shit");
+}
 //// set targets
   function setURI(targ, keys) {  
       let terms = []; 
