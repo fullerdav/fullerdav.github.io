@@ -70,6 +70,10 @@
         "helpme"
         "thumbnails";
     } 
+    .panel > img {
+      height: 25px;
+      width: 25px;
+    }
     .help {
       grid-area: helpme;
     }
@@ -79,9 +83,7 @@
       flex-flow: column nowrap;
       justify-content: flex-start;
       align-content: flex-start;
-      /*align-items: flex-start;*/
     }
-
     .thumbnails > a {
       display: flex; 
       width: 100%;
@@ -277,24 +279,21 @@
       });
       
       caption.innerHTML = record["ristype"];
-      
       if (item['isbn'] !== undefined) {  
         result = fetchThumbnail(item['isbn']);  
-        // if (result) {
-        //   img.src = result; 
-        // } else {
-        //   img.src = 
-        // }   
       }
-      img.src = result ? result : "icons/icon_book.png";
+      if (!result && record["ristype"] === "BOOK") {
+        img.src = result ? result : "icons/icon_book.png";
+      }
+      if (!result && record["ristype"] === "VIDEO") {
+        img.src = result ? result : "icons/icon_video.png";
+      }
       fig.appendChild(img);
       fig.appendChild(caption);
       
-      item["addau"] = item["addau"].length > 1 ? item["addau"] + ", et al." : item["addau"];
+      item["addau"] = record["addau"].length > 1 ? item["addau"] + ", et al." : item["addau"];
       div.innerHTML = [item["addau"], '<i>' + item["btitle"] + '</i>', item["edition"], item["pub"], item["creationdate"]].join(", ");
-      // [item['rft.au'], item['rft.pubdate'], item['rft.publisher'], item['rft.oclcnum'], item['rft.mms_id']] = [item['addau'], item['creationdate'], item['pub'], item['oclcid'], item['mms']];
-      // ['addau', 'pub', 'oclcid', 'creationdate', 'mms'].forEach(el => { delete item[el] });
-
+  
       let location = searchTarget(item);
       anchor.href = "javascript:(window.open('" + location + "', '_blank'));"; 
       anchor.appendChild(div);
@@ -309,22 +308,25 @@
       let newitem = thumbFactory();
       let anchor = newitem.querySelector("a");
       let div = newitem.querySelector("div");
+      let fig = newitem.querySelector("figure");
+      let img = document.createElement('img');
+      let caption = document.createElement('figcaption');
 
-      item['rft.isbn'] = (record.industryIdentifiers[1]) ? record.industryIdentifiers[1].identifier : record.industryIdentifiers[0].identifier;
-      item['rft.btitle'] = (record["title"] && Array.isArray(record['title'])) ? record["title"][0] : record["title"];
-      item['rft.au'] = (record["authors"] && Array.isArray(record['authors'])) ? record["authors"][0] : record["authors"];
-      item['rft.pubdate'] = (record["publishedDate"]) ? record["publishedDate"].match(/^\d{4}/)[0] : "";
-      item['rft.publisher'] = (record["publisher"] && Array.isArray(record['publisher'])) ? record["publisher"][0] : record["publisher"];
+      item['isbn'] = (record.industryIdentifiers[1]) ? record.industryIdentifiers[1].identifier : record.industryIdentifiers[0].identifier;
+      item['btitle'] = (record["title"] && Array.isArray(record['title'])) ? record["title"][0] : record["title"];
+      item['addau'] = (record["authors"] && Array.isArray(record['authors'])) ? record["authors"][0] : record["authors"];
+      item['creationdate'] = (record["publishedDate"]) ? record["publishedDate"].match(/^\d{4}/)[0] : "";
+      item['pub'] = (record["publisher"] && Array.isArray(record['publisher'])) ? record["publisher"][0] : record["publisher"];
       
-      if (record.imageLinks && record.imageLinks.smallThumbnail) {
-        anchor.style.background = "url('" + record.imageLinks.smallThumbnail + "')";
-      }
+      img.src = (record.imageLinks && record.imageLinks.smallThumbnail) ? record.imageLinks.smallThumbnail : "icons/icon_book.png";
+      caption.innerHTML = "BOOK";
+      fig.appendChild(img);
+      fig.appendChild(caption);
 
+      div.innerHTML = [item["addau"], '<i>' + item["btitle"] + '</i>', item["pub"], item["creationdate"]].join(", ");
       
-      ["rft.btitle", "rft.publisher", "rft.pubdate"].forEach(el => {
-        div.innerHTML += item[el];
-      });
       anchor.appendChild(div);
+      anchor.appendChild(fig);
 
       let location = searchTarget(item);
       anchor.href = "javascript:(window.open('" + location + "', '_blank'));";  
@@ -514,7 +516,8 @@
     searchParams.forEach(params => {
       let [rparam, sparam] = params.split(":");
       if (rparam === "addau") {
-        record[rparam] = record[rparam].replace(/et al\./, '');
+        let author = record[rparam];
+        record[rparam] = author.replace(/et al\./g, '');
       }
       if (record[rparam]) {
         url.searchParams.set(sparam, record[rparam]);
