@@ -274,25 +274,27 @@
       let img = document.createElement('img');
       let caption = document.createElement('figcaption');
 
-      ['isbn', 'btitle', 'addau', 'pub', 'creationdate', 'edition', 'ristype', 'oclcid', 'mms'].forEach(el => {
+      ['isbn', 'btitle', 'au', 'addau', 'pub', 'creationdate', 'edition', 'ristype', 'oclcid', 'mms'].forEach(el => {
         item[el] = (record[el] && Array.isArray(record[el])) ? record[el][0] : record[el];
       });
       
       caption.innerHTML = record["ristype"];
-      if (item['isbn'] !== undefined) {  
-        result = fetchThumbnail(item['isbn']);  
-      }
-      if (!result && record["ristype"] === "BOOK") {
-        img.src = result ? result : "icons/icon_book.png";
-      }
-      if (!result && record["ristype"] === "VIDEO") {
-        img.src = result ? result : "icons/icon_video.png";
-      }
+      fetchThumbnail(item['isbn']).then(thumburl => {
+          if (thumburl) {
+            img.src = thumburl;
+          } else if (!thumburl && record["ristype"] === "VIDEO") {
+            img.src = "icons/icon_video.png";
+          } else {
+            img.src = "icons/icon_book.png";
+          } 
+      });  
+     
       fig.appendChild(img);
       fig.appendChild(caption);
-      
-      item["addau"] = record["addau"].length > 1 ? item["addau"] + ", et al." : item["addau"];
-      div.innerHTML = [item["addau"], '<i>' + item["btitle"] + '</i>', item["edition"], item["pub"], item["creationdate"]].join(", ");
+    
+      item["author"] = (item["addau"] !== undefined) ? item["addau"] : (item["au"] !== undefined) ? item["au"] : "";
+      // item["addau"] = record["au"].length > 1 ? item["au"] + ", et al." : item["au"];
+      div.innerHTML = [item["author"], '<i>' + item["btitle"] + '</i>', item["edition"], item["pub"], item["creationdate"]].join(", ");
   
       let location = searchTarget(item);
       anchor.href = "javascript:(window.open('" + location + "', '_blank'));"; 
@@ -375,6 +377,7 @@
  
 //// fetch data
   async function fetchThumbnail(isbn) {
+      if (!isbn) { return false; }
       let bibkey = "isbn:" + isbn, data;
       let url = new URL(urls.gobooks);
       url.searchParams.set("q", bibkey);
