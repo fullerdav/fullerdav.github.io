@@ -26,7 +26,7 @@
       border-left-width: 3px; 
       border-top-width: 2px; 
       box-shadow: 0 0 2px 0px #007dba;
-      font: 525 100%/1.2 Courier,sans-serif;
+      font: 525 100%/1.2 Roboto,sans-serif;
       font-size: 15px;
       background: radial-gradient(ellipse farthest-corner at center center, #fcf6e8 95%, rgba(171,157,157,0.1) 50%);
       margin: 1em;
@@ -87,8 +87,18 @@
     }
     .thumbnails > a {
       display: flex; 
-      width: 100%;
+      width: auto;
       margin-top: 0.5em;
+      text-decoration: none;
+      font: 550 100%/1.5 Courier, sans-serif;
+      background-color: white;
+      border: 0.35em outset #fcf6e833;
+      padding: 0.25em;
+      color: black;
+      transition:  border-style 1s ease-in;
+    }
+    .thumbnails > a:hover {
+      border-style: inset;
     }
     .cite {
       flex: 1 85%;
@@ -239,7 +249,7 @@
   const status = document.querySelector(".status");
   const thumbs = document.querySelector(".thumbnails");
   const datanames = document.querySelectorAll('[data-name]');
-  const {log}  = console;
+  const {log} = console;
 
 //// set targets
   function setURI(targ, keys) {  
@@ -272,29 +282,35 @@
   function mapAPI(records) {
     records.forEach(record => {
       let item = {};
-      let newitem = thumbFactory(record["ristype"]);
+      let newitem = thumbFactory();
       let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
 
-      ['isbn', 'btitle', 'au', 'addau', 'pub', 'creationdate', 'edition', 'ristype', 'oclcid', 'mms'].forEach(el => {
+      ['isbn', 'btitle', 'au', 'addau', 'pub', 'ristype', 'creationdate', 'edition', 'oclcid', 'mms'].forEach(el => {
         if (record[el] !== undefined) {
            item[el] = (Array.isArray(record[el])) ? record[el][0] : record[el];
         }
       });
       item["author"] = (item["addau"] !== undefined) ? item["addau"] : (item["au"] !== undefined) ? item["au"] : "";
-      div.innerHTML = [item["author"], '<i>' + item["btitle"] + '</i>', item["edition"], item["pub"], item["creationdate"]].join(", ");
-      
+      let rtype = (item["ristype"] !== undefined) ? item["ristype"] : (record["type"] !== undefined) ? record["type"] : "";
+
+      div.innerHTML = `<b>${rtype}</b><br><br>`;
+      ["addau", "btitle", "pub"].forEach(el => {
+        if (item[el] !== undefined) {
+            div.innerHTML += item[el] + ", ";
+        }
+      });
+      div.innerHTML += (item["creationdate"] !== undefined) ? `${item["creationdate"]}.` : `.`; 
+
       fetchThumbnail(item['isbn']).then(thumburl => {
           if (thumburl) {
             img.src = thumburl;
-          } else if (!thumburl && record["ristype"] === "VIDEO") {
-            img.src = "icons/icon_video.png";
-          } else if (!thumburl && record["ristype"] !== "VIDEO") {
-            img.src = "icons/icon_book.png";
+          } else {
+            img.src = `icons/icon_${rtype.toLowerCase()}.png`;
           } 
       });  
       
       let location = searchTarget(item);
-      anchor.href = "javascript:(window.open('" + location + "', '_blank'));"; 
+      anchor.href = `javascript:(window.open('${location}', '_blank'))`;
       thumbs.appendChild(newitem);
     });
   }
@@ -302,7 +318,7 @@
   function mapGoogle(records) {
     records.forEach(record => {
       let item = {}; 
-      let newitem = thumbFactory("BOOK");
+      let newitem = thumbFactory();
       let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
       
       item['isbn'] = (record.industryIdentifiers[1]) ? record.industryIdentifiers[1].identifier : record.industryIdentifiers[0].identifier;
@@ -312,10 +328,19 @@
       item['pub'] = (record["publisher"] && Array.isArray(record['publisher'])) ? record["publisher"][0] : record["publisher"];
       
       img.src = (record.imageLinks && record.imageLinks.smallThumbnail) ? record.imageLinks.smallThumbnail : "icons/icon_book.png";
-      div.innerHTML = [item["addau"], '<i>' + item["btitle"] + '</i>', item["pub"], item["creationdate"]].join(", ");
-      
+      div.innerHTML = `<b>BOOK</b><br><br>`;
+      ["addau", "btitle", "pub", "creationdate"].forEach(el => {
+        if (item[el] !== undefined) {
+          if (item[el] !== "creationdate") {
+            div.innerHTML += item[el] + ", ";
+          } else {
+            div.innerHTML += item[el] + ".";
+          }
+        }
+      });
+
       let location = searchTarget(item);
-      anchor.href = "javascript:(window.open('" + location + "', '_blank'));";  
+      anchor.href = `javascript:(window.open('${location}', '_blank'))`;
       thumbs.appendChild(newitem);
     });
   }
@@ -325,15 +350,12 @@
     let anchor = document.createElement('a');
     let div = document.createElement('div');
     let figure = document.createElement('figure'); 
-    let figcaption = document.createElement('figcaption');  
     let img = document.createElement('img');
     
     div.classList.add("cite");
     figure.classList.add("thumb");
-    figcaption.innerHTML = caption;
+
     figure.appendChild(img);
-    figure.appendChild(figcaption);
-    
     anchor.appendChild(div);
     anchor.appendChild(figure);
     fragment.appendChild(anchor);
@@ -350,7 +372,7 @@
     
       if (searchkeys['rft.btitle']) {  
         let searchtitle = searchkeys['rft.btitle'].toLowerCase();
-        recordtitle = recordtitle ? recordtitle.toLowerCase() : "fuckme";
+        recordtitle = recordtitle ? recordtitle.toLowerCase() : "abcdef";
         FILTER = FILTER && recordtitle.includes(searchtitle);
       }      
       if (searchkeys['rft.pubdate'] && recordate && FILTER) {
@@ -402,19 +424,23 @@
     
 //// controller
   async function searchController() {
+      while (thumbs.firstChild) {
+        thumbs.removeChild(thumbs.firstChild);
+      } 
+ 
+      ["primapi","gobooks","oclcapi"].forEach(source => {
+        recordset[source].records = [];
+        recordset[source].found = () => recordset[source].records.length > 0;
+        recordset[source].totrecs = () => recordset[source].records.length;
+      });  
+      
       document.querySelectorAll('[name^=rft]').forEach(el => {
         if (el.value) { searchkeys[el.name] = el.value; }
       });
 
       ISBN_SEARCH = searchkeys["rft.isbn"] ? true : false ;    
       TITL_SEARCH = (searchkeys["rft.btitle"] && !ISBN_SEARCH) ? true : false ;
-
-      ["primapi","gobooks","oclcapi"].forEach(source => {
-        recordset[source].records = [];
-        recordset[source].found = () => recordset[source].records.length > 0;
-        recordset[source].totrecs = () => recordset[source].records.length;
-      });
-
+     
       status.innerHTML = "Searching...";
       let time0 = performance.now(); 
 
@@ -524,6 +550,10 @@
     ["primapi","gobooks","oclcapi"].forEach(source => { recordset[source].records = []; });   
     [searchkeys, ISBN_SEARCH, TITL_SEARCH, ISBN, RISTYPE, CURSOR] = [{}, undefined, undefined, undefined, "BOOK", 0]; 
     status.innerHTML = "";
+  
+    while (thumbs.firstChild) {
+      thumbs.removeChild(thumbs.firstChild);
+    } 
     document.querySelector('input[name="rft.isbn"]').focus(); 
   }
 
