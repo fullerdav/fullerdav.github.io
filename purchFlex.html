@@ -19,7 +19,7 @@
       "requestform  panel"
       "requestform  panel";
       width: 50%;
-      height: auto;
+      height: 23em;
       min-height: 23em;
       border-radius: 8px;
       border: 1px inset #007dba;
@@ -83,6 +83,7 @@
       flex-flow: column nowrap;
       justify-content: flex-start;
       align-content: flex-start;
+      overflow-y: scroll;
     }
     .thumbnails > a {
       display: flex; 
@@ -95,6 +96,10 @@
     .thumb {
       flex: 1 15%;
       margin: 0;
+    }
+    .thumb > img {
+      height: 8em;
+      padding: 0.25em;
     }
     button {  
       max-height: 2.5em;
@@ -255,51 +260,41 @@
     } else {
        url.searchParams.set("q", setURI(target, urikeys[target]));
        if (RISTYPE === "VIDEO") { 
-        url.searchParams.set("qInclude", "facet_rtype,include,videos");
-       } else if (RISTYPE === "BOOK") {
-        url.searchParams.set("qInclude", "facet_rtype,include,books");
+        url.searchParams.set("qInclude", "facet_rtype,exact,videos");
+       } else {
+        url.searchParams.set("multiFacets", "facet_rtype,include,books|,|facet_rtype,include,videos");
        }
     }
     return url;
   }   
  
 //// Normalize results
-  async function mapAPI(records) {
+  function mapAPI(records) {
     records.forEach(record => {
-      let item = {}, result;
-      let newitem = thumbFactory();
-      let anchor = newitem.querySelector("a");
-      let div = newitem.querySelector("div");
-      let fig = newitem.querySelector("figure");
-      let img = document.createElement('img');
-      let caption = document.createElement('figcaption');
+      let item = {};
+      let newitem = thumbFactory(record["ristype"]);
+      let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
 
       ['isbn', 'btitle', 'au', 'addau', 'pub', 'creationdate', 'edition', 'ristype', 'oclcid', 'mms'].forEach(el => {
-        item[el] = (record[el] && Array.isArray(record[el])) ? record[el][0] : record[el];
+        if (record[el] !== undefined) {
+           item[el] = (Array.isArray(record[el])) ? record[el][0] : record[el];
+        }
       });
+      item["author"] = (item["addau"] !== undefined) ? item["addau"] : (item["au"] !== undefined) ? item["au"] : "";
+      div.innerHTML = [item["author"], '<i>' + item["btitle"] + '</i>', item["edition"], item["pub"], item["creationdate"]].join(", ");
       
-      caption.innerHTML = record["ristype"];
       fetchThumbnail(item['isbn']).then(thumburl => {
           if (thumburl) {
             img.src = thumburl;
           } else if (!thumburl && record["ristype"] === "VIDEO") {
             img.src = "icons/icon_video.png";
-          } else {
+          } else if (!thumburl && record["ristype"] !== "VIDEO") {
             img.src = "icons/icon_book.png";
           } 
       });  
-     
-      fig.appendChild(img);
-      fig.appendChild(caption);
-    
-      item["author"] = (item["addau"] !== undefined) ? item["addau"] : (item["au"] !== undefined) ? item["au"] : "";
-      // item["addau"] = record["au"].length > 1 ? item["au"] + ", et al." : item["au"];
-      div.innerHTML = [item["author"], '<i>' + item["btitle"] + '</i>', item["edition"], item["pub"], item["creationdate"]].join(", ");
-  
+      
       let location = searchTarget(item);
       anchor.href = "javascript:(window.open('" + location + "', '_blank'));"; 
-      anchor.appendChild(div);
-      anchor.appendChild(fig);
       thumbs.appendChild(newitem);
     });
   }
@@ -307,13 +302,9 @@
   function mapGoogle(records) {
     records.forEach(record => {
       let item = {}; 
-      let newitem = thumbFactory();
-      let anchor = newitem.querySelector("a");
-      let div = newitem.querySelector("div");
-      let fig = newitem.querySelector("figure");
-      let img = document.createElement('img');
-      let caption = document.createElement('figcaption');
-
+      let newitem = thumbFactory("BOOK");
+      let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
+      
       item['isbn'] = (record.industryIdentifiers[1]) ? record.industryIdentifiers[1].identifier : record.industryIdentifiers[0].identifier;
       item['btitle'] = (record["title"] && Array.isArray(record['title'])) ? record["title"][0] : record["title"];
       item['addau'] = (record["authors"] && Array.isArray(record['authors'])) ? record["authors"][0] : record["authors"];
@@ -321,28 +312,28 @@
       item['pub'] = (record["publisher"] && Array.isArray(record['publisher'])) ? record["publisher"][0] : record["publisher"];
       
       img.src = (record.imageLinks && record.imageLinks.smallThumbnail) ? record.imageLinks.smallThumbnail : "icons/icon_book.png";
-      caption.innerHTML = "BOOK";
-      fig.appendChild(img);
-      fig.appendChild(caption);
-
       div.innerHTML = [item["addau"], '<i>' + item["btitle"] + '</i>', item["pub"], item["creationdate"]].join(", ");
       
-      anchor.appendChild(div);
-      anchor.appendChild(fig);
-
       let location = searchTarget(item);
       anchor.href = "javascript:(window.open('" + location + "', '_blank'));";  
       thumbs.appendChild(newitem);
     });
   }
-
-  function thumbFactory() {
+     
+  function thumbFactory(caption) {
     let fragment = new DocumentFragment();
     let anchor = document.createElement('a');
     let div = document.createElement('div');
-    let figure = document.createElement('figure');
+    let figure = document.createElement('figure'); 
+    let figcaption = document.createElement('figcaption');  
+    let img = document.createElement('img');
+    
     div.classList.add("cite");
     figure.classList.add("thumb");
+    figcaption.innerHTML = caption;
+    figure.appendChild(img);
+    figure.appendChild(figcaption);
+    
     anchor.appendChild(div);
     anchor.appendChild(figure);
     fragment.appendChild(anchor);
@@ -500,8 +491,8 @@
 //// data helpers
   const urls = {
     primreq: "https://union-psb.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:01UCNY_INST?url_ver=Z39.88-2004&ctx_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-8&rft_val_fmt=info:ofi/fmt:kev:mtx:book",
-    primapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&tab=Everything&scope=MyInst_and_CI&limit=8&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
-    oclcapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&tab=oclc&scope=oclc&limit=8&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
+    primapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=Everything&scope=MyInst_and_CI&limit=8&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
+    oclcapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=oclc&scope=oclc&limit=8&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
     gobooks: "https://www.googleapis.com/books/v1/volumes?projection=full",
   };
 
@@ -518,11 +509,7 @@
     let url = new URL(urls.primreq); 
     searchParams.forEach(params => {
       let [rparam, sparam] = params.split(":");
-      if (rparam === "addau") {
-        let author = record[rparam];
-        record[rparam] = author.replace(/et al\./g, '');
-      }
-      if (record[rparam]) {
+      if (record[rparam] !== undefined) {
         url.searchParams.set(sparam, record[rparam]);
       }
     });
