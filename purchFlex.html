@@ -92,9 +92,10 @@
       margin-top: 0.5em;
       text-decoration: none;
       font: 550 100%/1.2 Courier, sans-serif;
-      font-size: 1.5em;
-      background-color: white;
-      border: 0.35em outset #fcf6e833;
+      font-size: 1.1em;
+      line-height: 1.2em;
+      background-color: whitesmoke;
+      border: 0.3em outset #fcf6e833;
       padding: 0.25em;
       color: black;
       transition:  border-style 1s ease-in;
@@ -319,7 +320,7 @@
       item['pub'] = (record["publisher"] && Array.isArray(record['publisher'])) ? record["publisher"][0] : record["publisher"];
       
       img.src = (record.imageLinks && record.imageLinks.smallThumbnail) ? record.imageLinks.smallThumbnail : "icons/icon_book.png";
-      div.innerHTML = formatCitation(rtype, item);
+      div.innerHTML = formatCitation("BOOK", item);
 
       let location = searchTarget(item);
       anchor.href = `javascript:(window.open('${location}', '_blank'))`;
@@ -346,7 +347,7 @@
   }
 
   function formatCitation(type, metadata) {
-      let citation = `<b>${rtype}</b><br><br>`;
+      let citation = `<b>${type}</b><br><br>`;
       ["addau", "btitle", "pub"].forEach(el => {
         if (metadata[el] !== undefined) {
             citation += metadata[el] + ", ";
