@@ -18,16 +18,16 @@
       "requestform  panel"
       "requestform  panel"
       "requestform  panel";
-      width: 50%;
+      width: 60%;
       height: 24em;
-      /*min-height: 23em;*/
       border-radius: 8px;
       border: 1px inset #007dba;
       border-left-width: 3px; 
       border-top-width: 2px; 
       box-shadow: 0 0 2px 0px #007dba;
-      font: 525 100%/1.2 Roboto,sans-serif;
-      font-size: 15px;
+      font: 525 100%/1.2 "Roboto Condensed", sans-serif;
+      font-size: 16px;
+      color: #222;
       background: radial-gradient(ellipse farthest-corner at center center, #fcf6e8 95%, rgba(171,157,157,0.1) 50%);
       margin: 1em;
     }
@@ -83,22 +83,28 @@
       flex-flow: column nowrap;
       justify-content: flex-start;
       align-content: flex-start;
-      overflow-y: scroll;
+      overflow-y: scroll;    
+      width: 98%;
     }
     .thumbnails > a {
       display: flex; 
-      width: 100%;
-      margin-top: 0.25em;
+      margin: 0.1em auto;
       text-decoration: none;
       font-family: Courier, sans-serif;
-      font-size: 16px;
-      background-color: whitesmoke;
-      border: 0.25em outset #fcf6e833;
-      padding: 0.25em;
-      color: whitesmoke;
-      transition: color 1.2s ease-in;
-      transition-delay: 5s;
+      background: whitesmoke;
+      border: 0.3em outset #9999bb;
+      padding: 0.25em; 
+      width: 98%;
+     
+      transition: opacity 1.5s 1.5s;
     }
+    .opacity-none {
+       opacity: 0;
+    }
+    .opacity-full {
+      opacity: 0.9;
+    }
+  
     .thumbnails > a:hover {
       border-style: inset;
     }
@@ -242,6 +248,7 @@
 <script>
 //// variables
   "use strict";
+  'use strict';
   let ISBN, ISBN_SEARCH, TITL_SEARCH, FOUND = false, CURSOR = 0, RISTYPE = "BOOK", searchkeys = {};
   let recordset = {"primapi":{"records":[],"mapper":mapAPI}, "gobooks":{"records":[],"mapper":mapGoogle },"oclcapi":{"records":[],"mapper":mapAPI}};
   const status = document.querySelector(".status");
@@ -270,38 +277,37 @@
        if (RISTYPE === "VIDEO") { 
         url.searchParams.set("qInclude", "facet_rtype,exact,videos");
        } else {
-        url.searchParams.set("multiFacets", "facet_rtype,include,books|,|facet_rtype,include,videos");
+        url.searchParams.set("multiFacets", "facet_rtype,exact,books|,|facet_rtype,exact,videos");
        }
     }
     return url;
   }   
  
 //// Normalize results
-  function mapAPI(records) {
+  async function mapAPI(records) {
     records.forEach(record => {
       let item = {};
       let newitem = thumbFactory();
       let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
 
-      ['isbn', 'btitle', 'au', 'addau', 'pub', 'ristype', 'creationdate', 'edition', 'oclcid', 'mms', 'date'].forEach(el => {
-           item[el] = ((record[el] !== undefined) && Array.isArray(record[el])) ? record[el][0] : record[el];
+      ['isbn', 'btitle', 'pub', 'edition', 'oclcid', 'mms', 'creationdate', 'date', 'addau', 'au', 'ristype', 'type', 'format'].forEach(el => {
+           item[el] = (record.hasOwnProperty(el) && Array.isArray(record[el])) ? String(record[el][0]) : String(record[el]);
       });
-      item["creationdate"] = (item["creationdate"] !== undefined) ?  item["creationdate"].match(/^\d{4}/)[0] : item["date"].match(/^\d{4}/)[0];
-      item["author"] = (item["addau"] !== undefined) ? item["addau"] : (item["au"] !== undefined) ? item["au"] : "";
-      let rtype = (item["ristype"] !== undefined) ? item["ristype"] : (record["type"] !== undefined) ? record["type"] : "";
+    
+      item["creationdate"] = (item["creationdate"] !== 'undefined') ? item["creationdate"] : (item["date"] !== 'undefined') ? item["date"] : "undefined";
+      item["addau"] = (item["addau"] !== 'undefined') ? item["addau"] : (item["au"] !== 'undefined') ? item["au"] : "undefined";
+      item["ristype"] = (item["ristype"] !== 'undefined') ? item["ristype"] : (item["type"] !== 'undefined') ? item["type"] : "undefined";
       
-      div.innerHTML = formatCitation(rtype, item);
-      fetchThumbnail(item['isbn']).then(thumburl => {
-          img.src = thumburl ? thumburl : `icons/icon_${rtype.toLowerCase()}.png`;
-      });  
-      
+      for (let key of Object.keys(item)) { item[key] = item[key].trim(); } 
+      div.innerHTML = formatCitation(item);
+      fetchThumbnail(item['isbn']).then(thumburl => { img.src = thumburl ? thumburl : `icons/icon_${item["ristype"].toLowerCase()}.png`; });  
       let location = searchTarget(item);
-      anchor.href = `javascript:(window.open('${location}', '_blank'))`;
+      anchor.href = `javascript:window.open('${location}', '_blank')`;
       thumbs.appendChild(newitem);
     });  
   }
 
-  function mapGoogle(records) {
+  async function mapGoogle(records) {
     records.forEach(record => {
       let item = {}; 
       let newitem = thumbFactory();
@@ -325,7 +331,7 @@
   function filterAPI(recordset) {
     let records = recordset.filter(record => {
       let FILTER = true;     
-   
+
       if (searchkeys.hasOwnProperty('rft.btitle')) {  
         let recordtitle = (record.btitle && Array.isArray(record.btitle)) ? record.btitle[0] : record.btitle;
         recordtitle = recordtitle ? recordtitle.toLowerCase() : (record.title && Array.isArray(record.title)) ? record["title"][0].toLowerCase() : record["title"].toLowerCase();
@@ -362,7 +368,7 @@
 //// fetch data
   async function fetchThumbnail(isbn) {
       if (!isbn) { return false; }
-      let bibkey = "isbn:" + isbn, data, response;
+      let bibkey = "isbn:" + isbn, data, response, oldata, olresponse, imgurl;
       let url = new URL(urls.gobooks);
       url.searchParams.set("q", bibkey);
 
@@ -374,25 +380,30 @@
       }
       
       if (!response.ok) {
-        response = null, data = null;
         try {
-          response = await fetch(`https://covers.openlibrary.org/a/isbn/${isbn}-S.jpg`);
-          let oldata = await response.blob();
-          log(oldata);
+          olresponse = await fetch(`https://covers.openlibrary.org/a/isbn/${isbn}-S.jpg`);
+          let oldata = await olresponse.blob();
         } catch(e) { 
           status.innerHTML = e; 
         }
       }
       
-      if (data && data.totalItems === 1) {
-        if (data.items[0].volumeInfo.imageLinks.smallThumbnail !== undefined) {
-          return data.items[0].volumeInfo.imageLinks.smallThumbnail;
-        } 
-      } else if (olresponse.ok) {
-         return olresponse.url;
+      if (response && response.ok) {
+        if (data && data.totalItems === 1) {
+          let vol = data.items[0].volumeInfo;
+          if (vol.imageLinks && vol.imageLinks.smallThumbnail) {
+            imgurl = data.items[0].volumeInfo.imageLinks.smallThumbnail;
+          } 
+        }
+      } else if (olresponse && olresponse.ok) {
+         if (oldata && oldata.url) {
+          imgurl = data.url;
+         }
       } else {
-         return false;
+         imgurl = false;
       }
+      log(imgurl);
+      return imgurl;
   }
 
   async function fetchJSON(target) {
@@ -461,26 +472,30 @@
 
       let time1 = performance.now();
       status.innerHTML = `Search completed: ${((time1 - time0)/1000).toFixed(2)}s<br>`;
-      
+      // if (!ISBN_SEARCH && !TITL_SEARCH) { status.innerHTML = "Either ISBN or TITLE is required"; }
+      showRecords();
+  }  
+
+  function showRecords() {
+      const sources = {"primapi":"Primo", "oclcapi":"Worldcat", "gobooks":"Google"};
       for (let key of Object.keys(recordset)) { 
         if (recordset[key].found()) { 
-          FOUND = true;
-          showRecords(key);
-        }
-      } 
-      if (!ISBN_SEARCH && !TITL_SEARCH) { status.innerHTML = "Either ISBN or TITLE is required"; }
-      if (!FOUND) { status.innerHTML += "No records found"; } 
-  } 
-
-  function showRecords(source) {
-      const sources = {"primapi":"Primo", "oclcapi":"Worldcat", "gobooks":"Google"};
-      status.innerHTML += `${recordset[source].totrecs()} record(s) found in ${sources[source]}`;
-      recordset[source].mapper(recordset[source].records);
+          FOUND = true; 
+          status.innerHTML += `${recordset[key].totrecs()} record(s) found in ${sources[key]}`;
+          let promise = recordset[key].mapper(recordset[key].records); 
+          promise.then(() => {
+            let anchors = document.querySelectorAll(".thumbnails > a");
+            anchors.forEach(anchor => { anchor.style.opacity = '0.9'; });
+          });  
+        } 
+      }  
+      if (!FOUND) { status.innerHTML += "No records found"; }
   }
 
 //// event listeners
+
   document.querySelector('.littlebox').addEventListener("click", function(evt){    
-    this.classList.toggle("expandbox");
+    log(evt);
   }, false); 
 
   document.querySelector('input[name="rft.isbn"]').addEventListener("blur", function(evt){  
@@ -511,13 +526,13 @@
     "almasru":{"rft.btitle":"alma.title==", "rft.au":"alma.creator=", "rft.pub":"alma.publisher=", "rft.year":"alma.main_pub_date=="}
   };
 
-  const searchParams = ['isbn:rft.isbn', 'btitle:rft.btitle', 'addau:rft.au', 'edition:rft.edition', 'pub:rft.publisher', 'creationdate:rft.pubdate', 'oclcid:rft.oclcnum', 'mms:rft.mms_id']
   
-  function searchTarget(record){
+  function searchTarget(record) {
+    const searchParams = ['isbn:rft.isbn', 'btitle:rft.btitle', 'addau:rft.au', 'edition:rft.edition', 'pub:rft.publisher', 'creationdate:rft.pubdate', 'oclcid:rft.oclcnum', 'mms:rft.mms_id'];
     let url = new URL(urls.primreq); 
     searchParams.forEach(params => {
       let [rparam, sparam] = params.split(":");
-      if (record[rparam] !== undefined) {
+      if (record[rparam] !== "undefined") {
         url.searchParams.set(sparam, record[rparam]);
       }
     });
@@ -529,13 +544,13 @@
         el.value = ""; 
     });
     document.querySelector('input[name="videos"]').checked = false; 
-    ["primapi","gobooks","oclcapi"].forEach(source => { recordset[source].records = []; });   
-    [searchkeys, ISBN_SEARCH, TITL_SEARCH, ISBN, RISTYPE, CURSOR, FOUND] = [{}, undefined, undefined, undefined, "BOOK", 0, false]; 
     status.innerHTML = "";
-  
     while (thumbs.firstChild) {
       thumbs.removeChild(thumbs.firstChild);
     } 
+    ["primapi","gobooks","oclcapi"].forEach(source => { recordset[source].records = []; });   
+    [searchkeys, ISBN_SEARCH, TITL_SEARCH, ISBN, RISTYPE, CURSOR, FOUND] = [{}, undefined, undefined, undefined, "BOOK", 0, false]; 
+  
     document.querySelector('input[name="rft.isbn"]').focus(); 
   }
 
@@ -549,7 +564,8 @@
     let div = document.createElement('div');
     let figure = document.createElement('figure'); 
     let img = document.createElement('img');
-    div.classList.add("cite");
+    div.classList.add("cite"); 
+    anchor.classList.add("opacity-none");
     figure.classList.add("thumb");
     figure.appendChild(img);
     anchor.appendChild(div);
@@ -560,26 +576,33 @@
     return fragment;
   }
 
-  function formatCitation(type, metadata) {
-      let citation = `<b>${type}</b><br>`;
-      ["addau", "btitle", "pub"].forEach(el => {
-        if (metadata[el] !== undefined) {
-          citation += metadata[el] + ", ";
-        }
-      });
-      citation += (metadata["creationdate"] !== undefined) ? `${metadata["creationdate"]}.` : `.`; 
-      return citation;
+  function formatCitation(record) {
+    let citation = record["ristype"] !== "undefined" ? `<b>${record["ristype"]}</b><br>` : `<b>unknown</b><br>`;
+    ["au", "btitle", "pub"].forEach(el => {
+      citation += (record[el] !== "undefined") ? record[el] + ", " : "";
+    });
+    citation += (record["creationdate"] !== "undefined") ? `${record["creationdate"]}.` : `date unknown.`;
+    citation += (record.hasOwnProperty("format") && record["format"] !== "undefined") ? `<br><br>${record["format"]}.` : ""; 
+    return citation;
   }
 
   function watchThumbs() {
     const observedNode = document.querySelector('.thumbnails');
-    const config = { attributes:true, childList:true, subtree:true };
+    const config = { attributes:false, childList:true, subtree:true };
 
     const callback = function(mutationsList, observer) {
       for (const mutation of mutationsList) {
         if (mutation.type === 'childList') {
-          let anchor = mutation.addedNodes[0];
-          anchor.style.color = 'black';
+          let anchors = document.querySelectorAll(".thumbnails > a");
+          //let anchor = mutation.addedNodes[0];
+          // if (!anchor.classList.contains("opacity-none")) {
+          //      anchor.classList.replace("opacity-none", "opacity-full");
+          // }
+          anchors.forEach(anchor => {
+            if (!anchor.classList.contains("opacity-none")) {
+               anchor.classList.replace("opacity-none", "opacity-full");
+            }
+          });
         }
       }  
     }
