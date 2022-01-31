@@ -90,12 +90,13 @@
       display: flex; 
       margin: 0.1em auto;
       text-decoration: none;
-      font: 550 100%/1.8 Courier, sans-serif;
+      font-weight: 550;
+      font-family: "Courier", serif;
       background: whitesmoke;
       border: 0.3em outset #A8A8CC33;
       padding: 0.25em; 
       width: 96%;
-      color: #000088;
+      color: #000060;
       opacity: 0;
       transition: opacity 1.5s 1.5s;
     }
@@ -106,10 +107,11 @@
       flex: 4 4 84%; 
     }
     .promptxt {
-      border: 0.2em outset #A8A8CC33;
+      /*border: 0.2em outset #A8A8CC33;*/
       box-shadow: inset 2px 2px 2px 1px #A8A8CC33;
-      padding: 0 12%;
-      margin:  0 5%;
+      padding: 0 0.5em;
+      margin:  1em 0;
+      /*font-weight: bold;*/
     }
     .thumb {
       flex: 1 1 16%;
@@ -286,6 +288,7 @@
  
 //// Normalize results
   async function mapAPI(records) {
+    makeHeader();
     records.forEach(record => {
       let item = {};
       let newitem = newThumb.cloneNode(true);
@@ -294,6 +297,8 @@
       ['isbn', 'btitle', 'pub', 'edition', 'oclcid', 'mms', 'creationdate', 'date', 'addau', 'au', 'ristype', 'type', 'format'].forEach(el => {
            item[el] = (record.hasOwnProperty(el) && Array.isArray(record[el])) ? String(record[el][0]) : String(record[el]);
       });
+
+      if (FOUND === "WorldCat") { log(record); } 
     
       item["creationdate"] = (item["creationdate"] !== 'undefined') ? item["creationdate"] : (item["date"] !== 'undefined') ? item["date"] : "undefined";
       item["addau"] = (item["addau"] !== 'undefined') ? item["addau"] : (item["au"] !== 'undefined') ? item["au"] : "undefined";
@@ -301,6 +306,7 @@
       
       for (let key of Object.keys(item)) { item[key] = item[key].trim(); } 
       div.innerHTML = formatCitation(item);
+      
       fetchThumbnail(item['isbn']).then(thumburl => { img.src = thumburl ? thumburl : `icons/icon_${item["ristype"].toLowerCase()}.png`; });  
       let location = searchTarget(item);
       anchor.href = `javascript:window.open('${location}', '_blank')`;
@@ -571,10 +577,12 @@
     let div = document.createElement('div');
     let figure = document.createElement('figure'); 
     let img = document.createElement('img');
+    let blq = document.createElement('blockquote');
     div.classList.add("cite"); 
     anchor.classList.add("opacity-none");
     figure.classList.add("thumb");
     
+    div.appendChild(blq);
     figure.appendChild(img);
     anchor.appendChild(div);
     anchor.appendChild(figure);
@@ -590,14 +598,22 @@
     });
     citation += (record["creationdate"] !== "undefined") ? `${record["creationdate"]}.` : `date unknown.`;
     citation += (record.hasOwnProperty("format") && record["format"] !== "undefined") ? ` <br>${record["format"]}.` : "";
-    if (FOUND === "Primo") {
-      citation += `<blockquote class="promptxt">UC owned. Place requests in Primo?</blockquote>`; 
-    } else {
-      citation += `<blockquote class="promptxt">Not UC owned.  Request in Primo?</blockquote>`; 
-    }
+   
     return citation;
   }
 
+  function makeHeader() {
+    let headertxt;
+    if (FOUND === "Primo") {
+      headertxt = `<b>Check availability at Schaffer Library or place a request.</b><br>note: login to Primo to see request options or check their status.`;
+    } else {
+      headertxt = `<b>Not owned by Schaffer Library.</b>Select record foruse in requesting [ill, purchase].`;
+    }
+    let blq = document.createElement("blockquote");
+    blq.classList.add("promptxt");
+    blq.innerHTML = headertxt;
+    document.querySelector(".thumbnails").appendChild(blq);
+  }
   // function watchThumbs() {
   //   const observedNode = document.querySelector('.thumbnails');
   //   const config = { attributes:false, childList:true, subtree:true };
