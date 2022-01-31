@@ -90,29 +90,29 @@
       display: flex; 
       margin: 0.1em auto;
       text-decoration: none;
-      font-family: Courier, sans-serif;
+      font: 550 100%/1.8 Courier, sans-serif;
       background: whitesmoke;
-      border: 0.3em outset #9999bb;
+      border: 0.3em outset #A8A8CC33;
       padding: 0.25em; 
-      width: 98%;
-     
+      width: 96%;
+      color: #000088;
+      opacity: 0;
       transition: opacity 1.5s 1.5s;
     }
-    .opacity-none {
-       opacity: 0;
-    }
-    .opacity-full {
-      opacity: 0.9;
-    }
-  
     .thumbnails > a:hover {
       border-style: inset;
     }
     .cite {
-      flex: 1 80%; 
+      flex: 4 4 84%; 
+    }
+    .promptxt {
+      border: 0.2em outset #A8A8CC33;
+      box-shadow: inset 2px 2px 2px 1px #A8A8CC33;
+      padding: 0 12%;
+      margin:  0 5%;
     }
     .thumb {
-      flex: 1 20%;
+      flex: 1 1 16%;
       margin: 0;
     }
     .thumb > img {
@@ -254,6 +254,7 @@
   const status = document.querySelector(".status");
   const thumbs = document.querySelector(".thumbnails");
   const datanames = document.querySelectorAll('[data-name]');
+  const newThumb = thumbFactory();
   const {log} = console;
 
 //// set targets
@@ -277,7 +278,7 @@
        if (RISTYPE === "VIDEO") { 
         url.searchParams.set("qInclude", "facet_rtype,exact,videos");
        } else {
-        url.searchParams.set("multiFacets", "facet_rtype,exact,books|,|facet_rtype,exact,videos");
+        url.searchParams.set("multiFacets", "facet_rtype,include,books|,|facet_rtype,include,videos");
        }
     }
     return url;
@@ -287,7 +288,7 @@
   async function mapAPI(records) {
     records.forEach(record => {
       let item = {};
-      let newitem = thumbFactory();
+      let newitem = newThumb.cloneNode(true);
       let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
 
       ['isbn', 'btitle', 'pub', 'edition', 'oclcid', 'mms', 'creationdate', 'date', 'addau', 'au', 'ristype', 'type', 'format'].forEach(el => {
@@ -310,7 +311,7 @@
   async function mapGoogle(records) {
     records.forEach(record => {
       let item = {}; 
-      let newitem = thumbFactory();
+      let newitem = newThumb.cloneNode(true);
       let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
       
       item['isbn'] = (record.industryIdentifiers[1]) ? record.industryIdentifiers[1].identifier : record.industryIdentifiers[0].identifier;
@@ -349,17 +350,23 @@
       if (searchkeys.hasOwnProperty('rft.publisher') && FILTER) {   
         let recordpub = (record.pub && Array.isArray(record.pub)) ? record.pub[0].toLowerCase() : record.pub.toLowerCase(); 
         if (recordpub) {
-          let searchpub = searchkeys['rft.publisher'].toLowerCase();
+          let searchpub = searchkeys['rft.publisher'].trim().toLowerCase();
           FILTER = FILTER && recordpub.includes(searchpub);
         }
       }
       if (searchkeys.hasOwnProperty('rft.au') && FILTER) {
         let recordau = (record.authors && Array.isArray(record.authors)) ? record.authors[0] : record.authors;
         if (recordau) {
-          let searchau = searchkeys['rft.au'].toLowerCase();
+          let searchau = searchkeys['rft.au'].trim().toLowerCase();
           FILTER = FILTER && recordau.includes(searchau);
         }
       }
+      if (record.hasOwnProperty("ristype") && FILTER) {
+         let ristype = (record.ristype && Array.isArray(record.ristype)) ? record.ristype[0] : record.ristype;
+         ristype = ristype.trim().toLowerCase();
+         FILTER = FILTER && (ristype === "video" || ristype === "book");
+      }
+      
       return FILTER;      
     });
     return records;
@@ -390,13 +397,14 @@
       
       if (response && response.ok) {
         if (data && data.totalItems === 1) {
-          let vol = data.items[0].volumeInfo;
-          if (vol.imageLinks && vol.imageLinks.smallThumbnail) {
-            imgurl = data.items[0].volumeInfo.imageLinks.smallThumbnail;
+          let thumbnail = data.items[0].volumeInfo.imageLinks;
+          if (thumbnail && thumbnail.smallThumbnail) {
+            imgurl = thumbnail.smallThumbnail;
           } 
         }
       } else if (olresponse && olresponse.ok) {
          if (oldata && oldata.url) {
+          log("OL thumbnail needed", isbn)
           imgurl = data.url;
          }
       } else {
@@ -431,7 +439,7 @@
       });  
       
       document.querySelectorAll('[name^=rft]').forEach(el => {
-        if (el.value) { searchkeys[el.name] = el.value; }
+        if (el.value) { searchkeys[el.name] = el.value.trim().toLowerCase(); }
       });
 
       ISBN_SEARCH = searchkeys["rft.isbn"] ? true : false ;    
@@ -443,7 +451,7 @@
       await fetchJSON("primapi").then(records => {
           if (records && records.docs) {
             const results = records.docs.map(item => {
-              return { ...item.pnx.addata, ...item.pnx.display };
+              return { ...item.pnx.addata, ...item.pnx.display, ...item.pnx.control };
             });
             recordset["primapi"].records = filterAPI(results);
           }
@@ -463,7 +471,7 @@
         await fetchJSON("oclcapi").then(oclc_records => {
           if (oclc_records && oclc_records.docs) {
             const results = oclc_records.docs.map(item => {
-              return { ...item.pnx.addata, ...item.pnx.display };
+              return { ...item.pnx.addata, ...item.pnx.display, ...item.pnx.control };
             });
             recordset["oclcapi"].records = filterAPI(results);
           }
@@ -480,8 +488,8 @@
       const sources = {"primapi":"Primo", "oclcapi":"Worldcat", "gobooks":"Google"};
       for (let key of Object.keys(recordset)) { 
         if (recordset[key].found()) { 
-          FOUND = true; 
-          status.innerHTML += `${recordset[key].totrecs()} record(s) found in ${sources[key]}`;
+          FOUND = sources[key]; 
+          status.innerHTML += `${recordset[key].totrecs()} record(s) found in ${FOUND}`;
           let promise = recordset[key].mapper(recordset[key].records); 
           promise.then(() => {
             let anchors = document.querySelectorAll(".thumbnails > a");
@@ -492,8 +500,7 @@
       if (!FOUND) { status.innerHTML += "No records found"; }
   }
 
-//// event listeners
-
+//// event listeners 
   document.querySelector('.littlebox').addEventListener("click", function(evt){    
     log(evt);
   }, false); 
@@ -559,7 +566,7 @@
     box.classList.toggle("expandbox");
   }
 
-  function thumbFactory(caption) {
+  function thumbFactory() {
     let anchor = document.createElement('a');
     let div = document.createElement('div');
     let figure = document.createElement('figure'); 
@@ -567,10 +574,10 @@
     div.classList.add("cite"); 
     anchor.classList.add("opacity-none");
     figure.classList.add("thumb");
+    
     figure.appendChild(img);
     anchor.appendChild(div);
     anchor.appendChild(figure);
- 
     let fragment = new DocumentFragment();
     fragment.appendChild(anchor);
     return fragment;
@@ -582,34 +589,39 @@
       citation += (record[el] !== "undefined") ? record[el] + ", " : "";
     });
     citation += (record["creationdate"] !== "undefined") ? `${record["creationdate"]}.` : `date unknown.`;
-    citation += (record.hasOwnProperty("format") && record["format"] !== "undefined") ? `<br><br>${record["format"]}.` : ""; 
+    citation += (record.hasOwnProperty("format") && record["format"] !== "undefined") ? ` <br>${record["format"]}.` : "";
+    if (FOUND === "Primo") {
+      citation += `<blockquote class="promptxt">UC owned. Place requests in Primo?</blockquote>`; 
+    } else {
+      citation += `<blockquote class="promptxt">Not UC owned.  Request in Primo?</blockquote>`; 
+    }
     return citation;
   }
 
-  function watchThumbs() {
-    const observedNode = document.querySelector('.thumbnails');
-    const config = { attributes:false, childList:true, subtree:true };
+  // function watchThumbs() {
+  //   const observedNode = document.querySelector('.thumbnails');
+  //   const config = { attributes:false, childList:true, subtree:true };
 
-    const callback = function(mutationsList, observer) {
-      for (const mutation of mutationsList) {
-        if (mutation.type === 'childList') {
-          let anchors = document.querySelectorAll(".thumbnails > a");
-          //let anchor = mutation.addedNodes[0];
-          // if (!anchor.classList.contains("opacity-none")) {
-          //      anchor.classList.replace("opacity-none", "opacity-full");
-          // }
-          anchors.forEach(anchor => {
-            if (!anchor.classList.contains("opacity-none")) {
-               anchor.classList.replace("opacity-none", "opacity-full");
-            }
-          });
-        }
-      }  
-    }
-    const observer = new MutationObserver(callback);
-    observer.observe(observedNode, config);
-  }
-  watchThumbs();
+  //   const callback = function(mutationsList, observer) {
+  //     for (const mutation of mutationsList) {
+  //       if (mutation.type === 'childList') {
+  //         let anchors = document.querySelectorAll(".thumbnails > a");
+  //         //let anchor = mutation.addedNodes[0];
+  //         // if (!anchor.classList.contains("opacity-none")) {
+  //         //      anchor.classList.replace("opacity-none", "opacity-full");
+  //         // }
+  //         anchors.forEach(anchor => {
+  //           if (!anchor.classList.contains("opacity-none")) {
+  //              anchor.classList.replace("opacity-none", "opacity-full");
+  //           }
+  //         });
+  //       }
+  //     }  
+  //   }
+  //   const observer = new MutationObserver(callback);
+  //   observer.observe(observedNode, config);
+  // }
+  // watchThumbs();
 
 </script>
 </html>
