@@ -116,7 +116,7 @@
       margin: 0;
     }
     .thumb > img {
-      height: 8em;
+      height: 7.5em;
       padding: 0.25em;
     }
     button {  
@@ -249,7 +249,7 @@
 //// variables
   "use strict";
   'use strict';
-  let ISBN, ISBN_SEARCH, TITL_SEARCH, FOUND = false, CURSOR = 0, RISTYPE = "BOOK", searchkeys = {};
+  let ISBN, ISBN_SEARCH, TITL_SEARCH, FOUND, CURSOR = 0, RISTYPE = "BOOK", searchkeys = {};
   let recordset = {"primapi":{"records":[],"mapper":mapAPI}, "gobooks":{"records":[],"mapper":mapGoogle },"oclcapi":{"records":[],"mapper":mapAPI}};
   const status = document.querySelector(".status");
   const thumbs = document.querySelector(".thumbnails");
@@ -295,8 +295,6 @@
       ['isbn', 'btitle', 'pub', 'edition', 'oclcid', 'mms', 'creationdate', 'date', 'addau', 'au', 'ristype', 'type', 'format'].forEach(el => {
            item[el] = (record.hasOwnProperty(el) && Array.isArray(record[el])) ? String(record[el][0]) : String(record[el]);
       });
-
-      if (FOUND === "WorldCat") { log(record); } 
     
       item["creationdate"] = (item["creationdate"] !== 'undefined') ? item["creationdate"] : (item["date"] !== 'undefined') ? item["date"] : "undefined";
       item["addau"] = (item["addau"] !== 'undefined') ? item["addau"] : (item["au"] !== 'undefined') ? item["au"] : "undefined";
@@ -336,7 +334,7 @@
   function filterAPI(recordset) {
     let records = recordset.filter(record => {
       let FILTER = true;     
-
+log(FOUND, ": ", record);
       if (searchkeys.hasOwnProperty('rft.btitle')) {  
         let recordtitle = (record.btitle && Array.isArray(record.btitle)) ? record.btitle[0] : record.btitle;
         recordtitle = recordtitle ? recordtitle.toLowerCase() : (record.title && Array.isArray(record.title)) ? record["title"][0].toLowerCase() : record["title"].toLowerCase();
@@ -414,7 +412,6 @@
       } else {
          imgurl = false;
       }
-      log(imgurl);
       return imgurl;
   }
 
@@ -505,10 +502,6 @@
   }
 
 //// event listeners 
-  document.querySelector('.littlebox').addEventListener("click", function(evt){    
-    this.style.classList.toggle('.expandbox');
-  }, false); 
-
   document.querySelector('input[name="rft.isbn"]').addEventListener("blur", function(evt){  
     if (evt.target.value) {
       ISBN = evt.target.value.replace(/[^\dxX]/g,"");
@@ -520,7 +513,12 @@
 
   document.querySelector('input[name="videos"]').addEventListener("change", function(evt){  
      RISTYPE = (evt.target.checked) ? "VIDEO" : "BOOK";
-  }, false); 
+  }, false);
+
+  function showHelp() {
+    let box = document.querySelector(".littlebox");
+    box.classList.toggle("expandbox");
+  }
 
 //// data helpers
   const urls = {
@@ -560,14 +558,9 @@
       thumbs.removeChild(thumbs.firstChild);
     } 
     ["primapi","gobooks","oclcapi"].forEach(source => { recordset[source].records = []; });   
-    [searchkeys, ISBN_SEARCH, TITL_SEARCH, ISBN, RISTYPE, CURSOR, FOUND] = [{}, undefined, undefined, undefined, "BOOK", 0, false]; 
+    [searchkeys, ISBN_SEARCH, TITL_SEARCH, ISBN, RISTYPE, CURSOR, FOUND] = [{}, undefined, undefined, undefined, undefined, 0, false]; 
   
     document.querySelector('input[name="rft.isbn"]').focus(); 
-  }
-
-  function showHelp() {
-    let box = document.querySelector(".littlebox");
-    box.classList.toggle("expandbox");
   }
 
   function thumbFactory() {
@@ -596,7 +589,6 @@
     });
     citation += (record["creationdate"] !== "undefined") ? `${record["creationdate"]}.` : `date unknown.`;
     citation += (record.hasOwnProperty("format") && record["format"] !== "undefined") ? ` <br>${record["format"]}.` : "";
-   
     return citation;
   }
 
