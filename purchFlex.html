@@ -10,7 +10,7 @@
 <style>
     .container {
       display: grid;
-      grid-template-columns: 2fr 3fr;
+      grid-template-columns: 1fr 2fr;
       grid-template-rows: 0.5fr 2fr 1fr 0.5fr;
       grid-auto-flow: row;
       grid-template-areas: 
@@ -27,7 +27,7 @@
       box-shadow: 0 0 2px 0px #007dba;
       font: 525 100%/1.2 "Roboto Condensed", sans-serif;
       font-size: 16px;
-      color: #222;
+      color: #181818;
       background: radial-gradient(ellipse farthest-corner at center center, #fcf6e8 95%, rgba(171,157,157,0.1) 50%);
       margin: 1em;
     }
@@ -104,7 +104,7 @@
       border-style: inset;
     }
     .cite {
-      flex: 1 1 90%; 
+      flex-grow: 1; 
     }
     .promptxt {
       box-shadow: inset 2px 2px 2px 1px #A8A8CC33;
