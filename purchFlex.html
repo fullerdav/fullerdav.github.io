@@ -502,7 +502,7 @@
 
 //// event listeners 
   document.querySelector('.littlebox').addEventListener("click", function(evt){    
-    log(evt);
+    this.style.classList.toggle('.expandbox');
   }, false); 
 
   document.querySelector('input[name="rft.isbn"]').addEventListener("blur", function(evt){  
