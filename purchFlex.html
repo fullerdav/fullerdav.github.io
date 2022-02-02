@@ -18,31 +18,31 @@
       "requestform  panel"
       "requestform  panel"
       "requestform  panel";
-      width: 60%;
+      width: 50%;
       height: 24em;
       border-radius: 8px;
-      border: 1px inset #007dba;
-      border-left-width: 3px; 
-      border-top-width: 2px; 
-      box-shadow: 0 0 2px 0px #007dba;
-      font: 525 100%/1.2 "Roboto Condensed", sans-serif;
-      font-size: 16px;
-      color: #181818;
-      background: radial-gradient(ellipse farthest-corner at center center, #fcf6e8 95%, rgba(171,157,157,0.1) 50%);
+      box-shadow: 1px 0 1px 1px #822433cc inset;
+      border: 1px ridge #822433cc;
+      font-family: Source Sans Pro, Helvetica Neue, sans-serif;
+      font-size: 15px;
+      color: #000000cc;
+      background: #ededed;
       margin: 1em;
+      transition:  all .4s cubic-bezier(.25,.8,.25,1);
+      transform:  translateZ(0);
     }
     .requestform {
       grid-area: requestform;
       grid-template-rows: 1fr 5fr 1fr 1fr;
       grid-template-areas:
-        "title"
+        "header"
         "inputels"
         "status"
         "buttons";
       padding: 0.5em;
     }    
-    .title {
-      grid-area: title;
+    .header {
+      grid-area: header;
       padding: 0.5em;
     } 
     ul.flexer {
@@ -72,7 +72,7 @@
     } 
     .panel > img {
       margin: 4px 0;
-      height: 25px;
+
     }
     .help {
       grid-area: helpme;
@@ -84,48 +84,72 @@
       justify-content: flex-start;
       align-content: flex-start;
       overflow-y: scroll;    
-      width: 98%;
     }
     .thumbnails > a {
       display: flex; 
-      margin: 0.1em auto;
+      margin: 0.1em 0;
       text-decoration: none;
-      font-weight: 550;
-      font-family: "Courier", serif;
-      background: whitesmoke;
-      border: 0.3em outset #A8A8CC33;
-      padding: 0.25em; 
-      width: 96%;
-      color: #000060;
-      opacity: 0;
-      transition: opacity 1.5s 1.5s;
+      line-height:  1.25;
+      font-weight: 480;
+      font-size: 0.9em;
+      box-shadow: inset 0 0 0.15em 0.04em #822433cc;
+      border: 1px outset #822433cc;
+      background: #F6F6F6;
+      padding: 0.5em 0.75em; 
+      width: 95%;
+      color: #000000cc;
+      opacity: 0.8;
     }
     .thumbnails > a:hover {
       border-style: inset;
+      background: white;
+      opacity: 1;
     }
     .cite {
-      flex-grow: 1; 
+      flex: 1 1 auto;
+      width: 90%; 
     }
     .promptxt {
-      box-shadow: inset 2px 2px 2px 1px #A8A8CC33;
+      box-shadow: inset 2px 1px 2px 0 #822433cc;
       padding: 0.5em;
-      margin:  0.75em 0;
+      margin:  0.25em 0;
     }
     .thumb {
-      flex-grow: 1;
+      flex: 1 1 auto;
       margin: 0;
     }
     .thumb > img {
-      height: 7.5em;
+      height: 6em;
       padding: 0.25em;
+    }
+    .rtype {
+      font-size: 0.75em;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .rtype-video {
+      color: #822433;
+    }
+    .rtype-book {
+      color: #28F;
+    }
+    .btitle {
+      font-weight: 600;
+      font-size: 1.1em;
+      margin: 0.35em 0;
+      align-self: flex-start;
+      color: #000000cc;
     }
     button {  
       max-height: 2.5em;
       margin: 0.5em;
       padding: 0.1em 0.35em;
       color: white;
-      background: #3daaff;
-      border: 0.4em outset #2299ff;
+      background: #822433;
+      border: 0.5em outset #82243399;
+     /* background: #3daaff;
+      border: 0.4em outset #2299ff;*/
       border-radius: 6px;
     } 
     input {
@@ -164,17 +188,17 @@
       font-size: 0.1em;
       position: absolute;  
       width: auto;
-      transition: opacity 1.2s cubic-bezier(0.35, 0.25, 0.25, 0.34);
+      z-index: 10; 
+      cursor: pointer;  
+      transition: opacity 1.4s ease-out;
     }
     .expandbox {
-      top: 3em;
+     /* top: 1em;*/
       display: inline-block;
       font-size: 0.9em;
       opacity: 1;
-      z-index: 10;    
       background-color: white;    
       border-radius: 1%;
-      cursor: pointer;     
     } 
 
   </style>
@@ -209,7 +233,7 @@
       </div>
 
       <div class="requestform">     
-          <span class="title">Locate, then request</span>
+          <span class="header">Locate, then request</span>
           <ul class="flexer">
             <li>
               <input type="hidden" name="rft.oclcnum" data-name="oclcid" value=""> 
@@ -251,6 +275,10 @@
   'use strict';
   let ISBN, ISBN_SEARCH, TITL_SEARCH, FOUND, CURSOR = 0, RISTYPE = "BOOK", searchkeys = {};
   let recordset = {"primapi":{"records":[],"mapper":mapAPI}, "gobooks":{"records":[],"mapper":mapGoogle },"oclcapi":{"records":[],"mapper":mapAPI}};
+  for (let key of Object.keys(recordset)) { 
+    recordset[key].totrecs = () => { return recordset[key].records.length; }
+    recordset[key].found = () => { return recordset[key].records.length > 0; }
+  }
   const status = document.querySelector(".status");
   const thumbs = document.querySelector(".thumbnails");
   const datanames = document.querySelectorAll('[data-name]');
@@ -292,18 +320,18 @@
       let newitem = newThumb.cloneNode(true);
       let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
 
-      ['isbn', 'btitle', 'pub', 'edition', 'oclcid', 'mms', 'creationdate', 'date', 'addau', 'au', 'ristype', 'type', 'format'].forEach(el => {
-           item[el] = (record.hasOwnProperty(el) && Array.isArray(record[el])) ? String(record[el][0]) : String(record[el]);
-      });
-    
-      item["creationdate"] = (item["creationdate"] !== 'undefined') ? item["creationdate"] : (item["date"] !== 'undefined') ? item["date"] : "undefined";
-      item["addau"] = (item["addau"] !== 'undefined') ? item["addau"] : (item["au"] !== 'undefined') ? item["au"] : "undefined";
-      item["ristype"] = (item["ristype"] !== 'undefined') ? item["ristype"] : (item["type"] !== 'undefined') ? item["type"] : "undefined";
-      
-      for (let key of Object.keys(item)) { item[key] = item[key].trim(); } 
+      ['isbn', 'btitle', 'pub', 'edition', 'oclcid', 'mms', 'creationdate', 'date', 'au', 'description', 'ristype', 'type', 'format'].forEach(el => {
+          if (record.hasOwnProperty(el)) { item[el] = Array.isArray(record[el]) ? record[el][0] : record[el]; }
+      });  
+
+      item["creationdate"] = item.hasOwnProperty("creationdate") ? item["creationdate"] : item.hasOwnProperty("date") ? item["date"] : undefined;
+      item["ristype"] = item.hasOwnProperty("ristype") ? item["ristype"].toLowerCase() : item.hasOwnProperty("type") ? item["type"].toLowerCase() : undefined;
+      item["au"] = item.hasOwnProperty("au") ? item["au"] : record.hasOwnProperty("addau") ? record["addau"].join("; ") : undefined;
+
+      for (let key of Object.keys(item)) { item[key] = (item[key] !== undefined) ? item[key].toString().trim() : delete item[key]; }
+
       div.innerHTML = formatCitation(item);
-      
-      fetchThumbnail(item['isbn']).then(thumburl => { img.src = thumburl ? thumburl : `icons/icon_${item["ristype"].toLowerCase()}.png`; });  
+      fetchThumbnail(item['isbn']).then(thumburl => { img.src = thumburl ? thumburl : `icons/icon_${item["ristype"]}.png`; });  
       let location = searchTarget(item);
       anchor.href = `javascript:window.open('${location}', '_blank')`;
       thumbs.appendChild(newitem);
@@ -311,6 +339,7 @@
   }
 
   async function mapGoogle(records) {
+    makeHeader();
     records.forEach(record => {
       let item = {}; 
       let newitem = newThumb.cloneNode(true);
@@ -318,12 +347,12 @@
       
       item['isbn'] = (record.industryIdentifiers[1]) ? record.industryIdentifiers[1].identifier : record.industryIdentifiers[0].identifier;
       item['btitle'] = (record["title"] && Array.isArray(record['title'])) ? record["title"][0] : record["title"];
-      item['addau'] = (record["authors"] && Array.isArray(record['authors'])) ? record["authors"][0] : record["authors"];
-      item['creationdate'] = (record["publishedDate"]) ? record["publishedDate"].match(/^\d{4}/)[0] : "";
+      item['au'] = (record["authors"] && Array.isArray(record['authors'])) ? record["authors"][0] : record["authors"];
+      item['creationdate'] = record["publishedDate"] ? record["publishedDate"].match(/^\d{4}/)[0] : "";
       item['pub'] = (record["publisher"] && Array.isArray(record['publisher'])) ? record["publisher"][0] : record["publisher"];
-      
+      item["ristype"] = "book";
       img.src = (record.imageLinks && record.imageLinks.smallThumbnail) ? record.imageLinks.smallThumbnail : "icons/icon_book.png";
-      div.innerHTML = formatCitation("BOOK", item);
+      div.innerHTML = formatCitation(item);
 
       let location = searchTarget(item);
       anchor.href = `javascript:(window.open('${location}', '_blank'))`;
@@ -334,7 +363,7 @@
   function filterAPI(recordset) {
     let records = recordset.filter(record => {
       let FILTER = true;     
-log(FOUND, ": ", record);
+
       if (searchkeys.hasOwnProperty('rft.btitle')) {  
         let recordtitle = (record.btitle && Array.isArray(record.btitle)) ? record.btitle[0] : record.btitle;
         recordtitle = recordtitle ? recordtitle.toLowerCase() : (record.title && Array.isArray(record.title)) ? record["title"][0].toLowerCase() : record["title"].toLowerCase();
@@ -428,24 +457,14 @@ log(FOUND, ": ", record);
   }
     
 //// controller
-  async function searchController() {
-      while (thumbs.firstChild) {
-        thumbs.removeChild(thumbs.firstChild);
-      } 
- 
-      ["primapi","gobooks","oclcapi"].forEach(source => {
-        recordset[source].records = [];
-        recordset[source].found = () => recordset[source].records.length > 0;
-        recordset[source].totrecs = () => recordset[source].records.length;
-      });  
-      
+  async function searchController() {      
+      clearForm();
       document.querySelectorAll('[name^=rft]').forEach(el => {
         if (el.value) { searchkeys[el.name] = el.value.trim().toLowerCase(); }
       });
 
       ISBN_SEARCH = searchkeys["rft.isbn"] ? true : false ;    
       TITL_SEARCH = (searchkeys["rft.btitle"] && !ISBN_SEARCH) ? true : false ;
-     
       status.innerHTML = "Searching...";
       let time0 = performance.now(); 
 
@@ -481,7 +500,6 @@ log(FOUND, ": ", record);
 
       let time1 = performance.now();
       status.innerHTML = `Search completed: ${((time1 - time0)/1000).toFixed(2)}s<br>`;
-      // if (!ISBN_SEARCH && !TITL_SEARCH) { status.innerHTML = "Either ISBN or TITLE is required"; }
       showRecords();
   }  
 
@@ -501,6 +519,73 @@ log(FOUND, ": ", record);
       if (!FOUND) { status.innerHTML += "No records found"; }
   }
 
+  function startOver() {
+    clearForm();
+    datanames.forEach(el => { el.value = ""; });
+    document.querySelector('input[name="videos"]').checked = false; 
+    status.innerHTML = "";
+    [searchkeys, ISBN_SEARCH, TITL_SEARCH, ISBN, RISTYPE, FOUND] = [{}, undefined, undefined, undefined, "BOOK", false]; 
+    document.querySelector('input[name="rft.isbn"]').focus(); 
+  }
+
+  function clearForm() {
+    while (thumbs.firstChild) { thumbs.removeChild(thumbs.firstChild); } 
+    ["primapi","gobooks","oclcapi"].forEach(source => { recordset[source].records = []; });   
+  }
+
+///constructors
+  function thumbFactory() {
+    let anchor = document.createElement('a');
+    let div = document.createElement('div');
+    let figure = document.createElement('figure'); 
+    let img = document.createElement('img');
+    div.classList.add("cite"); 
+    figure.classList.add("thumb");
+    
+    figure.appendChild(img); 
+    anchor.appendChild(div);
+    anchor.appendChild(figure);
+    let fragment = new DocumentFragment();
+    fragment.appendChild(anchor);
+    return fragment;
+  }
+
+  function formatCitation(record) {
+    let citation = (record.hasOwnProperty("ristype")) ? `<span class="rtype ${record["ristype"] === "video" ? 'rtype-video' : 'rtype-book'}">${record["ristype"]}</span><br>` : `<span class="rtype">unknown</span><br>`;
+    citation += (record.hasOwnProperty("btitle")) ? `<span class="btitle">${record["btitle"]}</span><br>` : "";
+    citation += (typeof(record["au"]) === 'string') ? `<span>${record["au"]}</span><br>` : "";
+    
+    citation += (record.hasOwnProperty("pub")) ? `<span>${record["pub"]}</span>` : "";
+    citation += (record.hasOwnProperty("creationdate")) ? `<span>:${record["creationdate"]}</span>` : "";
+    citation += (record.hasOwnProperty("format")) ? `<br><span>${record["format"]}</span>` : "";
+    return citation;
+  }
+
+  function makeHeader() {
+    let headertxt;
+    if (FOUND === "Primo") {
+      headertxt = `<b>Owned!...maybe...check availability or place a request.</b><br>note: <i>login to Primo</i> to see request options or status of existing requests.`;
+    } else {
+      headertxt = `<b>Not owned</b>...select record to use data in requesting [ill, purchase].`;
+    }
+    let blq = document.createElement("blockquote");
+    blq.classList.add("promptxt");
+    blq.innerHTML = headertxt;
+    document.querySelector(".thumbnails").appendChild(blq);
+  }
+
+   function searchTarget(record) {
+    const searchParams = ['isbn:rft.isbn', 'btitle:rft.btitle', 'addau:rft.au', 'edition:rft.edition', 'pub:rft.publisher', 'creationdate:rft.pubdate', 'oclcid:rft.oclcnum', 'mms:rft.mms_id'];
+    let url = new URL(urls.primreq); 
+    searchParams.forEach(params => {
+      let [rparam, sparam] = params.split(":");
+      if (record[rparam] !== undefined) {
+        url.searchParams.set(sparam, record[rparam]);
+      }
+    });
+    return url;
+  }
+
 //// event listeners 
   document.querySelector('input[name="rft.isbn"]').addEventListener("blur", function(evt){  
     if (evt.target.value) {
@@ -518,6 +603,7 @@ log(FOUND, ": ", record);
   function showHelp() {
     let box = document.querySelector(".littlebox");
     box.classList.toggle("expandbox");
+    log("hi")
   }
 
 //// data helpers
@@ -535,75 +621,7 @@ log(FOUND, ": ", record);
     "almasru":{"rft.btitle":"alma.title==", "rft.au":"alma.creator=", "rft.pub":"alma.publisher=", "rft.year":"alma.main_pub_date=="}
   };
 
-  
-  function searchTarget(record) {
-    const searchParams = ['isbn:rft.isbn', 'btitle:rft.btitle', 'addau:rft.au', 'edition:rft.edition', 'pub:rft.publisher', 'creationdate:rft.pubdate', 'oclcid:rft.oclcnum', 'mms:rft.mms_id'];
-    let url = new URL(urls.primreq); 
-    searchParams.forEach(params => {
-      let [rparam, sparam] = params.split(":");
-      if (record[rparam] !== "undefined") {
-        url.searchParams.set(sparam, record[rparam]);
-      }
-    });
-    return url;
-  }
 
-  function startOver() {
-    datanames.forEach(el => { 
-        el.value = ""; 
-    });
-    document.querySelector('input[name="videos"]').checked = false; 
-    status.innerHTML = "";
-    while (thumbs.firstChild) {
-      thumbs.removeChild(thumbs.firstChild);
-    } 
-    ["primapi","gobooks","oclcapi"].forEach(source => { recordset[source].records = []; });   
-    [searchkeys, ISBN_SEARCH, TITL_SEARCH, ISBN, RISTYPE, CURSOR, FOUND] = [{}, undefined, undefined, undefined, undefined, 0, false]; 
-  
-    document.querySelector('input[name="rft.isbn"]').focus(); 
-  }
-
-  function thumbFactory() {
-    let anchor = document.createElement('a');
-    let div = document.createElement('div');
-    let figure = document.createElement('figure'); 
-    let img = document.createElement('img');
-    let blq = document.createElement('blockquote');
-    div.classList.add("cite"); 
-    anchor.classList.add("opacity-none");
-    figure.classList.add("thumb");
-    
-    div.appendChild(blq);
-    figure.appendChild(img);
-    anchor.appendChild(div);
-    anchor.appendChild(figure);
-    let fragment = new DocumentFragment();
-    fragment.appendChild(anchor);
-    return fragment;
-  }
-
-  function formatCitation(record) {
-    let citation = record["ristype"] !== "undefined" ? `<b>${record["ristype"]}</b><br>` : `<b>unknown</b><br>`;
-    ["au", "btitle", "pub"].forEach(el => {
-      citation += (record[el] !== "undefined") ? record[el] + ", " : "";
-    });
-    citation += (record["creationdate"] !== "undefined") ? `${record["creationdate"]}.` : `date unknown.`;
-    citation += (record.hasOwnProperty("format") && record["format"] !== "undefined") ? ` <br>${record["format"]}.` : "";
-    return citation;
-  }
-
-  function makeHeader() {
-    let headertxt;
-    if (FOUND === "Primo") {
-      headertxt = `<b>Check availability at Schaffer Library or place a request.</b><br>note: login to Primo to see request options or check their status.`;
-    } else {
-      headertxt = `<b>Not owned by Schaffer Library.</b>Select record foruse in requesting [ill, purchase].`;
-    }
-    let blq = document.createElement("blockquote");
-    blq.classList.add("promptxt");
-    blq.innerHTML = headertxt;
-    document.querySelector(".thumbnails").appendChild(blq);
-  }
   // function watchThumbs() {
   //   const observedNode = document.querySelector('.thumbnails');
   //   const config = { attributes:false, childList:true, subtree:true };
@@ -631,4 +649,5 @@ log(FOUND, ": ", record);
 
 </script>
 </html>
+
 
