@@ -200,7 +200,23 @@
       background-color: white;    
       border-radius: 2%;
     } 
-
+    .primolink {
+     
+      padding: 0;
+      margin: 0.25em 0;
+      line-height: inherit;
+      white-space: normal;
+      text-align: inherit;
+      overflow: visible;
+      font-size: 0.9em;
+      border-radius: 0;
+      padding-bottom: 0.1em;
+      text-decoration: none; 
+      text-transform: none;
+      box-shadow: inset 0 -1px 0 0 rgb(61 110 148 / 0%);
+      display: inline;
+      cursor: pointer;
+    }
   </style>
 </head>
  
@@ -305,18 +321,12 @@
      item["ristype"] = item.hasOwnProperty("ristype") ? item["ristype"].toLowerCase() : item.hasOwnProperty("type") ? item["type"].toLowerCase() : undefined;
      item["au"] = item.hasOwnProperty("au") ? item["au"] : record.hasOwnProperty("addau") ? record["addau"] : undefined;
 
-     for (let key of Object.keys(item)) {
-       if (item[key] === undefined) {
-         delete item[key];
-       }
-     }
+     for (let key of Object.keys(item)) { if (item[key] === undefined) { delete item[key]; } }
 
      div.innerHTML = genCitation(item);
      fetchThumbnail(item['isbn']).then(thumburl => {
        img.src = thumburl ? thumburl : `icons/icon_${item["ristype"]}.png`;
      });
-     let location = genTargetURL(item);
-     anchor.href = `javascript:window.open("${location}", "_blank")`;
      thumbs.appendChild(newitem);
    });
  }
@@ -336,9 +346,6 @@
      item["ristype"] = "book";
      img.src = (record.imageLinks && record.imageLinks.smallThumbnail) ? record.imageLinks.smallThumbnail : "icons/icon_book.png";
      div.innerHTML = genCitation(item);
-
-     let location = genTargetURL(item);
-     anchor.href = `javascript:(window.open("${location}", "_blank"))`;
      thumbs.appendChild(newitem);
    });
  }
@@ -346,7 +353,7 @@
  function filterAPI(recordset) {
    let records = recordset.filter(record => {
      let FILTER = true;
-log(record);
+
      if (searchkeys.hasOwnProperty('rft.btitle')) {
        let recordtitle = record.btitle ? record.btitle : record.title;
        if (recordtitle) {
@@ -509,7 +516,7 @@ log(record);
 
  function startOver() {
    document.querySelectorAll('[data-name]').forEach(el => { el.value = ""; });
-   document.querySelector('input[name="videos"]').checked = false;
+   RISTYPE.checked = false;
    status.innerHTML = "";
    document.querySelector('input[name="rft.isbn"]').focus();
    clearAnchors();
@@ -541,13 +548,17 @@ log(record);
  }
 
  function genCitation(record) {
+   let location = genTargetURL(record);
    let citation = (record.hasOwnProperty("ristype")) ? `<span class="rtype ${record["ristype"] === "video" ? 'rtype-video' : 'rtype-book'}">${record["ristype"]}</span><br>` : `<span class="rtype">unknown</span><br>`;
    citation += (record.hasOwnProperty("btitle")) ? `<span class="btitle">${record["btitle"]}</span><br>` : "";
    citation += (typeof(record["au"]) === 'string') ? `<span>${record["au"]}</span><br>` : "";
 
    citation += (record.hasOwnProperty("pub")) ? `<span>${record["pub"]}</span>` : "";
-   citation += (record.hasOwnProperty("creationdate")) ? `<span>: ${record["creationdate"]}</span>` : "";
+   citation += (record.hasOwnProperty("pub") && record.hasOwnProperty("creationdate")) ? ` : ` : "";
+   citation += (record.hasOwnProperty("edition")) ? `<br><span>${record["edition"]}</span>` : "";
+   citation += (record.hasOwnProperty("creationdate")) ? `<span>${record["creationdate"]}</span>` : "";
    citation += (record.hasOwnProperty("format")) ? `<br><span>${record["format"]}</span>` : "";
+   citation += (record.hasOwnProperty("format")) ? `<br><a href='javascript:window.open("${location}", "_blank");' class="primolink">View or request in Primo</a>` : "";
    return citation;
  }
 
@@ -594,9 +605,9 @@ log(record);
    } else {
      url.searchParams.set("q", genURI(target, urikeys[target]));
      if (RISTYPE.checked) {
-       url.searchParams.set("qInclude", "facet_rtype,exact,videos");
+       url.searchParams.set("qInclude", "facet_rtype,include,videos");
      } else {
-       url.searchParams.set("multiFacets", "facet_rtype,include,books|,|facet_rtype,include,videos");
+       url.searchParams.set("multiFacets", "facet_rtype,exact,books|,|facet_rtype,exact,videos");
      }
    }
    return url;
@@ -620,36 +631,17 @@ log(record);
  //// data helpers
  const urls = {
    primreq: "https://union-psb.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:01UCNY_INST?url_ver=Z39.88-2004&ctx_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-8&rft_val_fmt=info:ofi/fmt:kev:mtx:book",
-   primapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=Everything&scope=MyInst_and_CI&limit=8&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
-   oclcapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=oclc&scope=oclc&limit=8&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
+   primapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=Everything&scope=MyInst_and_CI&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
+   oclcapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=oclc&scope=oclc&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
    gobooks: "https://www.googleapis.com/books/v1/volumes?",
  };
 
  const urikeys = {
-   "gobooks": {
-     "rft.btitle": "intitle:",
-     "rft.au": "inauthor:",
-     "rft.publisher": "inpublisher:"
-   },
-   "oclcapi": {
-     "rft.btitle": "title,exact,",
-     "rft.au": "creator,contains,",
-     "rft.pubdate": "creationdate,contains,",
-     "rft.isbn": "isbn,contains,"
-   },
-   "primapi": {
-     "rft.btitle": "title,exact,",
-     "rft.au": "creator,contains,",
-     "rft.pubdate": "cdate,contains,",
-     "rft.isbn": "isbn,contains,"
-   },
-   "almasru": {
-     "rft.btitle": "alma.title==",
-     "rft.au": "alma.creator=",
-     "rft.pub": "alma.publisher=",
-     "rft.year": "alma.main_pub_date=="
-   }
- };
+   "gobooks": { "rft.btitle": "intitle:", "rft.au": "inauthor:", "rft.publisher": "inpublisher:" },
+   "oclcapi": { "rft.btitle": "title,exact,", "rft.au": "creator,contains,", "rft.pubdate": "creationdate,contains,", "rft.isbn": "isbn,contains,"},
+   "primapi": { "rft.btitle": "title,contains,", "rft.au": "creator,contains,", "rft.pubdate": "cdate,contains,", "rft.isbn": "isbn,contains,"},
+   "almasru": { "rft.btitle": "alma.title==", "rft.au": "alma.creator=", "rft.pub": "alma.publisher=", "rft.year": "alma.main_pub_date==" }
+};
 
 
  // function watchThumbs() {
