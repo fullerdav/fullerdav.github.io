@@ -256,7 +256,7 @@
               <input type="search" name="rft.pubdate" data-name="creationdate" data-gbname="publishedDate" pattern="\d{4}" value="" minlength="4" maxlength="4">
             </li><li>
               <label for="video">Video?</label> 
-              <input type="checkbox" name="videos">
+              <input id="ristype" type="checkbox" value="VIDEO" name="videos">
             </li> 
           </ul>
 
@@ -272,380 +272,410 @@
 <script>
 //// variables
   "use strict";
-  'use strict';
-  let ISBN, ISBN_SEARCH, TITL_SEARCH, FOUND, CURSOR = 0, RISTYPE = "BOOK", searchkeys = {};
-  let recordset = {"primapi":{"records":[],"mapper":mapAPI}, "gobooks":{"records":[],"mapper":mapGoogle },"oclcapi":{"records":[],"mapper":mapAPI}};
+ 'use strict';
+ let searchkeys = {};
+ const status = document.querySelector(".status");
+ const thumbs = document.querySelector(".thumbnails");
+ const RISTYPE = document.querySelector("#ristype");
+ const newThumb = genThumb();
+ const { log } = console;
+
+ let recordset = {"primapi":{"records":[],"mapper":makeAPI}, "gobooks":{"records":[],"mapper":makeGoogle },"oclcapi":{"records":[],"mapper":makeAPI}};
   for (let key of Object.keys(recordset)) { 
-    recordset[key].totrecs = () => { return recordset[key].records.length; }
-    recordset[key].found = () => { return recordset[key].records.length > 0; }
+   recordset[key].totrecs = () => { return recordset[key].records.length; }
+   recordset[key].found = () => { return recordset[key].records.length > 0; }
   }
-  const status = document.querySelector(".status");
-  const thumbs = document.querySelector(".thumbnails");
-  const datanames = document.querySelectorAll('[data-name]');
-  const newThumb = thumbFactory();
-  const {log} = console;
 
-//// set targets
-  function setURI(targ, keys) {  
-      let terms = []; 
-      for (let key of Object.keys(searchkeys)) {
-        if (keys[key] && searchkeys[key]) {
-          terms.push(keys[key] + searchkeys[key]);
-        }
-      }   
-      let uri = (targ === "gobooks") ?  uri = terms.join(" ") : terms.join(",AND;");
-      return uri;
-  };
+ //// Normalize results
+ async function makeAPI(records) {
+   let API = recordset["primapi"].found() ? "Primo" : "Worldcat";
+   genHeader(API);
+   records.forEach(record => {
+     let item = {};
+     let newitem = newThumb.cloneNode(true);
+     let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
 
-  function setURL(target) {
-    let url = new URL(urls[target]);
-    if (target === "gobooks") {
-       url.searchParams.set("q", "isbn:" + ISBN);
-    } else {
-       url.searchParams.set("q", setURI(target, urikeys[target]));
-       if (RISTYPE === "VIDEO") { 
-        url.searchParams.set("qInclude", "facet_rtype,exact,videos");
-       } else {
-        url.searchParams.set("multiFacets", "facet_rtype,include,books|,|facet_rtype,include,videos");
+     ['isbn', 'btitle', 'pub', 'edition', 'oclcid', 'mms', 'creationdate', 'date', 'au', 'addau', 'description', 'ristype', 'type', 'format'].forEach(el => {
+       if (record.hasOwnProperty(el)) {
+         item[el] = record[el].toString().trim();
        }
-    }
-    return url;
-  }   
- 
-//// Normalize results
-  async function mapAPI(records) {
-    makeHeader();
-    records.forEach(record => {
-      let item = {};
-      let newitem = newThumb.cloneNode(true);
-      let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
+     });
 
-      ['isbn', 'btitle', 'pub', 'edition', 'oclcid', 'mms', 'creationdate', 'date', 'au', 'description', 'ristype', 'type', 'format'].forEach(el => {
-          if (record.hasOwnProperty(el)) { item[el] = Array.isArray(record[el]) ? record[el][0] : record[el]; }
-      });  
+     item["creationdate"] = item.hasOwnProperty("creationdate") ? item["creationdate"] : item.hasOwnProperty("date") ? item["date"] : undefined;
+     item["ristype"] = item.hasOwnProperty("ristype") ? item["ristype"].toLowerCase() : item.hasOwnProperty("type") ? item["type"].toLowerCase() : undefined;
+     item["au"] = item.hasOwnProperty("au") ? item["au"] : record.hasOwnProperty("addau") ? record["addau"] : undefined;
 
-      item["creationdate"] = item.hasOwnProperty("creationdate") ? item["creationdate"] : item.hasOwnProperty("date") ? item["date"] : undefined;
-      item["ristype"] = item.hasOwnProperty("ristype") ? item["ristype"].toLowerCase() : item.hasOwnProperty("type") ? item["type"].toLowerCase() : undefined;
-      item["au"] = item.hasOwnProperty("au") ? item["au"] : record.hasOwnProperty("addau") ? record["addau"].join("; ") : undefined;
+     for (let key of Object.keys(item)) {
+       if (item[key] === undefined) {
+         delete item[key];
+       }
+     }
 
-      for (let key of Object.keys(item)) { item[key] = (item[key] !== undefined) ? item[key].toString().trim() : delete item[key]; }
+     div.innerHTML = genCitation(item);
+     fetchThumbnail(item['isbn']).then(thumburl => {
+       img.src = thumburl ? thumburl : `icons/icon_${item["ristype"]}.png`;
+     });
+     let location = genTargetURL(item);
+     anchor.href = `javascript:window.open("${location}", "_blank")`;
+     thumbs.appendChild(newitem);
+   });
+ }
 
-      div.innerHTML = formatCitation(item);
-      fetchThumbnail(item['isbn']).then(thumburl => { img.src = thumburl ? thumburl : `icons/icon_${item["ristype"]}.png`; });  
-      let location = searchTarget(item);
-      anchor.href = `javascript:window.open('${location}', '_blank')`;
-      thumbs.appendChild(newitem);
-    });  
-  }
+ async function makeGoogle(records) {
+   genHeader("GOOGLE");
+   records.forEach(record => {
+     let item = {};
+     let newitem = newThumb.cloneNode(true);
+     let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
 
-  async function mapGoogle(records) {
-    makeHeader();
-    records.forEach(record => {
-      let item = {}; 
-      let newitem = newThumb.cloneNode(true);
-      let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
-      
-      item['isbn'] = (record.industryIdentifiers[1]) ? record.industryIdentifiers[1].identifier : record.industryIdentifiers[0].identifier;
-      item['btitle'] = (record["title"] && Array.isArray(record['title'])) ? record["title"][0] : record["title"];
-      item['au'] = (record["authors"] && Array.isArray(record['authors'])) ? record["authors"][0] : record["authors"];
-      item['creationdate'] = record["publishedDate"] ? record["publishedDate"].match(/^\d{4}/)[0] : "";
-      item['pub'] = (record["publisher"] && Array.isArray(record['publisher'])) ? record["publisher"][0] : record["publisher"];
-      item["ristype"] = "book";
-      img.src = (record.imageLinks && record.imageLinks.smallThumbnail) ? record.imageLinks.smallThumbnail : "icons/icon_book.png";
-      div.innerHTML = formatCitation(item);
+     item['isbn'] = (record.industryIdentifiers[1]) ? record.industryIdentifiers[1].identifier : record.industryIdentifiers[0].identifier;
+     item['btitle'] = (record["title"] && Array.isArray(record['title'])) ? record["title"][0] : record["title"];
+     item['au'] = (record["authors"] && Array.isArray(record['authors'])) ? record["authors"][0] : record["authors"];
+     item['creationdate'] = record["publishedDate"] ? record["publishedDate"].match(/^\d{4}/)[0] : "";
+     item['pub'] = (record["publisher"] && Array.isArray(record['publisher'])) ? record["publisher"][0] : record["publisher"];
+     item["ristype"] = "book";
+     img.src = (record.imageLinks && record.imageLinks.smallThumbnail) ? record.imageLinks.smallThumbnail : "icons/icon_book.png";
+     div.innerHTML = genCitation(item);
 
-      let location = searchTarget(item);
-      anchor.href = `javascript:(window.open('${location}', '_blank'))`;
-      thumbs.appendChild(newitem);
-    });
-  }
+     let location = genTargetURL(item);
+     anchor.href = `javascript:(window.open("${location}", "_blank"))`;
+     thumbs.appendChild(newitem);
+   });
+ }
 
-  function filterAPI(recordset) {
-    let records = recordset.filter(record => {
-      let FILTER = true;     
-
-      if (searchkeys.hasOwnProperty('rft.btitle')) {  
-        let recordtitle = (record.btitle && Array.isArray(record.btitle)) ? record.btitle[0] : record.btitle;
-        recordtitle = recordtitle ? recordtitle.toLowerCase() : (record.title && Array.isArray(record.title)) ? record["title"][0].toLowerCase() : record["title"].toLowerCase();
-        if (recordtitle) {
-          let searchtitle = searchkeys['rft.btitle'].toLowerCase();
-          FILTER = FILTER && recordtitle.includes(searchtitle);
-        }
-      }      
-      if (searchkeys.hasOwnProperty('rft.pubdate') && FILTER) {
-        let recordate = (record.creationdate && Array.isArray(record.creationdate)) ? record.creationdate[0] : record.creationdate;
-        if (recordate) {
-          FILTER = FILTER && recordate.includes(searchkeys['rft.pubdate']);
-        }
-      }
-      if (searchkeys.hasOwnProperty('rft.publisher') && FILTER) {   
-        let recordpub = (record.pub && Array.isArray(record.pub)) ? record.pub[0].toLowerCase() : record.pub.toLowerCase(); 
-        if (recordpub) {
-          let searchpub = searchkeys['rft.publisher'].trim().toLowerCase();
-          FILTER = FILTER && recordpub.includes(searchpub);
-        }
-      }
-      if (searchkeys.hasOwnProperty('rft.au') && FILTER) {
-        let recordau = (record.authors && Array.isArray(record.authors)) ? record.authors[0] : record.authors;
-        if (recordau) {
-          let searchau = searchkeys['rft.au'].trim().toLowerCase();
-          FILTER = FILTER && recordau.includes(searchau);
-        }
-      }
-      if (record.hasOwnProperty("ristype") && FILTER) {
-         let ristype = (record.ristype && Array.isArray(record.ristype)) ? record.ristype[0] : record.ristype;
-         ristype = ristype.trim().toLowerCase();
+ function filterAPI(recordset) {
+   let records = recordset.filter(record => {
+     let FILTER = true;
+log(record);
+     if (searchkeys.hasOwnProperty('rft.btitle')) {
+       let recordtitle = record.btitle ? record.btitle : record.title;
+       if (recordtitle) {
+         recordtitle = recordtitle.toString().toLowerCase();
+         let searchtitle = searchkeys['rft.btitle'];
+         FILTER = FILTER && recordtitle.includes(searchtitle);
+       }
+     }
+     if (searchkeys.hasOwnProperty('rft.pubdate') && FILTER) {
+       let recordate = record.creationdate ? record.creationdate : record.date;
+       if (recordate) {
+         recordate = recordate.toString().toLowerCase();
+         let searchdate = searchkeys['rft.pubdate'];
+         FILTER = FILTER && recordate.includes(searchdate);
+       }
+     }
+     if (searchkeys.hasOwnProperty('rft.publisher') && FILTER) {
+       let recordpub = record.pub ? record.pub : record.publisher;
+       if (recordpub) {
+         recordpub = recordpub.toString().toLowerCase();
+         let searchpub = searchkeys['rft.publisher'];
+         FILTER = FILTER && recordpub.includes(searchpub);
+       }
+     }
+     if (searchkeys.hasOwnProperty('rft.au') && FILTER) {
+       let recordau = record.au ? record.au : record.addau;
+       if (recordau) {
+         recordau = recordau.toString().toLowerCase();
+         let searchau = searchkeys['rft.au'];
+         FILTER = FILTER && recordau.includes(searchau);
+       }
+     }
+     if (record.hasOwnProperty("ristype") && FILTER) {
+       let ristype = record.ristype ? record.ristype : record.type;
+       if (ristype) {
+         ristype = ristype.toString().trim().toLowerCase();
          FILTER = FILTER && (ristype === "video" || ristype === "book");
-      }
-      
-      return FILTER;      
-    });
-    return records;
-  }
- 
-//// fetch data
-  async function fetchThumbnail(isbn) {
-      if (!isbn) { return false; }
-      let bibkey = "isbn:" + isbn, data, response, oldata, olresponse, imgurl;
-      let url = new URL(urls.gobooks);
-      url.searchParams.set("q", bibkey);
+       }
+     }
 
-      try {
-        response = await fetch(url.href);
-        data = await response.json();
-      } catch(e) { 
-        status.innerHTML = e; 
-      }
-      
-      if (!response.ok) {
-        try {
-          olresponse = await fetch(`https://covers.openlibrary.org/a/isbn/${isbn}-S.jpg`);
-          let oldata = await olresponse.blob();
-        } catch(e) { 
-          status.innerHTML = e; 
-        }
-      }
-      
-      if (response && response.ok) {
-        if (data && data.totalItems === 1) {
-          let thumbnail = data.items[0].volumeInfo.imageLinks;
-          if (thumbnail && thumbnail.smallThumbnail) {
-            imgurl = thumbnail.smallThumbnail;
-          } 
-        }
-      } else if (olresponse && olresponse.ok) {
-         if (oldata && oldata.url) {
-          log("OL thumbnail needed", isbn)
-          imgurl = data.url;
-         }
-      } else {
-         imgurl = false;
-      }
-      return imgurl;
-  }
+     return FILTER;
+   });
+   return records;
+ }
 
-  async function fetchJSON(target) {
-      let data; 
-      try {   
-        let url = setURL(target);
-        let response = await fetch(url.href);
-        data = await response.json();    
-      } catch(e) { 
-        status.innerHTML = e; 
-      } 
-      return data;
-  }
-    
-//// controller
-  async function searchController() {      
-      clearForm();
-      document.querySelectorAll('[name^=rft]').forEach(el => {
-        if (el.value) { searchkeys[el.name] = el.value.trim().toLowerCase(); }
-      });
+ //// fetch data
+ async function fetchThumbnail(isbn) {
+   if (!isbn) { return false; }
 
-      ISBN_SEARCH = searchkeys["rft.isbn"] ? true : false ;    
-      TITL_SEARCH = (searchkeys["rft.btitle"] && !ISBN_SEARCH) ? true : false ;
-      status.innerHTML = "Searching...";
-      let time0 = performance.now(); 
+   let bibkey = "isbn:" + isbn,
+     data, response, oldata, olresponse, imgurl;
+   let url = new URL(urls.gobooks);
+   url.searchParams.set("q", bibkey);
 
-      await fetchJSON("primapi").then(records => {
-          if (records && records.docs) {
-            const results = records.docs.map(item => {
-              return { ...item.pnx.addata, ...item.pnx.display, ...item.pnx.control };
-            });
-            recordset["primapi"].records = filterAPI(results);
-          }
-      });  
-          
-      if (ISBN_SEARCH && !recordset["primapi"].found()) {
-        await fetchJSON("gobooks").then(gb_records => {
-          if (gb_records && gb_records.items) {
-            recordset["gobooks"].records = gb_records.items.map(item => {
-              return { ...item.volumeInfo, ...item.saleInfo };
-            });
-          }
-        });         
-      }
-          
-      if (!recordset["gobooks"].found() && !recordset["primapi"].found()) {
-        await fetchJSON("oclcapi").then(oclc_records => {
-          if (oclc_records && oclc_records.docs) {
-            const results = oclc_records.docs.map(item => {
-              return { ...item.pnx.addata, ...item.pnx.display, ...item.pnx.control };
-            });
-            recordset["oclcapi"].records = filterAPI(results);
-          }
-        });
-      } 
+   try {
+     response = await fetch(url.href);
+     data = await response.json();
+   } catch (e) {
+     status.innerHTML = e;
+   }
 
-      let time1 = performance.now();
-      status.innerHTML = `Search completed: ${((time1 - time0)/1000).toFixed(2)}s<br>`;
-      showRecords();
-  }  
+   if (!response.ok) {
+     try {
+       olresponse = await fetch(`https://covers.openlibrary.org/a/isbn/${isbn}-S.jpg`);
+       let oldata = await olresponse.blob();
+     } catch (e) {
+       status.innerHTML = e;
+     }
+   }
 
-  function showRecords() {
-      const sources = {"primapi":"Primo", "oclcapi":"Worldcat", "gobooks":"Google"};
-      for (let key of Object.keys(recordset)) { 
-        if (recordset[key].found()) { 
-          FOUND = sources[key]; 
-          status.innerHTML += `${recordset[key].totrecs()} record(s) found in ${FOUND}`;
-          let promise = recordset[key].mapper(recordset[key].records); 
-          promise.then(() => {
-            let anchors = document.querySelectorAll(".thumbnails > a");
-            anchors.forEach(anchor => { anchor.style.opacity = '0.9'; });
-          });  
-        } 
-      }  
-      if (!FOUND) { status.innerHTML += "No records found"; }
-  }
+   if (response && response.ok) {
+     if (data && data.totalItems === 1) {
+       let thumbnail = data.items[0].volumeInfo.imageLinks;
+       if (thumbnail && thumbnail.smallThumbnail) {
+         imgurl = thumbnail.smallThumbnail;
+       }
+     }
+   } else if (olresponse && olresponse.ok) {
+     if (oldata && oldata.url) {
+       log("OL thumbnail needed", isbn)
+       imgurl = data.url;
+     }
+   } else {
+     imgurl = false;
+   }
+   return imgurl;
+ }
 
-  function startOver() {
-    clearForm();
-    datanames.forEach(el => { el.value = ""; });
-    document.querySelector('input[name="videos"]').checked = false; 
-    status.innerHTML = "";
-    [searchkeys, ISBN_SEARCH, TITL_SEARCH, ISBN, RISTYPE, FOUND] = [{}, undefined, undefined, undefined, "BOOK", false]; 
-    document.querySelector('input[name="rft.isbn"]').focus(); 
-  }
+ async function fetchJSON(target) {
+   let data;
+   try {
+     let url = genURL(target);
+     let response = await fetch(url.href);
+     data = await response.json();
+   } catch (e) {
+     status.innerHTML = e;
+   }
+   return data;
+ }
 
-  function clearForm() {
-    while (thumbs.firstChild) { thumbs.removeChild(thumbs.firstChild); } 
-    ["primapi","gobooks","oclcapi"].forEach(source => { recordset[source].records = []; });   
-  }
+ //// controller
+ async function searchController() {
+   clearAnchors();
+   searchkeys = {};
+   document.querySelectorAll('[name^=rft]').forEach(el => {
+     if (el.value) {
+       searchkeys[el.name] = el.value.trim().toLowerCase();
+     }
+   });
 
-///constructors
-  function thumbFactory() {
-    let anchor = document.createElement('a');
-    let div = document.createElement('div');
-    let figure = document.createElement('figure'); 
-    let img = document.createElement('img');
-    div.classList.add("cite"); 
-    figure.classList.add("thumb");
-    
-    figure.appendChild(img); 
-    anchor.appendChild(div);
-    anchor.appendChild(figure);
-    let fragment = new DocumentFragment();
-    fragment.appendChild(anchor);
-    return fragment;
-  }
+   let ISBN_SEARCH = searchkeys["rft.isbn"] ? true : false;
+   let TITL_SEARCH = (searchkeys["rft.btitle"] && !ISBN_SEARCH) ? true : false;
+   status.innerHTML = "Searching...";
+   let time0 = performance.now();
 
-  function formatCitation(record) {
-    let citation = (record.hasOwnProperty("ristype")) ? `<span class="rtype ${record["ristype"] === "video" ? 'rtype-video' : 'rtype-book'}">${record["ristype"]}</span><br>` : `<span class="rtype">unknown</span><br>`;
-    citation += (record.hasOwnProperty("btitle")) ? `<span class="btitle">${record["btitle"]}</span><br>` : "";
-    citation += (typeof(record["au"]) === 'string') ? `<span>${record["au"]}</span><br>` : "";
-    
-    citation += (record.hasOwnProperty("pub")) ? `<span>${record["pub"]}</span>` : "";
-    citation += (record.hasOwnProperty("creationdate")) ? `<span>:${record["creationdate"]}</span>` : "";
-    citation += (record.hasOwnProperty("format")) ? `<br><span>${record["format"]}</span>` : "";
-    return citation;
-  }
+   await fetchJSON("primapi").then(records => {
+     if (records && records.docs) {
+       const results = records.docs.map(item => {
+         return { ...item.pnx.addata, ...item.pnx.display, ...item.pnx.control };
+       });
+       recordset["primapi"].records = filterAPI(results);
+     }
+   });
 
-  function makeHeader() {
-    let headertxt;
-    if (FOUND === "Primo") {
-      headertxt = `<b>Owned!...maybe...check availability or place a request.</b><br>note: <i>login to Primo</i> to see request options or status of existing requests.`;
-    } else {
-      headertxt = `<b>Not owned</b>...select record to use data in requesting [ill, purchase].`;
-    }
-    let blq = document.createElement("blockquote");
-    blq.classList.add("promptxt");
-    blq.innerHTML = headertxt;
-    document.querySelector(".thumbnails").appendChild(blq);
-  }
+   if (ISBN_SEARCH && !recordset["primapi"].found()) {
+     await fetchJSON("gobooks").then(gb_records => {
+       if (gb_records && gb_records.items) {
+         recordset["gobooks"].records = gb_records.items.map(item => {
+           return { ...item.volumeInfo, ...item.saleInfo };
+         });
+       }
+     });
+   }
 
-   function searchTarget(record) {
-    const searchParams = ['isbn:rft.isbn', 'btitle:rft.btitle', 'addau:rft.au', 'edition:rft.edition', 'pub:rft.publisher', 'creationdate:rft.pubdate', 'oclcid:rft.oclcnum', 'mms:rft.mms_id'];
-    let url = new URL(urls.primreq); 
-    searchParams.forEach(params => {
-      let [rparam, sparam] = params.split(":");
-      if (record[rparam] !== undefined) {
-        url.searchParams.set(sparam, record[rparam]);
-      }
-    });
-    return url;
-  }
+   if (!recordset["gobooks"].found() && !recordset["primapi"].found()) {
+     await fetchJSON("oclcapi").then(oclc_records => {
+       if (oclc_records && oclc_records.docs) {
+         const results = oclc_records.docs.map(item => {
+           return { ...item.pnx.addata, ...item.pnx.display, ...item.pnx.control };
+         });
+         recordset["oclcapi"].records = filterAPI(results);
+       }
+     });
+   }
 
-//// event listeners 
-  document.querySelector('input[name="rft.isbn"]').addEventListener("blur", function(evt){  
-    if (evt.target.value) {
-      ISBN = evt.target.value.replace(/[^\dxX]/g,"");
-      if (ISBN.length===10 || ISBN.length===13) {
-        searchController();
-      }
-    }
-  }, false); 
+   let time1 = performance.now();
+   status.innerHTML = `Search completed: ${((time1 - time0)/1000).toFixed(2)}s<br>`;
+   showRecords();
+ }
 
-  document.querySelector('input[name="videos"]').addEventListener("change", function(evt){  
-     RISTYPE = (evt.target.checked) ? "VIDEO" : "BOOK";
-  }, false);
+ function showRecords() {
+   const sources = {"primapi":"Primo", "oclcapi":"Worldcat", "gobooks":"Google" };
+   for (let key of Object.keys(recordset)) {
+     if (recordset[key].found()) {
+       status.innerHTML += `${recordset[key].totrecs()} record(s) found in ${sources[key]}`;
+       recordset[key].mapper(recordset[key].records);
+     }
+   }
+ }
 
-  function showHelp() {
-    let box = document.querySelector(".littlebox");
-    box.classList.toggle("expandbox");
-    log("hi")
-  }
+ function startOver() {
+   document.querySelectorAll('[data-name]').forEach(el => { el.value = ""; });
+   document.querySelector('input[name="videos"]').checked = false;
+   status.innerHTML = "";
+   document.querySelector('input[name="rft.isbn"]').focus();
+   clearAnchors();
+ }
 
-//// data helpers
-  const urls = {
-    primreq: "https://union-psb.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:01UCNY_INST?url_ver=Z39.88-2004&ctx_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-8&rft_val_fmt=info:ofi/fmt:kev:mtx:book",
-    primapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=Everything&scope=MyInst_and_CI&limit=8&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
-    oclcapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=oclc&scope=oclc&limit=8&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
-    gobooks: "https://www.googleapis.com/books/v1/volumes?",
-  };
+ function clearAnchors() {
+   if (thumbs && thumbs.firstChild) {
+     while (thumbs.firstChild) {
+       thumbs.removeChild(thumbs.firstChild);
+     }
+   }
+ }
 
-  const urikeys = { 
-    "gobooks":{"rft.btitle":"intitle:", "rft.au":"inauthor:", "rft.publisher":"inpublisher:"},
-    "oclcapi":{"rft.btitle":"title,exact,", "rft.au":"creator,contains,", "rft.pubdate":"creationdate,contains,", "rft.isbn":"isbn,contains,"},
-    "primapi":{"rft.btitle":"title,exact,", "rft.au":"creator,contains,", "rft.pubdate":"cdate,contains,", "rft.isbn":"isbn,contains,"},
-    "almasru":{"rft.btitle":"alma.title==", "rft.au":"alma.creator=", "rft.pub":"alma.publisher=", "rft.year":"alma.main_pub_date=="}
-  };
+ ///constructors
+ function genThumb() {
+   let anchor = document.createElement('a');
+   let div = document.createElement('div');
+   let figure = document.createElement('figure');
+   let img = document.createElement('img');
+   div.classList.add("cite");
+   figure.classList.add("thumb");
+
+   figure.appendChild(img);
+   anchor.appendChild(div);
+   anchor.appendChild(figure);
+   let fragment = new DocumentFragment();
+   fragment.appendChild(anchor);
+   return fragment;
+ }
+
+ function genCitation(record) {
+   let citation = (record.hasOwnProperty("ristype")) ? `<span class="rtype ${record["ristype"] === "video" ? 'rtype-video' : 'rtype-book'}">${record["ristype"]}</span><br>` : `<span class="rtype">unknown</span><br>`;
+   citation += (record.hasOwnProperty("btitle")) ? `<span class="btitle">${record["btitle"]}</span><br>` : "";
+   citation += (typeof(record["au"]) === 'string') ? `<span>${record["au"]}</span><br>` : "";
+
+   citation += (record.hasOwnProperty("pub")) ? `<span>${record["pub"]}</span>` : "";
+   citation += (record.hasOwnProperty("creationdate")) ? `<span>: ${record["creationdate"]}</span>` : "";
+   citation += (record.hasOwnProperty("format")) ? `<br><span>${record["format"]}</span>` : "";
+   return citation;
+ }
+
+ function genHeader(FOUND) {
+   let headertxt;
+   if (FOUND === "Primo") {
+     headertxt = `<b>Owned!...maybe...check availability or place a request.</b><br>note: <i>login to Primo</i> to see request options or status of existing requests.`;
+   } else {
+     headertxt = `<b>Not owned</b>...select record to use data in requesting [ill, purchase].`;
+   }
+   let blq = document.createElement("blockquote");
+   blq.classList.add("promptxt");
+   blq.innerHTML = headertxt;
+   document.querySelector(".thumbnails").appendChild(blq);
+ }
+
+ function genTargetURL(record) {
+   const searchParams = ['isbn:rft.isbn', 'btitle:rft.btitle', 'addau:rft.au', 'edition:rft.edition', 'pub:rft.publisher', 'creationdate:rft.pubdate', 'oclcid:rft.oclcnum', 'mms:rft.mms_id'];
+   let url = new URL(urls.primreq);
+   searchParams.forEach(params => {
+     let [rparam, sparam] = params.split(":");
+     if (record[rparam] !== undefined) {
+       url.searchParams.set(sparam, record[rparam]);
+     }
+   });
+   return url;
+ }
+
+ function genURI(targ, keys) {
+   let terms = [];
+   for (let key of Object.keys(searchkeys)) {
+     if (keys[key] && searchkeys[key]) {
+       terms.push(keys[key] + searchkeys[key]);
+     }
+   }
+   let uri = (targ === "gobooks") ? uri = terms.join(" ") : terms.join(",AND;");
+   return uri;
+ };
+
+ function genURL(target) {
+   let url = new URL(urls[target]);
+   if (target === "gobooks") {
+     url.searchParams.set("q", "isbn:" + ISBN);
+   } else {
+     url.searchParams.set("q", genURI(target, urikeys[target]));
+     if (RISTYPE.checked) {
+       url.searchParams.set("qInclude", "facet_rtype,exact,videos");
+     } else {
+       url.searchParams.set("multiFacets", "facet_rtype,include,books|,|facet_rtype,include,videos");
+     }
+   }
+   return url;
+ }
+
+ //// event listeners 
+ document.querySelector('input[name="rft.isbn"]').addEventListener("blur", function(evt) {
+   if (evt.target.value) {
+     let ISBN = evt.target.value.replace(/[^\dxX]/g, "");
+     if (ISBN.length === 10 || ISBN.length === 13) {
+       searchController();
+     }
+   }
+ }, false);
+
+ function showHelp() {
+   let box = document.querySelector(".littlebox");
+   box.classList.toggle("expandbox");
+ }
+
+ //// data helpers
+ const urls = {
+   primreq: "https://union-psb.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:01UCNY_INST?url_ver=Z39.88-2004&ctx_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-8&rft_val_fmt=info:ofi/fmt:kev:mtx:book",
+   primapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=Everything&scope=MyInst_and_CI&limit=8&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
+   oclcapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=oclc&scope=oclc&limit=8&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
+   gobooks: "https://www.googleapis.com/books/v1/volumes?",
+ };
+
+ const urikeys = {
+   "gobooks": {
+     "rft.btitle": "intitle:",
+     "rft.au": "inauthor:",
+     "rft.publisher": "inpublisher:"
+   },
+   "oclcapi": {
+     "rft.btitle": "title,exact,",
+     "rft.au": "creator,contains,",
+     "rft.pubdate": "creationdate,contains,",
+     "rft.isbn": "isbn,contains,"
+   },
+   "primapi": {
+     "rft.btitle": "title,exact,",
+     "rft.au": "creator,contains,",
+     "rft.pubdate": "cdate,contains,",
+     "rft.isbn": "isbn,contains,"
+   },
+   "almasru": {
+     "rft.btitle": "alma.title==",
+     "rft.au": "alma.creator=",
+     "rft.pub": "alma.publisher=",
+     "rft.year": "alma.main_pub_date=="
+   }
+ };
 
 
-  // function watchThumbs() {
-  //   const observedNode = document.querySelector('.thumbnails');
-  //   const config = { attributes:false, childList:true, subtree:true };
+ // function watchThumbs() {
+ //   const observedNode = document.querySelector('.thumbnails');
+ //   const config = { attributes:false, childList:true, subtree:true };
 
-  //   const callback = function(mutationsList, observer) {
-  //     for (const mutation of mutationsList) {
-  //       if (mutation.type === 'childList') {
-  //         let anchors = document.querySelectorAll(".thumbnails > a");
-  //         //let anchor = mutation.addedNodes[0];
-  //         // if (!anchor.classList.contains("opacity-none")) {
-  //         //      anchor.classList.replace("opacity-none", "opacity-full");
-  //         // }
-  //         anchors.forEach(anchor => {
-  //           if (!anchor.classList.contains("opacity-none")) {
-  //              anchor.classList.replace("opacity-none", "opacity-full");
-  //           }
-  //         });
-  //       }
-  //     }  
-  //   }
-  //   const observer = new MutationObserver(callback);
-  //   observer.observe(observedNode, config);
-  // }
-  // watchThumbs();
+ //   const callback = function(mutationsList, observer) {
+ //     for (const mutation of mutationsList) {
+ //       if (mutation.type === 'childList') {
+ //         let anchors = document.querySelectorAll(".thumbnails > a");
+ //         //let anchor = mutation.addedNodes[0];
+ //         // if (!anchor.classList.contains("opacity-none")) {
+ //         //      anchor.classList.replace("opacity-none", "opacity-full");
+ //         // }
+ //         anchors.forEach(anchor => {
+ //           if (!anchor.classList.contains("opacity-none")) {
+ //              anchor.classList.replace("opacity-none", "opacity-full");
+ //           }
+ //         });
+ //       }
+ //     }  
+ //   }
+ //   const observer = new MutationObserver(callback);
+ //   observer.observe(observedNode, config);
+ // }
+ // watchThumbs();
 
 </script>
 </html>
