@@ -289,65 +289,71 @@
 //// variables
   "use strict";
  'use strict';
- let searchkeys = {};
+ let searchkeys = {}, ISBN;
  const status = document.querySelector(".status");
  const thumbs = document.querySelector(".thumbnails");
  const RISTYPE = document.querySelector("#ristype");
  const newThumb = genThumb();
  const { log } = console;
 
- let recordset = {"primapi":{"records":[],"mapper":makeAPI}, "gobooks":{"records":[],"mapper":makeGoogle },"oclcapi":{"records":[],"mapper":makeAPI}};
-  for (let key of Object.keys(recordset)) { 
-   recordset[key].totrecs = () => { return recordset[key].records.length; }
-   recordset[key].found = () => { return recordset[key].records.length > 0; }
-  }
-
+ let recordset = {};
+ ["Primo", "Google", "Worldcat" ].forEach(src => {
+    recordset[src] = {records: [], totrecs: () => { return recordset[src].records.length; }, found: () => { return recordset[src].records.length > 0; }}
+  });
+ 
+   
  //// Normalize results
- async function makeAPI(records) {
-   let API = recordset["primapi"].found() ? "Primo" : "Worldcat";
-   genHeader(API);
-   records.forEach(record => {
-     let item = {};
+ async function makeAnchors(records) {
+    let API = getSource();
+    genHeader(API);
+
+    records.forEach(record => {
      let newitem = newThumb.cloneNode(true);
      let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
+     let item;
 
+      if (API === "Google") {
+        item = makeGoogle(record);
+        img.src = (record.imageLinks && record.imageLinks.smallThumbnail) ? record.imageLinks.smallThumbnail : "icons/icon_book.png";
+      } else {
+        
+        log("record ", record);
+        item = makeAPI(record);
+        log("item ", item);
+
+        fetchThumbnail(item['isbn']).then(thumburl => {
+          img.src = thumburl ? thumburl : `icons/icon_${item["ristype"]}.png`;
+        });
+      } 
+
+    div.innerHTML = genCitation(item);
+    thumbs.appendChild(newitem);
+   });
+ }
+
+ function makeAPI(record) {
+     let item = {};
      ['isbn', 'btitle', 'pub', 'edition', 'oclcid', 'mms', 'creationdate', 'date', 'au', 'addau', 'description', 'ristype', 'type', 'format'].forEach(el => {
        if (record.hasOwnProperty(el)) {
          item[el] = record[el].toString().trim();
        }
      });
-
      item["creationdate"] = item.hasOwnProperty("creationdate") ? item["creationdate"] : item.hasOwnProperty("date") ? item["date"] : undefined;
      item["ristype"] = item.hasOwnProperty("ristype") ? item["ristype"].toLowerCase() : item.hasOwnProperty("type") ? item["type"].toLowerCase() : undefined;
      item["au"] = item.hasOwnProperty("au") ? item["au"] : record.hasOwnProperty("addau") ? record["addau"] : undefined;
-
      for (let key of Object.keys(item)) { if (item[key] === undefined) { delete item[key]; } }
-
-     div.innerHTML = genCitation(item);
-     fetchThumbnail(item['isbn']).then(thumburl => {
-       img.src = thumburl ? thumburl : `icons/icon_${item["ristype"]}.png`;
-     });
-     thumbs.appendChild(newitem);
-   });
+     return item;
  }
 
- async function makeGoogle(records) {
-   genHeader("GOOGLE");
-   records.forEach(record => {
+ function makeGoogle(record) {
      let item = {};
-     let newitem = newThumb.cloneNode(true);
-     let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
-
      item['isbn'] = (record.industryIdentifiers[1]) ? record.industryIdentifiers[1].identifier : record.industryIdentifiers[0].identifier;
      item['btitle'] = (record["title"] && Array.isArray(record['title'])) ? record["title"][0] : record["title"];
      item['au'] = (record["authors"] && Array.isArray(record['authors'])) ? record["authors"][0] : record["authors"];
      item['creationdate'] = record["publishedDate"] ? record["publishedDate"].match(/^\d{4}/)[0] : "";
      item['pub'] = (record["publisher"] && Array.isArray(record['publisher'])) ? record["publisher"][0] : record["publisher"];
      item["ristype"] = "book";
-     img.src = (record.imageLinks && record.imageLinks.smallThumbnail) ? record.imageLinks.smallThumbnail : "icons/icon_book.png";
-     div.innerHTML = genCitation(item);
-     thumbs.appendChild(newitem);
-   });
+     return item;
  }
 
  function filterAPI(recordset) {
@@ -405,7 +411,7 @@
 
    let bibkey = "isbn:" + isbn,
      data, response, oldata, olresponse, imgurl;
-   let url = new URL(urls.gobooks);
+   let url = new URL(urls.Google);
    url.searchParams.set("q", bibkey);
 
    try {
@@ -457,11 +463,12 @@
  //// controller
  async function searchController() {
    clearAnchors();
-   searchkeys = {};
    document.querySelectorAll('[name^=rft]').forEach(el => {
-     if (el.value) {
-       searchkeys[el.name] = el.value.trim().toLowerCase();
-     }
+       if (el.value) {
+        searchkeys[el.name] = String(el.value).trim().toLowerCase();
+       } else if (searchkeys[el.name]) {
+        delete searchkeys[el.name];
+       }
    });
 
    let ISBN_SEARCH = searchkeys["rft.isbn"] ? true : false;
@@ -469,49 +476,42 @@
    status.innerHTML = "Searching...";
    let time0 = performance.now();
 
-   await fetchJSON("primapi").then(records => {
+   await fetchJSON("Primo").then(records => {
      if (records && records.docs) {
        const results = records.docs.map(item => {
          return { ...item.pnx.addata, ...item.pnx.display, ...item.pnx.control };
        });
-       recordset["primapi"].records = filterAPI(results);
+       recordset["Primo"].records = filterAPI(results);
      }
    });
 
-   if (ISBN_SEARCH && !recordset["primapi"].found()) {
-     await fetchJSON("gobooks").then(gb_records => {
+   if (ISBN_SEARCH && !recordset["Primo"].found()) {
+     await fetchJSON("Google").then(gb_records => {
        if (gb_records && gb_records.items) {
-         recordset["gobooks"].records = gb_records.items.map(item => {
+         recordset["Google"].records = gb_records.items.map(item => {
            return { ...item.volumeInfo, ...item.saleInfo };
          });
        }
      });
    }
 
-   if (!recordset["gobooks"].found() && !recordset["primapi"].found()) {
-     await fetchJSON("oclcapi").then(oclc_records => {
+   if (!recordset["Google"].found() && !recordset["Primo"].found()) {
+     await fetchJSON("Worldcat").then(oclc_records => {
        if (oclc_records && oclc_records.docs) {
          const results = oclc_records.docs.map(item => {
            return { ...item.pnx.addata, ...item.pnx.display, ...item.pnx.control };
          });
-         recordset["oclcapi"].records = filterAPI(results);
+         recordset["Worldcat"].records = filterAPI(results);
        }
      });
    }
 
    let time1 = performance.now();
-   status.innerHTML = `Search completed: ${((time1 - time0)/1000).toFixed(2)}s<br>`;
-   showRecords();
- }
-
- function showRecords() {
-   const sources = {"primapi":"Primo", "oclcapi":"Worldcat", "gobooks":"Google" };
-   for (let key of Object.keys(recordset)) {
-     if (recordset[key].found()) {
-       status.innerHTML += `${recordset[key].totrecs()} record(s) found in ${sources[key]}`;
-       recordset[key].mapper(recordset[key].records);
-     }
-   }
+   status.innerHTML = `Search completed: ${((time1 - time0)/1000).toFixed(2)}s<br>`; 
+   
+   let source = getSource();
+   status.innerHTML += `${recordset[source].totrecs()} record(s) found in ${source}`;
+   makeAnchors(recordset[source].records);
  }
 
  function startOver() {
@@ -552,19 +552,19 @@
    let citation = (record.hasOwnProperty("ristype")) ? `<span class="rtype ${record["ristype"] === "video" ? 'rtype-video' : 'rtype-book'}">${record["ristype"]}</span><br>` : `<span class="rtype">unknown</span><br>`;
    citation += (record.hasOwnProperty("btitle")) ? `<span class="btitle">${record["btitle"]}</span><br>` : "";
    citation += (typeof(record["au"]) === 'string') ? `<span>${record["au"]}</span><br>` : "";
-
+   citation += (record.hasOwnProperty("edition")) ? `<br><span>${record["edition"]}</span>` : "";
+   
    citation += (record.hasOwnProperty("pub")) ? `<span>${record["pub"]}</span>` : "";
    citation += (record.hasOwnProperty("pub") && record.hasOwnProperty("creationdate")) ? ` : ` : "";
-   citation += (record.hasOwnProperty("edition")) ? `<br><span>${record["edition"]}</span>` : "";
    citation += (record.hasOwnProperty("creationdate")) ? `<span>${record["creationdate"]}</span>` : "";
    citation += (record.hasOwnProperty("format")) ? `<br><span>${record["format"]}</span>` : "";
-   citation += (record.hasOwnProperty("format")) ? `<br><a href='javascript:window.open("${location}", "_blank");' class="primolink">View or request in Primo</a>` : "";
+   citation += `<br><a href='javascript:window.open("${location}", "_blank");' class="primolink">view or request in Primo</a>`;
    return citation;
  }
 
  function genHeader(FOUND) {
    let headertxt;
-   if (FOUND === "Primo") {
+   if (getSource() === "Primo") {
      headertxt = `<b>Owned!...maybe...check availability or place a request.</b><br>note: <i>login to Primo</i> to see request options or status of existing requests.`;
    } else {
      headertxt = `<b>Not owned</b>...select record to use data in requesting [ill, purchase].`;
@@ -594,13 +594,13 @@
        terms.push(keys[key] + searchkeys[key]);
      }
    }
-   let uri = (targ === "gobooks") ? uri = terms.join(" ") : terms.join(",AND;");
+   let uri = (targ === "Google") ? uri = terms.join(" ") : terms.join(",AND;");
    return uri;
  };
 
  function genURL(target) {
    let url = new URL(urls[target]);
-   if (target === "gobooks") {
+   if (target === "Google") {
      url.searchParams.set("q", "isbn:" + ISBN);
    } else {
      url.searchParams.set("q", genURI(target, urikeys[target]));
@@ -613,10 +613,18 @@
    return url;
  }
 
+  function getSource() {
+    let source = false;
+    [ "Primo", "Google", "Worldcat" ].forEach(src => {
+        if (recordset[src].found()) { source = src; }
+    });
+    return source;
+  }
+
  //// event listeners 
  document.querySelector('input[name="rft.isbn"]').addEventListener("blur", function(evt) {
    if (evt.target.value) {
-     let ISBN = evt.target.value.replace(/[^\dxX]/g, "");
+     ISBN = evt.target.value.replace(/[^\dxX]/g, "");
      if (ISBN.length === 10 || ISBN.length === 13) {
        searchController();
      }
@@ -631,15 +639,15 @@
  //// data helpers
  const urls = {
    primreq: "https://union-psb.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:01UCNY_INST?url_ver=Z39.88-2004&ctx_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-8&rft_val_fmt=info:ofi/fmt:kev:mtx:book",
-   primapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=Everything&scope=MyInst_and_CI&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
-   oclcapi: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=oclc&scope=oclc&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
-   gobooks: "https://www.googleapis.com/books/v1/volumes?",
+   Primo: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=Everything&scope=MyInst_and_CI&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
+   Worldcat: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=oclc&scope=oclc&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
+   Google: "https://www.googleapis.com/books/v1/volumes?",
  };
 
  const urikeys = {
-   "gobooks": { "rft.btitle": "intitle:", "rft.au": "inauthor:", "rft.publisher": "inpublisher:" },
-   "oclcapi": { "rft.btitle": "title,exact,", "rft.au": "creator,contains,", "rft.pubdate": "creationdate,contains,", "rft.isbn": "isbn,contains,"},
-   "primapi": { "rft.btitle": "title,contains,", "rft.au": "creator,contains,", "rft.pubdate": "cdate,contains,", "rft.isbn": "isbn,contains,"},
+   "Google": { "rft.btitle": "intitle:", "rft.au": "inauthor:", "rft.publisher": "inpublisher:" },
+   "Worldcat": { "rft.btitle": "title,exact,", "rft.au": "creator,contains,", "rft.pubdate": "creationdate,contains,", "rft.isbn": "isbn,contains,"},
+   "Primo": { "rft.btitle": "title,contains,", "rft.au": "creator,contains,", "rft.pubdate": "cdate,contains,", "rft.isbn": "isbn,contains,"},
    "almasru": { "rft.btitle": "alma.title==", "rft.au": "alma.creator=", "rft.pub": "alma.publisher=", "rft.year": "alma.main_pub_date==" }
 };
 
