@@ -8,215 +8,206 @@
 <meta name="keywords" content="schaffer library purchase request form">
 <link rel="icon" href="icons/request.png" type="image/png" sizes="84x84"> 
 <style>
-    .container {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      grid-template-rows: 0.5fr 2fr 1fr 0.5fr;
-      grid-auto-flow: row;
-      grid-template-areas: 
-      "requestform  panel"
-      "requestform  panel"
-      "requestform  panel"
-      "requestform  panel";
-      width: 50%;
-      height: 24em;
-      border-radius: 8px;
-      box-shadow: 1px 0 1px 1px #822433cc inset;
-      border: 1px ridge #822433cc;
-      font-family: Source Sans Pro, Helvetica Neue, sans-serif;
-      font-size: 15px;
-      color: #000000cc;
-      background: #ededed;
-      margin: 1em;
-      transition:  all .4s cubic-bezier(.25,.8,.25,1);
-      transform:  translateZ(0);
-    }
-    .requestform {
-      grid-area: requestform;
-      grid-template-rows: 1fr 5fr 1fr 1fr;
-      grid-template-areas:
-        "header"
-        "inputels"
-        "status"
-        "buttons";
-      padding: 0.5em;
-    }    
-    .header {
-      grid-area: header;
-      padding: 0.5em;
-    } 
-    ul.flexer {
-      grid-area: inputels;
-      padding: 0.5em;
-    }  
-    .status {
-      grid-area: status;
-      color: red;
-      font-size: 0.9em;
-      letter-spacing: .08em;
-      height: 2em;
-      padding: 0.5em;
-    }
-    .buttons {
-       grid-area: buttons;
-       padding: 0.5em;
-    }
+  
+  :root {
+     box-sizing: inherit;
+  }
 
-    .panel {
-      display: grid;
-      grid-area: panel;
-      grid-template-rows: 1fr 7fr;
-      grid-template-areas:
-        "helpme"
-        "thumbnails";
-    } 
-    .panel > img {
-      margin: 4px 0;
-      height: 2.5em;
-      z-index: 10;
-    }
-    .help {
-      grid-area: helpme;
-    }
-    .thumbnails {
-      grid-area: thumbnails;
-      display: flex;
-      flex-flow: column nowrap;
-      justify-content: flex-start;
-      align-content: flex-start;
-      overflow-y: scroll;    
-    }
-    .thumbnails > a {
-      display: flex; 
-      margin: 0.1em 0;
-      text-decoration: none;
-      line-height:  1.25;
-      font-weight: 480;
-      font-size: 0.9em;
-      box-shadow: inset 0 0 0.15em 0.04em #822433cc;
-      border: 1px outset #822433cc;
-      background: #F6F6F6;
-      padding: 0.5em 0.75em; 
-      width: 95%;
-      color: #000000cc;
-      opacity: 0.8;
-    }
-    .thumbnails > a:hover {
-      border-style: inset;
-      background: white;
-      opacity: 1;
-    }
-    .cite {
-      flex: 1 1 auto;
-      width: 90%; 
-    }
-    .promptxt {
-      box-shadow: inset 2px 1px 2px 0 #822433cc;
-      padding: 0.5em;
-      margin:  0.25em 0;
-    }
-    .thumb {
-      flex: 1 1 auto;
-      margin: 0;
-    }
-    .thumb > img {
-      height: 6em;
-      padding: 0.25em;
-    }
-    .rtype {
-      font-size: 0.75em;
-      font-weight: 600;
-      letter-spacing: .07em;
-      text-transform: uppercase;
-    }
-    .rtype-video {
-      color: #822433;
-    }
-    .rtype-book {
-      color: #28F;
-    }
-    .btitle {
-      font-weight: 600;
-      font-size: 1.1em;
-      margin: 0.35em 0;
-      align-self: flex-start;
-      color: #000000cc;
-    }
-    button {  
-      max-height: 2.5em;
-      margin: 0.5em;
-      padding: 0.1em 0.35em;
-      color: white;
-      background: #822433;
-      border: 0.5em outset #82243399;
-     /* background: #3daaff;
-      border: 0.4em outset #2299ff;*/
-      border-radius: 6px;
-    } 
-    input {
-      padding: 0.25em;
-      border: 2px inset #dedede;
-      width: 18em;
-      line-height:1.35em; 
-      background-color: whitesmoke;
-    }
-    ul { 
-      list-style-type: none; 
-      margin: 0;
-      padding: 0.5em;
-    }  
-    ul.flexer > li {
-      display: flex;
-      flex-wrap: nowrap;
-      margin: 0.25em 0;
-    }
-    ul.flexer > li > label {
-      padding: 0.25em;
-      letter-spacing:.08em;
-      width: 4.25em; 
-    }    
-    input[type="checkbox"] {
-      width: 1em; 
-      height: 1.5em;
-    }  
-    input[data-name="mms"], input[data-name="oclcid"] {
-      line-height: 0.01;
-    }
-    
-    .littlebox {
-      opacity: 0;
-      margin: 4px 0;
-      font-size: 0.1em;
-      position: absolute;
-      top: 3em;
-      width: auto;
-      z-index: 10;   
-      transition: opacity 1.4s ease-out;
-    }
-    .expandbox {
-      display: inline-block;
-      font-size: 0.9em;
-      opacity: 1;
-      background-color: white;    
-      border-radius: 2%;
-    } 
-    .primolink {
-     
-      padding: 0;
-      margin: 0.25em 0;
-      line-height: inherit;
-      white-space: normal;
-      text-align: inherit;
-      overflow: visible;
-      font-size: 0.9em;
-      border-radius: 0;
-      padding-bottom: 0.1em;
-      text-decoration: none; 
-      text-transform: none;
-      box-shadow: inset 0 -1px 0 0 rgb(61 110 148 / 0%);
-      display: inline;
-      cursor: pointer;
-    }
+  *, ::before, ::after {
+    box-sizing: border-box;    
+    border-radius: 0.4em;   
+    padding: 0.35em;
+    font-family: Source Sans Pro, Helvetica Neue, sans-serif;
+    font-size: 15px;
+  }
+  
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 0.5fr 2fr 1fr 0.5fr;
+    grid-auto-flow: row;
+    grid-template-areas: 
+    "requestform  panel"
+    "requestform  panel"
+    "requestform  panel"
+    "requestform  panel";
+    width: 50%;
+    height: 25em;
+    box-shadow: 1px 0 1px 1px #822433cc inset;
+    border: 1px ridge #822433cc;
+    margin: 1em; 
+    color: #000000cc;
+    background: #ededed;
+    transition:  all .4s cubic-bezier(.25,.8,.25,1);
+  }
+  .requestform {
+    grid-area: requestform;
+    grid-template-rows: 0.5fr 6fr 1fr 0.5fr;
+    grid-template-areas:
+      "header"
+      "inputels"
+      "status"
+      "buttons";
+  }    
+  .header { 
+    grid-area: header; 
+    height: 9%;
+  } 
+  ul.flexer { 
+    grid-area: inputels; 
+    height: 66%;
+  }  
+  .status {
+    grid-area: status;
+    color: red;
+    font-size: 0.9em;
+    letter-spacing: .08em;
+    height: 16%;
+    padding: 0;
+    justify-self: top;
+  }
+  .buttons { 
+    grid-area: buttons; 
+    padding: 0;
+    height:8%;
+  }
+  button {  
+    max-height: 2.5em;
+    padding: 0.1em 0.35em;
+    color: white;
+    background: #822433;
+    border: 0.5em outset #82243399;
+  } 
+  input {
+    padding: 0.25em;
+    border: 2px inset #dedede;
+    border-radius: 0.25em;
+    width: 18em;
+    background-color: whitesmoke;
+  }
+  ul { 
+    list-style-type: none; 
+    margin: 0;
+    padding: 0;
+  }  
+  ul.flexer > li {
+    display: flex;
+    flex-wrap: nowrap;
+    padding: 0.25em 0;
+  }
+  ul.flexer > li > label {
+    letter-spacing:.08em;
+    width: 4.25em; 
+  }    
+  input[type="checkbox"] {
+    width: 1em; 
+    height: 1.5em;
+  }  
+  input[data-name="mms"], input[data-name="oclcid"] {
+    line-height: 0.01;
+  }
+  .panel {
+    display: grid;
+    grid-area: panel;
+    grid-template-rows: 1fr 7fr;
+    grid-template-areas:
+      "helpme"
+      "thumbnails";
+  } 
+  .help {
+    grid-area: helpme;
+    height: 10%;
+  }
+  .thumbnails {
+    grid-area: thumbnails;
+    display: flex;
+    flex-flow: column nowrap;
+    height: 89%;
+    padding: 0;    
+  }
+  .anchors {
+    overflow-y: scroll;
+  }
+  .panel > img {
+    margin: 4px 0;
+    height: 2.5em;
+    padding: 0;
+  }
+  .thumbnails > a {
+    display: flex; 
+    box-shadow: inset 0 0 0.15em 0.04em #822433cc;
+    border: 1px outset #822433cc;
+    background: #F6F6F6;
+    margin: 0.1em 0;
+    text-decoration: none;
+    font-weight: 480;
+    font-size: 0.9em;
+    opacity: 0.8;
+    padding:  0.4em;
+  }
+  .thumbnails > a:hover {
+    border-style: inset;
+    background: white;
+    opacity: 1;
+  }
+  .cite {
+    flex: 1 1 auto;
+    padding: 0;
+  }
+  .cite > span {
+    padding: 0;
+  }
+  .promptxt {
+    box-shadow: inset 2px 1px 2px 0 #822433cc;
+    margin: 0;
+  }
+  .thumb {
+    flex: 1 1 auto;
+  }
+  .thumb > img {
+    height: 6em;
+    padding: 0.25em;
+  }
+  .rtype {
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+  }
+  .rtype-video {
+    color: #822433;
+  }
+  .rtype-book {
+    color: #28F;
+  }
+  .btitle {
+    font-weight: 600;
+    align-self: flex-start;
+  }
+  .location {
+    padding: 0.35em 0;
+    margin: 0;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .littlebox { 
+    position: absolute;
+    display: inline-block;
+    top: 3em;
+    width: auto;
+    margin: 4px 0;
+    opacity: 0;
+    font-size: 0.1em;
+    line-height: 0.1em;
+    transition: opacity 1.4s ease-out;
+  }
+  .expandbox { 
+    z-index: 10; 
+    font-size: 0.9em;
+    line-height: 1em;
+    opacity: 1;
+    background-color: white;    
+  } 
   </style>
 </head>
  
@@ -244,8 +235,12 @@
               </ul>
             </ul>
           </ul>
-          </span>
-        <div class="thumbnails"></div>
+          </span> 
+          <blockquote></blockquote>
+          <div class="anchors">
+         
+          <div class="thumbnails"></div>
+        </div>
       </div>
 
       <div class="requestform">     
@@ -286,66 +281,59 @@
 </body>
 
 <script>
-//// variables
-  "use strict";
- 'use strict';
- let searchkeys = {}, ISBN;
- const status = document.querySelector(".status");
- const thumbs = document.querySelector(".thumbnails");
- const RISTYPE = document.querySelector("#ristype");
- const newThumb = genThumb();
- const { log } = console;
 
- let recordset = {};
- ["Primo", "Google", "Worldcat" ].forEach(src => {
-    recordset[src] = {records: [], totrecs: () => { return recordset[src].records.length; }, found: () => { return recordset[src].records.length > 0; }}
-  });
- 
+
+    "use strict";
+   'use strict';
+   let searchkeys = {}, ISBN;
+   const status = document.querySelector(".status");
+   const thumbs = document.querySelector(".thumbnails");
+   const RISTYPE = document.querySelector("#ristype");
+   const Thumb = getThumb();
+   const { log } = console;
+
+   let recordset = {};
+   ["Primo", "Google", "Worldcat" ].forEach(src => {
+      recordset[src] = {records: [], totrecs: () => { return recordset[src].records.length; }, found: () => { return recordset[src].records.length > 0; }}
+    });
    
- //// Normalize results
- async function makeAnchors(records) {
-    let API = getSource();
-    genHeader(API);
+//// makers -- normalize results
+   async function makeAnchors(records) {
+      let API = getSource();
+      getHeader(API);
 
-    records.forEach(record => {
-     let newitem = newThumb.cloneNode(true);
-     let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
-     let item;
+      records.forEach(record => {
+       let newitem = Thumb.cloneNode(true), item;
+       let [anchor, div, img] = newitem.querySelectorAll("a, div, img");
 
-      if (API === "Google") {
-        item = makeGoogle(record);
-        img.src = (record.imageLinks && record.imageLinks.smallThumbnail) ? record.imageLinks.smallThumbnail : "icons/icon_book.png";
-      } else {
-        
-        log("record ", record);
-        item = makeAPI(record);
-        log("item ", item);
+        if (API === "Google") {
+          item = makeGoogle(record);
+          img.src = (record.imageLinks && record.imageLinks.smallThumbnail) ? record.imageLinks.smallThumbnail : "icons/icon_book.png";
+        } else {
+          item = makeAPI(record);
+          fetchThumbnail(item['isbn']).then(thumburl => {
+            img.src = thumburl ? thumburl : `icons/icon_${item["ristype"]}.png`;
+          });
+        } 
 
-        fetchThumbnail(item['isbn']).then(thumburl => {
-          img.src = thumburl ? thumburl : `icons/icon_${item["ristype"]}.png`;
-        });
-      } 
+        div.innerHTML = getCitation(item);
+        thumbs.appendChild(newitem);
+      });
+   }
 
-    div.innerHTML = genCitation(item);
-    thumbs.appendChild(newitem);
-   });
- }
+   function makeAPI(record) {
+       let item = {};
+       ['isbn', 'btitle', 'au', 'creationdate', 'pub', 'ristype', 'addau', 'date', 'type', 'description', 'edition', 'format', 'oclcid', 'mms'].forEach(el => {
+         if (record.hasOwnProperty(el)) { item[el] = String(record[el]).trim(); }
+       });
+       item["creationdate"] = item.hasOwnProperty("creationdate") ? item["creationdate"] : item.hasOwnProperty("date") ? item["date"] : undefined;
+       item["ristype"] = item.hasOwnProperty("ristype") ? item["ristype"].toLowerCase() : item.hasOwnProperty("type") ? item["type"].toLowerCase() : undefined;
+       item["au"] = item.hasOwnProperty("au") ? item["au"] : record.hasOwnProperty("addau") ? record["addau"] : undefined;
+       for (let key of Object.keys(item)) { if (item[key] === undefined || item[key] === "") { delete item[key]; } }
+       return item;
+   }
 
- function makeAPI(record) {
-     let item = {};
-     ['isbn', 'btitle', 'pub', 'edition', 'oclcid', 'mms', 'creationdate', 'date', 'au', 'addau', 'description', 'ristype', 'type', 'format'].forEach(el => {
-       if (record.hasOwnProperty(el)) {
-         item[el] = record[el].toString().trim();
-       }
-     });
-     item["creationdate"] = item.hasOwnProperty("creationdate") ? item["creationdate"] : item.hasOwnProperty("date") ? item["date"] : undefined;
-     item["ristype"] = item.hasOwnProperty("ristype") ? item["ristype"].toLowerCase() : item.hasOwnProperty("type") ? item["type"].toLowerCase() : undefined;
-     item["au"] = item.hasOwnProperty("au") ? item["au"] : record.hasOwnProperty("addau") ? record["addau"] : undefined;
-     for (let key of Object.keys(item)) { if (item[key] === undefined) { delete item[key]; } }
-     return item;
- }
-
- function makeGoogle(record) {
+  function makeGoogle(record) {
      let item = {};
      item['isbn'] = (record.industryIdentifiers[1]) ? record.industryIdentifiers[1].identifier : record.industryIdentifiers[0].identifier;
      item['btitle'] = (record["title"] && Array.isArray(record['title'])) ? record["title"][0] : record["title"];
@@ -354,9 +342,207 @@
      item['pub'] = (record["publisher"] && Array.isArray(record['publisher'])) ? record["publisher"][0] : record["publisher"];
      item["ristype"] = "book";
      return item;
+  }
+
+//// controller
+ async function searchController() {
+   clearAnchors();
+   document.querySelectorAll('[name^=rft]').forEach(el => {
+       if (el.value) {
+        searchkeys[el.name] = el.value.trim().toLowerCase();
+       } else if (searchkeys[el.name]) {
+        delete searchkeys[el.name];
+       }
+   });
+
+   let ISBN_SEARCH = searchkeys["rft.isbn"] ? true : false;
+   let TITL_SEARCH = (searchkeys["rft.btitle"] && !ISBN_SEARCH) ? true : false;
+   status.innerHTML = "Searching...";
+   let time0 = performance.now();
+
+   await fetchJSON("Primo").then(records => {
+     if (records && records.docs) {
+       const results = records.docs.map(item => {
+         return { ...item.pnx.addata, ...item.pnx.display, ...item.pnx.control };
+       });
+       recordset["Primo"].records = filterAPI(results);
+     }
+   });
+
+   if (ISBN_SEARCH && !recordset["Primo"].found()) {
+     await fetchJSON("Google").then(gb_records => {
+       if (gb_records && gb_records.items) {
+         recordset["Google"].records = gb_records.items.map(item => {
+           return { ...item.volumeInfo, ...item.saleInfo };
+         });
+       }
+     });
+   }
+
+   if (!recordset["Primo"].found() && !recordset["Google"].found()) {
+     await fetchJSON("Worldcat").then(oclc_records => {
+       if (oclc_records && oclc_records.docs) {
+         const results = oclc_records.docs.map(item => {
+           return { ...item.pnx.addata, ...item.pnx.display, ...item.pnx.control };
+         });
+         recordset["Worldcat"].records = filterAPI(results);
+       }
+     });
+   }
+
+   let time1 = performance.now();
+   status.innerHTML = `Search completed: ${((time1 - time0)/1000).toFixed(2)}s<br>`; 
+   
+   let source = getSource();
+   log(source);
+   status.innerHTML += `${recordset[source].totrecs()} record(s) found in ${source}`;
+   makeAnchors(recordset[source].records);
  }
 
- function filterAPI(recordset) {
+//// UI helpers
+  function startOver() {
+   document.querySelectorAll('[data-name]').forEach(el => { el.value = ""; });
+   RISTYPE.checked = false;
+   status.innerHTML = "";
+   document.querySelector('input[name="rft.isbn"]').focus();
+   clearAnchors();
+   return;
+  }
+
+  function clearAnchors() {
+   if (thumbs && thumbs.firstChild) {
+     while (thumbs.firstChild) { thumbs.removeChild(thumbs.firstChild); }
+   }
+   return;
+  }
+
+  function showHelp() {
+   let box = document.querySelector(".littlebox");
+   box.classList.toggle("expandbox");
+  }
+ 
+//// getters 
+  function getHeader() { 
+   let blq = document.querySelector("blockquote");
+  
+   if (getSource() === "Primo") {
+     blq.innerHTML = `<b>Owned!...maybe...check availability or place a request.</b><br>note: <i>login to Primo</i> to see request options or status of existing requests.`;
+   } else {
+     blq.innerHTML = `<b>Not owned</b>...select record to use data in requesting [ill, purchase].`;
+   }
+   blq.classList.add("promptxt");
+   return;
+ }
+
+ function getThumb() {
+   let anchor = document.createElement('a');
+   let div = document.createElement('div');
+   div.classList.add("cite");
+   let figure = document.createElement('figure');
+   figure.classList.add("thumb");
+   let img = document.createElement('img');
+
+   figure.appendChild(img);
+   anchor.appendChild(div)
+   div.appendChild(figure);
+
+   let fragment = new DocumentFragment();
+   fragment.appendChild(anchor);
+   return fragment;
+ }
+
+ function getCitation(record) {
+   let location = getTargetURL(record);
+   let citation = (record.hasOwnProperty("ristype")) ? `<span class="rtype rtype-${record.ristype}">${record.ristype}</span><br>`: "";
+   citation += (record.hasOwnProperty("btitle")) ? `<span class="btitle">${record["btitle"]}</span><br>` : "";
+   citation += (record.hasOwnProperty("au") && record["au"] !== "") ? `<span class="author">${record["au"]}</span>` : "";
+   citation += (record.hasOwnProperty("edition") && record["edition"] !== "") ? `<br><span class="edition">${record["edition"]}</span>` : "";
+   citation += formatPub(record["pub"], record["creationdate"]);
+   citation += (record.hasOwnProperty("format") && record["format"] !== "") ? `<br><span class="format">${record["format"]}</span>` : "";
+   citation += `<br><a href='javascript:window.open("${location}", "_blank");' class="location">view or request in Primo</a>`;
+   return citation;
+ }
+
+ function formatPub(publisher, date) {
+    let tmpstr = [];
+    if (publisher && publisher !== "") { tmpstr.push(publisher); }
+    if (date && date !== "") { tmpstr.push(date); }
+    return (publisher !== "" && date !== "") ? `<br><span class ="pub">${tmpstr.join(':')}</span>` : `<br><span class="pub">${tmpstr.toString()}</span>`;
+ }
+
+ function getTargetURL(record) {
+   const searchParams = ['isbn:rft.isbn', 'btitle:rft.btitle', 'addau:rft.au', 'edition:rft.edition', 'pub:rft.publisher', 'creationdate:rft.pubdate', 'oclcid:rft.oclcnum', 'mms:rft.mms_id'];
+   let url = new URL(urls.primreq);
+   searchParams.forEach(params => {
+     let [rparam, sparam] = params.split(":");
+     if (record[rparam] !== undefined) {
+       url.searchParams.set(sparam, record[rparam]);
+     }
+   });
+   return url;
+ }
+
+ function getURI(targ, keys) {
+   let terms = [];
+   for (let key of Object.keys(searchkeys)) {
+     if (keys[key] && searchkeys[key]) {
+       terms.push(keys[key] + searchkeys[key]);
+     }
+   }
+   let uri = (targ === "Google") ? uri = terms.join(" ") : terms.join(",AND;");
+   return uri;
+ };
+
+ function getURL(target) {
+   let url = new URL(urls[target]);
+   if (target === "Google") {
+     url.searchParams.set("q", "isbn:" + ISBN);
+   } else {
+     url.searchParams.set("q", getURI(target, urikeys[target]));
+     if (RISTYPE.checked) {
+       url.searchParams.set("qInclude", "facet_rtype,include,videos");
+     } else {
+       url.searchParams.set("multiFacets", "facet_rtype,exact,books|,|facet_rtype,exact,videos");
+     }
+   }
+   return url;
+ }
+
+  function getSource() {
+    let source;
+    [ "Primo", "Google", "Worldcat" ].forEach(src => {
+      if (recordset[src].found()) { source = src; }
+    });
+    return source;
+  }
+
+ //// event listeners 
+ document.querySelector('input[name="rft.isbn"]').addEventListener("blur", function(evt) {
+   if (evt.target.value) {
+     ISBN = evt.target.value.replace(/[^\dxX]/g, "");
+     if (ISBN.length === 10 || ISBN.length === 13) {
+       searchController();
+     }
+   }
+ }, false);
+
+//// urls and uris
+  const urls = {
+   primreq: "https://union-psb.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:01UCNY_INST?url_ver=Z39.88-2004&ctx_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-8&rft_val_fmt=info:ofi/fmt:kev:mtx:book",
+   Primo: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=Everything&scope=MyInst_and_CI&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
+   Worldcat: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=oclc&scope=oclc&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
+   Google: "https://www.googleapis.com/books/v1/volumes?",
+  };
+
+  const urikeys = {
+   "Google": { "rft.btitle": "intitle:", "rft.au": "inauthor:", "rft.publisher": "inpublisher:" },
+   "Worldcat": { "rft.btitle": "title,exact,", "rft.au": "creator,contains,", "rft.pubdate": "creationdate,contains,", "rft.isbn": "isbn,contains,"},
+   "Primo": { "rft.btitle": "title,contains,", "rft.au": "creator,contains,", "rft.pubdate": "cdate,contains,", "rft.isbn": "isbn,contains,"},
+   "almasru": { "rft.btitle": "alma.title==", "rft.au": "alma.creator=", "rft.pub": "alma.publisher=", "rft.year": "alma.main_pub_date==" }
+  };
+
+//// filters
+  function filterAPI(recordset) {
    let records = recordset.filter(record => {
      let FILTER = true;
 
@@ -393,289 +579,70 @@
        }
      }
      if (record.hasOwnProperty("ristype") && FILTER) {
-       let ristype = record.ristype ? record.ristype : record.type;
+       let ristype = record.ristype ? String(record.ristype).trim().toLowerCase() : String(record.type).trim().toLowerCase();
        if (ristype) {
-         ristype = ristype.toString().trim().toLowerCase();
          FILTER = FILTER && (ristype === "video" || ristype === "book");
        }
      }
-
      return FILTER;
    });
    return records;
- }
-
- //// fetch data
- async function fetchThumbnail(isbn) {
-   if (!isbn) { return false; }
-
-   let bibkey = "isbn:" + isbn,
-     data, response, oldata, olresponse, imgurl;
-   let url = new URL(urls.Google);
-   url.searchParams.set("q", bibkey);
-
-   try {
-     response = await fetch(url.href);
-     data = await response.json();
-   } catch (e) {
-     status.innerHTML = e;
-   }
-
-   if (!response.ok) {
-     try {
-       olresponse = await fetch(`https://covers.openlibrary.org/a/isbn/${isbn}-S.jpg`);
-       let oldata = await olresponse.blob();
-     } catch (e) {
-       status.innerHTML = e;
-     }
-   }
-
-   if (response && response.ok) {
-     if (data && data.totalItems === 1) {
-       let thumbnail = data.items[0].volumeInfo.imageLinks;
-       if (thumbnail && thumbnail.smallThumbnail) {
-         imgurl = thumbnail.smallThumbnail;
-       }
-     }
-   } else if (olresponse && olresponse.ok) {
-     if (oldata && oldata.url) {
-       log("OL thumbnail needed", isbn)
-       imgurl = data.url;
-     }
-   } else {
-     imgurl = false;
-   }
-   return imgurl;
- }
-
- async function fetchJSON(target) {
-   let data;
-   try {
-     let url = genURL(target);
-     let response = await fetch(url.href);
-     data = await response.json();
-   } catch (e) {
-     status.innerHTML = e;
-   }
-   return data;
- }
-
- //// controller
- async function searchController() {
-   clearAnchors();
-   document.querySelectorAll('[name^=rft]').forEach(el => {
-       if (el.value) {
-        searchkeys[el.name] = String(el.value).trim().toLowerCase();
-       } else if (searchkeys[el.name]) {
-        delete searchkeys[el.name];
-       }
-   });
-
-   let ISBN_SEARCH = searchkeys["rft.isbn"] ? true : false;
-   let TITL_SEARCH = (searchkeys["rft.btitle"] && !ISBN_SEARCH) ? true : false;
-   status.innerHTML = "Searching...";
-   let time0 = performance.now();
-
-   await fetchJSON("Primo").then(records => {
-     if (records && records.docs) {
-       const results = records.docs.map(item => {
-         return { ...item.pnx.addata, ...item.pnx.display, ...item.pnx.control };
-       });
-       recordset["Primo"].records = filterAPI(results);
-     }
-   });
-
-   if (ISBN_SEARCH && !recordset["Primo"].found()) {
-     await fetchJSON("Google").then(gb_records => {
-       if (gb_records && gb_records.items) {
-         recordset["Google"].records = gb_records.items.map(item => {
-           return { ...item.volumeInfo, ...item.saleInfo };
-         });
-       }
-     });
-   }
-
-   if (!recordset["Google"].found() && !recordset["Primo"].found()) {
-     await fetchJSON("Worldcat").then(oclc_records => {
-       if (oclc_records && oclc_records.docs) {
-         const results = oclc_records.docs.map(item => {
-           return { ...item.pnx.addata, ...item.pnx.display, ...item.pnx.control };
-         });
-         recordset["Worldcat"].records = filterAPI(results);
-       }
-     });
-   }
-
-   let time1 = performance.now();
-   status.innerHTML = `Search completed: ${((time1 - time0)/1000).toFixed(2)}s<br>`; 
-   
-   let source = getSource();
-   status.innerHTML += `${recordset[source].totrecs()} record(s) found in ${source}`;
-   makeAnchors(recordset[source].records);
- }
-
- function startOver() {
-   document.querySelectorAll('[data-name]').forEach(el => { el.value = ""; });
-   RISTYPE.checked = false;
-   status.innerHTML = "";
-   document.querySelector('input[name="rft.isbn"]').focus();
-   clearAnchors();
- }
-
- function clearAnchors() {
-   if (thumbs && thumbs.firstChild) {
-     while (thumbs.firstChild) {
-       thumbs.removeChild(thumbs.firstChild);
-     }
-   }
- }
-
- ///constructors
- function genThumb() {
-   let anchor = document.createElement('a');
-   let div = document.createElement('div');
-   let figure = document.createElement('figure');
-   let img = document.createElement('img');
-   div.classList.add("cite");
-   figure.classList.add("thumb");
-
-   figure.appendChild(img);
-   anchor.appendChild(div);
-   anchor.appendChild(figure);
-   let fragment = new DocumentFragment();
-   fragment.appendChild(anchor);
-   return fragment;
- }
-
- function genCitation(record) {
-   let location = genTargetURL(record);
-   let citation = (record.hasOwnProperty("ristype")) ? `<span class="rtype ${record["ristype"] === "video" ? 'rtype-video' : 'rtype-book'}">${record["ristype"]}</span><br>` : `<span class="rtype">unknown</span><br>`;
-   citation += (record.hasOwnProperty("btitle")) ? `<span class="btitle">${record["btitle"]}</span><br>` : "";
-   citation += (typeof(record["au"]) === 'string') ? `<span>${record["au"]}</span><br>` : "";
-   citation += (record.hasOwnProperty("edition")) ? `<br><span>${record["edition"]}</span>` : "";
-   
-   citation += (record.hasOwnProperty("pub")) ? `<span>${record["pub"]}</span>` : "";
-   citation += (record.hasOwnProperty("pub") && record.hasOwnProperty("creationdate")) ? ` : ` : "";
-   citation += (record.hasOwnProperty("creationdate")) ? `<span>${record["creationdate"]}</span>` : "";
-   citation += (record.hasOwnProperty("format")) ? `<br><span>${record["format"]}</span>` : "";
-   citation += `<br><a href='javascript:window.open("${location}", "_blank");' class="primolink">view or request in Primo</a>`;
-   return citation;
- }
-
- function genHeader(FOUND) {
-   let headertxt;
-   if (getSource() === "Primo") {
-     headertxt = `<b>Owned!...maybe...check availability or place a request.</b><br>note: <i>login to Primo</i> to see request options or status of existing requests.`;
-   } else {
-     headertxt = `<b>Not owned</b>...select record to use data in requesting [ill, purchase].`;
-   }
-   let blq = document.createElement("blockquote");
-   blq.classList.add("promptxt");
-   blq.innerHTML = headertxt;
-   document.querySelector(".thumbnails").appendChild(blq);
- }
-
- function genTargetURL(record) {
-   const searchParams = ['isbn:rft.isbn', 'btitle:rft.btitle', 'addau:rft.au', 'edition:rft.edition', 'pub:rft.publisher', 'creationdate:rft.pubdate', 'oclcid:rft.oclcnum', 'mms:rft.mms_id'];
-   let url = new URL(urls.primreq);
-   searchParams.forEach(params => {
-     let [rparam, sparam] = params.split(":");
-     if (record[rparam] !== undefined) {
-       url.searchParams.set(sparam, record[rparam]);
-     }
-   });
-   return url;
- }
-
- function genURI(targ, keys) {
-   let terms = [];
-   for (let key of Object.keys(searchkeys)) {
-     if (keys[key] && searchkeys[key]) {
-       terms.push(keys[key] + searchkeys[key]);
-     }
-   }
-   let uri = (targ === "Google") ? uri = terms.join(" ") : terms.join(",AND;");
-   return uri;
- };
-
- function genURL(target) {
-   let url = new URL(urls[target]);
-   if (target === "Google") {
-     url.searchParams.set("q", "isbn:" + ISBN);
-   } else {
-     url.searchParams.set("q", genURI(target, urikeys[target]));
-     if (RISTYPE.checked) {
-       url.searchParams.set("qInclude", "facet_rtype,include,videos");
-     } else {
-       url.searchParams.set("multiFacets", "facet_rtype,exact,books|,|facet_rtype,exact,videos");
-     }
-   }
-   return url;
- }
-
-  function getSource() {
-    let source = false;
-    [ "Primo", "Google", "Worldcat" ].forEach(src => {
-        if (recordset[src].found()) { source = src; }
-    });
-    return source;
   }
 
- //// event listeners 
- document.querySelector('input[name="rft.isbn"]').addEventListener("blur", function(evt) {
-   if (evt.target.value) {
-     ISBN = evt.target.value.replace(/[^\dxX]/g, "");
-     if (ISBN.length === 10 || ISBN.length === 13) {
-       searchController();
-     }
-   }
- }, false);
+//// fetch data
+  async function fetchThumbnail(isbn) {
+      if (!isbn) { return false; }
 
- function showHelp() {
-   let box = document.querySelector(".littlebox");
-   box.classList.toggle("expandbox");
- }
+      let bibkey = "isbn:" + isbn,
+      data, response, oldata, olresponse, imgurl;
+      let url = new URL(urls.Google);
+      url.searchParams.set("q", bibkey);
 
- //// data helpers
- const urls = {
-   primreq: "https://union-psb.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:01UCNY_INST?url_ver=Z39.88-2004&ctx_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-8&rft_val_fmt=info:ofi/fmt:kev:mtx:book",
-   Primo: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=Everything&scope=MyInst_and_CI&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
-   Worldcat: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=oclc&scope=oclc&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
-   Google: "https://www.googleapis.com/books/v1/volumes?",
- };
+      try {
+        response = await fetch(url.href);
+        data = await response.json();
+      } catch (e) {
+        status.innerHTML = e;
+      }
 
- const urikeys = {
-   "Google": { "rft.btitle": "intitle:", "rft.au": "inauthor:", "rft.publisher": "inpublisher:" },
-   "Worldcat": { "rft.btitle": "title,exact,", "rft.au": "creator,contains,", "rft.pubdate": "creationdate,contains,", "rft.isbn": "isbn,contains,"},
-   "Primo": { "rft.btitle": "title,contains,", "rft.au": "creator,contains,", "rft.pubdate": "cdate,contains,", "rft.isbn": "isbn,contains,"},
-   "almasru": { "rft.btitle": "alma.title==", "rft.au": "alma.creator=", "rft.pub": "alma.publisher=", "rft.year": "alma.main_pub_date==" }
-};
+      if (!response.ok) {
+        try {
+          olresponse = await fetch(`https://covers.openlibrary.org/a/isbn/${isbn}-S.jpg`);
+          let oldata = await olresponse.blob();
+        } catch (e) {
+          status.innerHTML = e;
+        }
+      }
 
+      if (response && response.ok) {
+        if (data && data.totalItems === 1) {
+          let thumbnail = data.items[0].volumeInfo.imageLinks;
+          if (thumbnail && thumbnail.smallThumbnail) {
+            imgurl = thumbnail.smallThumbnail;
+          }
+        }
+      } else if (olresponse && olresponse.ok) {
+        if (oldata && oldata.url) {
+          log("OL thumbnail needed", isbn)
+          imgurl = data.url;
+        }
+      }
 
- // function watchThumbs() {
- //   const observedNode = document.querySelector('.thumbnails');
- //   const config = { attributes:false, childList:true, subtree:true };
+      return imgurl;
+  }
 
- //   const callback = function(mutationsList, observer) {
- //     for (const mutation of mutationsList) {
- //       if (mutation.type === 'childList') {
- //         let anchors = document.querySelectorAll(".thumbnails > a");
- //         //let anchor = mutation.addedNodes[0];
- //         // if (!anchor.classList.contains("opacity-none")) {
- //         //      anchor.classList.replace("opacity-none", "opacity-full");
- //         // }
- //         anchors.forEach(anchor => {
- //           if (!anchor.classList.contains("opacity-none")) {
- //              anchor.classList.replace("opacity-none", "opacity-full");
- //           }
- //         });
- //       }
- //     }  
- //   }
- //   const observer = new MutationObserver(callback);
- //   observer.observe(observedNode, config);
- // }
- // watchThumbs();
+  async function fetchJSON(target) {
+    let data;
+    try {
+      let url = getURL(target);
+      let response = await fetch(url.href);
+      data = await response.json();
+    } catch (e) {
+      status.innerHTML = e;
+    }
+    return data;
+  }
+
 
 </script>
 </html>
