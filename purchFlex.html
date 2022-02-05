@@ -42,7 +42,7 @@
   }
   .requestform {
     grid-area: requestform;
-    grid-template-rows: 0.5fr 6fr 1fr 0.5fr;
+    grid-template-rows: 1fr 7fr 1fr 1fr;
     grid-template-areas:
       "header"
       "inputels"
@@ -51,7 +51,7 @@
   }    
   .header { 
     grid-area: header; 
-    height: 9%;
+    height: 10%;
   } 
   ul.flexer { 
     grid-area: inputels; 
@@ -109,57 +109,65 @@
   .panel {
     display: grid;
     grid-area: panel;
-    grid-template-rows: 1fr 7fr;
+    grid-template-rows: 1fr 1fr 8fr;
     grid-template-areas:
       "helpme"
-      "thumbnails";
+      "blockquote"
+      "thumbnails"; 
+      flex-direction: column nowrap;
   } 
   .help {
     grid-area: helpme;
     height: 10%;
-  }
-  .thumbnails {
-    grid-area: thumbnails;
-    display: flex;
-    flex-flow: column nowrap;
-    height: 89%;
-    padding: 0;    
-  }
-  .anchors {
-    overflow-y: scroll;
   }
   .panel > img {
     margin: 4px 0;
     height: 2.5em;
     padding: 0;
   }
+  .blockq {
+    grid-area: blockquote; 
+    padding: 0;
+    margin: 0.35em 0;
+  }  
+  .thumbnails { 
+    grid-area: thumbnails;
+    display: flex;
+    flex-flow: column nowrap;
+    overflow-y: scroll;
+    padding: 0;    
+  }  
+
   .thumbnails > a {
-    display: flex; 
+    display: flex;  
+    flex: 0 0 auto;
     box-shadow: inset 0 0 0.15em 0.04em #822433cc;
     border: 1px outset #822433cc;
     background: #F6F6F6;
-    margin: 0.1em 0;
+    margin: 0.15em 0;
     text-decoration: none;
     font-weight: 480;
     font-size: 0.9em;
     opacity: 0.8;
-    padding:  0.4em;
+    padding: 10.5em;
+    height: auto;
   }
   .thumbnails > a:hover {
     border-style: inset;
     background: white;
     opacity: 1;
-  }
+  } 
+  .promptxt {
+    box-shadow: inset 2px 1px 2px 0 #822433cc;
+    margin: 0;
+  } 
   .cite {
-    flex: 1 1 auto;
+    flex: 0 0 85%;
     padding: 0;
   }
   .cite > span {
     padding: 0;
-  }
-  .promptxt {
-    box-shadow: inset 2px 1px 2px 0 #822433cc;
-    margin: 0;
+    flex-wrap: wrap;
   }
   .thumb {
     flex: 1 1 auto;
@@ -182,11 +190,9 @@
   }
   .btitle {
     font-weight: 600;
-    align-self: flex-start;
   }
   .location {
-    padding: 0.35em 0;
-    margin: 0;
+    margin: 0.5em 0;
     text-decoration: none;
     cursor: pointer;
   }
@@ -235,12 +241,13 @@
               </ul>
             </ul>
           </ul>
-          </span> 
-          <blockquote></blockquote>
-          <div class="anchors">
-         
-          <div class="thumbnails"></div>
-        </div>
+          </span>
+          <div class="blockq">
+            <blockquote></blockquote>
+          </div>
+         <!--  <div class="anchors"> -->
+            <div class="thumbnails"></div>
+      <!--     </div> -->
       </div>
 
       <div class="requestform">     
@@ -435,20 +442,19 @@
  }
 
  function getThumb() {
-   let anchor = document.createElement('a');
-   let div = document.createElement('div');
-   div.classList.add("cite");
-   let figure = document.createElement('figure');
-   figure.classList.add("thumb");
-   let img = document.createElement('img');
-
-   figure.appendChild(img);
-   anchor.appendChild(div)
-   div.appendChild(figure);
-
-   let fragment = new DocumentFragment();
-   fragment.appendChild(anchor);
-   return fragment;
+    let anchor = document.createElement('a');
+    let div = document.createElement('div');
+    let figure = document.createElement('figure');
+    let img = document.createElement('img');
+    figure.classList.add("thumb"); 
+    div.classList.add("cite");
+    figure.appendChild(img); 
+  
+    anchor.appendChild(div)
+    anchor.appendChild(figure);
+    let fragment = new DocumentFragment();
+    fragment.appendChild(anchor);
+    return fragment;
  }
 
  function getCitation(record) {
