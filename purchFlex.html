@@ -443,14 +443,14 @@
  function getThumb() {
     let anchor = document.createElement('a');
     let div = document.createElement('div');
-    let figure = document.createElement('figure');
+    //let figure = document.createElement('figure');
     let img = document.createElement('img');
-    figure.classList.add("thumb"); 
+    //figure.classList.add("thumb"); 
     div.classList.add("cite");
-    figure.appendChild(img); 
+    //figure.appendChild(img); 
   
     anchor.appendChild(div)
-    anchor.appendChild(figure);
+    anchor.appendChild(img);
     let fragment = new DocumentFragment();
     fragment.appendChild(anchor);
     return fragment;
