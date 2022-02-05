@@ -171,8 +171,8 @@
   
   a > img {
     padding: 0.75em;
-    max-height: 5em;
-    min-height: 3.5em;
+    max-height: 8em;
+    min-height: 4em;
   }
   .rtype {
     font-size: 0.75em;
@@ -442,12 +442,9 @@
  function getThumb() {
     let anchor = document.createElement('a');
     let div = document.createElement('div');
-    //let figure = document.createElement('figure');
     let img = document.createElement('img');
-    //figure.classList.add("thumb"); 
     div.classList.add("cite");
-    //figure.appendChild(img); 
-  
+   
     anchor.appendChild(div)
     anchor.appendChild(img);
     let fragment = new DocumentFragment();
