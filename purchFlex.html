@@ -304,6 +304,7 @@
    
 //// makers -- normalize results
    async function makeAnchors(records) {
+      let time0 = performance.now();
       let API = getSource();
       getHeader(API);
 
@@ -324,6 +325,7 @@
         div.innerHTML = getCitation(item);
         thumbs.appendChild(newitem);
       });
+      log("Make Records time: ", `${(performance.now() - time0 )/1000}s`);
    }
 
    function makeAPI(record) {
@@ -394,14 +396,16 @@
        }
      });
    }
-
-   let time1 = performance.now();
-   status.innerHTML = `Search completed: ${((time1 - time0)/1000).toFixed(2)}s<br>`; 
+   status.innerHTML = `Search completed: ${(( performance.now() - time0 )/1000).toFixed(2)}s<br>`; 
    
    let source = getSource();
-   log(source);
-   status.innerHTML += `${recordset[source].totrecs()} record(s) found in ${source}`;
-   makeAnchors(recordset[source].records);
+   if (source) {
+      status.innerHTML += `${recordset[source].totrecs()} record(s) found in ${source}`;
+      makeAnchors(recordset[source].records);
+   } else {
+      status.innerHTML += `No records found`;
+   }
+   
  }
 
 //// UI helpers
@@ -529,9 +533,9 @@
 
 //// urls and uris
   const urls = {
-   primreq: "https://union-psb.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:01UCNY_INST?url_ver=Z39.88-2004&ctx_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-8&rft_val_fmt=info:ofi/fmt:kev:mtx:book",
-   Primo: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=Everything&scope=MyInst_and_CI&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
-   Worldcat: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:Services&tab=oclc&scope=oclc&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
+   primreq: "https://union-psb.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:Services?url_ver=Z39.88-2004&ctx_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-8&rft_val_fmt=info:ofi/fmt:kev:mtx:book",
+   Primo: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&tab=Everything&scope=MyInst_and_CI&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
+   Worldcat: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&tab=oclc&scope=oclc&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
    Google: "https://www.googleapis.com/books/v1/volumes?",
   };
 
@@ -551,32 +555,28 @@
        let recordtitle = record.btitle ? record.btitle : record.title;
        if (recordtitle) {
          recordtitle = recordtitle.toString().toLowerCase();
-         let searchtitle = searchkeys['rft.btitle'];
-         FILTER = FILTER && recordtitle.includes(searchtitle);
+         FILTER = FILTER && recordtitle.includes(searchkeys['rft.btitle']);
        }
      }
      if (searchkeys.hasOwnProperty('rft.pubdate') && FILTER) {
        let recordate = record.creationdate ? record.creationdate : record.date;
        if (recordate) {
          recordate = recordate.toString().toLowerCase();
-         let searchdate = searchkeys['rft.pubdate'];
-         FILTER = FILTER && recordate.includes(searchdate);
+         FILTER = FILTER && recordate.includes(searchkeys['rft.pubdate']);
        }
      }
      if (searchkeys.hasOwnProperty('rft.publisher') && FILTER) {
        let recordpub = record.pub ? record.pub : record.publisher;
        if (recordpub) {
          recordpub = recordpub.toString().toLowerCase();
-         let searchpub = searchkeys['rft.publisher'];
-         FILTER = FILTER && recordpub.includes(searchpub);
+         FILTER = FILTER && recordpub.includes(searchkeys['rft.publisher']);
        }
      }
      if (searchkeys.hasOwnProperty('rft.au') && FILTER) {
        let recordau = record.au ? record.au : record.addau;
        if (recordau) {
          recordau = recordau.toString().toLowerCase();
-         let searchau = searchkeys['rft.au'];
-         FILTER = FILTER && recordau.includes(searchau);
+         FILTER = FILTER && recordau.includes(searchkeys['rft.au']);
        }
      }
      if (record.hasOwnProperty("ristype") && FILTER) {
@@ -601,45 +601,57 @@
 
       try {
         response = await fetch(url.href);
-        data = await response.json();
-      } catch (e) {
-        status.innerHTML = e;
-      }
-
-      if (!response.ok) {
-        try {
-          olresponse = await fetch(`https://covers.openlibrary.org/a/isbn/${isbn}-S.jpg`);
-          let oldata = await olresponse.blob();
-        } catch (e) {
-          status.innerHTML = e;
-        }
-      }
+      } catch (e) { log("gthumb response: ", e); }
 
       if (response && response.ok) {
+        try {
+          data = await response.json();
+        } catch (e) { log("gthumb data.json", e); }
+        
         if (data && data.totalItems === 1) {
           let thumbnail = data.items[0].volumeInfo.imageLinks;
           if (thumbnail && thumbnail.smallThumbnail) {
             imgurl = thumbnail.smallThumbnail;
           }
         }
-      } else if (olresponse && olresponse.ok) {
-        if (oldata && oldata.url) {
-          log("OL thumbnail needed", isbn)
-          imgurl = data.url;
+      } else {
+
+        try {
+          olresponse = await fetch(`https://covers.openlibrary.org/a/isbn/${isbn}-S.jpg`);
+        } catch (e) { log("ol thumb response: ", e); }
+
+        if (olresponse && olresponse.ok) {
+          try {
+            oldata = await olresponse.blob();
+          } catch (e) { log("ol thumb data.json", e); }
+          
+          if (oldata && oldata.url) {
+            log("OL thumbnail needed", isbn)
+            imgurl = data.url;
+          }
         }
       }
-
       return imgurl;
   }
 
   async function fetchJSON(target) {
-    let data;
-    try {
-      let url = getURL(target);
-      let response = await fetch(url.href);
-      data = await response.json();
-    } catch (e) {
-      status.innerHTML = e;
+    let data, response; 
+    let url = getURL(target);
+    
+    try { 
+      response = await fetch(url.href);
+    } catch (e) { 
+      log("fetchJSON fetch: ", e); 
+    }
+
+    if (response.ok) {
+      try { 
+        data = await response.json();
+      } catch (e) { log("fetchJSON response.json: ", e); } 
+    }
+
+    if (response.status === "500") {
+        status.innerHTML = "Looks like the Primo server is not accepting requests";
     }
     return data;
   }
