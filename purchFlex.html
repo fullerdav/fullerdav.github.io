@@ -17,6 +17,7 @@
     box-sizing: border-box;    
     border-radius: 0.4em;   
     padding: 0.35em;
+    margin: 0;
     font-family: Source Sans Pro, Helvetica Neue, sans-serif;
     font-size: 15px;
   }
@@ -171,8 +172,8 @@
   
   a > img {
     padding: 0.75em;
+    height: 8em;
     max-height: 8em;
-    min-height: 4em;
   }
   .rtype {
     font-size: 0.75em;
@@ -190,7 +191,8 @@
     font-weight: 600;
   }
   .location {
-    margin: 0.5em 0;
+    display: inline-block;
+    padding: 0.4em 0 0;
     text-decoration: none;
     cursor: pointer;
   }
@@ -460,11 +462,11 @@
    let location = getTargetURL(record);
    let citation = (record.hasOwnProperty("ristype")) ? `<span class="rtype rtype-${record.ristype}">${record.ristype}</span><br>`: "";
    citation += (record.hasOwnProperty("btitle")) ? `<span class="btitle">${record["btitle"]}</span><br>` : "";
-   citation += (record.hasOwnProperty("au") && record["au"] !== "") ? `<span class="author">${record["au"]}</span>` : "";
-   citation += (record.hasOwnProperty("edition") && record["edition"] !== "") ? `<br><span class="edition">${record["edition"]}</span>` : "";
+   citation += (record.hasOwnProperty("au") && record["au"] !== "") ? `<span class="author">${record["au"]}</span><br>` : "";
+   citation += (record.hasOwnProperty("edition") && record["edition"] !== "") ? `<span class="edition">${record["edition"]}</span><br>` : "";
    citation += formatPub(record["pub"], record["creationdate"]);
-   citation += (record.hasOwnProperty("format") && record["format"] !== "") ? `<br><span class="format">${record["format"]}</span>` : "";
-   citation += `<br><a href='javascript:window.open("${location}", "_blank");' class="location">view or request in Primo</a>`;
+   citation += (record.hasOwnProperty("format") && (record["format"] !== "" && record["format"] !== "book")) ? `<span class="format">${record["format"]}</span><br>` : "";
+   citation += `<a href='javascript:window.open("${location}", "_blank");' class="location">view or request in Primo</a>`;
    return citation;
  }
 
@@ -472,7 +474,7 @@
     let tmpstr = [];
     if (publisher && publisher !== "") { tmpstr.push(publisher); }
     if (date && date !== "") { tmpstr.push(date); }
-    return (publisher !== "" && date !== "") ? `<br><span class ="pub">${tmpstr.join(':')}</span>` : `<br><span class="pub">${tmpstr.toString()}</span>`;
+    return (publisher !== "" && date !== "") ? `<span class="pub">${tmpstr.join(':')}</span><br>` : `<span class="pub">${tmpstr.toString()}</span><br>`;
  }
 
  function getTargetURL(record) {
@@ -651,7 +653,7 @@
     }
 
     if (response.status === "500") {
-        status.innerHTML = "Looks like the Primo server is not accepting requests";
+        status.innerHTML = "the Primo API may not be accepting requests";
     }
     return data;
   }
