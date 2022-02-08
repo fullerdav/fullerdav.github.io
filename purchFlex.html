@@ -38,7 +38,7 @@
     border: 1px ridge #822433cc;
     margin: 1em; 
     color: #000000cc;
-    background: #ededed;
+    background: #ededed99;
     transition:  all .4s cubic-bezier(.25,.8,.25,1);
   }
   .requestform {
@@ -115,7 +115,7 @@
       "helpme"
       "blockquote"
       "thumbnails"; 
-      flex-direction: column nowrap;
+    flex-direction: column nowrap;
   } 
   .help {
     grid-area: helpme;
@@ -144,7 +144,8 @@
     flex: 0 0 auto;
     box-shadow: inset 0 0 0.15em 0.04em #822433cc;
     border: 1px outset #822433cc;
-    background: #F6F6F6;
+    /*background: #F6F6F6;*/
+    background-image: radial-gradient(circle 250px at 85% 20%, lightyellow, whitesmoke, transparent);
     margin: 0.15em 0;
     text-decoration: none;
     font-weight: 480;
@@ -158,7 +159,7 @@
     opacity: 1;
   } 
   .promptxt {
-    box-shadow: inset 2px 1px 2px 0 #822433cc;
+    box-shadow: inset 1px 1px 1px 0 #822433cc;
     margin: 0;
   } 
   .cite {
@@ -195,6 +196,14 @@
     padding: 0.4em 0 0;
     text-decoration: none;
     cursor: pointer;
+  }
+  .loginprimo {
+    display: inline-block;
+    background-image: radial-gradient(circle,50px at 1% 1%, yellow, white, transparent);
+    cursor: pointer;
+    position: absolute;
+    top: 2em;
+    left: 25%;
   }
   .littlebox { 
     position: absolute;
@@ -242,12 +251,9 @@
             </ul>
           </ul>
           </span>
-          <div class="blockq">
-            <blockquote></blockquote>
-          </div>
-         <!--  <div class="anchors"> -->
-            <div class="thumbnails"></div>
-      <!--     </div> -->
+          <span class="loginprimo"><a href="https://union-psb.primo.exlibrisgroup.com/discovery/account?vid=01UCNY_INST:01UCNY_INST&section=overview" target="_blank">login to Primo</a> to see the status of your existing requests.</span>
+          <div class="blockq"><blockquote></blockquote></div>
+          <div class="thumbnails"></div>
       </div>
 
       <div class="requestform">     
@@ -407,7 +413,6 @@
    } else {
       status.innerHTML += `No records found`;
    }
-   
  }
 
 //// UI helpers
@@ -437,9 +442,9 @@
    let blq = document.querySelector("blockquote");
   
    if (getSource() === "Primo") {
-     blq.innerHTML = `<b>Owned!...maybe...check availability or place a request.</b><br>note: <i>login to Primo</i> to see request options or status of existing requests.`;
+     blq.innerHTML = `<b>Owned!</b>...maybe...select record to check availability or place a request [ill, digitization, or purchase additional copy?].`;
    } else {
-     blq.innerHTML = `<b>Not owned</b>...select record to use data in requesting [ill, purchase].`;
+     blq.innerHTML = `<b>Not owned</b>...select record to request a purchase or inter-library loan.`;
    }
    blq.classList.add("promptxt");
    return;
@@ -535,7 +540,7 @@
 
 //// urls and uris
   const urls = {
-   primreq: "https://union-psb.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:Services?url_ver=Z39.88-2004&ctx_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-8&rft_val_fmt=info:ofi/fmt:kev:mtx:book",
+   primreq: "https://union-psb.primo.exlibrisgroup.com/openurl/01UCNY_INST/01UCNY_INST:01UCNY_INST?url_ver=Z39.88-2004&ctx_ver=Z39.88-2004&ctx_enc=info:ofi/enc:UTF-8&rft_val_fmt=info:ofi/fmt:kev:mtx:book",
    Primo: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&tab=Everything&scope=MyInst_and_CI&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
    Worldcat: "https://api-na.hosted.exlibrisgroup.com/primo/v1/search?vid=01UCNY_INST:01UCNY_INST&tab=oclc&scope=oclc&conVoc=false&apikey=l7xxaa726f9cf9f74f048296f374d9ec74f5",
    Google: "https://www.googleapis.com/books/v1/volumes?",
