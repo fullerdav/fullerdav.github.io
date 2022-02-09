@@ -305,7 +305,7 @@
    let searchkeys = {}, ISBN;
    const status = document.querySelector(".status");
    const thumbs = document.querySelector(".thumbnails");
-   const blq = document.querySelector('.blq');
+   const blq = document.querySelector('blockquote');
    const rftnames = document.querySelectorAll('input[name^="rft"]');
    const RISTYPE = document.querySelector("#ristype");
    const Thumb = getThumb();
@@ -388,7 +388,7 @@
 
 //// controller
  async function searchController() {
-   if (blq.firstCild) { clearAnchors(); }
+   if (blq && blq.firstChild) { clearAnchors(); }
    rftnames.forEach(el => {
        if (el.value) {
         searchkeys[el.name] = el.value.trim().toLowerCase();
