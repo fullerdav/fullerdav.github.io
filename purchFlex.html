@@ -201,18 +201,23 @@
     position: absolute;
     display: inline-block;
     top: 4.5em;
+    height: 0.25em;
     width: auto;
     opacity: 0;   
-    line-height: 0.1em;
+    line-height: 0.01em;
     transition: opacity 1.4s ease-out;
   }
   .expandbox { 
     z-index: 10; 
-   /* font-size: 0.9em;*/
-    line-height: 1em;
+    height: auto;
+    width: 20em;
+    line-height:1.2;
     opacity: 1;
     background-color: white;    
   } 
+  .expandbox li {
+    padding: 0.15em;
+  }
   </style>
 </head>
  
@@ -221,24 +226,34 @@
       <div class="panel">
         <img src="icons/icon_info.png" onclick="showHelp();">
           <span class="help littlebox">
-          <ul>Requesting books and videos:   
-            <li>Enter an ISBN&lt;TAB&gt; or other data</li> 
+          <ul>
+            <li><b>Requesting books and videos</b></li>
+            <li>This will check if we own a title.
+              If so. select a record to open Primo for requesting [hold, digitize, ill, purchase (additional)].
+              If not owned a temporary record will permit the same [ill, purchase].</li>
+            <li><b>Locating books and DVDs</b></li>
+            <li>Enter an ISBN (preferred) or other data</li>
+            <li>ISBN or Title is required</li>  
             <li>distinctive keywords usually suffice...</li> 
-            <li>We'll check availability and populate a request</li>
-            <li>remember: login to see all options</li>
-            <li></li>
-            <ul>Best practices for locating videos:
-              <li><b>Author</b> varies, best to omit</li>
-              <li><b>Pub.</b> refers to studio or distributor</li>     
-              <li><b>Year</b> refers to release, not production</li> 
-              <li>remember to check the "video" box!</li>
-              <li></li>
-              <ul><b>[title, pub, year]</b> examples:
-                <li>The Way We Were, Columbia, 1999</li>
-                <li>Dersu Uzala, kino, 2000</li>
-                <li>dersu, Kino</li>
+            <li>
+              <ul>
+                <li><b>Locating videos (best practices)</b></li>
+                <li>Streaming video and some DVDs lack an ISBN</li>
+                <li>[title, pub, year]is effective</li>
+                <li>author varies, best to omit</li>
+                <li>pub refers to studio or distributor</li>     
+                <li>year refers to release, not production</li> 
+                <li>remember to check the "video" box!</li>
+                <li>
+                  <ul>
+                    <li><b>examples</b></li>
+                    <li>the way we were, Columbia, 1999</li>
+                    <li>Dersu Uzala, kino, 2000</li>
+                    <li>dersu, Kino</li>
+                  </ul>
+                </li>
               </ul>
-            </ul>
+            </li>
           </ul>
           </span>
           <span class="loginprimo"><a href="https://union-psb.primo.exlibrisgroup.com/discovery/account?vid=01UCNY_INST:01UCNY_INST&section=overview" target="_blank">login to Primo</a> to see the status of your existing requests.</span>
