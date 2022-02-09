@@ -199,13 +199,12 @@
   }
   .littlebox { 
     position: absolute;
-    display: inline-block;
     top: 4.5em;
     height: 0.25em;
-    width: auto;
+    width: 0.25em;
     opacity: 0;   
-    line-height: 0.01em;
-    transition: opacity 1.4s ease-out;
+    line-height: 0.05em;
+    transition: opacity 1.5s ease-out;
   }
   .expandbox { 
     z-index: 10; 
@@ -306,6 +305,8 @@
    let searchkeys = {}, ISBN;
    const status = document.querySelector(".status");
    const thumbs = document.querySelector(".thumbnails");
+   const blq = document.querySelector('.blq');
+   const rftnames = document.querySelectorAll('input[name^="rft"]');
    const RISTYPE = document.querySelector("#ristype");
    const Thumb = getThumb();
    const { log } = console;
@@ -361,13 +362,34 @@
      item['creationdate'] = record["publishedDate"] ? record["publishedDate"].match(/^\d{4}/)[0] : "";
      item['pub'] = (record["publisher"] && Array.isArray(record['publisher'])) ? record["publisher"][0] : record["publisher"];
      item["ristype"] = "book";
+     for (let key of Object.keys(item)) { if (item[key] === undefined || item[key] === "") { delete item[key]; } }
      return item;
   }
 
+ function getCitation(record) {
+   let location = getTargetURL(record);
+   let citation = (record.hasOwnProperty("ristype")) ? `<span class="rtype rtype-${record.ristype}">${record.ristype}</span><br>`: "";
+   citation += (record.hasOwnProperty("btitle")) ? `<span class="btitle">${record["btitle"]}</span><br>` : "";
+   citation += (record.hasOwnProperty("au") && record["au"] !== "") ? `<span class="author">${record["au"]}</span><br>` : "";
+   citation += (record.hasOwnProperty("edition") && record["edition"] !== "") ? `<span class="edition">${record["edition"]}</span><br>` : "";
+   citation += formatPub(record["pub"], record["creationdate"]);
+   citation += (record.hasOwnProperty("format") && (record["format"] !== "" && record["format"] !== "book")) ? `<span class="format">${record["format"]}</span><br>` : "";
+   citation += `<a href='javascript:window.open("${location}", "_blank");' class="location">view or request in Primo</a>`;
+   return citation;
+ }
+
+ function formatPub(publisher, date) {
+    let tmpstr = [];
+    if (publisher && publisher !== "") { tmpstr.push(publisher); }
+    if (date && date !== "") { tmpstr.push(date); }
+    return (publisher !== "" && date !== "") ? `<span class="pub">${tmpstr.join(':')}</span><br>` : `<span class="pub">${tmpstr.toString()}</span><br>`;
+ }
+
+
 //// controller
  async function searchController() {
-   clearAnchors();
-   document.querySelectorAll('[name^=rft]').forEach(el => {
+   if (blq.firstCild) { clearAnchors(); }
+   rftnames.forEach(el => {
        if (el.value) {
         searchkeys[el.name] = el.value.trim().toLowerCase();
        } else if (searchkeys[el.name]) {
@@ -420,17 +442,30 @@
    }
  }
 
+//// event listeners 
+ document.querySelector('input[name="rft.isbn"]').addEventListener("blur", function(evt) {
+   if (evt.target.value) {
+     ISBN = evt.target.value.replace(/[^\dxX]/g, "");
+     if (ISBN.length === 10 || ISBN.length === 13) {
+       searchController();
+     }
+   }
+ }, false);
+
 //// UI helpers
   function startOver() {
-   document.querySelectorAll('[data-name]').forEach(el => { el.value = ""; });
+   rftnames.forEach(el => { el.value = ""; });
    RISTYPE.checked = false;
-   status.innerHTML = "";
-   document.querySelector('input[name="rft.isbn"]').focus();
+   status.innerHTML = "";  
    clearAnchors();
+   document.querySelector('input[name="rft.isbn"]').focus();
    return;
   }
 
   function clearAnchors() {
+   if (blq && blq.firstChild) {
+     blq.removeChild(blq.firstChild);
+   }
    if (thumbs && thumbs.firstChild) {
      while (thumbs.firstChild) { thumbs.removeChild(thumbs.firstChild); }
    }
@@ -444,60 +479,22 @@
  
 //// getters 
   function getHeader() { 
-   let blq = document.querySelector("blockquote");
-  
-   if (getSource() === "Primo") {
+    if (getSource() === "Primo") {
      blq.innerHTML = `<b>Owned!</b>...maybe...select record to check availability or place a request [ill, digitization, or purchase additional copy?].`;
-   } else {
+    } else {
      blq.innerHTML = `<b>Not owned</b>...select record to request a purchase or inter-library loan.`;
-   }
-   blq.classList.add("promptxt");
-   return;
- }
+    }
+    blq.classList.add("promptxt");
+    return;
+  }
 
- function getThumb() {
-    let anchor = document.createElement('a');
-    let div = document.createElement('div');
-    let img = document.createElement('img');
-    div.classList.add("cite");
-   
-    anchor.appendChild(div)
-    anchor.appendChild(img);
-    let fragment = new DocumentFragment();
-    fragment.appendChild(anchor);
-    return fragment;
- }
-
- function getCitation(record) {
-   let location = getTargetURL(record);
-   let citation = (record.hasOwnProperty("ristype")) ? `<span class="rtype rtype-${record.ristype}">${record.ristype}</span><br>`: "";
-   citation += (record.hasOwnProperty("btitle")) ? `<span class="btitle">${record["btitle"]}</span><br>` : "";
-   citation += (record.hasOwnProperty("au") && record["au"] !== "") ? `<span class="author">${record["au"]}</span><br>` : "";
-   citation += (record.hasOwnProperty("edition") && record["edition"] !== "") ? `<span class="edition">${record["edition"]}</span><br>` : "";
-   citation += formatPub(record["pub"], record["creationdate"]);
-   citation += (record.hasOwnProperty("format") && (record["format"] !== "" && record["format"] !== "book")) ? `<span class="format">${record["format"]}</span><br>` : "";
-   citation += `<a href='javascript:window.open("${location}", "_blank");' class="location">view or request in Primo</a>`;
-   return citation;
- }
-
- function formatPub(publisher, date) {
-    let tmpstr = [];
-    if (publisher && publisher !== "") { tmpstr.push(publisher); }
-    if (date && date !== "") { tmpstr.push(date); }
-    return (publisher !== "" && date !== "") ? `<span class="pub">${tmpstr.join(':')}</span><br>` : `<span class="pub">${tmpstr.toString()}</span><br>`;
- }
-
- function getTargetURL(record) {
-   const searchParams = ['isbn:rft.isbn', 'btitle:rft.btitle', 'addau:rft.au', 'edition:rft.edition', 'pub:rft.publisher', 'creationdate:rft.pubdate', 'oclcid:rft.oclcnum', 'mms:rft.mms_id'];
-   let url = new URL(urls.primreq);
-   searchParams.forEach(params => {
-     let [rparam, sparam] = params.split(":");
-     if (record[rparam] !== undefined) {
-       url.searchParams.set(sparam, record[rparam]);
-     }
-   });
-   return url;
- }
+  function getSource() {
+    let source;
+    [ "Primo", "Google", "Worldcat" ].forEach(src => {
+      if (recordset[src].found()) { source = src; }
+    });
+    return source;
+  }
 
  function getURI(targ, keys) {
    let terms = [];
@@ -510,38 +507,32 @@
    return uri;
  };
 
- function getURL(target) {
-   let url = new URL(urls[target]);
-   if (target === "Google") {
-     url.searchParams.set("q", "isbn:" + ISBN);
-   } else {
-     url.searchParams.set("q", getURI(target, urikeys[target]));
-     if (RISTYPE.checked) {
-       url.searchParams.set("qInclude", "facet_rtype,include,videos");
+  function getURL(target) {
+     let url = new URL(urls[target]);
+     if (target === "Google") {
+       url.searchParams.set("q", "isbn:" + ISBN);
      } else {
-       url.searchParams.set("multiFacets", "facet_rtype,exact,books|,|facet_rtype,exact,videos");
+       url.searchParams.set("q", getURI(target, urikeys[target]));
+       if (RISTYPE.checked) {
+         url.searchParams.set("qInclude", "facet_rtype,include,videos");
+       } else {
+         url.searchParams.set("multiFacets", "facet_rtype,exact,books|,|facet_rtype,exact,videos");
+       }
      }
-   }
-   return url;
- }
-
-  function getSource() {
-    let source;
-    [ "Primo", "Google", "Worldcat" ].forEach(src => {
-      if (recordset[src].found()) { source = src; }
-    });
-    return source;
+     return url;
   }
 
- //// event listeners 
- document.querySelector('input[name="rft.isbn"]').addEventListener("blur", function(evt) {
-   if (evt.target.value) {
-     ISBN = evt.target.value.replace(/[^\dxX]/g, "");
-     if (ISBN.length === 10 || ISBN.length === 13) {
-       searchController();
+  function getTargetURL(record) {
+    const searchParams = ['isbn:rft.isbn', 'btitle:rft.btitle', 'addau:rft.au', 'edition:rft.edition', 'pub:rft.publisher', 'creationdate:rft.pubdate', 'oclcid:rft.oclcnum', 'mms:rft.mms_id'];
+    let url = new URL(urls.primreq);
+    searchParams.forEach(params => {
+     let [rparam, sparam] = params.split(":");
+     if (record[rparam] !== undefined) {
+       url.searchParams.set(sparam, record[rparam]);
      }
-   }
- }, false);
+    });
+    return url;
+  }
 
 //// urls and uris
   const urls = {
@@ -562,7 +553,7 @@
   function filterAPI(recordset) {
    let records = recordset.filter(record => {
      let FILTER = true;
-
+     
      if (searchkeys.hasOwnProperty('rft.btitle')) {
        let recordtitle = record.btitle ? record.btitle : record.title;
        if (recordtitle) {
@@ -605,7 +596,6 @@
 //// fetch data
   async function fetchThumbnail(isbn) {
       if (!isbn) { return false; }
-
       let bibkey = "isbn:" + isbn,
       data, response, oldata, olresponse, imgurl;
       let url = new URL(urls.Google);
@@ -667,7 +657,18 @@
     }
     return data;
   }
-
+ 
+ function getThumb() {
+    let anchor = document.createElement('a');
+    let div = document.createElement('div');
+    let img = document.createElement('img');
+    div.classList.add("cite");
+    anchor.appendChild(div)
+    anchor.appendChild(img);
+    let fragment = new DocumentFragment();
+    fragment.appendChild(anchor);
+    return fragment;
+ }
 
 </script>
 </html>
