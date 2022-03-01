@@ -7,6 +7,11 @@
 <meta name="description" content="author: david fuller, title: purchase request">
 <meta name="keywords" content="schaffer library purchase request form">
 <link rel="icon" href="icons/request.png" type="image/png" sizes="84x84"> 
+
+<script src="https://cdn.jsdelivr.net/npm/shepherd.js@8.3.1/dist/js/shepherd.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@8.3.1/dist/css/shepherd.css"/>
+
+
 <style>
   
   :root {
@@ -197,64 +202,15 @@
     top: 2em;
     left: 25%;
   }
-  .littlebox { 
-    position: absolute;
-    top: 4.5em;
-    height: 0.25em;
-    width: 0.25em;
-    opacity: 0;   
-    line-height: 0.05em;
-    transition: opacity 1.5s ease-out;
-  }
-  .expandbox { 
-    z-index: 10; 
-    height: auto;
-    width: 20em;
-    line-height:1.2;
-    opacity: 1;
-    background-color: white;    
-  } 
-  .expandbox li {
-    padding: 0.15em;
-  }
+ 
   </style>
 </head>
  
 <body>
     <div class="container"> 
       <div class="panel">
-        <img src="icons/icon_info.png" onclick="showHelp();">
-          <span class="help littlebox">
-          <ul>
-            <li><b>Requesting books and videos</b></li>
-            <li>This will check if we own a title.
-              If so. select a record to open Primo for requesting [hold, digitize, ill, purchase (additional)].
-              If not owned a temporary record will permit the same [ill, purchase].</li>
-            <li><b>Locating books and DVDs</b></li>
-            <li>Enter an ISBN (preferred) or other data</li>
-            <li>ISBN or Title is required</li>  
-            <li>distinctive keywords usually suffice...</li> 
-            <li>
-              <ul>
-                <li><b>Locating videos (best practices)</b></li>
-                <li>Streaming video and some DVDs lack an ISBN</li>
-                <li>[title, pub, year]is effective</li>
-                <li>author varies, best to omit</li>
-                <li>pub refers to studio or distributor</li>     
-                <li>year refers to release, not production</li> 
-                <li>remember to check the "video" box!</li>
-                <li>
-                  <ul>
-                    <li><b>examples</b></li>
-                    <li>the way we were, Columbia, 1999</li>
-                    <li>Dersu Uzala, kino, 2000</li>
-                    <li>dersu, Kino</li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-          </span>
+        <img src="icons/icon_info.png" onclick="tour.start();">
+          
           <span class="loginprimo"><a href="https://union-psb.primo.exlibrisgroup.com/discovery/account?vid=01UCNY_INST:01UCNY_INST&section=overview" target="_blank">login to Primo</a> to see the status of your existing requests.</span>
           <div class="blockq"><blockquote></blockquote></div>
           <div class="thumbnails"></div>
@@ -472,10 +428,7 @@
    return;
   }
 
-  function showHelp() {
-   let box = document.querySelector(".littlebox");
-   box.classList.toggle("expandbox");
-  }
+
  
 //// getters 
   function getHeader() { 
@@ -646,7 +599,7 @@
       log("fetchJSON fetch: ", e); 
     }
 
-    if (response.ok) {
+    if (response && response.ok) {
       try { 
         data = await response.json();
       } catch (e) { log("fetchJSON response.json: ", e); } 
@@ -669,6 +622,65 @@
     fragment.appendChild(anchor);
     return fragment;
  }
+
+ const tour = new Shepherd.Tour({
+  defaultStepOptions: {
+    cancelIcon: {
+      enabled: true
+    },
+    classes: 'class-1 class-2',
+    scrollTo: { behavior: 'smooth', block: 'center' }
+  }
+});
+
+ tour.addStep({
+  title: 'A quick tour,this app helps to:',
+  text: `(1) identify specific items <br>
+  (2) if we own it, and <br>
+  (3) how you might get it.`,
+  attachTo: {
+    element: '.flexer',
+    on: 'bottom'
+  },
+  buttons: [
+    {
+      action() {
+        return this.next();
+      },
+      text: 'Next'
+    }
+  ],
+  id: 'creating'
+});
+
+ tour.addStep({
+  title: 'first, search our repository:',
+  text: `an ISBN search for best results<br> \
+         otherwise enter what you have<br> \
+          distinctive keywords usually suffice...`,
+  attachTo: {
+    element: '.flexer',
+    on: 'right'
+  },
+  buttons: [
+    {
+      action() {
+        return this.back();
+      },
+      classes: 'shepherd-button-secondary',
+      text: 'Back'
+    },
+    {
+      action() {
+        return this.next();
+      },
+      text: 'Next'
+    }
+  ],
+  id: 'creating'
+});
+
+
 
 </script>
 </html>
